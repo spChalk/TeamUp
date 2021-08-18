@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+./springboot.p12
+./src/main/resources/springboot.p12
