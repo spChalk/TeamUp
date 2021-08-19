@@ -24,6 +24,7 @@ public class Usr {
     private String lastName;
     private String email;
     private LocalDate dob;
+    private String phoneNumber;
     private String password;
 
     @Transient
@@ -32,30 +33,33 @@ public class Usr {
     public Usr() {
     }
 
-    public Usr(Long id, String firstName, String lastName, String email, LocalDate dob, String password, Integer age) {
+    public Usr(Long id, String firstName, String lastName, String email, LocalDate dob, String phoneNumber, String password, Integer age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.age = age;
     }
 
-    public Usr(String firstName, String lastName, String email, LocalDate dob, String password, Integer age) {
+    public Usr(String firstName, String lastName, String email, LocalDate dob, String phoneNumber, String password, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.age = age;
     }
 
-    public Usr(String firstName, String lastName, String email, LocalDate dob, String password) {
+    public Usr(String firstName, String lastName, String email, LocalDate dob, String phoneNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
+        this.phoneNumber = phoneNumber;
         this.password = password;
     }
 
@@ -81,6 +85,10 @@ public class Usr {
 
     public LocalDate getDob() {
         return dob;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getPassword() {
@@ -111,6 +119,10 @@ public class Usr {
         this.dob = dob;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -123,6 +135,7 @@ public class Usr {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", dob=" + dob +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", age=" + age +
                 '}';
     }

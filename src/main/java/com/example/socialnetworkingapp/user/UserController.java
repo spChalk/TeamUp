@@ -26,6 +26,20 @@ public class UserController {
                 "  </body>\n" +
                 "</html>");
     }
+
+    @GetMapping(path = "/home")
+    public String home(){
+        return ("<!doctype html>\n" +
+                "<html>\n" +
+                "  <head>\n" +
+                "    <title>Home</title>\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <h1>You are logged in.</h1>\n" +
+                "  </body>\n" +
+                "</html>");
+    }
+
     @PostMapping(path = "/register")
     public void registerNewUser(@RequestBody Usr user) {
         userService.addNewUser(user);

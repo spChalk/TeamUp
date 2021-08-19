@@ -20,6 +20,7 @@ public class UserConfig {
                     "Chalkias",
                     "spiros@gmail.com",
                     LocalDate.of(2000, Month.APRIL, 5),
+                    "6987654321",
                     "asdf"
             );
 
@@ -28,6 +29,7 @@ public class UserConfig {
                     "Alexakis",
                     "alex@gmail.com",
                     LocalDate.of(2003, Month.FEBRUARY, 8),
+                    "6978675645",
                     "asdf"
             );
 
