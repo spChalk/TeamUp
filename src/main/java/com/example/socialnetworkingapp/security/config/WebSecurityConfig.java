@@ -2,6 +2,7 @@ package com.example.socialnetworkingapp.security.config;
 
 import com.example.socialnetworkingapp.account.AccountService;
 
+import com.example.socialnetworkingapp.account.AppUserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,8 +26,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/registration/**").permitAll()
-                .anyRequest().authenticated().and().formLogin();
+                .authorizeRequests()
+                .antMatchers("/registration/**").permitAll()//white list this route
+                .antMatchers("/admin/**").hasRole(AppUserRole.USER.name())
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/welcome", true) //redirect after login
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login");
     }
 
     @Override

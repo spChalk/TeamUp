@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.function.*;
@@ -39,25 +40,25 @@ public class AccountService implements UserDetailsService {
         return "workeeeed ";
     }
 
-    //    public Account addAccount(Account account){
-//        return accountRepository.save(account);
-//    }
-//
-//    public List<Account> findAllAccounts(){
-//        return accountRepository.findAll();
-//    }
-//
-//    public Account updateAccount(Account account){
-//        return accountRepository.save(account);
-//    }
-//
-//    public void deleteAccount(Long id){
-//        accountRepository.deleteAccountById(id);
-//    }
-//
-//    public Account findAccountById(Long id){
-//        return accountRepository.findAccountById(id).orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
-//    }
+        public Account addAccount(Account account){
+        return accountRepository.save(account);
+    }
+
+    public List<Account> findAllAccounts(){
+        return accountRepository.findAll();
+    }
+
+    public Account updateAccount(Account account){
+        return accountRepository.save(account);
+    }
+
+    public void deleteAccount(Long id){
+        accountRepository.deleteAccountById(id);
+    }
+
+    public Account findAccountById(Long id){
+        return accountRepository.findAccountById(id).orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+    }
 
 
     @Override

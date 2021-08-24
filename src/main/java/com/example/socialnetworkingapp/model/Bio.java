@@ -1,2 +1,4 @@
-package com.example.socialnetworkingapp.model;public class Bio {
-}
+//package com.example.socialnetworkingapp.model;
+//
+//public class Bio {
+//}
