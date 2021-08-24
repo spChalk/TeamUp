@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.account;
 
 
+import com.example.socialnetworkingapp.post.Post;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,8 +53,9 @@ public class Account implements UserDetails {
         this.phone = phone;
     }
 
-    //    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-//    private List<Article> articles = new ArrayList<Article>();
+
+    //posts by a user
+    // a user can write many posts
 
 //    @ManyToMany(mappedBy = "user",cascade = CascadeType.ALL)
 //    private List<AccountSetting> accountSettings = new ArrayList<AccountSetting>();
