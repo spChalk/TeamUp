@@ -54,24 +54,6 @@ public class Account implements UserDetails {
     }
 
 
-    //posts by a user
-    // a user can write many posts
-
-//    @ManyToMany(mappedBy = "user",cascade = CascadeType.ALL)
-//    private List<AccountSetting> accountSettings = new ArrayList<AccountSetting>();
-
-//    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
-//    private List<Message> messages = new ArrayList<Message>();
-
-    //    @ManyToMany(mappedBy = "friend", cascade = CascadeType.ALL)
-//    private List<Account> friends = new ArrayList<Account>();
-
-//    @ManyToMany(mappedBy = "advertiser", cascade = CascadeType.ALL)
-
-//    private List<Advertisment> advertisments = new ArrayList<Advertisment>();
-
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

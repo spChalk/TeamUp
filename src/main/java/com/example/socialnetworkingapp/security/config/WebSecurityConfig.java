@@ -22,26 +22,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AccountService accountService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/registration/**").permitAll()//white list this route
+//                .antMatchers("/admin/**").hasRole(AppUserRole.USER.name())
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login").permitAll()
+//                .defaultSuccessUrl("/welcome", true) //redirect after login
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .clearAuthentication(true)
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessUrl("/login");
+//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration/**").permitAll()//white list this route
-                .antMatchers("/admin/**").hasRole(AppUserRole.USER.name())
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/registration/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/welcome", true) //redirect after login
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login");
+                .httpBasic();
     }
 
     @Override
