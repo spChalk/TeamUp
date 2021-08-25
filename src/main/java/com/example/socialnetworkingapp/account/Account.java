@@ -1,22 +1,19 @@
 package com.example.socialnetworkingapp.account;
 
-
-import com.example.socialnetworkingapp.post.Post;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.*;
 
 @Data
 @Getter
 @Setter
 @EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="accounts")
@@ -39,10 +36,13 @@ public class Account implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-
     @Column(unique = true)
     private String phone;
     private String imageUrl;
+
+    @ManyToMany
+    @JoinColumn(name = "connections", nullable = false)
+    private Set<Account> connections;
 
     public Account(AppUserRole appUserRole, String firstName, String lastName, String email, String password, String phone) {
         this.appUserRole = appUserRole;
