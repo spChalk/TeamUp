@@ -40,7 +40,7 @@ public class AccountService implements UserDetailsService {
         return "workeeeed ";
     }
 
-        public Account addAccount(Account account){
+    public Account addAccount(Account account){
         return accountRepository.save(account);
     }
 
@@ -60,6 +60,9 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountById(id).orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
 
+    public Account findAccountByEmail(String email){
+        return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User by email "+ email + "was not found !"));
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
