@@ -4,6 +4,7 @@ import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.account.Account;
 import com.example.socialnetworkingapp.account.AccountRepository;
+import com.example.socialnetworkingapp.mapper.AccountMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,12 +19,14 @@ import java.util.List;
 import java.util.function.*;
 import java.util.OptionalInt;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AccountMapper accountMapper;
 
     public String AccountSignUp(Account account){
         boolean present = accountRepository.findAccountByEmail(account.getUsername()).isPresent();
@@ -44,8 +47,9 @@ public class AccountService implements UserDetailsService {
         return accountRepository.save(account);
     }
 
-    public List<Account> findAllAccounts(){
-        return accountRepository.findAll();
+    public List<AccountResponse> findAllAccounts(){
+//        return accountRepository.findAll();
+        return accountRepository.findAll().stream().map(accountMapper::AccountToAccountResponse).collect(Collectors.toList());
     }
 
     public Account updateAccount(Account account){
@@ -67,5 +71,11 @@ public class AccountService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email: " + email + " was not found"));
+    }
+
+    public Account addFriend(Account user, Account newFriend) {
+        user.addConnection(newFriend);
+        accountRepository.save(newFriend);
+        return accountRepository.save(user);
     }
 }

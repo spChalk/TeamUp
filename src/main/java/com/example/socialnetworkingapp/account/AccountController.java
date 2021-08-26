@@ -4,6 +4,9 @@ import com.example.socialnetworkingapp.account.Account;
 import com.example.socialnetworkingapp.account.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class AccountController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Account>> getAllAccounts(){
-        List<Account> accounts = accountService.findAllAccounts();
+    public ResponseEntity<List<AccountResponse>> getAllAccounts(){
+        List<AccountResponse> accounts = accountService.findAllAccounts();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
@@ -33,6 +36,17 @@ public class AccountController {
     public ResponseEntity<Account> addAccount(@RequestBody Account account){
         Account newAccount = accountService.addAccount(account);
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/add-friend")
+    public ResponseEntity<String> addFriend(@RequestBody Account account){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Account user = accountService.findAccountByEmail(userDetails.getUsername());
+        Account friend = accountService.findAccountByEmail(account.getUsername());
+        user = accountService.addFriend(user, friend);
+        return new ResponseEntity<>("You are now friends", HttpStatus.OK);
     }
 
     @PutMapping("/update")
