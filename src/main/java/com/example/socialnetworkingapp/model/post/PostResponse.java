@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.post;
+package com.example.socialnetworkingapp.model.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

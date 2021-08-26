@@ -1,7 +1,6 @@
 package com.example.socialnetworkingapp.model.comment;
 
 import com.example.socialnetworkingapp.mapper.CommentMapper;
-import com.example.socialnetworkingapp.post.Post;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

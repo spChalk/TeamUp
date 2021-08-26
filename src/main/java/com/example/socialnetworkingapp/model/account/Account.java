@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

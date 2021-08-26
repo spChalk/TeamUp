@@ -1,6 +1,6 @@
-package com.example.socialnetworkingapp.post;
+package com.example.socialnetworkingapp.model.post;
 
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

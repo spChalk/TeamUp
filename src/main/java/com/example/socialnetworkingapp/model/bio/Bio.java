@@ -1,18 +1,18 @@
 package com.example.socialnetworkingapp.model.bio;
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name = "bio")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "bio")
 public class Bio implements Serializable {
 
     @Id
@@ -24,6 +24,11 @@ public class Bio implements Serializable {
     public String desc;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account account;
+
+    public Bio(String desc, Account account) {
+        this.desc = desc;
+        this.account = account;
+    }
 }

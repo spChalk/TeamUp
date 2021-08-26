@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.post;
+package com.example.socialnetworkingapp.model.post;
 
 
 import com.example.socialnetworkingapp.exception.UserNotFoundException;

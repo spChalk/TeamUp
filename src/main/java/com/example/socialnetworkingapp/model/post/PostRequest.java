@@ -1,11 +1,9 @@
-package com.example.socialnetworkingapp.post;
+package com.example.socialnetworkingapp.model.post;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 
 /* when a user makes a post take that post request an create a post */

@@ -1,18 +1,18 @@
 package com.example.socialnetworkingapp.model.message;
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name="messages")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "messages")
 public class Message implements Serializable {
 
     @Id
@@ -23,6 +23,10 @@ public class Message implements Serializable {
     private String payload;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account sender;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(nullable = false)
+    private Account receiver;
 }

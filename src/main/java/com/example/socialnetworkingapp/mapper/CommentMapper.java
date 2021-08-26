@@ -1,14 +1,10 @@
 package com.example.socialnetworkingapp.mapper;
 
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.comment.Comment;
 import com.example.socialnetworkingapp.model.comment.CommentResponse;
-import com.example.socialnetworkingapp.post.Post;
-import com.example.socialnetworkingapp.post.PostResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.Date;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {

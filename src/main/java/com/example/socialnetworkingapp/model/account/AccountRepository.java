@@ -1,6 +1,5 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
-import com.example.socialnetworkingapp.account.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

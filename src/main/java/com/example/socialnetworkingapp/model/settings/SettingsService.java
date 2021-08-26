@@ -9,5 +9,8 @@ public class SettingsService {
 
     private final SettingsRepository settingsRepository;
 
-
+    public AccountSettings findSettingById(Long id) {
+        return this.settingsRepository.findById(id).
+                orElseThrow(() -> new IllegalStateException("Setting with id: " + id + " does not exist!"));
+    }
 }

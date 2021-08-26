@@ -1,13 +1,10 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

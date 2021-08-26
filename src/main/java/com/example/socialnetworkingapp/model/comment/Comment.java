@@ -1,7 +1,7 @@
 package com.example.socialnetworkingapp.model.comment;
 
-import com.example.socialnetworkingapp.account.Account;
-import com.example.socialnetworkingapp.post.Post;
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.post.Post;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

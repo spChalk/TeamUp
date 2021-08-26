@@ -1,26 +1,27 @@
 package com.example.socialnetworkingapp.model.interests;
 
-import com.example.socialnetworkingapp.account.Account;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.socialnetworkingapp.model.account.Account;
+import com.sun.istack.NotNull;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.io.Serializable;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "interests")
-public class Interest {
+public class Interest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false, unique = true)
-    private Long id ;
+    private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name ="account_id", nullable = false)
-    private Set<Account> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Account user;
 }

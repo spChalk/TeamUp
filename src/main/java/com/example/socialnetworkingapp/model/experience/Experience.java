@@ -1,20 +1,20 @@
 package com.example.socialnetworkingapp.model.experience;
 
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "experience")
+@Table
 public class Experience implements Serializable {
 
     private enum EmploymentType {
@@ -54,6 +54,6 @@ public class Experience implements Serializable {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="account_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account user;
 }

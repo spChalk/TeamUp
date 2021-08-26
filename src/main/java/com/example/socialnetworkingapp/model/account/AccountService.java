@@ -1,24 +1,16 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
-import com.example.socialnetworkingapp.account.Account;
-import com.example.socialnetworkingapp.account.AccountRepository;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
-import java.util.function.*;
-import java.util.OptionalInt;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

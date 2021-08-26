@@ -1,19 +1,20 @@
 package com.example.socialnetworkingapp.model.connection_request;
 
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name="connx_requests")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConnectionRequest {
+@Entity
+@Table(name = "connection_request")
+public class ConnectionRequest implements Serializable {
 
     private enum RequestStatus {
         PENDING,
@@ -27,13 +28,19 @@ public class ConnectionRequest {
     private Long id ;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account sender;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "receiver_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account receiver;
 
     @NotNull
     private RequestStatus requestStatus = RequestStatus.PENDING;
+
+    public ConnectionRequest(Account sender, Account receiver, RequestStatus requestStatus) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.requestStatus = requestStatus;
+    }
 }

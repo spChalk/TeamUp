@@ -1,19 +1,20 @@
 package com.example.socialnetworkingapp.model.job_application;
 
-import com.example.socialnetworkingapp.account.Account;
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.job.Job;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name = "job_application")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobApplication {
+@Entity
+@Table(name = "job_application")
+public class JobApplication implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +22,10 @@ public class JobApplication {
     private Long id ;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="account_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account user;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="job_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Job job;
 }

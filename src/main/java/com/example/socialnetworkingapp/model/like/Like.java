@@ -1,19 +1,20 @@
 package com.example.socialnetworkingapp.model.like;
 
-import com.example.socialnetworkingapp.account.Account;
-import com.example.socialnetworkingapp.post.Post;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.post.Post;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "likes")
-public class Like {
+public class Like implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +22,10 @@ public class Like {
     private Long id ;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="account_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Account user;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="post_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Post post;
 }

@@ -1,7 +1,5 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
-import com.example.socialnetworkingapp.account.Account;
-import com.example.socialnetworkingapp.account.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
