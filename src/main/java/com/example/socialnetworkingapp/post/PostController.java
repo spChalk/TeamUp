@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class PostController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Account user = accountService.findAccountByEmail(userDetails.getUsername());
-        Post newPost = new Post(request.getTitle(), request.getPayload(), user);
+        Post newPost = new Post(request.getTitle(), request.getPayload(), user, new Date(), null);
         return postService.addPost(newPost);
     }
 

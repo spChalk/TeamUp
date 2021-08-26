@@ -29,14 +29,28 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
 
+    //title and text of post
     private String title;
     private String payload;
 
+    //author of post
+    //1 post -> 1 author
+    //1 author -> many posts
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     private Account author;
 
+    //date of creation
     private Date date ;
-//    private String filePath;
 
+    //path to photo / video
+    private String filePath;
+
+    public Post(String title, String payload, Account author, Date date, String filePath) {
+        this.title = title;
+        this.payload = payload;
+        this.author = author;
+        this.date = date;
+        this.filePath = filePath;
+    }
 }

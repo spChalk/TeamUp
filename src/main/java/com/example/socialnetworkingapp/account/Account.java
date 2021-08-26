@@ -40,10 +40,8 @@ public class Account implements UserDetails {
     private String phone;
     private String imageUrl;
 
+    //friends , many-to-many self referencing
     @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
-//    @JoinTable(name="UserRel",
-//            joinColumns={@JoinColumn(name="AccountId")},
-//            inverseJoinColumns={@JoinColumn(name="FriendId")})
     private List<Account> followers = new ArrayList<Account>();
 
     @ManyToMany(cascade = CascadeType.ALL)
