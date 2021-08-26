@@ -40,9 +40,18 @@ public class Account implements UserDetails {
     private String phone;
     private String imageUrl;
 
-    @ManyToMany
-    @JoinColumn(name = "connections", nullable = false)
-    private Set<Account> connections;
+    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
+//    @JoinTable(name="UserRel",
+//            joinColumns={@JoinColumn(name="AccountId")},
+//            inverseJoinColumns={@JoinColumn(name="FriendId")})
+    private List<Account> followers = new ArrayList<Account>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_connections",
+            joinColumns={@JoinColumn(name="FriendId")},
+            inverseJoinColumns={@JoinColumn(name="AccountId")})
+    private List<Account> following = new ArrayList<Account>();
+
 
     public Account(AppUserRole appUserRole, String firstName, String lastName, String email, String password, String phone) {
         this.appUserRole = appUserRole;
@@ -97,8 +106,12 @@ public class Account implements UserDetails {
         return true;
     }
 
-
     public void setPassword(String encodedPassword) {
         this.password = encodedPassword;
+    }
+
+    public void addConnection(Account friend){
+        friend.getFollowing().add(this);
+        this.following.add(friend);
     }
 }
