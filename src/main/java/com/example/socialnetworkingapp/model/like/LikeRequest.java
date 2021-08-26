@@ -6,4 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LikeRequest {
+    private String title;
+    private String payload;
 }
