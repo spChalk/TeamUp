@@ -1,26 +1,40 @@
 package com.example.socialnetworkingapp.security.config;
 
-import com.example.socialnetworkingapp.account.AccountService;
-
-import com.example.socialnetworkingapp.account.AppUserRole;
+import com.example.socialnetworkingapp.security.PasswordEncoder;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AccountService accountService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasRole("USER")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("springuser").password(new PasswordEncoder().bCryptPasswordEncoder().encode("spring123")).roles("USER")
+                .and()
+                .withUser("springadmin").password(new PasswordEncoder().bCryptPasswordEncoder().encode("admin123")).roles("ADMIN", "USER");
+    }
+
+/*    private final AccountService accountService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
@@ -43,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .deleteCookies("JSESSIONID")
 //                .logoutSuccessUrl("/login");
 //    }
-    @Override
+   /* @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
@@ -52,18 +66,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
-    }
+    }*/
 
-    @Bean
+    /*@Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         provider.setUserDetailsService(accountService);
         return provider;
-    }
+    }*/
 }
