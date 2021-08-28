@@ -29,7 +29,7 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-        @GetMapping("/find/{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id){
         Account account = this.accountService.findAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);

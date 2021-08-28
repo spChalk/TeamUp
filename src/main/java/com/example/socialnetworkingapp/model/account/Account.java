@@ -116,9 +116,7 @@ public class Account implements UserDetails {
 
     public void follow(Account friend){
         this.following.add(friend);
-        if(friend != null) {
-            friend.getFollowers().add(this);
-        }
+        friend.getFollowers().add(this);
     }
 }
 
