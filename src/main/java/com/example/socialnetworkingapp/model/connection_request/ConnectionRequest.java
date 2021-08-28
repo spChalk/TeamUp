@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Table(name = "connection_request")
 public class ConnectionRequest implements Serializable {
 
-    private enum RequestStatus {
+    public enum RequestStatus {
         PENDING,
         ACCEPTED,
         REJECTED

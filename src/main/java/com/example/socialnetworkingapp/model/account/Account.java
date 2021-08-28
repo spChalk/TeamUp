@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.model.account;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,11 @@ public class Account implements UserDetails {
     @Column(unique = true)
     private String phone;
     private String imageUrl;
+
+    /*
+     * Επειδη υπαρχουν followers, following αλλά και connections στο linkedin, θα κανουμε το εξης:
+     * - Aν ακολουθω εναν χρηστη ο οποιος με ακολουθει και εκεινος, τοτε σχηματιζουμε ενα connection.
+    */
 
     //friends , many-to-many self referencing
     @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
@@ -108,8 +114,12 @@ public class Account implements UserDetails {
         this.password = encodedPassword;
     }
 
-    public void addConnection(Account friend){
-        friend.getFollowing().add(this);
+    public void follow(Account friend){
         this.following.add(friend);
+        if(friend != null) {
+            friend.getFollowers().add(this);
+        }
     }
 }
+
+

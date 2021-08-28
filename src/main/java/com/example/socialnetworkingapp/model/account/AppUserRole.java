@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.account;
+package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.security.AccountPermission;
 import com.google.common.collect.Sets;

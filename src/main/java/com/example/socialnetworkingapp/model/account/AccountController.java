@@ -18,48 +18,47 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/all")
+    /*@GetMapping("/all")
     public ResponseEntity<List<AccountResponse>> getAllAccounts(){
-        List<AccountResponse> accounts = accountService.findAllAccounts();
+        List<AccountResponse> accounts = this.accountService.findAllAccounts();
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }*/
+
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        List<Account> accounts = this.accountService.findAllAccounts();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+        @GetMapping("/find/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id){
-        Account account = accountService.findAccountById(id);
+        Account account = this.accountService.findAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody Account account){
-        Account newAccount = accountService.addAccount(account);
+        Account newAccount = this.accountService.addAccount(account);
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
     }
 
-    @PutMapping("/add-friend")
-    public ResponseEntity<String> addFriend(@RequestBody Account account){
+    @PutMapping("/follow")
+    public ResponseEntity<String> follow(@RequestBody TransferAccounts accounts) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Account user = accountService.findAccountByEmail(userDetails.getUsername());
-        Account friend = accountService.findAccountByEmail(account.getUsername());
-        user = accountService.addFriend(user, friend);
-        return new ResponseEntity<>("You are now friends", HttpStatus.OK);
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();*/
+        this.accountService.follow(accounts.sender, accounts.receiver);
+        return new ResponseEntity<>("You have followed " + accounts.receiver.getFirstName() + "!", HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account){
-        Account newAccount = accountService.updateAccount(account);
+        Account newAccount = this.accountService.updateAccount(account);
         return new ResponseEntity<>(newAccount, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
-        accountService.deleteAccount(id);
+        this.accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
 }

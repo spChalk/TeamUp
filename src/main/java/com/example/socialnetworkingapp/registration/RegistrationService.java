@@ -21,6 +21,6 @@ public class RegistrationService {
             throw new NotValidEmailException("email not valid!");
         }
 
-        return accountService.AccountSignUp(new Account(AppUserRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone() ));
+        return accountService.accountSignUp(new Account(AppUserRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone() ));
     }
 }
