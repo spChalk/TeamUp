@@ -10,9 +10,11 @@ import {AccountService} from "./account.service";
 })
 export class AppComponent implements OnInit {
 
-  public accounts: Account[] | undefined;
+  public accounts: Account[];
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) {
+    this.accounts = [];
+  }
 
   ngOnInit() {
     this.getAccounts();

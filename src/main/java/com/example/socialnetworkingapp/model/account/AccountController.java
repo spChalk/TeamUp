@@ -24,6 +24,7 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }*/
 
+    @GetMapping("/all")
     public ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts = this.accountService.findAllAccounts();
         return new ResponseEntity<>(accounts, HttpStatus.OK);

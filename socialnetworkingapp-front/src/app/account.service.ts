@@ -1,7 +1,7 @@
 
 import {Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Account} from "./account";
 import {environment} from "../environments/environment";
 
@@ -23,13 +23,17 @@ export class AccountService {
   }
 
   public addAccount(account: Account): Observable<Account> {
-    /* TODO: Remove this later -> */ // @ts-ignore
-    return this.http.post<Account>(`${this.apiServerUrl}/accounts/add`);
+    return this.http.post<Account>(`${this.apiServerUrl}/accounts/add`,
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      });
   }
 
   public updateAccount(account: Account): Observable<Account> {
-    /* TODO: Remove this later -> */ // @ts-ignore
-    return this.http.put<Account>(`${this.apiServerUrl}/accounts/update`);
+    return this.http.put<Account>(`${this.apiServerUrl}/accounts/update`,
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      });
   }
 
   public deleteAccountById(account_id: number): Observable<void> {
