@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "settings")
-public class AccountSettings implements Serializable {
+public class Settings implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,8 +1,13 @@
 
+enum AppUserRole {
+  USER,
+  ADMIN
+}
+
 export interface Account {
 
   id: number;
-  /*appUserRole: AppUserRole;*/
+  appUserRole: AppUserRole;
   firstName: string;
   lastName: string;
   email: string;
