@@ -10,34 +10,33 @@ import {environment} from "../../environments/environment";
 })
 
 export class AccountService {
-  private apiServerUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {  }
 
   public getAllAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiServerUrl}/accounts/all`);
+    return this.http.get<Account[]>(`${environment.apiBaseUrl}/accounts/all`);
   }
 
   public getAccountById(account_id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.apiServerUrl}/accounts/find/${account_id}`);
+    return this.http.get<Account>(`${environment.apiBaseUrl}/accounts/find/${account_id}`);
   }
 
   public addAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(`${this.apiServerUrl}/accounts/add`,
+    return this.http.post<Account>(`${environment.apiBaseUrl}/accounts/add`,
       {
         headers: new HttpHeaders({'Content-Type': 'application/json'}),
       });
   }
 
   public updateAccount(account: Account): Observable<Account> {
-    return this.http.put<Account>(`${this.apiServerUrl}/accounts/update`,
+    return this.http.put<Account>(`${environment.apiBaseUrl}/accounts/update`,
       {
         headers: new HttpHeaders({'Content-Type': 'application/json'}),
       });
   }
 
   public deleteAccountById(account_id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/accounts/delete/${account_id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/accounts/delete/${account_id}`);
   }
 
   /* TODO: addFriend */

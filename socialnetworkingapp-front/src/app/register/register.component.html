@@ -1,59 +1,28 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container pb-5 mb-sm-4">
-  <div class="row pt-5">
-    <div class="col-md-6 pt-5 pt-sm-3">
-      <h2 class="h4 mb-3">No account? Sign up</h2>
-      <p class="text-muted mb-4">Registration takes less than a minute but gives you full control over your orders.</p>
-      <form class="needs-validation" novalidate="">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-fn">First Name</label>
-              <input class="form-control" type="text" required="" id="reg-fn">
-              <div class="invalid-feedback">Please enter your first name!</div>
-            </div>
+<!--login modal-->
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="text-center">Register</h1>
+      </div>
+      <div class="modal-body">
+        <form class="form col-md-12 center-block">
+          <div class="form-group">
+            <input type="text" class="form-control input-lg" placeholder="Email">
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-ln">Last Name</label>
-              <input class="form-control" type="text" required="" id="reg-ln">
-              <div class="invalid-feedback">Please enter your last name!</div>
-            </div>
+          <div class="form-group">
+            <input type="password" class="form-control input-lg" placeholder="Password">
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-email">E-mail Address</label>
-              <input class="form-control" type="email" required="" id="reg-email">
-              <div class="invalid-feedback">Please enter valid email address!</div>
-            </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-lg btn-block">Register</button>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-phone">Phone Number</label>
-              <input class="form-control" type="text" required="" id="reg-phone">
-              <div class="invalid-feedback">Please enter your phone number!</div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-password">Password</label>
-              <input class="form-control" type="password" required="" id="reg-password">
-              <div class="invalid-feedback">Please enter password!</div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="reg-password-confirm">Confirm Password</label>
-              <input class="form-control" type="password" required="" id="reg-password-confirm">
-              <div class="invalid-feedback">Passwords do not match!</div>
-            </div>
-          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-1accordion2">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
         </div>
-        <div class="text-right">
-          <button class="btn btn-primary" type="submit">Sign Up</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
-
