@@ -18,7 +18,8 @@ import { JobApplicationComponent } from './job-application/job-application.compo
 import { LikeComponent } from './like/like.component';
 import { MessageComponent } from './message/message.component';
 import { PostComponent } from './post/post.component';
-import { SettingsComponent } from './settings/settings.component'
+import { SettingsComponent } from './settings/settings.component';
+import { WelcomeComponent } from './welcome/welcome.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SettingsComponent } from './settings/settings.component'
     LikeComponent,
     MessageComponent,
     PostComponent,
-    SettingsComponent
+    SettingsComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
