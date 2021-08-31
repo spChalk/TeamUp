@@ -1,0 +1,105 @@
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1,h2,h3 {
+  text-align: center;
+}
+
+p {
+  font-weight: 350;
+}
+
+body{
+  margin-top:20px;
+  background: #ffffff;
+}
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.card-columns .card {
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 576px) {
+  .card-columns {
+    column-count: 3;
+    column-gap: 1.25rem;
+  }
+  .card-columns .card {
+    display: inline-block;
+    width: 100%;
+  }
+}
+.text-muted {
+  color: #9faecb !important;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+strong{
+  font-weight: 800;
+  padding: 0px;
+  margin: 0px;
+}
+
+.btn-primary {
+  background: #2b7ee3;
+  color: #ffffff; }
+.btn-primary:hover {
+  background: #014fb0;
+  color: #ffffff; }
+.btn-primary:focus {
+  box-shadow: 0 0 0 3px #fcfdff; }
+
+.btn-secondary {
+  background: #cdecff;
+  color: #000000;
+}
+.btn-secondary:hover {
+  background: #ffffff;
+  color: #000000; }
+.btn-secondary:focus {
+  box-shadow: 0 0 0 3px #fcfdff; }
