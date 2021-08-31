@@ -19,7 +19,8 @@ import { LikeComponent } from './like/like.component';
 import { MessageComponent } from './message/message.component';
 import { PostComponent } from './post/post.component';
 import { SettingsComponent } from './settings/settings.component';
-import { WelcomeComponent } from './welcome/welcome.component'
+import { WelcomeComponent } from './welcome/welcome.component';
+import { AboutComponent } from './about/about.component'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { WelcomeComponent } from './welcome/welcome.component'
     MessageComponent,
     PostComponent,
     SettingsComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
