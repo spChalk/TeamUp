@@ -1,7 +1,14 @@
 
 * {
   font-family: 'Montserrat', sans-serif;
+}
+
+h1,h2,h3 {
   text-align: center;
+}
+
+p {
+  font-weight: 350;
 }
 
 body{
@@ -77,3 +84,22 @@ strong{
   padding: 0px;
   margin: 0px;
 }
+
+.btn-primary {
+  background: #4189e3;
+  color: #ffffff; }
+.btn-primary:hover {
+  background: #1e78ee;
+  color: #ffffff; }
+.btn-primary:focus {
+  box-shadow: 0 0 0 3px #fcfdff; }
+
+.btn-secondary {
+  background: #cdecff;
+  color: #000000;
+}
+.btn-secondary:hover {
+  background: #ffffff;
+  color: #000000; }
+.btn-secondary:focus {
+  box-shadow: 0 0 0 3px #fcfdff; }
