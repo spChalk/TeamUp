@@ -7,6 +7,8 @@ import {WelcomeComponent} from "./welcome/welcome.component";
 import {JobComponent} from "./job/job.component";
 import {AboutComponent} from "./about/about.component";
 import {SettingsComponent} from "./settings/settings.component";
+import {ChatComponent} from "./chat/chat.component";
+import {AccountComponent} from "./account/account.component";
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'job', component: JobComponent },
   { path: 'about', component: AboutComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'chat', component: ChatComponent },
+  { path: 'account', component: AccountComponent },
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}

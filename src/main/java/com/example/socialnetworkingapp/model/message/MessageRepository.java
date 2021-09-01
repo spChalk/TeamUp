@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.message;
 
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

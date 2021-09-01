@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.model.message;
 
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
+import com.example.socialnetworkingapp.model.account.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -20,7 +20,8 @@ import { MessageComponent } from './message/message.component';
 import { PostComponent } from './post/post.component';
 import { SettingsComponent } from './settings/settings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AboutComponent } from './about/about.component'
+import { AboutComponent } from './about/about.component';
+import { ChatComponent } from './chat/chat.component'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AboutComponent } from './about/about.component'
     PostComponent,
     SettingsComponent,
     WelcomeComponent,
-    AboutComponent
+    AboutComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

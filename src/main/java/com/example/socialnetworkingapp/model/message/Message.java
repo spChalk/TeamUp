@@ -29,4 +29,10 @@ public class Message implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     private Account receiver;
+
+    public Message(String payload, Account sender, Account receiver) {
+        this.payload = payload;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
 }
