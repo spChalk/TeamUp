@@ -9,6 +9,8 @@ import {AboutComponent} from "./about/about.component";
 import {SettingsComponent} from "./settings/settings.component";
 import {ChatComponent} from "./chat/chat.component";
 import {AccountComponent} from "./account/account.component";
+import {AdminComponent} from "./admin/admin.component";
+import {NetworkComponent} from "./network/network.component";
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -20,6 +22,9 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'network', component: NetworkComponent },
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}

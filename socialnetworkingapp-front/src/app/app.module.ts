@@ -22,6 +22,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AboutComponent } from './about/about.component';
 import { ChatComponent } from './chat/chat.component'
+import {FormsModule} from "@angular/forms";
+import { AdminComponent } from './admin/admin.component';
+import { NetworkComponent } from './network/network.component';
 
 @NgModule({
   declarations: [
@@ -42,12 +45,15 @@ import { ChatComponent } from './chat/chat.component'
     SettingsComponent,
     WelcomeComponent,
     AboutComponent,
-    ChatComponent
+    ChatComponent,
+    AdminComponent,
+    NetworkComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]

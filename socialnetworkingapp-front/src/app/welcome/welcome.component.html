@@ -29,6 +29,7 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
+  <form #regForm="ngForm" (ngSubmit)="onLogin(regForm)">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card-group mb-0">
@@ -37,14 +38,14 @@
             <h1 style="font-weight: 300">Sign in</h1>
             <p class="text-muted">Sign in to your account</p>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Your email">
+              <input type="text" ngModel name="username" class="form-control" placeholder="Your email" required>
             </div>
             <div class="input-group mb-4">
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="password" ngModel name="password" class="form-control" placeholder="Password" required>
             </div>
             <div class="row">
               <div class="col-6">
-                <button type="button" class="btn btn-primary px-4" style="font-weight: 400">Login</button>
+                <button [disabled]="regForm.invalid" type="submit" class="btn btn-primary px-4" style="font-weight: 400">Sign in</button>
               </div>
               <div class="col-6 text-right">
                 <button type="button" class="btn btn-link px-0">Forgot password?</button>
@@ -66,6 +67,7 @@
       </div>
     </div>
   </div>
+  </form>
 </div>
 </body>
 </html>

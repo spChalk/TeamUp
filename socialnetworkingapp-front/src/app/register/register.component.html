@@ -7,7 +7,7 @@
 <h1 style="text-align: center">Register</h1>
 
 <div class="container">
-  <form action="#">
+  <form #regForm="ngForm" (ngSubmit)="onRegister(regForm)">
     <div class="row justify-content-md-center">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="login-screen">
@@ -18,32 +18,37 @@
             <div class="row gutters">
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="First Name">
+                  <input type="text" ngModel name="firstName" class="form-control" placeholder="First Name" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Last Name">
+                  <input type="text" ngModel name="lastName" class="form-control" placeholder="Last Name" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="email" class="form-control" placeholder="Email">
+                  <input type="email" ngModel name="email" class="form-control" placeholder="Email" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" ngModel name="password" class="form-control" placeholder="Password" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="phone" class="form-control" placeholder="Phone">
+                  <input type="phone" ngModel name="phone" class="form-control" placeholder="Phone" required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <input type="password" ngModel name="conf_password" class="form-control" placeholder="Confirm Password" required>
                 </div>
               </div>
             </div>
             <div class="actions clearfix">
-              <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+              <button [disabled]="regForm.invalid" type="submit" class="btn btn-primary btn-block">Sign up</button>
             </div>
             <!--<div class="or">
               <span>or signup using</span>

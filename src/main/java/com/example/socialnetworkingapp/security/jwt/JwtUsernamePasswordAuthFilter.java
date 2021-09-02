@@ -4,6 +4,8 @@ import com.example.socialnetworkingapp.model.account.Account;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,9 +18,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 @Slf4j
@@ -32,9 +36,16 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+
+        BufferedReader reader = null;
+        try {
+            reader = request.getReader();
+        } catch (Exception e) { throw new IllegalStateException("Could not read buffer!"); }
+
+        JSONTokener tokens = new JSONTokener(reader);
+        JSONObject json = new JSONObject(tokens);
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(json.get("username"), json.get("password"));
         //authentication manager checks whether a user exists and if the password is correct
         return authenticationManager.authenticate(authenticationToken);
     }

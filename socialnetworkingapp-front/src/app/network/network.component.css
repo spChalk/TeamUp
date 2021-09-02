@@ -1,0 +1,195 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  margin-top: 20px;
+}
+
+.user-widget-2 .media {
+  margin-bottom: 20px;
+}
+
+.user-widget-2 h5 {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.user-widget-2 p {
+  font-size: 0.8125rem;
+  margin-bottom: 10px;
+}
+
+.user-widget-2 p .badge {
+  margin-right: 10px;
+}
+
+.user-widget-2 i {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.user-widget-2 .rounded-circle {
+  border: 3px solid #fff;
+  height: 50px;
+  width: 50px;
+  -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  margin-right: 20px;
+}
+
+.sample-badges .badge {
+  margin-right: 10px;
+}
+
+.badge {
+  border-radius: 8px;
+  border: 0;
+  font-size: 0.75rem;
+  text-align: center;
+  line-height: 0.8;
+  padding: 8px 12px;
+  font-weight: normal;
+}
+
+.badge.badge-sm {
+  font-size: 0.625rem;
+  line-height: 0.6;
+}
+
+.badge.badge-lg {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.badge.badge-rounded {
+  padding: 0;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.badge.badge-rounded.badge-sm {
+  height: 18px;
+  width: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+}
+
+.badge.badge-rounded.badge-sm.badge-outline {
+  line-height: 16px;
+}
+
+.badge.badge-rounded.badge-lg {
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+}
+
+.badge.badge-rounded.badge-lg.badge-outline {
+  line-height: 28px;
+}
+
+.badge.badge-light:not(.badge-outline) {
+  background-color: #ffffff;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-light {
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.badge.badge-dark:not(.badge-outline) {
+  background-color: #212121;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-dark {
+  border: 1px solid #212121;
+  background-color: transparent;
+  color: #212121;
+}
+
+.badge.badge-default:not(.badge-outline) {
+  background-color: #212121;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-default {
+  border: 1px solid #212121;
+  background-color: transparent;
+  color: #212121;
+}
+
+.badge.badge-primary:not(.badge-outline) {
+  background-color: #303f9f;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-primary {
+  border: 1px solid #303f9f;
+  background-color: transparent;
+  color: #303f9f;
+}
+
+.badge.badge-secondary:not(.badge-outline) {
+  background-color: #7b1fa2;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-secondary {
+  border: 1px solid #7b1fa2;
+  background-color: transparent;
+  color: #7b1fa2;
+}
+
+.badge.badge-info:not(.badge-outline) {
+  background-color: #0288d1;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-info {
+  border: 1px solid #0288d1;
+  background-color: transparent;
+  color: #0288d1;
+}
+
+.badge.badge-success:not(.badge-outline) {
+  background-color: #388e3c;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-success {
+  border: 1px solid #388e3c;
+  background-color: transparent;
+  color: #388e3c;
+}
+
+.badge.badge-warning:not(.badge-outline) {
+  background-color: #ffa000;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-warning {
+  border: 1px solid #ffa000;
+  background-color: transparent;
+  color: #ffa000;
+}
+
+.badge.badge-danger:not(.badge-outline) {
+  background-color: #d32f2f;
+  color: #fff;
+}
+
+.badge.badge-outline.badge-danger {
+  border: 1px solid #d32f2f;
+  background-color: transparent;
+  color: #d32f2f;
+}
