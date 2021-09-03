@@ -1,53 +1,98 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
 body{
-  margin-top:20px;
-  color: #1a202c;
-  text-align: left;
-  background-color: #e2e8f0;
+  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 }
-.main-body {
-  padding: 15px;
+.emp-profile{
+  padding: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  border-radius: 0.5rem;
+  background: #fff;
 }
-.card {
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+.profile-img{
+  text-align: center;
 }
-
-.card {
+.profile-img img{
+  width: 70%;
+  height: 100%;
+}
+.profile-img .file {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0 solid rgba(0,0,0,.125);
-  border-radius: .25rem;
+  overflow: hidden;
+  margin-top: -20%;
+  width: 70%;
+  border: none;
+  border-radius: 0;
+  font-size: 15px;
+  background: #212529b8;
 }
-
-.card-body {
-  flex: 1 1 auto;
-  min-height: 1px;
-  padding: 1rem;
+.profile-img .file input {
+  position: absolute;
+  opacity: 0;
+  right: 0;
+  top: 0;
 }
-
-.gutters-sm {
-  margin-right: -8px;
-  margin-left: -8px;
+.profile-head h5{
+  color: #333;
 }
-
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
-  padding-right: 8px;
-  padding-left: 8px;
+.profile-head h6{
+  color: #0062cc;
 }
-.mb-3, .my-3 {
-  margin-bottom: 1rem!important;
+.profile-edit-btn{
+  border: none;
+  border-radius: 1.5rem;
+  width: 70%;
+  padding: 2%;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
 }
-
-.bg-gray-300 {
-  background-color: #e2e8f0;
+.proile-rating{
+  font-size: 12px;
+  color: #818182;
+  margin-top: 5%;
 }
-.h-100 {
-  height: 100%!important;
+.proile-rating span{
+  color: #495057;
+  font-size: 15px;
+  font-weight: 600;
 }
-.shadow-none {
-  box-shadow: none!important;
+.profile-head .nav-tabs{
+  margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+  font-weight:600;
+  border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+  border: none;
+  border-bottom:2px solid #0062cc;
+}
+.profile-work{
+  padding: 14%;
+  margin-top: -15%;
+}
+.profile-work p{
+  font-size: 12px;
+  color: #818182;
+  font-weight: 600;
+  margin-top: 10%;
+}
+.profile-work a{
+  text-decoration: none;
+  color: #495057;
+  font-weight: 600;
+  font-size: 14px;
+}
+.profile-work ul{
+  list-style: none;
+}
+.profile-tab label{
+  font-weight: 600;
+}
+.profile-tab p{
+  font-weight: 600;
+  color: #0062cc;
 }

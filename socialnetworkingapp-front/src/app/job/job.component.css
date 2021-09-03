@@ -2,98 +2,75 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-body{margin-top:20px;}
-.shadow-sm,
-.shadow-sm--on-hover:hover {
-  box-shadow: 0 0.125rem 0.25rem rgba(132, 138, 163, 0.1) !important
-}
-.gradient-light--lean-left {
-  background-image: -webkit-linear-gradient(110deg, #f2f3fa 0%, #fcfdff 100%);
-  background-image: -ms-linear-gradient(110deg, #f2f3fa 0%, #fcfdff 100%)
-}
 
-.color--heading {
-  color: #101f41 !important
+body {
+   background-color: #eee
+ }
+
+.card {
+  border: none;
+  border-radius: 10px
 }
 
-.color--text {
-  color: #4f5464 !important
+.c-details span {
+  font-weight: 300;
+  font-size: 13px
 }
 
-
-.badge-circle {
-  border-radius: 50%;
-  height: 2.5rem;
-  width: 2.5rem;
-  font-size: 1rem;
-  line-height: 2.5rem;
-  padding: 0
+.icon {
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 39px
 }
 
-.text-white {
-  color: #fff!important;
+.badge span {
+  background-color: #fffbec;
+  width: 60px;
+  height: 25px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  display: flex;
+  color: #fed85d;
+  justify-content: center;
+  align-items: center
 }
 
-
-.background--white,
-.bg-white {
-  background-color: #fff !important
+.progress {
+  height: 10px;
+  border-radius: 10px
 }
 
-.background--brand,
-.background--primary,
-.bg-brand,
-.bg-primary {
-  background-color: #4d5bed !important;
-  color: #fff
+.progress div {
+  background-color: red
 }
 
-.background--dark,
-.bg-dark {
-  background: #0c2050 !important;
-  color: #939eb8
+.text1 {
+  font-size: 14px;
+  font-weight: 600
 }
 
-.background--secondary,
-.bg-secondary {
-  background-color: #939eb8 !important
+.text2 {
+  color: #a5aec0
 }
-
-.background--tertiary,
-.bg-tertiary {
-  background-color: #9779e3 !important
+.left,.right {
+  height: 100%;
+  width: 55%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 50px;
+  padding-right: 280px;
 }
-
-.background--danger,
-.bg-danger {
-  background-color: #f53d55 !important
+.left {
+  left: 0;
+  background-color: rgb(36, 0, 95);
 }
-
-.background--success,
-.bg-success {
-  background-color: #66df7c !important
-}
-
-.background--warning,
-.bg-warning {
-  background-color: #f6c460 !important
-}
-
-.background--warning2,
-.bg-warning2 {
-  background-color: #f89c59 !important
-}
-
-.background--info,
-.bg-info {
-  background-color: #52bbd3 !important
-}
-
-.background--light,
-.bg-light {
-  background-color: #f6f8fb !important
-}
-
-a {
-  text-decoration: none !important;
+.right {
+  right: 0;
 }

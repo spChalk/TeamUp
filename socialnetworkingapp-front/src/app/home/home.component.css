@@ -1,3 +1,8 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 body {
   background-color: #eeeeee;
 }
@@ -12,8 +17,8 @@ body {
 
 @media (min-width: 992px) {
   .gedf-main {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
   .gedf-card {
     margin-bottom: 2.77rem;
