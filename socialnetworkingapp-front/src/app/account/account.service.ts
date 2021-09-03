@@ -16,7 +16,9 @@ export class AccountService {
   constructor(private http: HttpClient) {  }
 
   public getAllAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.url}/all`);
+    return this.http.get<Account[]>(`${this.url}/all`, {
+      headers: new HttpHeaders({"Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzY0BnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaWF0IjoxNjMwNjE2NDAwLCJleHAiOjE2MzA3MDI4MDB9.WD222Ijsjg_5rSXg_mRSqGfgNUT5azLew1rIV6Y2RU5x-ZDq6VcbrwPWT4x0_alr"})
+    });
   }
 
   public getAccountById(account_id: number): Observable<Account> {
