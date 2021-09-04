@@ -70,9 +70,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/register/**").permitAll();
-        http.authorizeRequests().antMatchers("/login/**").permitAll();
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/register/**").permitAll()
+                                .antMatchers("/login/**").permitAll()
+                                .antMatchers("/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated();
+
         http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean()));
         http.addFilterAfter(new JwtTokenVerifier(), JwtUsernamePasswordAuthFilter.class);
     }

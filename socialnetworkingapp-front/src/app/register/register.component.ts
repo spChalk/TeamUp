@@ -3,6 +3,7 @@ import {NgForm} from "@angular/forms";
 import {AccountService} from "../account/account.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Account} from "../account/account";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,10 @@ import {Account} from "../account/account";
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private accountService: AccountService){}
+  constructor(
+    private accountService: AccountService,
+    private router: Router
+    ){}
 
   ngOnInit(): void {
   }
@@ -26,6 +30,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.registerAccount(regForm.value).subscribe(
       (response: Account) => {
         console.log(response);
+        this.router.navigateByUrl('/');
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

@@ -4,6 +4,7 @@ import {Account} from "../account/account";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AccountService} from "../account/account.service";
 import {Login} from "../login/login";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-welcome',
@@ -12,7 +13,8 @@ import {Login} from "../login/login";
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private accountService: AccountService){}
+  constructor(private accountService: AccountService,
+              private router: Router){}
 
   ngOnInit(): void {
   }
@@ -21,6 +23,7 @@ export class WelcomeComponent implements OnInit {
     this.accountService.logIn(regForm.value).subscribe(
       (response: Login) => {
         console.log(response);
+        this.router.navigateByUrl('/home');
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

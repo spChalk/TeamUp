@@ -28,7 +28,7 @@ import java.time.LocalDate;
 @Slf4j
 public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     public JwtUsernamePasswordAuthFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
@@ -64,5 +64,6 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
                 .compact();
 
         response.addHeader("Authorization", "Bearer " + access_token);
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
     }
 }
