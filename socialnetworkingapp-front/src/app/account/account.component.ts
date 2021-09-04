@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Account} from "./account";
+import {AccountService} from "./account.service";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-account',
@@ -7,11 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  loading = false;
+  users: Account[];
 
-  ngOnInit(): void {
+  constructor(private userService: AccountService) { }
+
+  ngOnInit() {
+    this.loading = true;
+    this.userService.getAllAccounts().pipe(first()).subscribe(users => {
+      this.loading = false;
+      this.users = users;
+    });
   }
-
-
-
 }
