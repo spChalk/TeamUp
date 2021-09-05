@@ -1,5 +1,5 @@
 
-export enum AppUserRole {
+enum AppUserRole {
   USER,
   ADMIN
 }
@@ -16,5 +16,4 @@ export interface Account {
   imageUrl: string;
   followers: Array<Account>;
   following: Array<Account>;
-  token?: string;
 }

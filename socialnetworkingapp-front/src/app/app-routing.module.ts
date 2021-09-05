@@ -11,21 +11,20 @@ import {ChatComponent} from "./chat/chat.component";
 import {AccountComponent} from "./account/account.component";
 import {AdminComponent} from "./admin/admin.component";
 import {NetworkComponent} from "./network/network.component";
-import {AuthGuardService} from "./auth/auth.guard.service";
-import {AuthGuard} from "./auth/auth.guard";
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path: 'home', component: HomeComponent, canActivate:[AuthGuard]  },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'job', component: JobComponent, canActivate:[AuthGuard] },
+  { path: 'job', component: JobComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'settings', component: SettingsComponent, canActivate:[AuthGuard] },
-  { path: 'chat', component: ChatComponent, canActivate:[AuthGuard] },
-  { path: 'account', component: AccountComponent, canActivate:[AuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard] },
-  { path: 'network', component: NetworkComponent, canActivate:[AuthGuard] },
+  { path: 'settings', component: SettingsComponent },
+  { path: 'chat', component: ChatComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'network', component: NetworkComponent },
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}
