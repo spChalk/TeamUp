@@ -1,9 +1,11 @@
 package com.example.socialnetworkingapp.security.config;
 
 import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.security.jwt.JwtConfig;
 import com.example.socialnetworkingapp.security.jwt.JwtTokenVerifier;
 import com.example.socialnetworkingapp.security.jwt.JwtUsernamePasswordAuthFilter;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,57 +17,26 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.crypto.SecretKey;
+
 @Configuration
-@AllArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AccountService accountService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SecretKey secretKey;
+    private final JwtConfig jwtConfig;
 
-//    @Override
-//    public void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/register/**").permitAll()
-//                .antMatchers("/admin").hasRole("ADMIN")
-//                .antMatchers("/user").hasRole("USER")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin();
-//    }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("springuser").password(new PasswordEncoder().bCryptPasswordEncoder().encode("spring123")).roles("USER")
-//                .and()
-//                .withUser("springadmin").password(new PasswordEncoder().bCryptPasswordEncoder().encode("admin123")).roles("ADMIN", "USER");
-//    }
+    @Autowired
+    public WebSecurityConfig(AccountService accountService, BCryptPasswordEncoder bCryptPasswordEncoder, SecretKey secretKey, JwtConfig jwtConfig) {
+        this.accountService = accountService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.secretKey = secretKey;
+        this.jwtConfig = jwtConfig;
+    }
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/registration/**").permitAll()//white list this route
-//                .antMatchers("/admin/**").hasRole(AppUserRole.USER.name())
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .defaultSuccessUrl("/welcome", true) //redirect after login
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessUrl("/login");
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -75,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated();
 
-        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean()));
-        http.addFilterAfter(new JwtTokenVerifier(), JwtUsernamePasswordAuthFilter.class);
+        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));
+        http.addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernamePasswordAuthFilter.class);
     }
 
     @Override

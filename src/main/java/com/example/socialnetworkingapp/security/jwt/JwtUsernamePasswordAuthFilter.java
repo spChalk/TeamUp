@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +30,13 @@ import java.time.LocalDate;
 public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtConfig jwtConfig;
+    private final SecretKey secretKey;
 
-    public JwtUsernamePasswordAuthFilter(AuthenticationManager authenticationManager){
+    public JwtUsernamePasswordAuthFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, SecretKey secretKey){
         this.authenticationManager = authenticationManager;
+        this.jwtConfig = jwtConfig;
+        this.secretKey = secretKey;
     }
 
     @Override
@@ -54,16 +59,15 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         UserDetails user = (UserDetails) authResult.getPrincipal();
-        String key = "mysecretKeysecretsecretcsdfsdfasdfasfsadfsadfsdfsdfa";
         String access_token = Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(java.sql.Date.valueOf(LocalDate.now()))
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
-                .signWith(Keys.hmacShaKeyFor(key.getBytes()))
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
+                .signWith(secretKey)
                 .compact();
 
-        response.addHeader("Authorization", "Bearer " + access_token);
+        response.addHeader( jwtConfig.getAuthorizationHeader() , jwtConfig.getTokenPrefix() + access_token);
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
     }
 }
