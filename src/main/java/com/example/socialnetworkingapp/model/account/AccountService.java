@@ -58,11 +58,6 @@ public class AccountService implements UserDetailsService {
         return "Account registered successfully!";
     }
 
-    public Account addAccount(Account account){
-
-        return this.accountRepository.save(checkAccount(account));
-    }
-
     public List<Account> findAllAccounts(){
 
         return this.accountRepository.findAll();

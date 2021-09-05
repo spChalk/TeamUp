@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.security;
+/*package com.example.socialnetworkingapp.security;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
@@ -33,9 +33,9 @@ public class TomCatRedirect {
     private Connector httpToHttpsRedirectConnector(){
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         connector.setScheme("http");
-        connector.setPort(8080);
+        connector.setPort(8081);
         connector.setSecure(false);
-        connector.setRedirectPort(8443);
+        connector.setRedirectPort(8081);
         return connector;
     }
-}
+}*/

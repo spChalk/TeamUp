@@ -14,6 +14,7 @@ export interface Account {
   password: string;
   phone: string;
   imageUrl: string;
+  dateCreated: Date;
   followers: Array<Account>;
   following: Array<Account>;
 }

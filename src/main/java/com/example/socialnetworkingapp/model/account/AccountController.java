@@ -32,16 +32,16 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/find/id/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id){
         Account account = this.accountService.findAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Account> addAccount(@RequestBody Account account){
-        Account newAccount = this.accountService.addAccount(account);
-        return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
+    @GetMapping("/find/mail/{email}")
+    public ResponseEntity<Account> getAccountByEmail(@PathVariable("email") String email){
+        Account account = this.accountService.findAccountByEmail(email);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PutMapping("/follow")

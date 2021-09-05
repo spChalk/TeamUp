@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/register/**").permitAll()
                                 .antMatchers("/login/**").permitAll()
-                                .antMatchers("/admin/**").hasRole("ADMIN")
+                                .antMatchers("/accounts/**").permitAll()
                                 .anyRequest().authenticated();
 
         http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));

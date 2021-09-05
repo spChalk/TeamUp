@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.account;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.*;
 
@@ -40,6 +43,9 @@ public class Account implements UserDetails {
     @Column(unique = true)
     private String phone;
     private String imageUrl;
+
+    @NotNull
+    private LocalDate dateCreated = LocalDate.now();
 
     /*
      * Επειδη υπαρχουν followers, following αλλά και connections στο linkedin, θα κανουμε το εξης:

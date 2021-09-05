@@ -1,82 +1,226 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <div class="container" id="main-container">
+
+  <br>
+  <form #searchForm="ngForm">
+  <div class="input-group">
+    <div class="form-outline mr-1">
+      <input id="search-input" ngModel name="email" type="search" id="form1" class="form-control" placeholder="Search" required />
+    </div>
+    <button [disabled]="searchForm.invalid" (click)="onSearch(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
+      <i class="fa fa-search"></i>
+    </button>
+    <button (click)="getAccounts()" id="reload" type="submit" class="btn btn-primary mr-1">
+      Reload all
+    </button>
+    <button (click)="onClickModal(null, 'add')" id="addAccountModal" type="submit" class="btn btn-outline-success">
+      Add account
+    </button>
+  </div>
+  </form>
+  <br>
+
   <div class="row">
     <!--<div class="col-lg-12">-->
-    <div *ngFor="let account of accounts" class="col-lg-12">
+    <div class="col-lg-12">
       <div class="main-box clearfix">
-        <div class="table-responsive">
+        <div class="table-responsive" style="overflow-x: hidden; overflow-y: auto; height: 800px;">
           <table class="table user-list">
             <thead>
             <tr>
               <th><span>User</span></th>
               <th><span>Created</span></th>
               <th><span>Email</span></th>
-              <th>&nbsp;</th>
+              <th><span>Actions</span></th>
             </tr>
             </thead>
+
             <tbody>
-            <tr>
+            <tr *ngFor="let account of accounts">
               <td>
                 <img src="{{account?.imageUrl}}" alt="">
 <!--
                 <img src="#" alt="">
 -->
-                <a href="#" class="user-link">{{account?.firstName}} {{account?.lastName}}</a>
-                <span class="user-subhead">{{account?.phone}}</span>
+                <a class="user-link"> {{account?.firstName}} {{account?.lastName}} </a>
+                <!--<span class="user-subhead">{{account?.dateCreated}}</span>-->
 <!--
                 <span class="user-subhead">PROFESSION</span>
 -->
               </td>
               <td>
-                CREATION DATE
+                {{account?.dateCreated}}
               </td>
               <td>
                 <!--<a href="#">{{account?.email}}</a>-->
-                <a href="#">MAIL</a>
+                {{account?.email}}
               </td>
               <td style="width: 20%;">
-                <a (click)="onClickModal(account, 'info')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Info"><i class="fa fa-search-plus"></i> </a>
-                <a (click)="onClickModal(account, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                <a (click)="onClickModal(account, 'remove')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                <button (click)="onClickModal(account, 'info')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Info"> <i class="fa fa-question"></i> </button>
+                <button (click)="onClickModal(account, 'edit')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <button (click)="onClickModal(account, 'remove')" type="button" class="btn btn-outline-danger" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></button>
               </td>
             </tr>
             </tbody>
+
           </table>
         </div>
-        <ul class="pagination pull-right">
-          <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-        </ul>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Info Modal -->
-<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+<div class="modal fade bd-example-modal-lg" id="info" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="infoModal">Modal sideout normal</h5>
+        <h5 class="modal-title" id="infoModal">User info</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+
+
+
+        <div class="container emp-profile shadow ">
+          <form method="post">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="profile-img">
+                  <img src="{{infoAccount?.imageUrl}}" alt=""/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="profile-head">
+                  <h5>
+                    {{infoAccount?.firstName}} {{infoAccount?.lastName}}
+                  </h5>
+                  <h6>
+                    MORE INFO HERE
+                  </h6>
+                  <p class="profile-rating"> <i> since {{infoAccount?.dateCreated}}</i></p>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="profile-work">
+                  <p>WORK LINK</p>
+                  <a href="">Website Link</a><br/>
+                  <a href="">Bootsnipp Profile</a><br/>
+                  <a href="">Bootply Profile</a>
+                  <p>SKILLS</p>
+                  <a href="">Web Designer</a><br/>
+                  <a href="">Web Developer</a><br/>
+                  <a href="">WordPress</a><br/>
+                  <a href="">WooCommerce</a><br/>
+                  <a href="">PHP, .Net</a><br/>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Name</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{infoAccount?.lastName}} {{infoAccount?.firstName}}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Email</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{infoAccount?.email}}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Phone</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{infoAccount?.phone}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Experience</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>Expert</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Hourly Rate</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>10$/hr</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Total Projects</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>230</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>English Level</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>Expert</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Availability</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>6 months</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label>Your Bio</label><br/>
+                        <p>Your detail description</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -87,17 +231,50 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModal">Modal sideout normal</h5>
+        <h5 class="modal-title" id="editModal">Edit user</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+
+        <div class="card-body tab-content">
+          <div class="tab-pane active" id="profile">
+            <form #editForm="ngForm">
+
+              <input type="hidden" ngModel="{{editAccount?.id}}"  class="form-control" name="id" aria-describedby="identificationHelp">
+              <input type="hidden" ngModel="{{editAccount?.appUserRole}}" class="form-control" name="appUserRole" aria-describedby="roleHelp">
+              <input type="hidden" ngModel="{{editAccount?.dateCreated}}" class="form-control" name="dateCreated" aria-describedby="dateHelp">
+
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" ngModel="{{editAccount?.firstName}}" class="form-control" name="firstName" aria-describedby="firstNameHelp" value="{{editAccount?.firstName}}">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" ngModel="{{editAccount?.lastName}}" class="form-control" name="lastName" aria-describedby="lastNameHelp" value="{{editAccount?.lastName}}">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" ngModel="{{editAccount?.email}}" class="form-control" name="email" aria-describedby="emailHelp" value="{{editAccount?.email}}">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" ngModel="{{editAccount?.phone}}" class="form-control" name="phone" aria-describedby="phoneHelp" value="{{editAccount?.phone}}">
+              </div>
+              <div class="form-group">
+                <label for="photo">Image</label>
+                <br>
+                <input type="file" ngModel="{{editAccount?.imageUrl}}" name="imageUrl" id="customFile" />
+              </div>
+              <input type="hidden" ngModel="{{editAccount?.password}}" class="form-control" name="password" aria-describedby="passwordHelp">
+            </form>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button (click)="onUpdateAccount(editForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
@@ -108,17 +285,72 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="removeModalLabel">Modal sideout normal</h5>
+        <h5 class="modal-title" id="removeModalLabel">Delete account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        Are you sure you want to delete user <strong>{{deleteAccount?.email}}</strong> ?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button (click)="onDeleteAccount(deleteAccount?.id)" type="button" class="btn btn-danger"  data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Add user modal-->
+<div class="modal fade" id="addAccount" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModal">Add account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="card-body tab-content">
+          <div class="tab-pane active" id="prof">
+            <form #addForm="ngForm">
+
+              <input type="hidden" ngModel class="form-control" name="appUserRole" aria-describedby="roleHelp" value="USER">
+
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" ngModel class="form-control" name="firstName" aria-describedby="firstNameHelp" >
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" ngModel class="form-control" name="lastName" aria-describedby="lastNameHelp" >
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" ngModel class="form-control" name="email" aria-describedby="emailHelp" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" ngModel class="form-control" name="phone" aria-describedby="phoneHelp" required>
+              </div>
+              <div class="form-group">
+                <label for="photo">Image</label>
+                <br>
+                <input type="file" ngModel name="imageUrl" id="customFile" />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" ngModel class="form-control" name="password" id="password" aria-describedby="pwdHelp" required/>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button  [disabled]="addForm.invalid" (click)="onAddAccount(addForm.value)" type="submit" class="btn btn-success" data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>
