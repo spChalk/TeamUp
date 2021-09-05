@@ -2,11 +2,13 @@ package com.example.socialnetworkingapp.model.account;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -18,11 +20,11 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    /*@GetMapping("/all")
-    public ResponseEntity<List<AccountResponse>> getAllAccounts(){
-        List<AccountResponse> accounts = this.accountService.findAllAccounts();
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
-    }*/
+
+    @PostConstruct
+    public void createAdmin(){
+        accountService.createAdmin();
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Account>> getAllAccounts() {

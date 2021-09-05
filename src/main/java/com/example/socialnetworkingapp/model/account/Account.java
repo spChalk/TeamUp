@@ -26,7 +26,7 @@ public class Account implements UserDetails {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private AccountRole role;
 
     private String firstName;
     private String lastName;
@@ -57,8 +57,8 @@ public class Account implements UserDetails {
     private List<Account> following = new ArrayList<Account>();
 
 
-    public Account(AppUserRole appUserRole, String firstName, String lastName, String email, String password, String phone) {
-        this.appUserRole = appUserRole;
+    public Account(AccountRole role, String firstName, String lastName, String email, String password, String phone) {
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -70,7 +70,7 @@ public class Account implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(simpleGrantedAuthority);
 
     }

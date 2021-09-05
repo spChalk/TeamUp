@@ -115,4 +115,12 @@ public class AccountService implements UserDetailsService {
             sender.follow(receiver);
         }
     }
+
+    public void createAdmin() {
+
+        Account account = new Account(AccountRole.ADMIN, "admin", "admin", "admin@admin.com", "admin", "12345");
+        String encodedPassword = bCryptPasswordEncoder.encode(account.getPassword());
+        account.setPassword(encodedPassword);
+        this.accountRepository.save(account);
+    }
 }
