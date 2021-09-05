@@ -21,14 +21,14 @@ public class Bio implements Serializable {
     private Long id;
 
     /* Description */
-    public String desc;
+    public String description;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     private Account account;
 
     public Bio(String desc, Account account) {
-        this.desc = desc;
+        this.description = desc;
         this.account = account;
     }
 }

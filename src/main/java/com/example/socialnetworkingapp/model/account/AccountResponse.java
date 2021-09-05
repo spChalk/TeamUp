@@ -12,7 +12,7 @@ import java.util.List;
 public class AccountResponse {
 
     private Long id;
-    private AppUserRole role;
+    private AccountRole role;
     private String firstName;
     private String lastName;
     private String email;

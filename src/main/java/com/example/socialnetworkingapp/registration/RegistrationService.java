@@ -2,7 +2,7 @@ package com.example.socialnetworkingapp.registration;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
-import com.example.socialnetworkingapp.model.account.AppUserRole;
+import com.example.socialnetworkingapp.model.account.AccountRole;
 import com.example.socialnetworkingapp.exception.NotValidEmailException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,6 @@ public class RegistrationService {
             throw new NotValidEmailException("email not valid!");
         }
 
-        return accountService.accountSignUp(new Account(AppUserRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone() ));
+        return accountService.accountSignUp(new Account(AccountRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone() ));
     }
 }

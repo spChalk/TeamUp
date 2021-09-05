@@ -15,7 +15,7 @@ public class BioController {
 
     @GetMapping("/{id}")
     public String getBioById(@PathVariable("id") Long id){
-        return bioService.findBioById(id).getDesc();
+        return bioService.findBioById(id).getDescription();
     }
 
     @PostMapping("/add")

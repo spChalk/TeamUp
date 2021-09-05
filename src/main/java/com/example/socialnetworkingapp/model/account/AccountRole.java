@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 
 import java.util.Set;
 
-public enum AppUserRole {
+public enum AccountRole {
     USER(Sets.newHashSet()),
     ADMIN(Sets.newHashSet(
             AccountPermission.USER_READ,
@@ -16,7 +16,7 @@ public enum AppUserRole {
 
     private final Set<AccountPermission> permissions;
 
-    AppUserRole(Set<AccountPermission> permissions) {
+    AccountRole(Set<AccountPermission> permissions) {
         this.permissions = permissions;
     }
 
