@@ -21,8 +21,6 @@ export class RegisterComponent implements OnInit {
   progress = 0;
   message = '';
 
-  fileInfos: Observable<any>;
-
   constructor(
     private accountService: AccountService,
     public router: Router,

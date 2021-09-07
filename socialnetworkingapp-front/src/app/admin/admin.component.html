@@ -294,13 +294,6 @@
                 <label for="phone">Phone</label>
                 <input type="text" ngModel="{{editAccount?.phone}}" class="form-control" name="phone" aria-describedby="phoneHelp" value="{{editAccount?.phone}}">
               </div>
-              <div class="form-group">
-                <label for="customeFile">Image</label>
-                <div class="custom-file">
-                  <input type="file" ngModel="{{editAccount?.imageUrl}}" name="imageUrl" class="custom-file-input" id="customFile">
-                  <label class="custom-file-label" for="customFile">Upload image</label>
-                </div>
-              </div>
               <input type="hidden" ngModel="{{editAccount?.password}}" class="form-control" name="password" aria-describedby="passwordHelp">
             </form>
           </div>
@@ -308,7 +301,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button (click)="onUpdateAccount(editForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <button (click)="onUpdateAccount(editForm.value);onClickModal(null, 'addPhoto')" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <button (click)="onClickModal(null, 'addPhoto')" type="button" class="btn btn-info" data-dismiss="modal">Add photo</button>
       </div>
     </div>
   </div>
@@ -369,13 +363,14 @@
                 <label for="phone">Phone</label>
                 <input type="text" ngModel class="form-control" name="phone" aria-describedby="phoneHelp" required>
               </div>
-              <div class="form-group">
+              <!--<div class="form-group">
                 <label for="customeFile">Image</label>
                 <div class="custom-file">
                   <input type="file" ngModel class="custom-file-input" name="imageUrl" id="customFile">
                   <label class="custom-file-label" for="customFile">Upload image</label>
                 </div>
               </div>
+              -->
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="text" ngModel class="form-control" name="password" id="password" aria-describedby="pwdHelp" required/>
@@ -387,6 +382,36 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
         <button  [disabled]="addForm.invalid" (click)="onAddAccount(addForm.value)" type="submit" class="btn btn-success" data-dismiss="modal">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Photo Modal -->
+<div class="modal fade" id="addPhoto" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPhotoModalLabel">Add a photo to an account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        Every account is better with a picture!
+      </div>
+
+      <label class="btn btn-default">
+        <input type="file" (change)="selectFile($event)" />
+      </label>
+      <div class="alert alert-light" role="alert">{{ message }}</div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button class="btn btn-danger" [disabled]="!selectedFiles" (click)="upload(addForm.value.email)">
+          Upload
+        </button>
       </div>
     </div>
   </div>

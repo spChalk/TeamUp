@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Account, AppUserRole} from "../account/account";
 import {AccountService} from "../account/account.service";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {ExportService} from "../export/export.service";
 import {JSONFile} from "@angular/cli/utilities/json-file";
 import {Byte} from "@angular/compiler/src/util";
+import {UploadFileService} from "../upload-files/upload-files.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin',
@@ -20,11 +22,42 @@ export class AdminComponent implements OnInit {
   public infoAccount: Account;
   public selectedUsers: Account[] = [];
 
+  selectedFiles: FileList;
+  currentFile: File;
+  progress = 0;
+  message = '';
+
   constructor(private accountService: AccountService,
-              private exportService: ExportService) {}
+              private exportService: ExportService,
+              private uploadService: UploadFileService,
+              public router: Router) {}
 
   ngOnInit() {
     this.getAccounts();
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(email: string) {
+    this.progress = 0;
+    this.currentFile = this.selectedFiles.item(0);
+    this.uploadService.upload(this.currentFile, email).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          this.message = event.body.message;
+        }
+      },
+      err => {
+        this.progress = 0;
+        this.message = 'Could not upload the file!';
+        this.currentFile = undefined;
+      });
+
+    this.selectedFiles = undefined;
   }
 
   public getAccounts(): void {
@@ -62,6 +95,9 @@ export class AdminComponent implements OnInit {
     if(mode === 'remove') {
       this.deleteAccount = account;
       button.setAttribute('data-target', '#remove');
+    }
+    if(mode === 'addPhoto') {
+      button.setAttribute('data-target', '#addPhoto');
     }
     if(container != null) {
       container.appendChild(button);
