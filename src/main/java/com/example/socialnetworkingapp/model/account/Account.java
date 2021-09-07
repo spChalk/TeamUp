@@ -72,6 +72,15 @@ public class Account implements UserDetails {
         this.phone = phone;
     }
 
+    public Account(AccountRole role, String firstName, String lastName, String email, String password, String phone, String url) {
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.imageUrl = url;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

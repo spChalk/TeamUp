@@ -25,6 +25,7 @@ import { ChatComponent } from './chat/chat.component'
 import {FormsModule} from "@angular/forms";
 import { AdminComponent } from './admin/admin.component';
 import { NetworkComponent } from './network/network.component';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NetworkComponent } from './network/network.component';
     AboutComponent,
     ChatComponent,
     AdminComponent,
-    NetworkComponent
+    NetworkComponent,
+    UploadFilesComponent
   ],
   imports: [
     BrowserModule,

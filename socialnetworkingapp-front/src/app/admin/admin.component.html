@@ -12,7 +12,7 @@
   <form #searchForm="ngForm">
   <div class="input-group">
     <div class="form-outline mr-1">
-      <input id="search-input" ngModel name="email" type="search" id="form1" class="form-control" placeholder="Search" required />
+      <input id="search-input" ngModel name="email" type="search" id="form1" class="form-control" placeholder="Search by email" required />
     </div>
     <button [disabled]="searchForm.invalid" (click)="onSearch(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
       <i class="fa fa-search"></i>
@@ -20,9 +20,31 @@
     <button (click)="getAccounts()" id="reload" type="submit" class="btn btn-primary mr-1">
       Reload all
     </button>
-    <button (click)="onClickModal(null, 'add')" id="addAccountModal" type="submit" class="btn btn-outline-success">
+    <button (click)="onClickModal(null, 'add')" id="addAccountModal" type="submit"  class="btn btn-outline-success">
       Add account
     </button>
+    <button (click)="onExportSelectedJSON()" id="exportAccountsJson" type="submit"  class="btn btn-outline-success">
+      Export JSON
+    </button>
+    <button (click)="onExportSelectedXML()" id="exportAccountsXml" type="submit"  class="btn btn-outline-success">
+      Export XML
+    </button>
+
+
+    <!--<button (click)="onSelectAll()" id="select" type="submit" class="btn btn-primary mr-1" style="margin-left:170px;">
+      Select All
+    </button>
+    <button (click)="onRemoveAllSelections()" id="cl_select" type="submit" class="btn btn-outline-primary mr-1">
+      Clear selections
+    </button>
+
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Export Selections
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">JSON</a>
+      <a class="dropdown-item" href="#">XML</a>
+    </div>-->
   </div>
   </form>
   <br>
@@ -38,11 +60,14 @@
               <th><span>User</span></th>
               <th><span>Created</span></th>
               <th><span>Email</span></th>
+              <!--<th><span>Select</span></th>-->
               <th><span>Actions</span></th>
             </tr>
             </thead>
 
             <tbody>
+
+
             <tr *ngFor="let account of accounts">
               <td>
                 <img src="{{account?.imageUrl}}" alt="">
@@ -62,6 +87,12 @@
                 <!--<a href="#">{{account?.email}}</a>-->
                 {{account?.email}}
               </td>
+              <!--<td>
+                <<div class="custom-control custom-checkbox" >
+                  <input (click)="onSelectUser(account)" type="checkbox" class="custom-control-input" id="checkBoxNo{{account?.id}}">
+                  <label class="custom-control-label" for="checkBoxNo{{account?.id}}"></label>
+                </div>
+              </td>-->
               <td style="width: 20%;">
                 <button (click)="onClickModal(account, 'info')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Info"> <i class="fa fa-question"></i> </button>
                 <button (click)="onClickModal(account, 'edit')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
@@ -69,6 +100,7 @@
               </td>
             </tr>
             </tbody>
+
 
           </table>
         </div>
@@ -263,9 +295,11 @@
                 <input type="text" ngModel="{{editAccount?.phone}}" class="form-control" name="phone" aria-describedby="phoneHelp" value="{{editAccount?.phone}}">
               </div>
               <div class="form-group">
-                <label for="photo">Image</label>
-                <br>
-                <input type="file" ngModel="{{editAccount?.imageUrl}}" name="imageUrl" id="customFile" />
+                <label for="customeFile">Image</label>
+                <div class="custom-file">
+                  <input type="file" ngModel="{{editAccount?.imageUrl}}" name="imageUrl" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">Upload image</label>
+                </div>
               </div>
               <input type="hidden" ngModel="{{editAccount?.password}}" class="form-control" name="password" aria-describedby="passwordHelp">
             </form>
@@ -336,9 +370,11 @@
                 <input type="text" ngModel class="form-control" name="phone" aria-describedby="phoneHelp" required>
               </div>
               <div class="form-group">
-                <label for="photo">Image</label>
-                <br>
-                <input type="file" ngModel name="imageUrl" id="customFile" />
+                <label for="customeFile">Image</label>
+                <div class="custom-file">
+                  <input type="file" ngModel class="custom-file-input" name="imageUrl" id="customFile">
+                  <label class="custom-file-label" for="customFile">Upload image</label>
+                </div>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>

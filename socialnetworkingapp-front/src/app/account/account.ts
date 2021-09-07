@@ -1,5 +1,5 @@
 
-enum AppUserRole {
+export enum AppUserRole {
   USER,
   ADMIN
 }

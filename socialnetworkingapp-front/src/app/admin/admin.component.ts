@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {Account} from "../account/account";
+import {Component, OnInit} from '@angular/core';
+import {Account, AppUserRole} from "../account/account";
 import {AccountService} from "../account/account.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {ExportService} from "../export/export.service";
+import {JSONFile} from "@angular/cli/utilities/json-file";
+import {Byte} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-admin',
@@ -15,8 +18,10 @@ export class AdminComponent implements OnInit {
   public deleteAccount: Account;
   public editAccount: Account;
   public infoAccount: Account;
+  public selectedUsers: Account[] = [];
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService,
+              private exportService: ExportService) {}
 
   ngOnInit() {
     this.getAccounts();
@@ -128,4 +133,97 @@ export class AdminComponent implements OnInit {
       }
     );
   }
+
+  public onSelectUser(account: Account): void {
+
+      /* If the selected account exists, remove it, else add it. */
+      if(this.selectedUsers.length && this.selectedUsers.find(x => x.email == account.email)) {
+        this.selectedUsers.splice(this.selectedUsers.indexOf(account, 0), 1);
+      } else {
+        this.selectedUsers.push(account);
+      }
+  }
+
+  public onSelectAll(): void {
+
+  }
+
+  public onRemoveAllSelections(): void {
+    this.selectedUsers.length = 0;
+  }
+
+  public onExportSelectedJSON() {
+
+    let data = [];
+    for(let account of this.accounts) {
+
+      data.push({
+        "firstName": account.firstName,
+        "lastName": account.lastName,
+        "email": account.email,
+        "phone": account.phone,
+        "crDate": account.dateCreated,
+        "role": "USER"
+      })
+    }
+
+    /*this.exportService.exportJSON(data);*/
+
+   /* public getFileName(response: HttpResponse<Blob>){
+      let filename: string;
+      try {
+        const contentDisposition: string = response.headers.get('content-disposition');
+        const r = /(?:filename=")(.+)(?:")/
+        filename = r.exec(contentDisposition)[1];
+      }
+      catch (e) {
+        filename = 'myfile.txt'
+      }
+      return filename
+    }*/
+
+
+    /*public downloadFile() {
+      this.exportService.downloadFile("exp")
+        .subscribe(
+          (response: HttpResponse<Blob>) => {
+            let filename: string = this.getFileName(response)
+            let binaryData = [];
+            binaryData.push(response.body);
+            let downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
+            downloadLink.setAttribute('download', filename);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+          }
+        )
+    }*/
+  }
+
+  public onExportSelectedXML() {
+
+    let data = [];
+    for(let account of this.accounts) {
+
+      data.push({
+        "firstName": account.firstName,
+        "lastName": account.lastName,
+        "email": account.email,
+        "phone": account.phone,
+        "crDate": account.dateCreated,
+        "role": "USER"
+      })
+    }
+
+    this.exportService.exportXML(data).subscribe(
+      (response: Byte[]) => {
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+
 }
