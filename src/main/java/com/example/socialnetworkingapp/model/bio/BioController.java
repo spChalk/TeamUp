@@ -13,9 +13,9 @@ public class BioController {
 
     private final BioService bioService;
 
-    @GetMapping("/{id}")
-    public String getBioById(@PathVariable("id") Long id){
-        return bioService.findBioById(id).getDescription();
+    @GetMapping("/acc_ref/{id}")
+    public ResponseEntity<Bio> getBioByAccountId(@PathVariable("id") Long id){
+        return new ResponseEntity<>(bioService.findBioByAccountId(id), HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -31,8 +31,8 @@ public class BioController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBioById(@PathVariable("id") Long id){
-        bioService.deleteBio(id);
+    public ResponseEntity<?> deleteBioByAccountId(@PathVariable("id") Long id){
+        bioService.deleteBioByAccountId(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

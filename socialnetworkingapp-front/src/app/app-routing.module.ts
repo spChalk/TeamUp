@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'chat', component: ChatComponent },
-  { path: 'account', component: AccountComponent },
+  { path: 'account/:id', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'network', component: NetworkComponent },

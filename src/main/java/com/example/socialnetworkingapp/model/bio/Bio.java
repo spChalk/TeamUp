@@ -23,7 +23,7 @@ public class Bio implements Serializable {
     /* Description */
     public String description;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(nullable = false)
     private Account account;
 

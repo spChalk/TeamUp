@@ -381,7 +381,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button  [disabled]="addForm.invalid" (click)="onAddAccount(addForm.value)" type="submit" class="btn btn-success" data-dismiss="modal">Add</button>
+        <button  [disabled]="addForm.invalid" (click)="onAddAccount(addForm.value);onClickModal(null, 'addPhoto')" type="submit" class="btn btn-success" data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>
@@ -409,7 +409,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button class="btn btn-danger" [disabled]="!selectedFiles" (click)="upload(addForm.value.email)">
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(addForm.value.email)">
           Upload
         </button>
       </div>

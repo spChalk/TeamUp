@@ -84,7 +84,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addPhotoModalLabel">Add a photo to your account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal"(click)="onClickModal('bio')" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -99,8 +99,38 @@
           <div class="alert alert-light" role="alert">{{ message }}</div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="router.navigateByUrl('/')">No</button>
-        <button class="btn btn-danger" [disabled]="!selectedFiles" (click)="upload(regForm.value.email);">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"(click)="onClickModal('bio')" >No</button>
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(regForm.value.email);onClickModal('bio')">
+          Upload
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Bio Modal -->
+<div class="modal fade" id="addBio" tabindex="-1" role="dialog" aria-labelledby="addBioModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBioModalLabel">Add a bio to your account</h5>
+        <button type="button" class="close" data-dismiss="modal" (click)="router.navigateByUrl('/')" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Introduce yourself, are you a student, or maybe a business manager? Do you swim or play music? We'd love to learn more about your personality!
+      </div>
+
+      <form #bioForm="ngForm" >
+        <div class="form-group">
+          <textarea ngModel name="bio" class="form-control" placeholder="Your bio..." required></textarea>
+        </div>
+      </form>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="router.navigateByUrl('/')">No, thanks</button>
+        <button class="btn btn-primary" [disabled]="bioForm.invalid" (click)="uploadBio(bioForm.value.bio, regForm.value.email);router.navigateByUrl('/')">
           Upload
         </button>
       </div>

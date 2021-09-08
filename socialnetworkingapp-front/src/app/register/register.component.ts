@@ -3,11 +3,14 @@ import {NgForm} from "@angular/forms";
 import {AccountService} from "../account/account.service";
 import {HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
 import {Account} from "../account/account";
+import {Bio} from "../bio/bio";
 import { Router } from '@angular/router';
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {repeatGroups} from "@angular/compiler/src/shadow_css";
+import {BioComponent} from "../bio/bio.component";
+import {BioService} from "../bio/bio.service";
 
 @Component({
   selector: 'app-register',
@@ -21,10 +24,13 @@ export class RegisterComponent implements OnInit {
   progress = 0;
   message = '';
 
+  private account: Account;
+
   constructor(
     private accountService: AccountService,
     public router: Router,
-    private uploadService: UploadFileService
+    private uploadService: UploadFileService,
+    private bioService: BioService
     ){}
 
   ngOnInit(): void {
@@ -52,7 +58,6 @@ export class RegisterComponent implements OnInit {
      });
 
    this.selectedFiles = undefined;
-   this.router.navigateByUrl("/");
   }
 
   public onRegister(regForm: NgForm): void {
@@ -84,10 +89,25 @@ export class RegisterComponent implements OnInit {
     if(mode === 'addPhoto') {
       button.setAttribute('data-target', '#addPhoto');
     }
+    if(mode === 'bio') {
+      button.setAttribute('data-target', '#addBio');
+    }
     if(container != null) {
       container.appendChild(button);
       button.click();
     }
   }
 
+  uploadBio(description: string, email: string) {
+    this.accountService.getAccountByEmail(email).subscribe((response) => {
+      this.bioService.addBio( new Bio(description, response) ).subscribe(
+        (responseBio: Bio) => {
+          console.log(responseBio);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    });
+  }
 }

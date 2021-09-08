@@ -1,5 +1,8 @@
 package com.example.socialnetworkingapp.model.account;
 
+import com.example.socialnetworkingapp.model.bio.Bio;
+import com.example.socialnetworkingapp.security.jwt.CustomAuthorityDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -82,6 +85,7 @@ public class Account implements UserDetails {
         this.imageUrl = url;
     }
 
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

@@ -1,8 +1,15 @@
 import {Account} from "../account/account";
+import {Observable} from "rxjs";
 
-export interface Bio {
+export class Bio {
 
   id: number;
-  desc: string;
+  description: string;
   account: Account;
+
+  constructor(descr: string, account: Account) {
+
+    this.description = descr;
+    this.account = account;
+  }
 }

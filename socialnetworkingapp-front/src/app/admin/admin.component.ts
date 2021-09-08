@@ -8,6 +8,7 @@ import {JSONFile} from "@angular/cli/utilities/json-file";
 import {Byte} from "@angular/compiler/src/util";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {Router} from "@angular/router";
+import {BioService} from "../bio/bio.service";
 
 @Component({
   selector: 'app-admin',
@@ -30,6 +31,7 @@ export class AdminComponent implements OnInit {
   constructor(private accountService: AccountService,
               private exportService: ExportService,
               private uploadService: UploadFileService,
+              private bioService: BioService,
               public router: Router) {}
 
   ngOnInit() {
@@ -147,14 +149,28 @@ export class AdminComponent implements OnInit {
 
   public onDeleteAccount(accountId: number): void {
 
-    this.accountService.deleteAccountById(accountId).subscribe(
-      (response: void) => {
-        this.getAccounts();
-      },
-      (error: HttpErrorResponse) => {
+    /* Find account Id, delete its bio (if present), delete account */
+    this.accountService.getAccountById(accountId).subscribe(
+      (response: Account) => {
+        this.bioService.deleteBioByAccountId(response.id).subscribe(
+          (response: void) => {
+            this.accountService.deleteAccountById(accountId).subscribe(
+              (response: void) => {
+                this.getAccounts();
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    );
+    )
   }
 
   public onAddAccount(account: Account): void {

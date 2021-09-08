@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders} from "@angula
 import {Account} from "./account";
 import {environment} from "../../environments/environment";
 import {Login} from "../login/login";
+import {Bio} from "../bio/bio";
 
 @Injectable({
   providedIn: 'root'

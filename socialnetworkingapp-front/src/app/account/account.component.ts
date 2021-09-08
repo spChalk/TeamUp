@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Account} from "./account";
 import {AccountService} from "./account.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Bio} from "../bio/bio";
+import {BioService} from "../bio/bio.service";
+
+/* https://codecraft.tv/courses/angular/routing/parameterised-routes/ */
 
 @Component({
   selector: 'app-account',
@@ -10,17 +15,41 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class AccountComponent implements OnInit {
 
-  private account: Account;
+  public account: Account;
+  public bio: string;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService,
+              private bioService: BioService,
+              private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      console.log(params);
+      if (params['id']) {
+        this.getAccountDetails(params['id'])
+      }
+    });
+  }
 
   ngOnInit(): void {}
 
-  public getAccountDetails(accountId: number): void {
-    this.accountService.getAccountById(accountId).subscribe(
+  public getAccountDetails(uid: number): void {
+    this.accountService.getAccountById(uid).subscribe(
       (response: Account) => {
         this.account = response;
         console.log(this.account);
+
+        this.bioService.getBioByAccountId(response.id).subscribe(
+          (responseBio: Bio) => {
+            if(responseBio === null) {
+              this.bio = "No available bio";
+            } else {
+              this.bio = responseBio.description;
+            }
+            console.log(this.bio);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
