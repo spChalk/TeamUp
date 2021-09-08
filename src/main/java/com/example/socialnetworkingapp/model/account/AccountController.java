@@ -1,5 +1,8 @@
 package com.example.socialnetworkingapp.model.account;
 
+import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
+import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,15 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
+
     private final AccountService accountService;
-
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
+    private final ConnectionReqService connectionRequestService;
 
     @PostConstruct
     public void createAdmin(){
@@ -62,6 +63,24 @@ public class AccountController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
         this.accountService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /* Lists all received *PENDING* connection requests */
+    @GetMapping("/crequests/{uid}")
+    public ResponseEntity<List<ConnectionRequest>> getConnectionRequests(@PathVariable("uid") Long uid) {
+        return new ResponseEntity<>(this.connectionRequestService.findRequestsByAccId(uid), HttpStatus.OK);
+    }
+
+    @PutMapping("/crequests/accept")
+    public ResponseEntity<HttpStatus> acceptConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
+        this.connectionRequestService.acceptRequest(connectionRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/crequests/reject")
+    public ResponseEntity<HttpStatus> rejectConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
+        this.connectionRequestService.rejectRequest(connectionRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

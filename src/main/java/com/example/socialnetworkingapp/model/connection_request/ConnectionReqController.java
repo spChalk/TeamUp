@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.model.connection_request;
 
 import com.example.socialnetworkingapp.model.bio.Bio;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,16 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/crequest")
 public class ConnectionReqController {
 
     private final ConnectionReqService connectionReqService;
-
-    @Autowired
-    public ConnectionReqController(ConnectionReqService connectionReqService) {
-        this.connectionReqService = connectionReqService;
-    }
 
     @GetMapping("/{acc_id}")
     public List<ConnectionRequest> getRequestsByAccId(@PathVariable("acc_id") Long id){

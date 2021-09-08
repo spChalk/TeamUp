@@ -27,11 +27,11 @@ public class ConnectionRequest implements Serializable {
     @Column(nullable = false, updatable = false, unique = true)
     private Long id ;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(nullable = false)
     private Account sender;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(nullable = false)
     private Account receiver;
 
@@ -42,5 +42,10 @@ public class ConnectionRequest implements Serializable {
         this.sender = sender;
         this.receiver = receiver;
         this.requestStatus = requestStatus;
+    }
+
+    public ConnectionRequest(Account sender, Account receiver) {
+        this.sender = sender;
+        this.receiver = receiver;
     }
 }

@@ -4,33 +4,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 </head>
 
-<div class="container mt-5 mb-3">
+<div class="container mt-5 mb-3" id="main-container">
   <div class="col">
 
 
-    <div class="col-md-4">
-      <a class="card-block stretched-link text-decoration-none text-black" href>
+    <div class="col-md-4" *ngFor="let job of jobs">
+      <a class="card-block  text-decoration-none" >
       <div class="card p-3 mb-2 shadow bg-body rounded">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
             <div class="icon"> <i class="bx bxl-mailchimp"></i> </div>
             <div class="ms-2 c-details">
-              <h6 class="mb-0"> Mailchimp</h6> <span> 1 days ago</span>
+              <h6 class="mb-0"> <strong>{{job?.company}}</strong> </h6> <span> {{job?.datePosted}} </span>
             </div>
           </div>
-          <div class="badge"> <span>Design</span> </div>
         </div>
         <div >
-          <h3 class="heading">Senior Product<br>Designer-Singapore</h3>
+          <h3 class="heading">{{job?.title}}</h3>
+          <h5>{{job?.location}}</h5>
+        </div>
+        <div class="container">
+          <span class="badge badge-info mr-1"> {{job?.jobType}} </span>
+          <span class="badge badge-secondary mr-4"> {{job?.experienceLevel}} </span>
+          <button type="button" (click)="setSelectedJob(job)" class="btn btn-outline-primary"><i class="fa fa-external-link"></i></button>
         </div>
       </div>
       </a>
     </div>
 
 
-    <div class="col-md-4">
+    <!--<div class="col-md-4">
       <a class="card-block stretched-link text-decoration-none text-black" href>
       <div class="card p-3 mb-2 shadow bg-body rounded">
         <div class="d-flex justify-content-between">
@@ -68,7 +75,7 @@
       </div>
       </a>
     </div>
-  </div>
+  </div>-->
 
 
 </div>
@@ -80,22 +87,45 @@
          <div class="card p-3 mb-2 shadow bg-body rounded">
            <div class="icon"> <i class="bx bxl-reddit"></i> </div>
            <br>
-           <h1 class="heading">Software Architect - Java - USA</h1>
-           <h2 class="heading">Software Architect - Java - USA</h2>
-           <h3 class="heading">Software Architect - Java - USA</h3>
-           <h4 class="heading">Software Architect - Java - USA</h4>
+           <h1 class="heading">{{selectedJob.title}}</h1>
+           <h2 class="heading">{{selectedJob.location }}</h2>
+           <h6>
+             <br>
+             <strong>Job type:  </strong> <span class="badge badge-info"> {{selectedJob?.jobType}} </span>
+             <br><br>
+             <strong>Experience level:  </strong> <span class="badge badge-secondary"> {{selectedJob?.experienceLevel}} </span>
+             <br><br>
+             <strong>Uploaded:  </strong> <span class="badge badge-primary text-white"> {{selectedJob?.datePosted}} </span>
+             <br><br>
+           </h6>
            <p>
-             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-             et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+             {{selectedJob?.info}}
            </p>
-           <div class="container text-white">
-             <span class="badge rounded-pill bg-primary">Full Time</span>
-           </div>
          </div>
-      <button type="button" class="btn btn-outline-success mr-2">Apply</button>
-      <button type="button" class="btn btn-outline-danger">I'm not interested</button>
-
+      <button (click)="onClickModal('apply')" type="button" class="btn btn-outline-success mr-2" data-placement="top" data-original-title="Info">Apply</button>
+      <!--<button type="button" class="btn btn-outline-danger">I'm not interested</button>-->
     </div>
   </div>
 </div>
+</div>
+
+<!-- Application confirmation modal -->
+  <div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="applyModalLabel">Apply</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to apply for <strong>{{selectedJob?.company}} - {{selectedJob?.title}}</strong> ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" (click)="onApplyToJob(selectedJob)" class="btn btn-success"  data-dismiss="modal">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>

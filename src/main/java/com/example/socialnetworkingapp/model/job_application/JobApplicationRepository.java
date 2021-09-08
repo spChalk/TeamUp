@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
 
-    @Query("SELECT ja FROM JobApplication ja WHERE ja.user.id = ?1")
+    @Query("SELECT ja FROM JobApplication ja WHERE ja.applicant.id = ?1")
     List<JobApplication> findAllApplicationsByUserId(Long id);
 
     @Query("SELECT ja FROM JobApplication ja WHERE ja.job.id = ?1")

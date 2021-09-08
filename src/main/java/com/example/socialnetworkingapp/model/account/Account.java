@@ -50,19 +50,14 @@ public class Account implements UserDetails {
     @NotNull
     private LocalDate dateCreated = LocalDate.now();
 
-    /*
-     * Επειδη υπαρχουν followers, following αλλά και connections στο linkedin, θα κανουμε το εξης:
-     * - Aν ακολουθω εναν χρηστη ο οποιος με ακολουθει και εκεινος, τοτε σχηματιζουμε ενα connection.
-    */
-
     //friends , many-to-many self referencing
     @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
     private List<Account> followers = new ArrayList<Account>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_connections",
-            joinColumns={@JoinColumn(name="FriendId")},
-            inverseJoinColumns={@JoinColumn(name="AccountId")})
+            joinColumns={@JoinColumn(name="user1_id")},
+            inverseJoinColumns={@JoinColumn(name="user2_id")})
     private List<Account> following = new ArrayList<Account>();
 
 

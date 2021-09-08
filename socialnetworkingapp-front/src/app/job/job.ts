@@ -16,7 +16,7 @@ enum ExperienceLevel {
   EXECUTIVE
 }
 
-export interface Job {
+export class Job {
 
   id: number;
   title: string;
@@ -26,4 +26,14 @@ export interface Job {
   jobType: JobType;
   experienceLevel: ExperienceLevel;
   info: string;
+
+  constructor(title: string, company: string, location: string, datePosted: Date, jobType: JobType, experienceLevel: ExperienceLevel, info: string) {
+    this.title = title;
+    this.company = company;
+    this.location = location;
+    this.datePosted = datePosted;
+    this.jobType = jobType;
+    this.experienceLevel = experienceLevel;
+    this.info = info;
+  }
 }

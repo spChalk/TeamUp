@@ -26,4 +26,12 @@ public class ConnectionReqService {
     public void deleteRequest(Long id) {
         this.connectionReqRepository.deleteById(id);
     }
+
+    public void acceptRequest(ConnectionRequest connectionRequest) {
+        this.connectionReqRepository.acceptRequest(connectionRequest.getId());
+    }
+
+    public void rejectRequest(ConnectionRequest connectionRequest) {
+        this.connectionReqRepository.rejectRequest(connectionRequest.getId());
+    }
 }

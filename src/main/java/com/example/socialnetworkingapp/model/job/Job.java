@@ -56,5 +56,6 @@ public class Job implements Serializable {
     private ExperienceLevel experienceLevel;
 
     @NotNull
+    @Lob
     private String info;
 }
