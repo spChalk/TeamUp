@@ -14,8 +14,18 @@ public class ConnectionReqService {
 
     private final ConnectionReqRepository connectionReqRepository;
 
-    public List<ConnectionRequest> findRequestsByAccId(Long id) {
-        return this.connectionReqRepository.findRequestsByAccId(id).
+    public List<ConnectionRequest> findPendingRequestsByAccId(Long id) {
+        return this.connectionReqRepository.findPendingRequestsByAccId(id).
+                orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+    }
+
+    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccId(Long id) {
+        return this.connectionReqRepository.findReceivedAcceptedRequestsByAccId(id).
+                orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+    }
+
+    public List<ConnectionRequest> findSentAcceptedRequestsByAccId(Long id) {
+        return this.connectionReqRepository.findSentAcceptedRequestsByAccId(id).
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
 
@@ -33,5 +43,9 @@ public class ConnectionReqService {
 
     public void rejectRequest(ConnectionRequest connectionRequest) {
         this.connectionReqRepository.rejectRequest(connectionRequest.getId());
+    }
+
+    public void deleteRequestByAccIds(Long me, Long uid) {
+        this.connectionReqRepository.deleteByAccIds(me, uid);
     }
 }

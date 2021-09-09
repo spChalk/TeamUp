@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +21,7 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService accountService;
-    private final ConnectionReqService connectionRequestService;
+    private final ConnectionReqService connectionReqService;
 
     @PostConstruct
     public void createAdmin(){
@@ -66,21 +67,26 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /* Lists all received *PENDING* connection requests */
-    @GetMapping("/crequests/{uid}")
-    public ResponseEntity<List<ConnectionRequest>> getConnectionRequests(@PathVariable("uid") Long uid) {
-        return new ResponseEntity<>(this.connectionRequestService.findRequestsByAccId(uid), HttpStatus.OK);
+    @GetMapping("/network/all/{uid}")
+    public ResponseEntity<List<Account>> getNetwork(@PathVariable("uid") Long uid) {
+
+        /* Get ALL accepted requests, the ones that the user has sent AND received */
+        List<ConnectionRequest> sentRequests = this.connectionReqService.findSentAcceptedRequestsByAccId(uid);
+        List<ConnectionRequest> receivedRequests = this.connectionReqService.findReceivedAcceptedRequestsByAccId(uid);
+
+        List<Account> net = new ArrayList<>();
+        for (ConnectionRequest request: sentRequests) {
+            net.add(request.getReceiver());
+        }
+        for (ConnectionRequest request: receivedRequests) {
+            net.add(request.getSender());
+        }
+        return new ResponseEntity<>(net, HttpStatus.OK);
     }
 
-    @PutMapping("/crequests/accept")
-    public ResponseEntity<HttpStatus> acceptConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
-        this.connectionRequestService.acceptRequest(connectionRequest);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/crequests/reject")
-    public ResponseEntity<HttpStatus> rejectConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
-        this.connectionRequestService.rejectRequest(connectionRequest);
+    @DeleteMapping("/network/{me}/delete/{uid}")
+    public ResponseEntity<?> deleteFromNetwork(@PathVariable("me") Long me, @PathVariable("uid") Long uid){
+        this.connectionReqService.deleteRequestByAccIds(me, uid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

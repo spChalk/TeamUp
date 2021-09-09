@@ -16,11 +16,6 @@ public class ConnectionReqController {
 
     private final ConnectionReqService connectionReqService;
 
-    @GetMapping("/{acc_id}")
-    public List<ConnectionRequest> getRequestsByAccId(@PathVariable("acc_id") Long id){
-        return connectionReqService.findRequestsByAccId(id);
-    }
-
     @PostMapping("/add")
     public ResponseEntity<ConnectionRequest> addRequest(@RequestBody ConnectionRequest connectionRequest){
         ConnectionRequest newConnectionRequest = connectionReqService.addRequest(connectionRequest);
@@ -30,6 +25,24 @@ public class ConnectionReqController {
     @DeleteMapping("/delete/{req_id}")
     public ResponseEntity<?> deleteRequestById(@PathVariable("req_id") Long id){
         connectionReqService.deleteRequest(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /* Lists all received *PENDING* connection requests */
+    @GetMapping("/{uid}")
+    public ResponseEntity<List<ConnectionRequest>> getPendingConnectionRequests(@PathVariable("uid") Long uid) {
+        return new ResponseEntity<>(this.connectionReqService.findPendingRequestsByAccId(uid), HttpStatus.OK);
+    }
+
+    @PutMapping("/accept")
+    public ResponseEntity<HttpStatus> acceptConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
+        this.connectionReqService.acceptRequest(connectionRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/reject")
+    public ResponseEntity<HttpStatus> rejectConnectionRequests(@RequestBody ConnectionRequest connectionRequest) {
+        this.connectionReqService.rejectRequest(connectionRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
