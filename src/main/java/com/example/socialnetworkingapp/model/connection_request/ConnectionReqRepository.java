@@ -16,6 +16,9 @@ public interface ConnectionReqRepository extends JpaRepository<ConnectionRequest
     @Query("SELECT cr FROM ConnectionRequest cr WHERE cr.receiver.id = ?1 AND cr.requestStatus = 0")
     Optional<List<ConnectionRequest>> findPendingRequestsByAccId(Long id);
 
+    @Query("SELECT cr FROM ConnectionRequest cr WHERE cr.sender.id = ?1 AND cr.receiver.id = ?2 AND cr.requestStatus = 0")
+    Optional<ConnectionRequest> findPendingRequestByAccIds(Long sender, Long receiver);
+
     @Query("SELECT cr FROM ConnectionRequest cr WHERE cr.receiver.id = ?1 AND cr.requestStatus = 1")
     Optional<List<ConnectionRequest>> findReceivedAcceptedRequestsByAccId(Long id);
 

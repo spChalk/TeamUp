@@ -2,6 +2,7 @@ package com.example.socialnetworkingapp.filesystem;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import com.example.socialnetworkingapp.model.account.Account;
@@ -25,10 +26,12 @@ public class FileDBService {
 
         FileDB saved = fileDBRepository.save(fileDB);
 
-        Account acc = accountService.findAccountByEmail(ownerMail);
-        acc.setImageUrl("http://localhost:8081/api/files/" + saved.getId());
-        accountService.updateAccount(acc);
-
+        /* If the file is an image, add it to user's photo */
+        if(saved.getType().contains("image")) {
+            Account acc = accountService.findAccountByEmail(ownerMail);
+            acc.setImageUrl("http://localhost:8081/api/files/" + saved.getId());
+            accountService.updateAccount(acc);
+        }
         return saved;
     }
 

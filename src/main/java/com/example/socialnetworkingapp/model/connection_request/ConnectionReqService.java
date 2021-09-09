@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +31,10 @@ public class ConnectionReqService {
     }
 
     public ConnectionRequest addRequest(ConnectionRequest connectionRequest) {
-        return this.connectionReqRepository.save(connectionRequest);
+        Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
+                .findPendingRequestByAccIds(connectionRequest.getSender().getId(),
+                        connectionRequest.getReceiver().getId());
+        return alreadyExists.orElseGet(() -> this.connectionReqRepository.save(connectionRequest));
     }
 
     public void deleteRequest(Long id) {
