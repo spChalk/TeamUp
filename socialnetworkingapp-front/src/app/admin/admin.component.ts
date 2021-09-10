@@ -18,6 +18,7 @@ import {environment} from "../../environments/environment";
 export class AdminComponent implements OnInit {
 
   public accounts: Account[];
+  public accountsTemp: Account[];
   public deleteAccount: Account;
   public editAccount: Account;
   public infoAccount: Account;
@@ -111,10 +112,10 @@ export class AdminComponent implements OnInit {
 
   public onSearch(form: NgForm): void {
 
-    this.accountService.getAccountByEmail(form.value.email).subscribe(
-      (response: Account) => {
+    this.accountService.getAccountsBySimilarName(form.value.keyword).subscribe(
+      (response: Account[]) => {
         console.log(response);
-        this.accounts = [response];
+        this.accounts = response;
       },
       (error: HttpErrorResponse) => {
         if(error.status === 500) {

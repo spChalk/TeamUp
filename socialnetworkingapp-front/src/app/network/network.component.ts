@@ -46,10 +46,10 @@ export class NetworkComponent implements OnInit {
 
   public onSearch(form: NgForm): void {
 
-    this.accountService.getAccountByEmail(form.value.email).subscribe(
-      (response: Account) => {
+    this.accountService.getAccountsBySimilarName(form.value.keyword).subscribe(
+      (response: Account[]) => {
         console.log(response);
-        this.accounts = [response];
+        this.accounts = response;
       },
       (error: HttpErrorResponse) => {
         if(error.status === 500) {

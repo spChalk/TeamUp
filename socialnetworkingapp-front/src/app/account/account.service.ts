@@ -37,6 +37,22 @@ export class AccountService {
     });
   }
 
+  public getAccountsBySimilarEmail(keyword: string): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.url}/find/mails/${keyword}`, {
+      headers: new HttpHeaders( {
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+      })
+    });
+  }
+
+  public getAccountsBySimilarName(keyword: string): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.url}/find/names/${keyword}`, {
+      headers: new HttpHeaders( {
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+      })
+    });
+  }
+
   public registerAccount(account: Account): Observable<Account> {
 
     /* https://www.gitmemory.com/issue/angular/angular/18396/490910837 */

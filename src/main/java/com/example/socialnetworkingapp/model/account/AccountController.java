@@ -57,9 +57,21 @@ public class AccountController {
     }
 
     @GetMapping("/find/mail/{email}")
-    public ResponseEntity<Account> getAccountByEmail(@PathVariable("email") String email){
+    public ResponseEntity<Account> getAccountByEmail(@PathVariable("email") String email) {
         Account account = this.accountService.findAccountByEmail(email);
         return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/mails/{keyword}")
+    public ResponseEntity<List<Account>> getAccountsBySimilarEmail(@PathVariable("keyword") String keyword) {
+        List<Account> accounts = this.accountService.findAccountsBySimilarEmail(keyword);
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/names/{keyword}")
+    public ResponseEntity<List<Account>> getAccountsBySimilarName(@PathVariable("keyword") String keyword) {
+        List<Account> accounts = this.accountService.findAccountsBySimilarName(keyword);
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     @PutMapping("/follow")

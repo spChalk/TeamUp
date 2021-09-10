@@ -93,6 +93,14 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email "+ email + " was not found!"));
     }
 
+    public List<Account> findAccountsBySimilarEmail(String keyword) {
+        return accountRepository.findAccountBySimilarEmail(keyword).get();
+    }
+
+    public List<Account> findAccountsBySimilarName(String keyword) {
+        return accountRepository.findAccountBySimilarName(keyword).get();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email " + email + " was not found!"));
