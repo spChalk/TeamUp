@@ -276,8 +276,11 @@ body{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-25deg);
-  width: 270px;
+  transform: translate(-50%, -50%);
+  opacity: 15%;
+  width: 240px;
+  border-radius: 50%;
+
 }
 
 .container .card .contentBx{
