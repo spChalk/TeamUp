@@ -61,5 +61,10 @@ export class AccountService {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
 
+  public getNetworkById(uid: number) {
+    return this.http.get<Account[]>(`${this.url}/network/all/${uid}`);
+  }
+
   /* TODO: addFriend */
+
 }

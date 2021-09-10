@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'account/:id', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'network', component: NetworkComponent },
+  { path: 'network/:uid', component: NetworkComponent },
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}

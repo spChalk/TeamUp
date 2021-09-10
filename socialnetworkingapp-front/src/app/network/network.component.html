@@ -3,7 +3,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
+<!--
 <br>
 <h1 style="text-align: center">Network</h1>
 <br>
@@ -114,4 +117,56 @@
       </div>
     </div>
   </div>
+</div>
+-->
+
+
+
+
+
+
+
+
+<br>
+<h1 style="text-align: center;">Network</h1>
+<br>
+<form #searchForm="ngForm" style="float: right; margin-right: 200px">
+  <div class="input-group">
+    <div class="form-outline mr-1">
+      <input id="search-input" ngModel name="email" type="search" id="form1" class="form-control" placeholder="Search by email" required />
+    </div>
+    <button [disabled]="searchForm.invalid" (click)="onSearch(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
+      <i class="fa fa-search"></i>
+    </button>
+    <button (click)="refresh();" id="reload" type="submit" class="btn btn-primary mr-1">
+      Reload Network
+    </button>
+  </div>
+</form>
+
+<br>
+<br>
+
+<div class="grid-container">
+    <div class="container" *ngFor="let account of accounts">
+      <div class="card shadow">
+        <div class="imgBx">
+          <img src="{{account?.imageUrl}}">
+        </div>
+        <div class="contentBx">
+          <h2 style="color: black">{{account?.firstName}} {{account?.lastName}}</h2>
+          <div class="size">
+            <h3 style="color: black">{{account?.email}}</h3>
+            <!--<span>7</span>
+            <span>8</span>
+            <span>9</span>
+            <span>10</span>-->
+          </div>
+          <div class="color">
+              <h3 style="color: black">MORE INFO</h3>
+          </div>
+          <button  routerLink="../../account/{{account?.id}}" type="button" class="btn btn-danger">Visit profile</button>
+        </div>
+      </div>
+    </div>
 </div>
