@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Account, AppUserRole} from "../account/account";
+import {Account} from "../account/account";
 import {AccountService} from "../account/account.service";
 import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {ExportService} from "../export/export.service";
-import {JSONFile} from "@angular/cli/utilities/json-file";
-import {Byte} from "@angular/compiler/src/util";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {Router} from "@angular/router";
 import {BioService} from "../bio/bio.service";
+import {environment} from "../../environments/environment";
+
 
 @Component({
   selector: 'app-admin',
@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit {
   public deleteAccount: Account;
   public editAccount: Account;
   public infoAccount: Account;
-  public selectedUsers: Account[] = [];
+  public selectedUsers: Account[];
 
   selectedFiles: FileList;
   currentFile: File;
@@ -32,7 +32,9 @@ export class AdminComponent implements OnInit {
               private exportService: ExportService,
               private uploadService: UploadFileService,
               private bioService: BioService,
-              public router: Router) {}
+              public router: Router) {
+    this.selectedUsers = [];
+  }
 
   ngOnInit() {
     this.getAccounts();
@@ -189,25 +191,24 @@ export class AdminComponent implements OnInit {
   public onSelectUser(account: Account): void {
 
       /* If the selected account exists, remove it, else add it. */
-      if(this.selectedUsers.length && this.selectedUsers.find(x => x.email == account.email)) {
+      if(this.selectedUsers.find(x => x.email === account.email)) {
         this.selectedUsers.splice(this.selectedUsers.indexOf(account, 0), 1);
       } else {
         this.selectedUsers.push(account);
       }
   }
 
-  public onSelectAll(): void {
+  public onExportSelectedXML(mode: string) {
 
-  }
-
-  public onRemoveAllSelections(): void {
-    this.selectedUsers.length = 0;
-  }
-
-  public onExportSelectedJSON() {
-
+/*
     let data = [];
-    for(let account of this.accounts) {
+*/
+    let accs = this.accounts;
+
+    if(mode === "sel") {
+      accs = this.selectedUsers;
+    }
+    /*for(let account of this.accounts) {
 
       data.push({
         "firstName": account.firstName,
@@ -217,59 +218,35 @@ export class AdminComponent implements OnInit {
         "crDate": account.dateCreated,
         "role": "USER"
       })
-    }
-
-    /*this.exportService.exportJSON(data);*/
-
-   /* public getFileName(response: HttpResponse<Blob>){
-      let filename: string;
-      try {
-        const contentDisposition: string = response.headers.get('content-disposition');
-        const r = /(?:filename=")(.+)(?:")/
-        filename = r.exec(contentDisposition)[1];
-      }
-      catch (e) {
-        filename = 'myfile.txt'
-      }
-      return filename
     }*/
 
+    this.exportService.exportXML(accs).subscribe(
+      (resp: string) => {
 
-    /*public downloadFile() {
-      this.exportService.downloadFile("exp")
-        .subscribe(
-          (response: HttpResponse<Blob>) => {
-            let filename: string = this.getFileName(response)
-            let binaryData = [];
-            binaryData.push(response.body);
-            let downloadLink = document.createElement('a');
-            downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
-            downloadLink.setAttribute('download', filename);
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-          }
-        )
-    }*/
-  }
+        this.exportService.downloadFile(environment.apiBaseUrl + resp).subscribe(
+          (response: any) => {
 
-  public onExportSelectedXML() {
+            let element = document.createElement('a');
+            let blob = new Blob([response], {
+              type: 'text/xml'
+            });
+            element.href = URL.createObjectURL(blob);
+            element.setAttribute('download',  'accounts__' + Date.now() + '.xml');
+            document.body.appendChild(element);
+            element.click();
+            window.location.reload();
+       /*   const blob: Blob = new Blob([response], {
+            type: 'text/xml' });
 
-    let data = [];
-    for(let account of this.accounts) {
+          const url = window.URL.createObjectURL(blob);
+          fileSaver.saveAs(blob,);
+          window.open(url);
 
-      data.push({
-        "firstName": account.firstName,
-        "lastName": account.lastName,
-        "email": account.email,
-        "phone": account.phone,
-        "crDate": account.dateCreated,
-        "role": "USER"
-      })
-    }
-
-    this.exportService.exportXML(data).subscribe(
-      (response: Byte[]) => {
-        console.log(response);
+          this.selectedUsers.splice(0, this.selectedUsers.length);
+          window.location.reload();*/
+        }),
+          (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
+          () => console.info('File downloaded successfully');
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -277,5 +254,58 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  public onExportSelectedJSON(mode: string) {
+
+    /*let data = [];*/
+    let accs = this.accounts;
+
+    if(mode === "sel") {
+      accs = this.selectedUsers;
+    }
+   /* for(let account of this.accounts) {
+
+      data.push({
+        "firstName": account.firstName,
+        "lastName": account.lastName,
+        "email": account.email,
+        "phone": account.phone,
+        "crDate": account.dateCreated,
+        "role": "USER"
+      })
+    }*/
+
+    this.exportService.exportJSON(accs).subscribe(
+      (resp: string) => {
+
+        this.exportService.downloadFile(environment.apiBaseUrl + resp).subscribe(
+          (response: any) => {
+
+            let element = document.createElement('a');
+            let blob = new Blob([response], {
+              type: 'text/json'
+            });
+            element.href = URL.createObjectURL(blob);
+            element.setAttribute('download',  'accounts__' + Date.now() + '.json');
+            document.body.appendChild(element);
+            element.click();
+            window.location.reload();
+           /* const blob:any = new Blob([response], {
+              type: 'text/json; charset=utf-8' });
+
+            const url = window.URL.createObjectURL(blob);
+            fileSaver.saveAs(blob, 'accounts__' + Date.now() + '.json');
+            window.open(url);
+
+            this.selectedUsers.splice(0, this.selectedUsers.length);
+            window.location.reload();*/
+          }),
+          (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
+          () => console.info('File downloaded successfully');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
 }

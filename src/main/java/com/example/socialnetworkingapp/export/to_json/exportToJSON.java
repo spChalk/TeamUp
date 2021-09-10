@@ -1,8 +1,11 @@
 package com.example.socialnetworkingapp.export.to_json;
 
+import com.example.socialnetworkingapp.export.ByteArrMultipartFile;
+import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 import org.springframework.core.io.InputStreamResource;
@@ -17,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /*
@@ -31,8 +37,10 @@ import java.util.ArrayList;
 @Controller
 public class exportToJSON {
 
+    private FileDBService storageService;
+
     @PostMapping("/export/json")
-    public ResponseEntity<byte[]> export(@RequestBody ArrayList<Account> accounts) throws IOException {
+    public ResponseEntity<String> export(@RequestBody ArrayList<Account> accounts) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -40,12 +48,16 @@ public class exportToJSON {
         String json = objectMapper.writeValueAsString(accounts);
 
         byte[] isr = json.getBytes();
-        String fileName = "accounts.json";
-        HttpHeaders respHeaders = new HttpHeaders();
-        respHeaders.setContentLength(isr.length);
-        respHeaders.setContentType(new MediaType("text", "json"));
-        respHeaders.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        respHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-        return new ResponseEntity<byte[]>(isr, respHeaders, HttpStatus.OK);
+        String fileName = "EXP_accounts_" + LocalDate.now() + "__"
+                + LocalTime.now().toString().replace(':', '-')
+                .replace('.', '-')
+                + ".json ", path = "";
+        ByteArrMultipartFile customMultipartFile = new ByteArrMultipartFile(isr, fileName, path);
+        try {
+            customMultipartFile.transferTo(customMultipartFile.getFile());
+        } catch (IllegalStateException | IOException e) {
+            System.out.println(e);
+        }
+        return new ResponseEntity<>("/download/file/" + customMultipartFile.getFileName(), HttpStatus.OK);
     }
 }
