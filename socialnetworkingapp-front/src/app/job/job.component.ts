@@ -4,6 +4,10 @@ import {HttpErrorResponse} from "@angular/common/http";
 import { Job } from './job';
 import {JobService} from "./job.service";
 import {JobApplicationService} from "../job-application/job-application.service";
+import {AccountService} from "../account/account.service";
+import {BioService} from "../bio/bio.service";
+import {ActivatedRoute} from "@angular/router";
+import {JobApplication} from "../job-application/job-application";
 
 @Component({
   selector: 'app-job',
@@ -14,9 +18,22 @@ export class JobComponent implements OnInit {
 
   public jobs: Job[];
   public selectedJob: Job;
+  public currUser: Account;
 
   constructor(private jobService: JobService,
-              private jobAppService: JobApplicationService) { }
+              private jobAppService: JobApplicationService,
+              private accountService: AccountService,
+              private route: ActivatedRoute) {
+   this.route.params.subscribe(params => {
+      console.log(params);
+      if (params['uid']) {
+/*
+        this.getJobs(params['uid']);
+*/
+        this.accountService.getAccountById(params['uid']).subscribe(acc => this.currUser = acc);
+      }
+    });
+  }
 
   ngOnInit() {
     this.getJobs();
@@ -56,7 +73,14 @@ export class JobComponent implements OnInit {
     }
   }
 
-  onApplyToJob(selectedJob: Job) {
-    /* TODO */
+  public onApplyToJob(selectedJob: Job) {
+    this.jobAppService.applyToJob(this.currUser, selectedJob).subscribe(
+      (response: JobApplication) => {
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 }

@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'jobs', component: JobComponent },
+  { path: 'jobs/:uid', component: JobComponent },
   { path: 'about', component: AboutComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'chat', component: ChatComponent },

@@ -17,13 +17,14 @@
       <div class="card p-3 mb-2 shadow bg-body rounded">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
-            <div class="icon"> <i class="bx bxl-mailchimp"></i> </div>
+            <img src="{{selectedJob?.publisher.imageUrl}}" style="width: 60px;height: auto;border-radius: 30%" alt=""/>
             <div class="ms-2 c-details">
-              <h6 class="mb-0"> <strong>{{job?.company}}</strong> </h6> <span> {{job?.datePosted}} </span>
+              <h6 class="mb-0 ml-3"> <strong> {{job?.publisher.firstName}} {{job?.publisher.lastName}}</strong> </h6> <span> {{job?.datePosted}} </span>
             </div>
           </div>
         </div>
         <div >
+          <br>
           <h3 class="heading">{{job?.title}}</h3>
           <h5>{{job?.location}}</h5>
         </div>
@@ -85,7 +86,7 @@
   <div class="container mt-5">
     <div class="col">
          <div class="card p-3 mb-2 shadow bg-body rounded">
-           <div class="icon"> <i class="bx bxl-reddit"></i> </div>
+           <img src="{{selectedJob?.publisher.imageUrl}}" style="width: 100px;height: auto;border-radius: 30%" alt=""/>
            <br>
            <h1 class="heading">{{selectedJob.title}}</h1>
            <h2 class="heading">{{selectedJob.location }}</h2>
@@ -120,7 +121,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to apply for <strong>{{selectedJob?.company}} - {{selectedJob?.title}}</strong> ?
+          Are you sure you want to apply for <strong>{{selectedJob?.publisher.firstName}}{{selectedJob?.publisher.lastName}} - {{selectedJob?.title}}</strong> ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
