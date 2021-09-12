@@ -22,10 +22,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AboutComponent } from './about/about.component';
 import { ChatComponent } from './chat/chat.component'
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AdminComponent } from './admin/admin.component';
 import { NetworkComponent } from './network/network.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { NavBarAuthenticatedComponent } from './nav-bar-authenticated/nav-bar-authenticated.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -49,13 +52,17 @@ import { UploadFilesComponent } from './upload-files/upload-files.component';
     ChatComponent,
     AdminComponent,
     NetworkComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    NavBarAuthenticatedComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgxWebstorageModule.forRoot()
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]

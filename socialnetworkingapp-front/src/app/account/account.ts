@@ -6,7 +6,6 @@ export enum AppUserRole {
 }
 
 export class Account {
-
   id: number;
   appUserRole: AppUserRole;
   firstName: string;

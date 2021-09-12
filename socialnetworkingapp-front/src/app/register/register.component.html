@@ -4,10 +4,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 </head>
 <br>
+<div class="container">
+    <app-nav-bar></app-nav-bar>
+</div>
 <h1 style="text-align: center">Register</h1>
 
 <div class="container" id="main-container">
-  <form #regForm="ngForm" >
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm)">
     <div class="row justify-content-md-center">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="login-screen">
@@ -18,58 +21,78 @@
             <div class="row gutters">
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="text" ngModel name="firstName" class="form-control" placeholder="First Name" required>
+                  <input type="text" formControlName="firstName" class="form-control" placeholder="First Name" required>
+                  <span *ngIf="registerForm.get('firstName').hasError('pattern')">
+                    First Name should consist of letter only !
+                  </span>
+                  <span *ngIf="registerForm.get('firstName').hasError('maxlength')">
+                    First Name can be at max 20 characters!
+                  </span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="text" ngModel name="lastName" class="form-control" placeholder="Last Name" required>
+                  <input type="text" formControlName ="lastName" class="form-control" placeholder="Last Name" required>
+                  <span *ngIf="registerForm.get('lastName').hasError('pattern')">
+                    Last Name should consist of letter only !
+                  </span>
+                  <span *ngIf="registerForm.get('lastName').hasError('maxlength')">
+                    Last Name can be at max 20 characters!
+                  </span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="email" ngModel name="email" class="form-control" placeholder="Email" required>
+                  <input type="email" formControlName ="email" class="form-control" placeholder="Email" required>
+                  <span *ngIf="registerForm.get('email').hasError('pattern')">
+                    Email example : default@something.country !
+                  </span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="password" ngModel name="password" class="form-control" placeholder="Password" required>
+                  <input type="password" formControlName ="password" class="form-control" placeholder="Password" required>
+                  <span *ngIf="registerForm.get('password').hasError('minlength')">
+                    Password should have at least 8 characters!
+                  </span>
+                  <span *ngIf="registerForm.get('password').hasError('maxlength')">
+                    Password should have at max 16 characters!
+                  </span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="phone" ngModel name="phone" class="form-control" placeholder="Phone" required>
+                  <input type="phone" formControlName="phone" class="form-control" placeholder="Phone" required>
+                  <span *ngIf="registerForm.get('phone').hasError('pattern')">
+                    Phone should consist of digits only !
+                  </span>
+                  <span *ngIf="registerForm.get('phone').hasError('maxlength')">
+                    Phone can be at max 15 digits!
+                  </span>
                 </div>
               </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="password" ngModel name="conf_password" class="form-control" placeholder="Confirm Password" required>
+                  <input type="password" formControlName="conf_password" class="form-control" placeholder="Confirm Password" required>
+                  <span *ngIf="registerForm.get('conf_password').hasError('minlength')">
+                    Password should have at least 8 characters!
+                  </span>
+                  <span *ngIf="registerForm.get('conf_password').hasError('maxlength')">
+                    Password should have at max 16 characters!
+                  </span>
                 </div>
-              </div>
-
-<!--              <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group">
-                  <div class="custom-file">
-                    <input type="file" ngModel name="imageUrl" (change)="selectFile($event)" class="custom-file-input form-control" id="customFile">
-                    <label class="custom-file-label" for="customFile">Upload image</label>
-                  </div>
-                </div>
-              </div>-->
+              </div> -->
             </div>
             <div class="actions clearfix">
-              <button (click)="onClickModal('addPhoto');onRegister(regForm)" [disabled]="regForm.invalid" type="button" class="btn btn-primary btn-block">Sign up</button>
+              <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-block">Sign up</button>
+                <div *ngIf="correctCredentials else wrongCredentials">
+                </div>
+                <ng-template #wrongCredentials>
+                    <span> A user with that email might already exist.</span>
+                    <br>
+                    <span> Try using another email address.</span>
+                </ng-template>
             </div>
-            <!--<div class="or">
-              <span>or signup using</span>
-            </div>
-            <div class="row gutters">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <button type="submit" class="btn btn-tw btn-block">Twitter</button>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <button type="submit" class="btn btn-fb btn-block">Facebook</button>
-              </div>
-            </div>-->
             <a href="#" class="additional-link">Have an Account? <span>Login Now</span></a>
           </div>
         </div>
@@ -79,7 +102,7 @@
 </div>
 
 <!-- Add Photo Modal -->
-<div class="modal fade" id="addPhoto" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="addPhoto" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,10 +129,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Add Bio Modal -->
-<div class="modal fade" id="addBio" tabindex="-1" role="dialog" aria-labelledby="addBioModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="addBio" tabindex="-1" role="dialog" aria-labelledby="addBioModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -136,4 +159,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

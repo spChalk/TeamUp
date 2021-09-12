@@ -13,21 +13,9 @@ import {Router} from "@angular/router";
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private accountService: AccountService,
-              private router: Router){}
+  constructor(){}
 
   ngOnInit(): void {
   }
 
-  public onLogin(regForm: NgForm): void {
-    this.accountService.logIn(regForm.value).subscribe(
-      (response: Login) => {
-        console.log(response);
-        this.router.navigateByUrl('/home');
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
 }

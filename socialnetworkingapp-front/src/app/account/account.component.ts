@@ -5,6 +5,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Bio} from "../bio/bio";
 import {BioService} from "../bio/bio.service";
+import { AuthenticationService } from '../authentication';
 
 /* https://codecraft.tv/courses/angular/routing/parameterised-routes/ */
 
@@ -20,14 +21,9 @@ export class AccountComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private bioService: BioService,
-              private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      console.log(params);
-      if (params['id']) {
-        this.getAccountDetails(params['id'])
-      }
-    });
-  }
+              private route: ActivatedRoute,
+            ) {
+}
 
   ngOnInit(): void {}
 
