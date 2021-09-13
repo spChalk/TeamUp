@@ -12,7 +12,6 @@ import { AccountComponent } from './account/account.component';
 import { BioComponent } from './bio/bio.component';
 import { CommentComponent } from './comment/comment.component';
 import { ExperienceComponent } from './experience/experience.component';
-import { InterestsComponent } from './interests/interests.component';
 import { JobComponent } from './job/job.component';
 import { JobApplicationComponent } from './job-application/job-application.component';
 import { LikeComponent } from './like/like.component';
@@ -26,6 +25,9 @@ import {FormsModule} from "@angular/forms";
 import { AdminComponent } from './admin/admin.component';
 import { NetworkComponent } from './network/network.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { JobViewComponent } from './job-view/job-view.component';
+import { AccInterestsComponent } from './interests/acc-interests/acc-interests.component';
+import { JobInterestsComponent } from './interests/job-interests/job-interests.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,6 @@ import { UploadFilesComponent } from './upload-files/upload-files.component';
     BioComponent,
     CommentComponent,
     ExperienceComponent,
-    InterestsComponent,
     JobComponent,
     JobApplicationComponent,
     LikeComponent,
@@ -49,7 +50,10 @@ import { UploadFilesComponent } from './upload-files/upload-files.component';
     ChatComponent,
     AdminComponent,
     NetworkComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    JobViewComponent,
+    AccInterestsComponent,
+    JobInterestsComponent
   ],
   imports: [
     BrowserModule,

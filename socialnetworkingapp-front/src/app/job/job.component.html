@@ -1,5 +1,4 @@
-
-<head>
+<head xmlns="http://www.w3.org/1999/html">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -8,16 +7,22 @@
 
 </head>
 
+<br>
+<h1 style="text-align: center">New Opportunities</h1>
+
+
 <div class="container mt-5 mb-3" id="main-container">
+
+  <button (click)="onClickModal('addJob')" type="button" class="btn btn-outline-primary  mb-2" data-placement="top" data-original-title="AddJob">+ Add a new job</button>
   <div class="col">
 
 
-    <div class="col-md-4" *ngFor="let job of jobs">
+    <div class="col-md-4" *ngFor="let job of this.jobs">
       <a class="card-block  text-decoration-none" >
       <div class="card p-3 mb-2 shadow bg-body rounded">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
-            <img src="{{selectedJob?.publisher.imageUrl}}" style="width: 60px;height: auto;border-radius: 30%" alt=""/>
+            <img src="{{job?.publisher.imageUrl}}" style="width: 60px;height: auto;border-radius: 30%" alt=""/>
             <div class="ms-2 c-details">
               <h6 class="mb-0 ml-3"> <strong> {{job?.publisher.firstName}} {{job?.publisher.lastName}}</strong> </h6> <span> {{job?.datePosted}} </span>
             </div>
@@ -31,7 +36,7 @@
         <div class="container">
           <span class="badge badge-info mr-1"> {{job?.jobType}} </span>
           <span class="badge badge-secondary mr-4"> {{job?.experienceLevel}} </span>
-          <button type="button" (click)="setSelectedJob(job)" class="btn btn-outline-primary"><i class="fa fa-external-link"></i></button>
+          <button type="button" (click)="setSelectedJob(job);increaseView(this.currUser.id, job.id)" class="btn btn-outline-primary"><i class="fa fa-external-link"></i></button>
         </div>
       </div>
       </a>
@@ -81,9 +86,8 @@
 
 </div>
 
-
 <div class="right">
-  <div class="container mt-5">
+  <div class="container" style="margin-top: 120px">
     <div class="col">
          <div class="card p-3 mb-2 shadow bg-body rounded">
            <img src="{{selectedJob?.publisher.imageUrl}}" style="width: 100px;height: auto;border-radius: 30%" alt=""/>
@@ -111,7 +115,7 @@
 </div>
 
 <!-- Application confirmation modal -->
-  <div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
+ <div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -130,3 +134,124 @@
       </div>
     </div>
   </div>
+
+<!-- Add job modal -->
+<div class="modal fade" id="addJob" tabindex="-1" role="dialog" aria-labelledby="addjobModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addjobModalLabel">Add a new job</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form #jobForm="ngForm">
+
+          <div class="form-group">
+            <label for="title">Job Title</label>
+            <input type="text" ngModel class="form-control" id="title" name="title" aria-describedby="titleHelp" required>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" ngModel class="form-control" id="location" name="location" aria-describedby="locationHelp" required>
+          </div>
+
+          <div class="form-group">
+            <label for="jobtype">Job Type</label>
+            <select id="jobtype" ngModel name="jobType" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>FULL_TIME</option>
+              <option>PART_TIME</option>
+              <option>INTERNSHIP</option>
+              <option>CONTRACT</option>
+              <option>OTHER</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="experiencelevel">Experience Level</label>
+            <select id="experiencelevel" ngModel name="experienceLevel" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>INTERNSHIP</option>
+              <option>ENTRY_LEVEL</option>
+              <option>ASSOCIATE</option>
+              <option>MIN_SENIOR</option>
+              <option>DIRECTOR</option>
+              <option>EXECUTIVE</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="interests">Interests <i>(Press Ctrl to select multiple tags)</i></label>
+            <select id="interests" ngModel name="interests" class="form-control" data-role="select-dropdown" data-profile="minimal" multiple required>
+              <option>TECHNOLOGY</option>
+              <option>BUSINESS</option>
+              <option>MACHINE_LEARNING</option>
+              <option>SOFTWARE</option>
+              <option>HARDWARE</option>
+              <option>SALES</option>
+              <option>RESEARCH</option>
+              <option>MAINTENANCE</option>
+              <option>OPERATING_SYSTEMS</option>
+              <option>ARTIFICIAL_INTELLIGENCE</option>
+              <option>DBMS</option>
+              <option>NETWORKING</option>
+              <option>DATA_STRUCTURES</option>
+              <option>ALGORITHMS</option>
+              <option>OOP</option>
+              <option>SQL</option>
+              <option>UNIX</option>
+              <option>WINDOWS</option>
+              <option>GIT</option>
+              <option>GITHUB</option>
+              <option>MANAGEMENT</option>
+              <option>ECONOMICS</option>
+              <option>PSYCHOLOGY</option>
+              <option>HISTORY</option>
+              <option>BOOKS</option>
+              <option>MUSIC</option>
+              <option>RUNNING</option>
+              <option>SWIMMING</option>
+              <option>LAW</option>
+              <option>MATHEMATICS</option>
+              <option>PHYSICS</option>
+              <option>ENGINEERING</option>
+              <option>ARCHITECTURE</option>
+              <option>AGRICULTURE</option>
+              <option>SPACE</option>
+              <option>CHEMISTRY</option>
+              <option>SCIENCE</option>
+              <option>POLITICS</option>
+              <option>ATHLETICS</option>
+              <option>ROBOTICS</option>
+              <option>BIOINFORMATICS</option>
+              <option>MEDICINE</option>
+              <option>ARCHEOLOGY</option>
+              <option>STOCK_MARKET</option>
+              <option>CRYPTOCURRENCY</option>
+              <option>YACHTS</option>
+              <option>SHIPS</option>
+              <option>AEROPLANE</option>
+              <option>MINERAL_RESOURCES</option>
+              <option>MINING</option>
+              <option>TRAVELLING</option>
+            </select>
+            <a class="text-muted">At least 2 tags are required.</a>
+          </div>
+
+          <div class="form-group">
+            <label for="info">Info</label>
+            <textarea  ngModel class="form-control" name="info" id="info" aria-describedby="infoHelp" required></textarea>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button [disabled]="jobForm.invalid" (click)="onAddJob(jobForm)" type="submit" class="btn btn-success"  data-dismiss="modal">Publish</button>
+      </div>
+    </div>
+  </div>
+</div>

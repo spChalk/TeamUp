@@ -49,7 +49,7 @@ public class Job implements Serializable {
     @NotNull
     private String location;
 
-    private Date datePosted;
+    private String Date;
 
     @NotNull
     private JobType jobType;

@@ -4,6 +4,7 @@ import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -51,11 +52,10 @@ public class AccountService implements UserDetailsService {
         return account;
     }
 
-    public String accountSignUp(Account account){
+    public Account accountSignUp(RegistrationRequest request){
 
-        this.accountRepository.save(checkAccount(account));
-
-        return "Account registered successfully!";
+        Account account = new Account(AccountRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone());
+        return this.accountRepository.save(checkAccount(account));
     }
 
     public List<Account> findAllAccounts(){

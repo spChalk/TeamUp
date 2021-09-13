@@ -46,15 +46,69 @@
                   <input type="password" ngModel name="conf_password" class="form-control" placeholder="Confirm Password" required>
                 </div>
               </div>
-
-<!--              <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <div class="custom-file">
-                    <input type="file" ngModel name="imageUrl" (change)="selectFile($event)" class="custom-file-input form-control" id="customFile">
-                    <label class="custom-file-label" for="customFile">Upload image</label>
-                  </div>
+                  <label for="interests">Interests <i>(Press Ctrl to select multiple tags)</i></label>
+                  <select id="interests" ngModel name="interests" class="form-control" data-role="select-dropdown" data-profile="minimal" multiple required>
+                    <option>TECHNOLOGY</option>
+                    <option>BUSINESS</option>
+                    <option>MACHINE_LEARNING</option>
+                    <option>SOFTWARE</option>
+                    <option>HARDWARE</option>
+                    <option>SALES</option>
+                    <option>RESEARCH</option>
+                    <option>MAINTENANCE</option>
+                    <option>OPERATING_SYSTEMS</option>
+                    <option>ARTIFICIAL_INTELLIGENCE</option>
+                    <option>DBMS</option>
+                    <option>NETWORKING</option>
+                    <option>DATA_STRUCTURES</option>
+                    <option>ALGORITHMS</option>
+                    <option>OOP</option>
+                    <option>SQL</option>
+                    <option>UNIX</option>
+                    <option>WINDOWS</option>
+                    <option>GIT</option>
+                    <option>GITHUB</option>
+                    <option>MANAGEMENT</option>
+                    <option>ECONOMICS</option>
+                    <option>PSYCHOLOGY</option>
+                    <option>HISTORY</option>
+                    <option>BOOKS</option>
+                    <option>MUSIC</option>
+                    <option>RUNNING</option>
+                    <option>SWIMMING</option>
+                    <option>LAW</option>
+                    <option>MATHEMATICS</option>
+                    <option>PHYSICS</option>
+                    <option>ENGINEERING</option>
+                    <option>ARCHITECTURE</option>
+                    <option>AGRICULTURE</option>
+                    <option>SPACE</option>
+                    <option>CHEMISTRY</option>
+                    <option>SCIENCE</option>
+                    <option>POLITICS</option>
+                    <option>ATHLETICS</option>
+                    <option>ROBOTICS</option>
+                    <option>BIOINFORMATICS</option>
+                    <option>MEDICINE</option>
+                    <option>ARCHEOLOGY</option>
+                    <option>STOCK_MARKET</option>
+                    <option>CRYPTOCURRENCY</option>
+                    <option>YACHTS</option>
+                    <option>SHIPS</option>
+                    <option>AEROPLANE</option>
+                    <option>MINERAL_RESOURCES</option>
+                    <option>MINING</option>
+                    <option>TRAVELLING</option>
+                  </select>
+                  <a class="text-muted">At least 2 tags are required.</a>
                 </div>
-              </div>-->
+              </div>
+
+
+
+
             </div>
             <div class="actions clearfix">
               <button (click)="onClickModal('addPhoto');onRegister(regForm)" [disabled]="regForm.invalid" type="button" class="btn btn-primary btn-block">Sign up</button>

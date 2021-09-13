@@ -11,6 +11,9 @@ import {UploadFileService} from "../upload-files/upload-files.service";
 import {repeatGroups} from "@angular/compiler/src/shadow_css";
 import {BioComponent} from "../bio/bio.component";
 import {BioService} from "../bio/bio.service";
+import {r3JitTypeSourceSpan} from "@angular/compiler";
+import {AccInterestsService} from "../interests/acc-interests/acc-interests.service";
+import {AccountInterest} from "../interests/acc-interests/acc_interests";
 
 @Component({
   selector: 'app-register',
@@ -30,7 +33,8 @@ export class RegisterComponent implements OnInit {
     private accountService: AccountService,
     public router: Router,
     private uploadService: UploadFileService,
-    private bioService: BioService
+    private bioService: BioService,
+    private interestsService: AccInterestsService
     ){}
 
   ngOnInit(): void {
@@ -70,6 +74,16 @@ export class RegisterComponent implements OnInit {
     this.accountService.registerAccount(regForm.value).subscribe(
       (response: Account) => {
         console.log(response);
+            for (let interest of regForm.value.interests) {
+              this.interestsService.addTag(response, interest).subscribe(
+                (res: AccountInterest) => {
+                  console.log(res);
+                },
+                (err: HttpErrorResponse) => {
+                  alert(err.message);
+                }
+              );
+            }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

@@ -8,6 +8,13 @@ import {AccountService} from "../account/account.service";
 import {BioService} from "../bio/bio.service";
 import {ActivatedRoute} from "@angular/router";
 import {JobApplication} from "../job-application/job-application";
+import {NgForm} from "@angular/forms";
+import {JobViewService} from "../job-view/job-view.service";
+import {JobView} from "../job-view/job-view";
+import {AccountInterest} from "../interests/acc-interests/acc_interests";
+import {AccInterestsService} from "../interests/acc-interests/acc-interests.service";
+import {JobInterestsService} from "../interests/job-interests/job-interests.service";
+import {JobInterest} from "../interests/job-interests/job_interests";
 
 @Component({
   selector: 'app-job',
@@ -16,21 +23,26 @@ import {JobApplication} from "../job-application/job-application";
 })
 export class JobComponent implements OnInit {
 
-  public jobs: Job[];
+  public jobs: Job[] = [];
   public selectedJob: Job;
   public currUser: Account;
 
   constructor(private jobService: JobService,
               private jobAppService: JobApplicationService,
+              private jobViewService: JobViewService,
               private accountService: AccountService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private interestsService: JobInterestsService) {
    this.route.params.subscribe(params => {
       console.log(params);
       if (params['uid']) {
 /*
         this.getJobs(params['uid']);
 */
-        this.accountService.getAccountById(params['uid']).subscribe(acc => this.currUser = acc);
+        this.accountService.getAccountById(params['uid']).subscribe(
+          (acc: Account) => {
+            this.currUser = acc;
+          });
       }
     });
   }
@@ -67,6 +79,9 @@ export class JobComponent implements OnInit {
     if(mode === 'apply') {
       button.setAttribute('data-target', '#apply');
     }
+    if(mode === 'addJob') {
+      button.setAttribute('data-target', '#addJob');
+    }
     if(container != null) {
       container.appendChild(button);
       button.click();
@@ -74,8 +89,48 @@ export class JobComponent implements OnInit {
   }
 
   public onApplyToJob(selectedJob: Job) {
+
     this.jobAppService.applyToJob(this.currUser, selectedJob).subscribe(
       (response: JobApplication) => {
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onAddJob(jobForm: NgForm) {
+
+    jobForm.value.publisher = this.currUser;
+    jobForm.value.datePosted = new Date();
+    this.jobService.addJob(jobForm.value).subscribe(
+      (response: Job) => {
+        console.log(response);
+
+        for (let interest of jobForm.value.interests) {
+          this.interestsService.addTag(response, interest).subscribe(
+            (res: JobInterest) => {
+              console.log(res);
+            },
+            (err: HttpErrorResponse) => {
+              alert(err.message);
+            }
+          );
+        }
+
+
+        this.getJobs();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public increaseView(uid: number, jid: number) {
+    this.jobViewService.addView(uid, jid).subscribe(
+      (response: JobView) => {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
