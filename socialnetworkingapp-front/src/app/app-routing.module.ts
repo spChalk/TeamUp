@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'jobs/:uid', component: JobComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'settings/:id', component: SettingsComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'account/:id', component: AccountComponent },
   { path: 'login', component: LoginComponent },
