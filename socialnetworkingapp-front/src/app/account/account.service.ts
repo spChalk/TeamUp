@@ -24,7 +24,6 @@ export class AccountService {
         })
       });
   }
-
   public getAccountById(account_id: number): Observable<Account> {
     return this.http.get<Account>(`${this.url}/find/id/${account_id}`);
   }
@@ -59,13 +58,10 @@ export class AccountService {
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
 
+                console.log(account)
     return this.http.post<Account>(`${environment.apiBaseUrl}/register`,
       account,
       httpOptions);
-  }
-
-  public logIn(credentials: Login): Observable<Login> {
-    return this.http.post<Login>(`${environment.apiBaseUrl}/login`, credentials);
   }
 
   public updateAccount(account: Account): Observable<Account> {

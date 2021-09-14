@@ -21,10 +21,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AboutComponent } from './about/about.component';
 import { ChatComponent } from './chat/chat.component'
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AdminComponent } from './admin/admin.component';
 import { NetworkComponent } from './network/network.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { NavBarAuthenticatedComponent } from './nav-bar-authenticated/nav-bar-authenticated.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { JobViewComponent } from './job-view/job-view.component';
 import { AccInterestsComponent } from './interests/acc-interests/acc-interests.component';
 import { JobInterestsComponent } from './interests/job-interests/job-interests.component';
@@ -51,6 +54,8 @@ import { JobInterestsComponent } from './interests/job-interests/job-interests.c
     AdminComponent,
     NetworkComponent,
     UploadFilesComponent,
+    NavBarAuthenticatedComponent,
+    NavBarComponent
     JobViewComponent,
     AccInterestsComponent,
     JobInterestsComponent
@@ -59,7 +64,9 @@ import { JobInterestsComponent } from './interests/job-interests/job-interests.c
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgxWebstorageModule.forRoot()
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]

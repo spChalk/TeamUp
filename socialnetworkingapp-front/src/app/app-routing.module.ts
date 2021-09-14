@@ -11,20 +11,21 @@ import {ChatComponent} from "./chat/chat.component";
 import {AccountComponent} from "./account/account.component";
 import {AdminComponent} from "./admin/admin.component";
 import {NetworkComponent} from "./network/network.component";
+import { AuthGuardService } from './authentication';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'jobs/:uid', component: JobComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'settings/:id', component: SettingsComponent },
-  { path: 'chat', component: ChatComponent },
-  { path: 'account/:id', component: AccountComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'network/:uid', component: NetworkComponent },
+  { path: 'about', component: AboutComponent, },
+  { path: 'home', component: HomeComponent , canActivate: [AuthGuardService]},
+  { path: 'jobs', component: JobComponent,canActivate: [AuthGuardService] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuardService] },
+  { path: 'chat', component: ChatComponent , canActivate: [AuthGuardService]},
+  { path: 'account/:id', component: AccountComponent ,canActivate: [AuthGuardService]},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
+  { path: 'network', component: NetworkComponent ,canActivate: [AuthGuardService]},
+  { path: 'network/:uid', component: NetworkComponent , canActivate : [AuthGuardService ]},
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}
