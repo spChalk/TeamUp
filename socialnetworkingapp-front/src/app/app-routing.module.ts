@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuardService] },
   { path: 'chat', component: ChatComponent , canActivate: [AuthGuardService]},
   { path: 'account/:id', component: AccountComponent ,canActivate: [AuthGuardService]},
+  { path: 'account', component: AccountComponent ,canActivate: [AuthGuardService]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
   { path: 'network', component: NetworkComponent ,canActivate: [AuthGuardService]},
   { path: 'network/:uid', component: NetworkComponent , canActivate : [AuthGuardService ]},
