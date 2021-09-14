@@ -36,12 +36,27 @@ export class AccountService {
     });
   }
 
+  public getAccountsBySimilarEmail(keyword: string): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.url}/find/mails/${keyword}`, {
+      headers: new HttpHeaders( {
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+      })
+    });
+  }
+
+  public getAccountsBySimilarName(keyword: string): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.url}/find/names/${keyword}`, {
+      headers: new HttpHeaders( {
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+      })
+    });
+  }
+
   public registerAccount(account: Account): Observable<Account> {
 
     /* https://www.gitmemory.com/issue/angular/angular/18396/490910837 */
     let httpOptions = { headers: new HttpHeaders(
-      { 'Content-Type': 'application/json', }),
-                responseType: 'text' as 'json' };
+      { 'Content-Type': 'application/json', })};
 
                 console.log(account)
     return this.http.post<Account>(`${environment.apiBaseUrl}/register`,
@@ -57,5 +72,10 @@ export class AccountService {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
 
+  public getNetworkById(uid: number) {
+    return this.http.get<Account[]>(`${this.url}/network/all/${uid}`);
+  }
+
   /* TODO: addFriend */
+
 }

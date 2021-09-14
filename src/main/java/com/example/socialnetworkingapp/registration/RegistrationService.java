@@ -16,13 +16,13 @@ public class RegistrationService {
     private final EmailValidatorService emailValidatorService;
     private final AccountService accountService;
 
-    public String register(RegistrationRequest request) throws InterruptedException {
+    public Account register(RegistrationRequest request) throws InterruptedException {
         boolean isValidEmail = emailValidatorService.test(request.getEmail());
 
         if(!isValidEmail){
             throw new NotValidEmailException("email not valid!");
         }
 
-        return accountService.accountSignUp(new Account(AccountRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone()));
+        return accountService.accountSignUp(request);
     }
 }

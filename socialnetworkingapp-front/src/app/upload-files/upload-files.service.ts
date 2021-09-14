@@ -29,4 +29,8 @@ export class UploadFileService {
   getFiles(): Observable<any> {
     return this.http.get(`${environment.apiBaseUrl}/files`);
   }
+
+  delete(imageUrl: string) {
+    return this.http.delete(`${environment.apiBaseUrl}/files/delete/${imageUrl}`);
+  }
 }

@@ -1,10 +1,10 @@
+import {Account} from "../account/account";
 
 enum JobType {
   FULL_TIME,
   PART_TIME,
   INTERNSHIP,
-  CONTRACT,
-  OTHER
+  CONTRACT
 }
 
 enum ExperienceLevel {
@@ -20,16 +20,16 @@ export class Job {
 
   id: number;
   title: string;
-  company: string;
+  publisher: Account;
   location: string;
   datePosted: Date;
   jobType: JobType;
   experienceLevel: ExperienceLevel;
   info: string;
 
-  constructor(title: string, company: string, location: string, datePosted: Date, jobType: JobType, experienceLevel: ExperienceLevel, info: string) {
+  constructor(title: string, publisher: Account, location: string, datePosted: Date, jobType: JobType, experienceLevel: ExperienceLevel, info: string) {
     this.title = title;
-    this.company = company;
+    this.publisher = publisher;
     this.location = location;
     this.datePosted = datePosted;
     this.jobType = jobType;

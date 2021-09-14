@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.job;
 
+import com.example.socialnetworkingapp.model.account.Account;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -42,12 +43,13 @@ public class Job implements Serializable {
     private String title;
 
     @NotNull
-    private String company;
+    @OneToOne
+    private Account publisher;
 
     @NotNull
     private String location;
 
-    private Date datePosted;
+    private String Date;
 
     @NotNull
     private JobType jobType;

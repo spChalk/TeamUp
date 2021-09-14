@@ -1,9 +1,14 @@
 import {Account} from "../account/account";
 import {Job} from "../job/job";
 
-export interface JobApplication {
+export class JobApplication {
 
   id: number;
-  user: Account;
+  applicant: Account;
   job: Job;
+
+  constructor(applicant: Account, job: Job) {
+    this.applicant = applicant;
+    this.job = job;
+  }
 }

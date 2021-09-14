@@ -12,6 +12,10 @@ import { repeatGroups } from "@angular/compiler/src/shadow_css";
 import { BioComponent } from "../bio/bio.component";
 import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
+import {repeatGroups} from "@angular/compiler/src/shadow_css";
+import {r3JitTypeSourceSpan} from "@angular/compiler";
+import {AccInterestsService} from "../interests/acc-interests/acc-interests.service";
+import {AccountInterest} from "../interests/acc-interests/acc_interests";
 
 @Component({
     selector: 'app-register',
@@ -35,7 +39,9 @@ export class RegisterComponent implements OnInit {
         public router: Router,
         private uploadService: UploadFileService,
         private bioService: BioService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private interestsService: AccInterestsService
+
     ) { }
 
     ngOnInit(): void {

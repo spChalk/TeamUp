@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'account/:id', component: AccountComponent ,canActivate: [AuthGuardService]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
   { path: 'network', component: NetworkComponent ,canActivate: [AuthGuardService]},
+  { path: 'network/:uid', component: NetworkComponent , canActivate : [AuthGuardService ]},
 
   // otherwise, redirect to home
   { path: '**', redirectTo: ''}

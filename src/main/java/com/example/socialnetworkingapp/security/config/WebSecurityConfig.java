@@ -52,6 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/posts/**").permitAll()
                                 .antMatchers("/jobs/**").permitAll()
                                 .antMatchers("/crequest/**").permitAll()
+                                .antMatchers("/download/**").permitAll()
+                                .antMatchers("/jobapp/**").permitAll()
+                                .antMatchers("/job_views/**").permitAll()
+                                .antMatchers("/acc_tags/**").permitAll()
+                                .antMatchers("/job_tags/**").permitAll()
                                 .anyRequest().authenticated();
 
 //        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));

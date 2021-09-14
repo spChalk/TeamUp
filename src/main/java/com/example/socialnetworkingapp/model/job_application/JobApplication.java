@@ -2,6 +2,7 @@ package com.example.socialnetworkingapp.model.job_application;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.job.Job;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,10 +23,10 @@ public class JobApplication implements Serializable {
     private Long id ;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
+    @NotNull
     private Account applicant;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
+    @NotNull
     private Job job;
 }

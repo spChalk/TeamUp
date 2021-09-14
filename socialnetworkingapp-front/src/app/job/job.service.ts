@@ -21,4 +21,8 @@ export class JobService {
         })
       });
   }
+
+  public addJob(job: Job) {
+    return this.http.post<Job>(`${this.url}/add`, job);
+  }
 }

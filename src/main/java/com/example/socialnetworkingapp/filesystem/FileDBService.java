@@ -1,8 +1,14 @@
 package com.example.socialnetworkingapp.filesystem;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.example.socialnetworkingapp.model.account.Account;
@@ -35,6 +41,10 @@ public class FileDBService {
         return saved;
     }
 
+    public FileDB storeBytes(byte[] file, String fileName, String cType) throws IOException {
+        return fileDBRepository.save(new FileDB(fileName, cType, null, file));
+    }
+
     public FileDB getFile(String id) {
         return fileDBRepository.findById(id).get();
     }
@@ -45,5 +55,31 @@ public class FileDBService {
 
     public String getFileIdByOwnerEmail(String email) {
         return fileDBRepository.findIdByOwnerEmail(email).getId();
+    }
+
+    /* https://stackoverflow.com/questions/4645242/how-do-i-move-a-file-from-one-location-to-another-in-java */
+    public void moveFile(String source, String target) {
+        File fileToMove = new File(source);
+        fileToMove.renameTo(new File(target));
+    }
+
+    /* https://www.baeldung.com/java-list-directory-files */
+    public Set<String> listDir(String dir) throws IOException {
+        Set<String> fileList = new HashSet<>();
+        Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                    throws IOException {
+                if (!Files.isDirectory(file)) {
+                    fileList.add(file.getFileName().toString());
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        return fileList;
+    }
+
+    public void deleteFile(String id) {
+        this.fileDBRepository.deleteById(id);
     }
 }
