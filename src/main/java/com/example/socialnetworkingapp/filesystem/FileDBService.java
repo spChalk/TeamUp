@@ -78,4 +78,8 @@ public class FileDBService {
         });
         return fileList;
     }
+
+    public void deleteFile(String id) {
+        this.fileDBRepository.deleteById(id);
+    }
 }

@@ -66,4 +66,10 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(fileDB.getData());
     }
+
+    @DeleteMapping("/files/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteFile(@PathVariable("id") String id) {
+        this.storageService.deleteFile(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -6,7 +6,7 @@
 <br>
 <h1 style="text-align: center">Settings</h1>
 <br>
-<div class="container">
+<div class="container" id="main-container">
 
 
   <div class="row gutters-sm">
@@ -57,11 +57,20 @@
                 <input type="text" class="form-control" ngModel name="phone" id="phone" aria-describedby="phoneHelp" placeholder="Enter your phone" value="{{this.account?.phone}}">
               </div>
               <div class="form-group">
+                <label for="image">Profile photo</label>
+                <br>
+                <label class="btn btn-default">
+                  <input type="file" (change)="selectFile($event)" />
+                </label>
+                <div class="alert alert-light" role="alert">{{ message }}</div>
+              </div>
+              <hr>
+              <div class="form-group">
                 <label for="bio">Your Bio</label>
                 <textarea type="text" class="form-control" ngModel name="bio" id="bio" aria-describedby="bioHelp" placeholder="Enter your bio..." value="{{this?.bio}}"></textarea>
               </div>
 
-              <button type="button" (click)="updateProfileInformation(settingsForm)" [disabled]="settingsForm.invalid" class="btn btn-primary">Update Profile</button>
+              <button type="button" (click)="upload();updateProfileInformation(settingsForm);" [disabled]="settingsForm.invalid" class="btn btn-primary">Update Profile</button>
             </form>
           </div>
           <div class="tab-pane" id="account">
@@ -73,7 +82,7 @@
                 <input type="text" class="form-control" ngModel name="email" id="email" aria-describedby="emailHelp" placeholder="Enter your email" value="{{this.account?.email}}" required>
                 <small id="emailHelp" class="form-text text-muted">After changing your email, your old email becomes available for anyone else to claim.</small>
               </div>
-              <button (click)="updateEmail(emailForm)" [disabled]="emailForm.invalid" class="btn btn-warning" type="button">Change email</button>
+              <button (click)="onClickModal('updateEmail')" [disabled]="emailForm.invalid" class="btn btn-warning" type="button">Change email</button>
               <hr>
             </form>
               <form #passwordForm="ngForm">
@@ -83,7 +92,7 @@
                 </div>
                 <input type="password" class="form-control" ngModel name="password" id="password" aria-describedby="passwordHelp" placeholder="Enter your password" required>
               </div>
-              <button (click)="updatePassword(passwordForm)" [disabled]="passwordForm.invalid" class="btn btn-danger" type="button">Change password</button>
+              <button (click)="onClickModal('updatePass')" [disabled]="passwordForm.invalid" class="btn btn-danger" type="button">Change password</button>
             </form>
           </div>
 
@@ -92,5 +101,53 @@
       </div>
     </div>
   </div>
+</div>
 
+
+<!-- Confirm password modal for email -->
+<div class="modal fade" id="updateEmail" tabindex="-1" role="dialog" aria-labelledby="updateEmailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateEmailModalLabel">Confirm password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Enter your current password, in order to proceed.
+        <form #confirmEmail="ngForm">
+          <input type="password" class="form-control" ngModel name="password" id="conf_email" aria-describedby="passwordHelp" placeholder="Enter your password" required>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button (click)="updateEmail(emailForm, confirmEmail.value.password)" type="button" class="btn btn-warning"  data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm password modal for password -->
+<div class="modal fade" id="updatePass" tabindex="-1" role="dialog" aria-labelledby="updatePassModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatePassModalLabel">Confirm password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Enter your current password, in order to proceed.
+        <form #confirmPassword="ngForm">
+          <input type="password" class="form-control" ngModel name="password" id="conf_password" aria-describedby="passwordHelp" placeholder="Enter your password" required>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button (click)="updatePassword(passwordForm, confirmPassword.value.password)" type="button" class="btn btn-danger"  data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
 </div>
