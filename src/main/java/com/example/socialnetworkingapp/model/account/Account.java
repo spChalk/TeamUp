@@ -1,17 +1,15 @@
 package com.example.socialnetworkingapp.model.account;
 
-import com.example.socialnetworkingapp.model.bio.Bio;
+import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.security.jwt.CustomAuthorityDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.*;
@@ -60,6 +58,8 @@ public class Account implements UserDetails {
             inverseJoinColumns={@JoinColumn(name="user2_id")})
     private List<Account> following = new ArrayList<Account>();
 
+    @ManyToMany(mappedBy = "accounts", fetch = FetchType.LAZY)
+    private List<Tag> tags = new ArrayList<>();
 
     public Account(AccountRole role, String firstName, String lastName, String email, String password, String phone) {
         this.role = role;

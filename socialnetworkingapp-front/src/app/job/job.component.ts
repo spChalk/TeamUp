@@ -33,12 +33,14 @@ export class JobComponent implements OnInit {
               private accountService: AccountService,
               private route: ActivatedRoute,
               private interestsService: JobInterestsService) {
-   this.route.params.subscribe(params => {
+
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
       console.log(params);
       if (params['uid']) {
-/*
         this.getJobs(params['uid']);
-*/
         this.accountService.getAccountById(params['uid']).subscribe(
           (acc: Account) => {
             this.currUser = acc;
@@ -47,16 +49,12 @@ export class JobComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.getJobs();
-  }
-
-  public getJobs(): void {
-    this.jobService.getAllJobs().subscribe(
+  public getJobs(uid: number): void {
+    this.jobService.getAllJobs(uid).subscribe(
       (response: Job[]) => {
         this.jobs = response;
         console.log(this.jobs);
-      },
+    },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
@@ -102,9 +100,16 @@ export class JobComponent implements OnInit {
 
   public onAddJob(jobForm: NgForm) {
 
-    jobForm.value.publisher = this.currUser;
-    jobForm.value.datePosted = new Date();
-    this.jobService.addJob(jobForm.value).subscribe(
+    let newJob = new Job(jobForm.value.title,
+      this.currUser,
+      jobForm.value.location,
+      new Date(),
+      jobForm.value.jobType,
+      jobForm.value.experienceLevel,
+      jobForm.value.info,
+      );
+
+    this.jobService.addJob(newJob).subscribe(
       (response: Job) => {
         console.log(response);
 
@@ -120,7 +125,7 @@ export class JobComponent implements OnInit {
         }
 
 
-        this.getJobs();
+        this.getJobs(this.currUser.id);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

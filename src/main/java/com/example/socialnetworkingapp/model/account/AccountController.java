@@ -3,13 +3,11 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.model.tags.AccountTag;
+import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;

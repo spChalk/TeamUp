@@ -1,5 +1,4 @@
-package com.example.socialnetworkingapp.model.interests;
-
+package com.example.socialnetworkingapp.model.tags;
 
 public enum Tags {
     TECHNOLOGY,

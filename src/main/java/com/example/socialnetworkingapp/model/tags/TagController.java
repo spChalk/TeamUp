@@ -1,4 +1,4 @@
-package com.example.socialnetworkingapp.model.interests.account_tags;
+package com.example.socialnetworkingapp.model.tags;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/acc_tags")
 @AllArgsConstructor
-public class AccountInterestsController {
+@RestController
+@RequestMapping("/tags")
+public class TagController {
 
-    private final AccountInterestsService interestsService;
+    private TagService tagService;
 
     @PostMapping("/add")
-    public ResponseEntity<AccountInterest> addTag(@RequestBody AccountInterest interest){
-        return new ResponseEntity<>(this.interestsService.addTag(interest), HttpStatus.CREATED);
+    public ResponseEntity<Tag> addTag(@RequestBody Tag tag) {
+        return new ResponseEntity<>(this.tagService.addTag(tag), HttpStatus.CREATED);
     }
 }

@@ -11,7 +11,7 @@ import {JobInterestsComponent} from "./job-interests.component";
 })
 export class JobInterestsService {
 
-  private url = environment.apiBaseUrl + "/job_tags";
+  private url = environment.apiBaseUrl + "/jobs/tags";
   constructor(private http: HttpClient) { }
 
   public addTag(job: Job, interest: number): Observable<JobInterest> {

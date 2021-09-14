@@ -3,7 +3,7 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

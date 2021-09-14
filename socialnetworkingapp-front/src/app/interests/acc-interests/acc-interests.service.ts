@@ -10,10 +10,10 @@ import {AccountInterest} from "./acc_interests";
 })
 export class AccInterestsService {
 
-  private url = environment.apiBaseUrl + "/acc_tags";
+  private url = environment.apiBaseUrl + "/accounts/tags";
   constructor(private http: HttpClient) { }
 
-  public addTag(account: Account, interest: number): Observable<AccountInterest> {
-    return this.http.post<AccountInterest>(`${this.url}/add`, new AccountInterest(account, interest));
+  public addTag(account: Account, interest: number): any {
+    return this.http.post<any>(`${this.url}/add`, new AccountInterest(account, interest));
   }
 }

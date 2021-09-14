@@ -1,12 +1,14 @@
 package com.example.socialnetworkingapp.model.job;
 
 import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.tags.Tag;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Getter
@@ -60,4 +62,7 @@ public class Job implements Serializable {
     @NotNull
     @Lob
     private String info;
+
+    @ManyToMany(mappedBy = "jobs", fetch = FetchType.LAZY)
+    private List<Tag> tags = new ArrayList<>();
 }

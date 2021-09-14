@@ -13,8 +13,8 @@ export class JobService {
   private url = environment.apiBaseUrl + "/jobs";
   constructor(private http: HttpClient) {  }
 
-  public getAllJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>(`${this.url}/all`,
+  public getAllJobs(uid: number): Observable<Job[]> {
+    return this.http.get<Job[]>(`${this.url}/all/${uid}`,
       {
         headers: new HttpHeaders( {
           "Access-Control-Allow-Origin": "http://localhost:4200",

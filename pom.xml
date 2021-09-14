@@ -34,7 +34,11 @@
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.javatuples</groupId>
+			<artifactId>javatuples</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
