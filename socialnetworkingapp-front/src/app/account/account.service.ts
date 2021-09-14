@@ -16,6 +16,9 @@ export class AccountService {
   private url = environment.apiBaseUrl + '/accounts';
   constructor(private http: HttpClient) {  }
 
+  public fetchUser(email:string): Observable<Account> {
+    return this.http.get<Account>(`${this.url}/find/mail/${email}`);
+  }
   public getAllAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(`${this.url}/all`,
       {
