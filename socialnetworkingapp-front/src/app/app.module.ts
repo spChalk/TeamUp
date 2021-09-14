@@ -55,7 +55,7 @@ import { JobInterestsComponent } from './interests/job-interests/job-interests.c
     NetworkComponent,
     UploadFilesComponent,
     NavBarAuthenticatedComponent,
-    NavBarComponent
+    NavBarComponent,
     JobViewComponent,
     AccInterestsComponent,
     JobInterestsComponent
