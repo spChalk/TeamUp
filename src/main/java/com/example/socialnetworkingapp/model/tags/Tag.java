@@ -23,22 +23,24 @@ public class Tag {
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "account_tags",
-            joinColumns={@JoinColumn(name="tag_id")},
-            inverseJoinColumns={@JoinColumn(name="account_id")})
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }, mappedBy = "tags")
     private List<Account> accounts = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "job_tags",
-            joinColumns={@JoinColumn(name="tag_id")},
-            inverseJoinColumns={@JoinColumn(name="job_id")})
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }, mappedBy = "tags")
     private List<Job> jobs = new ArrayList<>();
 
     @NotNull
-    private Tags tag;
+    private String tag;
 
-    public Tag(Tags tag) {
+    public Tag(String tag) {
         this.tag = tag;
     }
 }

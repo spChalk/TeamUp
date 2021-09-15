@@ -58,7 +58,14 @@ public class Account implements UserDetails {
             inverseJoinColumns={@JoinColumn(name="user2_id")})
     private List<Account> following = new ArrayList<Account>();
 
-    @ManyToMany(mappedBy = "accounts", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "account_tags",
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private List<Tag> tags = new ArrayList<>();
 
     public Account(AccountRole role, String firstName, String lastName, String email, String password, String phone) {

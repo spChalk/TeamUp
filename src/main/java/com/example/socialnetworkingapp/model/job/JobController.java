@@ -43,9 +43,8 @@ public class JobController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/tags/add")
-    public ResponseEntity<HttpStatus>addTag(@RequestBody Job job, Tag tag) {
-        this.jobService.addTag(job, tag);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/tags/add/{tagName}")
+    public ResponseEntity<Job>addTag(@PathVariable("tagName") String tagName, @RequestBody Long id) {
+        return new ResponseEntity<>(this.jobService.addTag(tagName, id), HttpStatus.OK);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.socialnetworkingapp.model.job;
 
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountRepository;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
+import com.example.socialnetworkingapp.model.tags.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class JobService {
     private final JobRepository jobRepository;
     private final AccountRepository accountRepository;
     private final JobViewRepository jobViewRepository;
+    private final TagService tagService;
     /*
     private final AccountInterestsService accountInterestsService;
     private final JobInterestsRepository jobInterestsRepository;
@@ -228,12 +231,16 @@ public class JobService {
         this.jobRepository.deleteById(id);
     }
 
-    public void addTag(Job job, Tag tag) {
+    public Job addTag(String tagName, Long id) {
 
-        if(job.getTags().contains(tag)) {
-            return;
+        Job job = findJobById(id);
+        Tag existingTag = this.tagService.getTagByName(tagName);
+        if(existingTag == null) {
+            job.getTags().add(this.tagService.addTag(new Tag(tagName)));
+        } else {
+            job.getTags().add(existingTag);
         }
-        job.getTags().add(tag);
-        this.jobRepository.save(job);
-    }
+        return this.jobRepository.save(job);
+
+     }
 }

@@ -4,8 +4,10 @@ import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
 import com.example.socialnetworkingapp.model.tags.Tag;
+import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TagService tagService;
     private final AccountMapper accountMapper;
 
     /*
@@ -122,5 +125,17 @@ public class AccountService implements UserDetailsService {
         String encodedPassword = bCryptPasswordEncoder.encode(account.getPassword());
         account.setPassword(encodedPassword);
         this.accountRepository.save(account);
+    }
+
+    public Account addTag(String tagName, String email) {
+
+        Account account = findAccountByEmail(email);
+        Tag existingTag = this.tagService.getTagByName(tagName);
+        if(existingTag == null) {
+            account.getTags().add(this.tagService.addTag(new Tag(tagName)));
+        } else {
+            account.getTags().add(existingTag);
+        }
+        return this.accountRepository.save(account);
     }
 }

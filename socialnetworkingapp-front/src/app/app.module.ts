@@ -29,8 +29,7 @@ import { NavBarAuthenticatedComponent } from './nav-bar-authenticated/nav-bar-au
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { JobViewComponent } from './job-view/job-view.component';
-import { AccInterestsComponent } from './interests/acc-interests/acc-interests.component';
-import { JobInterestsComponent } from './interests/job-interests/job-interests.component';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   declarations: [
@@ -57,8 +56,7 @@ import { JobInterestsComponent } from './interests/job-interests/job-interests.c
     NavBarAuthenticatedComponent,
     NavBarComponent,
     JobViewComponent,
-    AccInterestsComponent,
-    JobInterestsComponent
+    TagsComponent
   ],
   imports: [
     BrowserModule,

@@ -13,8 +13,7 @@ import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
 import {repeatGroups} from "@angular/compiler/src/shadow_css";
 import {r3JitTypeSourceSpan} from "@angular/compiler";
-import {AccInterestsService} from "../interests/acc-interests/acc-interests.service";
-import {AccountInterest} from "../interests/acc-interests/acc_interests";
+import {TagsService} from "../tags/tags.service";
 
 @Component({
     selector: 'app-register',
@@ -39,7 +38,7 @@ export class RegisterComponent implements OnInit {
         private uploadService: UploadFileService,
         private bioService: BioService,
         private fb: FormBuilder,
-        private interestsService: AccInterestsService
+        private tagsService: TagsService
 
     ) { }
 
@@ -54,7 +53,8 @@ export class RegisterComponent implements OnInit {
             // conf_password : new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
             firstName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
             lastName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
-            phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(15)])
+            phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(15)]),
+            interests: new FormControl('')
         });
 
     }
@@ -92,6 +92,18 @@ export class RegisterComponent implements OnInit {
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
                 console.log(response);
+
+                for(let interest of registerForm. value.interests) {
+                  this.tagsService.addAccountTag(response.email, interest).subscribe(
+                    (resp: Account) => {
+                      console.log(resp);
+                    },
+                    (err: HttpErrorResponse) => {
+                      alert(err.message);
+                    }
+                  );
+                }
+
             },
             (error) => {
                 this.correctCredentials = false;

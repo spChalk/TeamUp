@@ -3,9 +3,10 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
-import com.example.socialnetworkingapp.model.tags.AccountTag;
 import com.example.socialnetworkingapp.model.tags.Tag;
+import com.example.socialnetworkingapp.model.tags.TagService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -114,5 +115,10 @@ public class AccountController {
     public ResponseEntity<?> deleteFromNetwork(@PathVariable("me") Long me, @PathVariable("uid") Long uid){
         this.connectionReqService.deleteRequestByAccIds(me, uid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/tags/add/{tagName}")
+    public ResponseEntity<Account> addTag(@PathVariable("tagName") String tagName, @RequestBody String email) {
+        return new ResponseEntity<>(this.accountService.addTag(tagName, email), HttpStatus.OK);
     }
 }

@@ -11,10 +11,7 @@ import {JobApplication} from "../job-application/job-application";
 import {NgForm} from "@angular/forms";
 import {JobViewService} from "../job-view/job-view.service";
 import {JobView} from "../job-view/job-view";
-import {AccountInterest} from "../interests/acc-interests/acc_interests";
-import {AccInterestsService} from "../interests/acc-interests/acc-interests.service";
-import {JobInterestsService} from "../interests/job-interests/job-interests.service";
-import {JobInterest} from "../interests/job-interests/job_interests";
+import {TagsService} from "../tags/tags.service";
 
 @Component({
   selector: 'app-job',
@@ -32,7 +29,7 @@ export class JobComponent implements OnInit {
               private jobViewService: JobViewService,
               private accountService: AccountService,
               private route: ActivatedRoute,
-              private interestsService: JobInterestsService) {
+              private tagsService: TagsService) {
 
   }
 
@@ -114,8 +111,8 @@ export class JobComponent implements OnInit {
         console.log(response);
 
         for (let interest of jobForm.value.interests) {
-          this.interestsService.addTag(response, interest).subscribe(
-            (res: JobInterest) => {
+          this.tagsService.addJobTag(response.id, interest).subscribe(
+            (res: Job) => {
               console.log(res);
             },
             (err: HttpErrorResponse) => {
@@ -123,8 +120,6 @@ export class JobComponent implements OnInit {
             }
           );
         }
-
-
         this.getJobs(this.currUser.id);
       },
       (error: HttpErrorResponse) => {
