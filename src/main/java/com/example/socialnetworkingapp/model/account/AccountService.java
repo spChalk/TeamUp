@@ -3,6 +3,10 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
+import com.example.socialnetworkingapp.model.bio.Bio;
+import com.example.socialnetworkingapp.model.bio.BioService;
+import com.example.socialnetworkingapp.model.experience.Experience;
+import com.example.socialnetworkingapp.model.experience.ExperienceService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
@@ -14,7 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,6 +29,8 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TagService tagService;
+    private final ExperienceService experienceService;
+    private final BioService bioService;
     private final AccountMapper accountMapper;
 
     /*
@@ -137,5 +145,27 @@ public class AccountService implements UserDetailsService {
             account.getTags().add(existingTag);
         }
         return this.accountRepository.save(account);
+    }
+
+    public Account addExperience(String email, Experience xp) {
+
+        Account account = findAccountByEmail(email);
+        account.getExperience().add(this.experienceService.addExperience(xp));
+        return this.accountRepository.save(account);
+    }
+
+    public List<Experience> getExperience(String email) {
+
+        Account account = this.accountRepository.findAccountByEmail(email).orElseThrow(
+                () -> new UserNotFoundException("User with email " + email + " was not found!")
+        );
+        return account.getExperience();
+    }
+
+    public Bio addBio(String email, Bio bio) {
+        Account account = findAccountByEmail(email);
+        account.setBio(this.bioService.addBio(bio));
+        this.accountRepository.save(account);
+        return account.getBio();
     }
 }

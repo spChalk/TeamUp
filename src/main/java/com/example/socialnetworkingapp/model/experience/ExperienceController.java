@@ -15,11 +15,6 @@ public class ExperienceController {
 
     private final ExperienceService experienceService;
 
-    @GetMapping("/{id}")
-    public List<Experience> getExperienceById(@PathVariable("id") Long id){
-        return experienceService.findExperienceById(id);
-    }
-
     @PostMapping("/add")
     public ResponseEntity<Experience> addExperience(@RequestBody Experience experience){
         Experience newXp = experienceService.addExperience(experience);
@@ -35,12 +30,6 @@ public class ExperienceController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteExperienceById(@PathVariable("id") Long id){
         experienceService.deleteExperience(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete_all/{id}")
-    public ResponseEntity<?> deleteAllExperienceByUserId(@PathVariable("id") Long id){
-        experienceService.deleteALlExperience(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

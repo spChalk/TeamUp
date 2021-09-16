@@ -30,6 +30,16 @@ public class ConnectionReqService {
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
 
+    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccEmail(String email) {
+        return this.connectionReqRepository.findReceivedAcceptedRequestsByAccEmail(email).
+                orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
+    }
+
+    public List<ConnectionRequest> findSentAcceptedRequestsByAccEmail(String email) {
+        return this.connectionReqRepository.findSentAcceptedRequestsByAccEmail(email).
+                orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
+    }
+
     public ConnectionRequest addRequest(ConnectionRequest connectionRequest) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
                 .findPendingRequestByAccIds(connectionRequest.getSender().getId(),

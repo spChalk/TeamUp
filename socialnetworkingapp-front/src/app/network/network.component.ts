@@ -9,6 +9,7 @@ import {environment} from "../../environments/environment";
 import {Observable, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, repeat, switchMap} from "rxjs/operators";
 import {NgForm} from "@angular/forms";
+import {AuthenticationService} from "../authentication";
 
 @Component({
   selector: 'app-network',
@@ -18,22 +19,21 @@ import {NgForm} from "@angular/forms";
 export class NetworkComponent implements OnInit {
 
   public accounts: Account[];
+  private email: string;
 
   constructor(private accountService: AccountService,
               private bioService: BioService,
-              private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      console.log(params);
-      if (params['uid']) {
-        this.getNetwork(params['uid']);
-      }
-    });
+              private route: ActivatedRoute,
+              private authenticationService : AuthenticationService ) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.email = this.authenticationService.getCurrentUser();
+    this.getNetwork(this.email);
+  }
 
-  public getNetwork(uid: number): void {
-    this.accountService.getNetworkById(uid).subscribe(
+  public getNetwork(email: string): void {
+    this.accountService.getNetworkByEmail(email).subscribe(
       (response: Account[]) => {
         this.accounts = response;
         console.log(this.accounts);

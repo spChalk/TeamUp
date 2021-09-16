@@ -1,10 +1,14 @@
 package com.example.socialnetworkingapp.model.bio;
 import com.example.socialnetworkingapp.model.account.Account;
 
+import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 @Data
 @Getter
@@ -21,14 +25,11 @@ public class Bio implements Serializable {
     private Long id;
 
     /* Description */
-    public String description;
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    private String description;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(nullable = false)
-    private Account account;
-
-    public Bio(String desc, Account account) {
-        this.description = desc;
-        this.account = account;
+    public Bio(String description) {
+        this.description = description;
     }
 }

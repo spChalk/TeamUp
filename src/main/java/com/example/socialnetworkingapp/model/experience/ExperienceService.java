@@ -5,16 +5,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ExperienceService {
 
     private final ExperienceRepository experienceRepository;
-
-    public List<Experience> findExperienceById(Long id) {
-        return this.experienceRepository.findAllByUserId(id).orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
-    }
 
     public Experience addExperience(Experience experience) {
         return this.experienceRepository.save(experience);
@@ -28,7 +25,7 @@ public class ExperienceService {
         this.experienceRepository.deleteById(id);
     }
 
-    public void deleteALlExperience(Long id) {
-        this.experienceRepository.deleteByUserId(id);
+    public Optional<Experience> findExperienceById(Long id) {
+        return this.experienceRepository.findById(id);
     }
 }

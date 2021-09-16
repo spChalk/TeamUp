@@ -1,8 +1,10 @@
 package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.filesystem.FileDBService;
+import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import lombok.AllArgsConstructor;
@@ -94,12 +96,12 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/network/all/{uid}")
-    public ResponseEntity<List<Account>> getNetwork(@PathVariable("uid") Long uid) {
+    @GetMapping("/network/all/{email}")
+    public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
 
         /* Get ALL accepted requests, the ones that the user has sent AND received */
-        List<ConnectionRequest> sentRequests = this.connectionReqService.findSentAcceptedRequestsByAccId(uid);
-        List<ConnectionRequest> receivedRequests = this.connectionReqService.findReceivedAcceptedRequestsByAccId(uid);
+        List<ConnectionRequest> sentRequests = this.connectionReqService.findSentAcceptedRequestsByAccEmail(email);
+        List<ConnectionRequest> receivedRequests = this.connectionReqService.findReceivedAcceptedRequestsByAccEmail(email);
 
         List<Account> net = new ArrayList<>();
         for (ConnectionRequest request: sentRequests) {
@@ -120,5 +122,24 @@ public class AccountController {
     @PostMapping("/tags/add/{tagName}")
     public ResponseEntity<Account> addTag(@PathVariable("tagName") String tagName, @RequestBody String email) {
         return new ResponseEntity<>(this.accountService.addTag(tagName, email), HttpStatus.OK);
+    }
+
+    @GetMapping("/experience/get")
+    public ResponseEntity<List<Experience>> getExperience(@RequestBody String email) {
+        return new ResponseEntity<>(this.accountService.getExperience(email), HttpStatus.OK);
+    }
+
+    /* Post a {email, experience} */
+    @PostMapping("/experience/add")
+    public ResponseEntity<Account> addExperience(@RequestBody AccountExperience accountExperience) {
+        return new ResponseEntity<>(this.accountService.addExperience(accountExperience.getEmail(), accountExperience.getXp()),
+                HttpStatus.OK);
+    }
+
+    /* Post a {email, bio} */
+    @PostMapping("/bio/add")
+    public ResponseEntity<Bio> addBio(@RequestBody AccountBio accountBio) {
+        return new ResponseEntity<>(this.accountService.addBio(accountBio.getEmail(), accountBio.getBio()),
+                HttpStatus.OK);
     }
 }

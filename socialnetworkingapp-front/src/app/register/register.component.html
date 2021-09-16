@@ -10,7 +10,7 @@
 <h1 style="text-align: center">Register</h1>
 
 <div class="container" id="main-container">
-  <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm)">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm);onClickModal('addPhoto')">
     <div class="row justify-content-md-center">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="login-screen">
@@ -165,7 +165,7 @@
 </div>
 
 <!-- Add Photo Modal -->
-<!-- <div class="modal fade" id="addPhoto" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+ <div class="modal fade" id="addPhoto" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -186,40 +186,11 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal"(click)="onClickModal('bio')" >No</button>
-        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(regForm.value.email);onClickModal('bio')">
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(registerForm.value.email);">
           Upload
         </button>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
-<!-- Add Bio Modal -->
-<!-- <div class="modal fade" id="addBio" tabindex="-1" role="dialog" aria-labelledby="addBioModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addBioModalLabel">Add a bio to your account</h5>
-        <button type="button" class="close" data-dismiss="modal" (click)="router.navigateByUrl('/')" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Introduce yourself, are you a student, or maybe a business manager? Do you swim or play music? We'd love to learn more about your personality!
-      </div>
-
-      <form #bioForm="ngForm" >
-        <div class="form-group">
-          <textarea ngModel name="bio" class="form-control" placeholder="Your bio..." required></textarea>
-        </div>
-      </form>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="router.navigateByUrl('/')">No, thanks</button>
-        <button class="btn btn-primary" [disabled]="bioForm.invalid" (click)="uploadBio(bioForm.value.bio, regForm.value.email);router.navigateByUrl('/')">
-          Upload
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->

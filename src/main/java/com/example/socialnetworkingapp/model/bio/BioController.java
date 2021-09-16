@@ -13,11 +13,6 @@ public class BioController {
 
     private final BioService bioService;
 
-    @GetMapping("/acc_ref/{id}")
-    public ResponseEntity<Bio> getBioByAccountId(@PathVariable("id") Long id){
-        return new ResponseEntity<>(bioService.findBioByAccountId(id), HttpStatus.OK);
-    }
-
     @PostMapping("/add")
     public ResponseEntity<Bio> addBio(@RequestBody Bio bio){
         Bio newBio = bioService.addBio(bio);
@@ -30,9 +25,10 @@ public class BioController {
         return new ResponseEntity<>(newBio, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBioByAccountId(@PathVariable("id") Long id){
-        bioService.deleteBioByAccountId(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteBio(@RequestBody Bio bio){
+        this.bioService.deleteBio(bio);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

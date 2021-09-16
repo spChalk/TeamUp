@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Part;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -12,11 +13,6 @@ import java.util.Optional;
 public class BioService {
 
     private final BioRepository bioRepository;
-
-    public Bio findBioByAccountId(Long id) {
-        Optional<Bio> bio = this.bioRepository.findBioByAccountId(id);
-        return bio.orElse(null);
-    }
 
     public Bio addBio(Bio bio) {
         return this.bioRepository.save(bio);
@@ -26,7 +22,7 @@ public class BioService {
         return this.bioRepository.save(bio);
     }
 
-    public void deleteBioByAccountId(Long id) {
-        this.bioRepository.deleteBioByAccountId(id);
+    public void deleteBio(Bio bio) {
+        this.bioRepository.delete(bio);
     }
 }

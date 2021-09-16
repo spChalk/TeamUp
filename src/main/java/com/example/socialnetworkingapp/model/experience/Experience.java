@@ -6,7 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -14,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name="experience")
 public class Experience implements Serializable {
 
     private enum EmploymentType {
@@ -45,15 +47,11 @@ public class Experience implements Serializable {
     private String location;
 
     @NotNull
-    private Date startDate;
+    private String startDate;
 
     @NotNull
-    private Date endDate;
+    private String endDate;
 
     private String headline;
     private String description;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
-    private Account user;
 }

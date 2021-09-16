@@ -75,8 +75,8 @@ export class AccountService {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
 
-  public getNetworkById(uid: number) {
-    return this.http.get<Account[]>(`${this.url}/network/all/${uid}`);
+  public getNetworkByEmail(email: string) {
+    return this.http.get<Account[]>(`${this.url}/network/all/${email}`);
   }
 
   /* TODO: addFriend */

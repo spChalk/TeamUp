@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.fb.group({
             email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
-            // conf_password : new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
+            /*conf_password : new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(16)]),*/
             firstName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
             lastName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
             phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(15)]),
@@ -84,16 +84,16 @@ export class RegisterComponent implements OnInit {
     }
 
     public onRegister(registerForm: FormGroup): void {
-        //   if(registerForm.get('password').value !== registerForm.get('conf_password').value){
-        //     console.log("passwords do not match");
-        //     registerForm.reset();
-        //     return;
-        //   }
+/*        if(registerForm.get('password').value !== registerForm.get('conf_password').value){
+          console.log("passwords do not match");
+          registerForm.reset();
+          return;
+        }*/
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
                 console.log(response);
 
-                for(let interest of registerForm. value.interests) {
+                for(let interest of registerForm.value.interests) {
                   this.tagsService.addAccountTag(response.email, interest).subscribe(
                     (resp: Account) => {
                       console.log(resp);
@@ -113,37 +113,21 @@ export class RegisterComponent implements OnInit {
         );
     }
 
-    //   public onClickModal(mode: string): void {
+    public onClickModal(mode: string): void {
 
-    //     const container = document.getElementById('main-container');
+      const container = document.getElementById('main-container');
 
-    //     const button = document.createElement('button');
-    //     button.type = 'button';
-    //     button.style.display = 'none';
-    //     button.setAttribute('data-toggle', 'modal');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.style.display = 'none';
+      button.setAttribute('data-toggle', 'modal');
 
-    //     if(mode === 'addPhoto') {
-    //       button.setAttribute('data-target', '#addPhoto');
-    //     }
-    //     if(mode === 'bio') {
-    //       button.setAttribute('data-target', '#addBio');
-    //     }
-    //     if(container != null) {
-    //       container.appendChild(button);
-    //       button.click();
-    //     }
-    //   }
-
-    //   uploadBio(description: string, email: string) {
-    //     this.accountService.getAccountByEmail(email).subscribe((response) => {
-    //       this.bioService.addBio( new Bio(description, response) ).subscribe(
-    //         (responseBio: Bio) => {
-    //           console.log(responseBio);
-    //         },
-    //         (error: HttpErrorResponse) => {
-    //           alert(error.message);
-    //         }
-    //       );
-    //     });
-    //   }
+      if(mode === 'addPhoto') {
+        button.setAttribute('data-target', '#addPhoto');
+      }
+      if(container != null) {
+        container.appendChild(button);
+        button.click();
+      }
+    }
 }

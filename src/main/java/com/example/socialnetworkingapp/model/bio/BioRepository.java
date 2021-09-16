@@ -12,11 +12,4 @@ import java.util.Optional;
 @Transactional
 public interface BioRepository extends JpaRepository<Bio, Long> {
 
-    @Query("SELECT b FROM Bio b WHERE b.account.id = ?1")
-    Optional<Bio> findBioByAccountId(Long id);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Bio b WHERE b.account.id = ?1")
-    void deleteBioByAccountId(Long id);
 }
