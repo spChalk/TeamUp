@@ -23,20 +23,6 @@ public class Tag {
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }, mappedBy = "tags")
-    private List<Account> accounts = new ArrayList<>();
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }, mappedBy = "tags")
-    private List<Job> jobs = new ArrayList<>();
-
     @NotNull
     private String tag;
 

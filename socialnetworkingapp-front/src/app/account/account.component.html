@@ -6,11 +6,11 @@
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container emp-profile shadow ">
-  <form method="post">
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
@@ -30,44 +30,66 @@
               {{this.account?.email}}
           </h6>
           <p class="profile-rating">Since {{this.account?.dateCreated}}</p>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+          <!--<ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bio" role="tab" aria-controls="profile" aria-selected="false">Bio</a>
+              <a class="nav-link" id="bio-tab" data-toggle="tab" href="#bio" role="tab" aria-controls="bio" >Bio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#education" role="tab" aria-controls="profile" aria-selected="false">Education</a>
+              <a class="nav-link" id="education-tab" data-toggle="tab" href="#education" role="tab" aria-controls="education" >Education</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#working-experience" role="tab" aria-controls="profile" aria-selected="false">Experience</a>
+              <a class="nav-link" id="working_experience-tab" data-toggle="tab" href="#working-experience" role="tab" aria-controls="working_experience" >Experience</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#interests" role="tab" aria-controls="profile" aria-selected="false">Interests</a>
+              <a class="nav-link" id="tags-tab" data-toggle="tab" href="#interests" role="tab" aria-controls="tags" >Interests</a>
+            </li>
+          </ul>-->
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#home">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#bio">Bio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#education">Education</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " data-toggle="tab" href="#working_experience">Experience</a>
             </li>
           </ul>
+
+
         </div>
       </div>
+
       <div class="col-md-2">
         <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
       </div>
+
     </div>
+
+
     <div class="row">
       <div class="col-md-4">
         <div class="profile-work">
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br/>
-          <a href="">Bootsnipp Profile</a><br/>
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br/>
-          <a href="">Web Developer</a><br/>
-          <a href="">WordPress</a><br/>
-          <a href="">WooCommerce</a><br/>
-          <a href="">PHP, .Net</a><br/>
+          <h6>INTERESTS</h6>
+          <hr>
+           <h6 *ngFor="let tag of this.account.tags">
+             <span class="badge badge-secondary">
+               {{tag?.tag.replace("_", " ")}}
+             </span>
+             <br>
+           </h6>
         </div>
       </div>
+
       <div class="col-md-8">
         <div class="tab-content profile-tab" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -95,88 +117,92 @@
                 <p>{{account?.phone}}</p>
               </div>
             </div>
-          </div>
-          <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Hourly Rate</label>
-              </div>
-              <div class="col-md-6">
-                <p>10$/hr</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Total Projects</label>
-              </div>
-              <div class="col-md-6">
-                <p>230</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>English Level</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Availability</label>
-              </div>
-              <div class="col-md-6">
-                <p>6 months</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label>Your Bio</label><br/>
-                <p>Your detail description</p>
-              </div>
-            </div>
+            <button type="button" routerLink="/settings" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
           </div>
 
-          <div class="tab-pane fade" id="working-experience" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
             <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
+
             </div>
+            <button type="button" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button type="button" class="btn btn-outline-primary mr-3" data-original-title="Edit"><i class="fa fa-plus"></i></button>
           </div>
 
-          <div class="tab-pane fade" id="interests" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-pane fade show active" id="bio" role="tabpanel" aria-labelledby="home-tab">
+          <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
             <div class="row">
               <div class="col-md-12">
                 {{this.account.bio.description}}
               </div>
             </div>
+            <hr>
+            <button type="button" routerLink="/settings" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
           </div>
+
+          <div class="tab-pane fade" id="working_experience" role="tabpanel" aria-labelledby="working-experience-tab">
+            <div *ngFor="let xp of account?.experience" class="row">
+              <div class="col-md-12">
+
+                <div class="row">
+                  <h4>{{xp?.headline}}</h4>
+
+                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{xp?.startDate}} - {{xp?.endDate}})
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Title</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.title}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                    <label>Company</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.company}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                    <label>Employment type</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.employmentType.toString().replace("_", " ")}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                    <label>Location</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.location}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                    <label>Description</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.description}}</p>
+                  </div>
+                </div>
+                <hr>
+
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+          </div>
+
 
         </div>
       </div>
     </div>
-  </form>
 </div>

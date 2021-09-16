@@ -1,4 +1,6 @@
 import {Bio} from "../bio/bio";
+import {Experience} from "../experience/experience";
+import {Tag} from "../tags/Tag";
 
 export enum AppUserRole {
   USER,
@@ -18,6 +20,8 @@ export class Account {
   bio: Bio;
   followers: Array<Account>;
   following: Array<Account>;
+  experience: Array<Experience>;
+  tags: Array<Tag>;
 
   constructor(acc: Account) {
     this.id = acc.id;
@@ -32,5 +36,7 @@ export class Account {
     this.bio = acc.bio;
     this.followers = acc.followers;
     this.following = acc.following;
+    this.experience = acc.experience;
+    this.tags = acc.tags;
   }
 }

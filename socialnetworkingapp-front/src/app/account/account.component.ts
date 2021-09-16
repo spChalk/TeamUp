@@ -26,8 +26,11 @@ export class AccountComponent implements OnInit {
     ngOnInit(): void {
        let email = this.authenticationService.getCurrentUser();
        this.accountService.fetchUser(email).subscribe(
-           (response: Account)=>{
-               this.account = response;
+           (response: Account)=> {
+               this.account = new Account(response);
+               if(this.account.bio === null) {
+                 this.account.bio = new Bio("No available bio.", null);
+               }
            }
        );
 /*

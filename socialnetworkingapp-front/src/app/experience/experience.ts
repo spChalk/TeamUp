@@ -11,16 +11,15 @@ enum EmploymentType {
   SEASONAL
 }
 
-export interface Experience {
+export class Experience {
 
   id: number;
   title: string;
   employmentType: EmploymentType;
   company: string;
   location: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   headline: string;
   description: string;
-  user: Account;
 }
