@@ -10,7 +10,7 @@
 </head>
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="container emp-profile shadow ">
+<div class="container emp-profile shadow " id="main-container">
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
@@ -31,25 +31,6 @@
           </h6>
           <p class="profile-rating">Since {{this.account?.dateCreated}}</p>
 
-
-          <!--<ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="bio-tab" data-toggle="tab" href="#bio" role="tab" aria-controls="bio" >Bio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="education-tab" data-toggle="tab" href="#education" role="tab" aria-controls="education" >Education</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="working_experience-tab" data-toggle="tab" href="#working-experience" role="tab" aria-controls="working_experience" >Experience</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="tags-tab" data-toggle="tab" href="#interests" role="tab" aria-controls="tags" >Interests</a>
-            </li>
-          </ul>-->
-
           <ul class="nav nav-tabs">
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#home">About</a>
@@ -68,11 +49,6 @@
 
         </div>
       </div>
-
-      <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-      </div>
-
     </div>
 
 
@@ -87,6 +63,8 @@
              </span>
              <br>
            </h6>
+          <hr>
+          <button type="button" (click)="onClickModal(null, 'interests')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
         </div>
       </div>
 
@@ -117,21 +95,23 @@
                 <p>{{account?.phone}}</p>
               </div>
             </div>
-            <button type="button" routerLink="/settings" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <hr>
+            <button type="button" (click)="onClickModal(null, 'about')" style="float: right" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
           </div>
 
           <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
             <div *ngFor="let ed of account?.education" class="row">
               <div class="col-md-12">
-
+                <button type="button" style="float: right" (click)="onClickModal(ed, 'education')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <br>
                 <div class="row">
-                  <h4>{{ed?.school}}</h4>
+                  <h3><strong>{{ed?.school}}</strong></h3>
 
                   <div class="col-md-6 mt-2" style="font-size: smaller;">
                     ({{ed?.startDate}} - {{ed?.endDate}})
                   </div>
                 </div>
-
+                <br>
                 <div class="row">
                   <div class="col-md-6">
                     <label>Field</label>
@@ -171,7 +151,7 @@
 
               </div>
             </div>
-            <button type="button" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button type="button" style="float: right" class="btn btn-outline-primary mr-3" data-original-title="New"><i class="fa fa-plus"></i></button>
           </div>
 
 
@@ -182,21 +162,22 @@
               </div>
             </div>
             <hr>
-            <button type="button" routerLink="/settings" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button type="button" style="float: right" (click)="onClickModal(null, 'bio')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
           </div>
 
           <div class="tab-pane fade" id="working_experience" role="tabpanel" aria-labelledby="working-experience-tab">
             <div *ngFor="let xp of account?.experience" class="row">
               <div class="col-md-12">
-
+                <button type="button" style="float: right" (click)="onClickModal(xp, 'experience')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <br>
                 <div class="row">
-                  <h4>{{xp?.headline}}</h4>
+                  <h3><strong>{{xp?.headline}}</strong></h3>
 
                   <div class="col-md-6 mt-2" style="font-size: smaller;">
                     ({{xp?.startDate}} - {{xp?.endDate}})
                   </div>
                 </div>
-
+                <br>
                 <div class="row">
                   <div class="col-md-6">
                     <label>Title</label>
@@ -245,11 +226,271 @@
 
               </div>
             </div>
-            <button type="button" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button type="button" style="float: right" class="btn btn-outline-primary mr-3" data-original-title="New"><i class="fa fa-plus"></i></button>
           </div>
 
 
         </div>
       </div>
     </div>
+</div>
+
+
+<!-- About Modal -->
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">Edit profile details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #aboutForm="ngForm">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" name="firstName" aria-describedby="firstNameHelp">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" aria-describedby="lastNameHelp">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" name="phone" aria-describedby="phoneHelp">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bio Modal -->
+<div class="modal fade" id="biom" tabindex="-1" role="dialog" aria-labelledby="bioModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bioModalLabel">Edit biography</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #bioForm="ngForm">
+          <div class="form-group">
+            <label for="biography">Your bio</label>
+            <textarea type="text" class="form-control" name="biography" aria-describedby="biographyHelp" [value]="this.account?.bio.description" ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Education Modal -->
+<div class="modal fade" id="educationm" tabindex="-1" role="dialog" aria-labelledby="educationmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="educationmModalLabel">Edit education</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+          <form #eduForm="ngForm">
+            <div class="form-group">
+              <label for="edu">School</label>
+              <input type="text" class="form-control" name="edu" aria-describedby="eduHelp" [value]="selectedEdu?.school">
+            </div>
+            <div class="form-group">
+              <label for="field">Field</label>
+              <input type="text" class="form-control" name="field" aria-describedby="fieldHelp" [value]="selectedEdu?.field">
+            </div>
+            <div class="form-group">
+              <label for="degree">Degree</label>
+              <input type="text" class="form-control" name="degree" aria-describedby="degreeHelp" [value]="selectedEdu?.degree">
+            </div>
+            <div class="form-group">
+              <label for="gdp">GDP</label>
+              <input type="text" class="form-control" name="gdp" aria-describedby="gdpHelp" [value]="selectedEdu?.grade">
+            </div>
+            <div class="form-group">
+              <label for="stdate">Starting date</label>
+              <input type="text" class="form-control" name="stdate" aria-describedby="stdateHelp" [value]="selectedEdu?.startDate">
+            </div>
+            <div class="form-group">
+              <label for="endate">Ending date</label>
+              <input type="text" class="form-control" name="endate" aria-describedby="endateHelp" [value]="selectedEdu?.endDate">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp" [value]="selectedEdu?.description"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Experience Modal -->
+<div class="modal fade" id="experiencem" tabindex="-1" role="dialog" aria-labelledby="experiencemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="experiencemModalLabel">Edit experience</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #expForm="ngForm">
+          <div class="form-group">
+            <label for="headline">Headline</label>
+            <input type="text" class="form-control" name="headline" aria-describedby="headlineHelp" [value]="selectedExp?.headline">
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" aria-describedby="titleHelp" [value]="selectedExp?.title">
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" class="form-control" name="company" aria-describedby="companyHelp" [value]="selectedExp?.company">
+          </div>
+          <div class="form-group">
+            <label for="employment_type">Employment Type</label>
+            <input type="text" class="form-control" name="employment_type" aria-describedby="employment_typeHelp" [value]="selectedExp?.employmentType.toString().replace('_', ' ')">
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" name="location" aria-describedby="locationHelp" [value]="selectedExp?.location">
+          </div>
+          <div class="form-group">
+            <label for="stdate1">Starting date</label>
+            <input type="text" class="form-control" name="stdate1" aria-describedby="stdateHelp1" [value]="selectedExp?.startDate">
+          </div>
+          <div class="form-group">
+            <label for="endate1">Ending date</label>
+            <input type="text" class="form-control" name="endate1" aria-describedby="endateHelp1" [value]="selectedExp?.endDate">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp" [value]="selectedExp?.description"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interests Modal -->
+<div class="modal fade" id="interests" tabindex="-1" role="dialog" aria-labelledby="interestsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="interestsModalLabel">Edit interests</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #intForm="ngForm">
+          <div class="form-group">
+            <label for="interests">Interests <i>(Press Ctrl to select multiple tags)</i></label>
+            <select size="15" id="interestsid" formControlName="interests" class="form-control" data-role="select-dropdown" data-profile="minimal" multiple required>
+              <option>TECHNOLOGY</option>
+              <option>BUSINESS</option>
+              <option>MACHINE_LEARNING</option>
+              <option>SOFTWARE</option>
+              <option>HARDWARE</option>
+              <option>SALES</option>
+              <option>RESEARCH</option>
+              <option>MAINTENANCE</option>
+              <option>OPERATING_SYSTEMS</option>
+              <option>ARTIFICIAL_INTELLIGENCE</option>
+              <option>DBMS</option>
+              <option>NETWORKING</option>
+              <option>DATA_STRUCTURES</option>
+              <option>ALGORITHMS</option>
+              <option>OOP</option>
+              <option>SQL</option>
+              <option>UNIX</option>
+              <option>WINDOWS</option>
+              <option>GIT</option>
+              <option>GITHUB</option>
+              <option>MANAGEMENT</option>
+              <option>ECONOMICS</option>
+              <option>PSYCHOLOGY</option>
+              <option>HISTORY</option>
+              <option>BOOKS</option>
+              <option>MUSIC</option>
+              <option>RUNNING</option>
+              <option>SWIMMING</option>
+              <option>LAW</option>
+              <option>MATHEMATICS</option>
+              <option>PHYSICS</option>
+              <option>ENGINEERING</option>
+              <option>ARCHITECTURE</option>
+              <option>AGRICULTURE</option>
+              <option>SPACE</option>
+              <option>CHEMISTRY</option>
+              <option>SCIENCE</option>
+              <option>POLITICS</option>
+              <option>ATHLETICS</option>
+              <option>ROBOTICS</option>
+              <option>BIOINFORMATICS</option>
+              <option>MEDICINE</option>
+              <option>ARCHEOLOGY</option>
+              <option>STOCK_MARKET</option>
+              <option>CRYPTOCURRENCY</option>
+              <option>YACHTS</option>
+              <option>SHIPS</option>
+              <option>AEROPLANE</option>
+              <option>MINERAL_RESOURCES</option>
+              <option>MINING</option>
+              <option>TRAVELLING</option>
+            </select>
+            <a class="text-muted">At least 2 tags are required.</a>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

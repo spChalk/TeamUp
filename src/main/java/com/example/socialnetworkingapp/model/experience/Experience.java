@@ -3,6 +3,7 @@ package com.example.socialnetworkingapp.model.experience;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -53,5 +54,8 @@ public class Experience implements Serializable {
     private String endDate;
 
     private String headline;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 }

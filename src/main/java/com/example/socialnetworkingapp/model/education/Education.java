@@ -2,6 +2,7 @@ package com.example.socialnetworkingapp.model.education;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,5 +33,8 @@ public class Education implements Serializable {
     private String endDate;
 
     private float grade;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 }

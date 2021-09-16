@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Bio } from "../bio/bio";
 import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
+import {Education} from "../education/education";
+import {Experience} from "../experience/experience";
 
 /* https:odecraft.tv/courses/angular/routing/parameterised-routes/ */
 
@@ -17,6 +19,8 @@ import { AuthenticationService } from '../authentication';
 export class AccountComponent implements OnInit {
 
     public account: Account;
+    public selectedEdu: Education;
+    public selectedExp: Experience;
 
     constructor(private accountService: AccountService,
         private route: ActivatedRoute,
@@ -33,34 +37,38 @@ export class AccountComponent implements OnInit {
                }
            }
        );
-/*
-       this.getAccountDetails(this.account.id);
-*/
     }
 
-/*    public getAccountDetails(uid: number): void {
-        this.accountService.getAccountById(uid).subscribe(
-            (response: Account) => {
-                this.account = response;
-                console.log(this.account);
+  public onClickModal(data: any, mode: string): void {
 
-                this.bioService.getBioByAccountId(response.id).subscribe(
-                    (responseBio: Bio) => {
-                        if (responseBio === null) {
-                            this.bio = "No available bio";
-                        } else {
-                            this.bio = responseBio.description;
-                        }
-                        console.log(this.bio);
-                    },
-                    (error: HttpErrorResponse) => {
-                        alert(error.message);
-                    }
-                );
-            },
-            (error: HttpErrorResponse) => {
-                alert(error.message);
-            }
-        );
-    }*/
+    const container = document.getElementById('main-container');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+
+    if(mode === 'about') {
+      button.setAttribute('data-target', '#about');
+    }
+    if(mode === 'bio') {
+      button.setAttribute('data-target', '#biom');
+    }
+    if(mode === 'education') {
+      this.selectedEdu = data;
+      button.setAttribute('data-target', '#educationm');
+    }
+    if(mode === 'experience') {
+      this.selectedExp = data;
+      button.setAttribute('data-target', '#experiencem');
+    }
+    if(mode === 'interests') {
+      button.setAttribute('data-target', '#interests');
+    }
+    if(container != null) {
+      container.appendChild(button);
+      button.click();
+    }
+  }
+
 }
