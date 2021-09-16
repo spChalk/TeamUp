@@ -58,9 +58,15 @@ export class AccountComponent implements OnInit {
       this.selectedEdu = data;
       button.setAttribute('data-target', '#educationm');
     }
+    if(mode === 'add_education') {
+      button.setAttribute('data-target', '#educationadd');
+    }
     if(mode === 'experience') {
       this.selectedExp = data;
       button.setAttribute('data-target', '#experiencem');
+    }
+    if(mode === 'add_experience') {
+      button.setAttribute('data-target', '#experienceadd');
     }
     if(mode === 'interests') {
       button.setAttribute('data-target', '#interests');
