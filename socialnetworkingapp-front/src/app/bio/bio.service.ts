@@ -30,4 +30,8 @@ export class BioService {
   updateBio(bio: Bio) {
     return this.http.put<Bio>(`${environment.apiBaseUrl}/bio/update`, bio);
   }
+
+  deleteBioById(bioId: number) {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/bio/delete/${bioId}`);
+  }
 }

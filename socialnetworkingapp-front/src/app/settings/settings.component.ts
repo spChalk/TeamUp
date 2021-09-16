@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
 import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {environment} from "../../environments/environment";
+import {AuthenticationService} from "../authentication";
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,6 @@ import {environment} from "../../environments/environment";
 export class SettingsComponent implements OnInit {
 
   public account: Account;
-  public bio: string;
 
   selectedFiles: FileList;
   currentFile: File;
@@ -28,37 +28,23 @@ export class SettingsComponent implements OnInit {
   constructor(private accountService: AccountService,
               private bioService: BioService,
               private route: ActivatedRoute,
-              private uploadService: UploadFileService) {
-    this.route.params.subscribe(params => {
-      console.log(params);
-      if (params['id']) {
-        this.getAccountDetails(params['id'])
-      }
-    });
+              private uploadService: UploadFileService,
+              private authenticationService : AuthenticationService ) {
   }
 
   ngOnInit(): void {
+    let email = this.authenticationService.getCurrentUser();
+    this.accountService.fetchUser(email).subscribe(
+      (response: Account)=> {
+        this.account = new Account(response);
+      }
+    );
   }
 
-  public getAccountDetails(uid: number): void {
-    this.accountService.getAccountById(uid).subscribe(
-      (response: Account) => {
-        this.account = response;
-        console.log(this.account);
-
-        this.bioService.getBioByAccountId(response.id).subscribe(
-          (responseBio: Bio) => {
-            if(responseBio === null) {
-              this.bio = "No available bio";
-            } else {
-              this.bio = responseBio.description;
-            }
-            console.log(this.bio);
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
+  public addBio(email: string, bio: Bio) {
+    this.accountService.addBio(email, bio).subscribe(
+      (responseBio: Bio) => {
+        console.log(responseBio);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -71,38 +57,8 @@ export class SettingsComponent implements OnInit {
    */
   public updateProfileInformation(settingsForm: NgForm): void {
 
-    if(settingsForm.value.bio !== this.bio) {
-      this.bio = settingsForm.value.bio;
-      this.bioService.getBioByAccountId(this.account.id).subscribe(
-        (response: Bio) => {
-
-          if(response === null) {
-              this.bioService.addBio(new Bio(this.bio, this.account)).subscribe(
-                (responseBio: Bio) => {
-                  console.log(responseBio);
-                },
-                (error: HttpErrorResponse) => {
-                  alert(error.message);
-                }
-              );
-          }
-          else {
-            response.description = this.bio;
-            this.bioService.updateBio(response).subscribe(
-              (responseBio: Bio) => {
-                console.log(responseBio);
-              },
-              (error: HttpErrorResponse) => {
-                alert(error.message);
-              }
-            );
-          }
-
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      );
+    if((this.account.bio !== null) && (settingsForm.value.bio !== this.account.bio.description)) {
+      this.deleteBio();
     }
 
     if(settingsForm.value.firstName && (settingsForm.value.firstName !== this.account.firstName)) {
@@ -113,6 +69,9 @@ export class SettingsComponent implements OnInit {
     }
     if(settingsForm.value.phone && (settingsForm.value.phone !== this.account.phone)) {
       this.account.phone = settingsForm.value.phone;
+    }
+    if(settingsForm.value.bio) {
+      this.account.bio = new Bio(settingsForm.value.bio);
     }
 
     this.accountService.updateAccount(this.account).subscribe(
@@ -239,5 +198,25 @@ export class SettingsComponent implements OnInit {
       }
     );
     window.location.reload();
+  }
+
+  public deleteBio() {
+    let bid = this.account.bio.id;
+    this.accountService.deleteBio(this.account.id).subscribe(
+      (event: any) => {
+          this.bioService.deleteBioById(bid).subscribe(
+            msg => {
+              console.log(msg);
+              window.location.reload();
+            },
+            (err: HttpErrorResponse) => {
+              alert(err);
+            }
+          );
+        },
+      (error: HttpErrorResponse) => {
+          alert(error.message);
+      }
+    );
   }
 }

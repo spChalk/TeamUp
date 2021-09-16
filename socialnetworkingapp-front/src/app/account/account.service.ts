@@ -81,4 +81,11 @@ export class AccountService {
 
   /* TODO: addFriend */
 
+  public addBio(email: string, bio: Bio) {
+    return this.http.post<Bio>(`${this.url}/bio/add`, {email, bio});
+  }
+
+  public deleteBio(id: number) {
+    return this.http.delete<any>(`${this.url}/bio/delete/${id}`);
+  }
 }

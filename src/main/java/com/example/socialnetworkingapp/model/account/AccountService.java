@@ -89,6 +89,7 @@ public class AccountService implements UserDetailsService {
         acc.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         acc.setPhone(account.getPhone());
         acc.setImageUrl(account.getImageUrl());
+        acc.setBio(account.getBio());
         return this.accountRepository.save(acc);
     }
 
@@ -176,5 +177,13 @@ public class AccountService implements UserDetailsService {
         Account account = findAccountByEmail(email);
         account.getEducation().add(this.educationService.addEducation(education));
         return this.accountRepository.save(account);
+    }
+
+    public void deleteBio(Long uid) {
+        Account account = this.accountRepository.findAccountById(uid).orElseThrow(
+                () -> new UserNotFoundException("User with id " + uid.toString() + " does not exist!")
+        );
+        account.setBio(null);
+        this.accountRepository.save(account);
     }
 }

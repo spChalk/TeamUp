@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
            (response: Account)=> {
                this.account = new Account(response);
                if(this.account.bio === null) {
-                 this.account.bio = new Bio("No available bio.", null);
+                 this.account.bio = new Bio("No available bio.");
                }
            }
        );

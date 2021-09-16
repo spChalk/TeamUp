@@ -5,11 +5,8 @@ export class Bio {
 
   id: number;
   description: string;
-  account: Account;
 
-  constructor(descr: string, account: Account) {
-
+  constructor(descr: string) {
     this.description = descr;
-    this.account = account;
   }
 }

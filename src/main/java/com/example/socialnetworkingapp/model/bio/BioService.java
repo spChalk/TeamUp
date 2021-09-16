@@ -25,4 +25,8 @@ public class BioService {
     public void deleteBio(Bio bio) {
         this.bioRepository.delete(bio);
     }
+
+    public void deleteBioById(Long bioId) {
+        this.bioRepository.deleteById(bioId);
+    }
 }

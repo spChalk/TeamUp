@@ -66,13 +66,13 @@
                   <input type="file" (change)="selectFile($event)" />
                 </label>
                 <div class="alert alert-light" role="alert">{{ message }}</div>
-              </div>
+              </div>`
               <hr>
               <div class="form-group">
                 <label for="bio">Your Bio</label>
-                <textarea type="text" class="form-control" ngModel name="bio" id="bio" aria-describedby="bioHelp" placeholder="Enter your bio..." value="{{this?.bio}}"></textarea>
+                <button type="button" (click)="deleteBio()" style="float: right" class="btn btn-outline-danger mb-3">Delete bio</button>
+                <textarea type="text" class="form-control" ngModel name="bio" id="bio" aria-describedby="bioHelp" placeholder="Enter your bio..." value="{{this?.account?.bio?.description}}"></textarea>
               </div>
-
               <button type="button" (click)="upload();updateProfileInformation(settingsForm);" [disabled]="settingsForm.invalid" class="btn btn-primary">Update Profile</button>
             </form>
           </div>

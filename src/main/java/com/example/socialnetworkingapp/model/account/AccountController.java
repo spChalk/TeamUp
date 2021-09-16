@@ -143,6 +143,12 @@ public class AccountController {
                 HttpStatus.OK);
     }
 
+    @DeleteMapping("/bio/delete/{uid}")
+    public ResponseEntity<HttpStatus> deleteBio(@PathVariable("uid") Long uid) {
+        this.accountService.deleteBio(uid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /* Post a {email, education} */
     @PostMapping("/education/add")
     public ResponseEntity<Account> addEducation(@RequestBody AccountEducation accountEducation) {

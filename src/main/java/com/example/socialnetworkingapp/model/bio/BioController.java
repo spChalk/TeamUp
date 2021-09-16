@@ -25,9 +25,9 @@ public class BioController {
         return new ResponseEntity<>(newBio, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteBio(@RequestBody Bio bio){
-        this.bioService.deleteBio(bio);
+    @DeleteMapping("/delete/{bioId}")
+    public ResponseEntity<HttpStatus> deleteBio(@PathVariable("bioId") Long bioId) {
+        this.bioService.deleteBioById(bioId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
