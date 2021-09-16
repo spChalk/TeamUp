@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.model.bio.Bio;
+import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.security.jwt.CustomAuthorityDeserializer;
@@ -79,6 +80,16 @@ public class Account implements UserDetails {
             joinColumns = { @JoinColumn(name = "account_id") },
             inverseJoinColumns = { @JoinColumn(name = "experience_id") })
     private List<Experience> experience = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "account_education",
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "education_id") })
+    private List<Education> education = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER,
             cascade = {

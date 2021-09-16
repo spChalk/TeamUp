@@ -30,6 +30,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { JobViewComponent } from './job-view/job-view.component';
 import { TagsComponent } from './tags/tags.component';
+import { EducationComponent } from './education/education.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { TagsComponent } from './tags/tags.component';
     NavBarAuthenticatedComponent,
     NavBarComponent,
     JobViewComponent,
-    TagsComponent
+    TagsComponent,
+    EducationComponent
   ],
   imports: [
     BrowserModule,

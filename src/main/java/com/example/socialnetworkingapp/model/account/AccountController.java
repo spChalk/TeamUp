@@ -142,4 +142,11 @@ public class AccountController {
         return new ResponseEntity<>(this.accountService.addBio(accountBio.getEmail(), accountBio.getBio()),
                 HttpStatus.OK);
     }
+
+    /* Post a {email, education} */
+    @PostMapping("/education/add")
+    public ResponseEntity<Account> addEducation(@RequestBody AccountEducation accountEducation) {
+        return new ResponseEntity<>(this.accountService.addEducation(accountEducation.getEmail(), accountEducation.getEducation()),
+                HttpStatus.OK);
+    }
 }

@@ -121,12 +121,59 @@
           </div>
 
           <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
-            <div class="row">
+            <div *ngFor="let ed of account?.education" class="row">
+              <div class="col-md-12">
 
+                <div class="row">
+                  <h4>{{ed?.school}}</h4>
+
+                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{ed?.startDate}} - {{ed?.endDate}})
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Field</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.field}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Degree</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.degree}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>GDP</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.grade}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Description</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.description}}</p>
+                  </div>
+                </div>
+                <hr>
+
+              </div>
             </div>
             <button type="button" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
-            <button type="button" class="btn btn-outline-primary mr-3" data-original-title="Edit"><i class="fa fa-plus"></i></button>
           </div>
+
 
           <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
             <div class="row">

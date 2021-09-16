@@ -5,6 +5,8 @@ import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.bio.BioService;
+import com.example.socialnetworkingapp.model.education.Education;
+import com.example.socialnetworkingapp.model.education.EducationService;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.experience.ExperienceService;
 import com.example.socialnetworkingapp.model.tags.Tag;
@@ -30,6 +32,7 @@ public class AccountService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TagService tagService;
     private final ExperienceService experienceService;
+    private final EducationService educationService;
     private final BioService bioService;
     private final AccountMapper accountMapper;
 
@@ -167,5 +170,11 @@ public class AccountService implements UserDetailsService {
         account.setBio(this.bioService.addBio(bio));
         this.accountRepository.save(account);
         return account.getBio();
+    }
+
+    public Account addEducation(String email, Education education) {
+        Account account = findAccountByEmail(email);
+        account.getEducation().add(this.educationService.addEducation(education));
+        return this.accountRepository.save(account);
     }
 }
