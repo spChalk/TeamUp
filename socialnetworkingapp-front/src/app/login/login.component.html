@@ -1,4 +1,9 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
 <div class="container">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
   <div class="row justify-content-center">
@@ -6,13 +11,13 @@
       <div class="card-group mb-0">
         <div class="card p-4">
           <div class="card-body">
-            <h1 style="font-weight: 300">Sign in</h1>
+            <h1 style="font-weight: 300;text-align: center">Sign in</h1>
             <p class="text-muted">Sign in to your account</p>
             <div class="input-group mb-3">
                 <label for="email">Email: </label>
               <input id="email" type="text" formControlName="username" class="form-control" placeholder="Your email" required>
                   <span *ngIf="loginForm.get('username').hasError('pattern')">
-                    Email example : <br> someone@something.country 
+                    Email example : <br> someone@something.country
                   </span>
             </div>
             <div class="input-group mb-4">
@@ -30,7 +35,6 @@
                 <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary px-4" style="font-weight: 400">Sign in</button>
               </div>
               <div class="col-6 text-right">
-                <button type="button" class="btn btn-link px-0">Forgot password?</button>
                     <div *ngIf="correctCredentials else wrongCredentials">
                     </div>
                     <ng-template #wrongCredentials>
@@ -46,7 +50,7 @@
               <h2>New to team up?</h2>
               <p>Create a brand new account and start your career. </p>
               <br>
-              <a class="btn btn-secondary px-4" routerLink="/register" style="font-weight: bold">Register Now!</a>
+              <a class="btn btn-light px-4" routerLink="/register" style="font-weight: bold">Register Now!</a>
             </div>
           </div>
         </div>
