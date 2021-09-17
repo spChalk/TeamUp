@@ -8,6 +8,9 @@ import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
 import {Education} from "../education/education";
 import {Experience} from "../experience/experience";
+import {ExportService} from "../export/export.service";
+import {EducationService} from "../education/education.service";
+import {ExperienceService} from "../experience/experience.service";
 
 /* https:odecraft.tv/courses/angular/routing/parameterised-routes/ */
 
@@ -24,7 +27,10 @@ export class AccountComponent implements OnInit {
 
     constructor(private accountService: AccountService,
         private route: ActivatedRoute,
-        private authenticationService : AuthenticationService ) {
+        private authenticationService : AuthenticationService,
+        private experienceService: ExperienceService,
+        private educationService: EducationService
+    ) {
     }
 
     ngOnInit(): void {
@@ -77,4 +83,67 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  public hide(data: any, mode: string) {
+
+    if(mode == 'tag') {
+      this.accountService.hideTags(this.account).subscribe(
+        (response: Account) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    if(mode == 'experience') {
+      this.experienceService.hideExperience(data).subscribe(
+        (response: Experience) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    if(mode == 'education') {
+      this.educationService.hideEducation(data).subscribe(
+        (response: Education) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    window.location.reload();
+  }
+
+  public show(data: any, mode: string) {
+
+    if(mode == 'tag') {
+      this.accountService.showTags(this.account).subscribe(
+        (response: Account) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    if(mode == 'experience') {
+      this.experienceService.showExperience(data).subscribe(
+        (response: Experience) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    if(mode == 'education') {
+      this.educationService.showEducation(data).subscribe(
+        (response: Education) => {
+          console.log(response);
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
+    window.location.reload();
+  }
 }

@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.education;
 
+import com.example.socialnetworkingapp.model.experience.Experience;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,15 @@ public class EducationController {
     public ResponseEntity<?> deleteEducationById(@PathVariable("id") Long id){
         educationService.deleteEducation(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/show")
+    public ResponseEntity<Education> setEducationVisibility(@RequestBody Education education) {
+        return new ResponseEntity<>(this.educationService.setVisible(education), HttpStatus.OK);
+    }
+
+    @PostMapping("/hide")
+    public ResponseEntity<Education> hideEducation(@RequestBody Education education) {
+        return new ResponseEntity<>(this.educationService.hide(education), HttpStatus.OK);
     }
 }

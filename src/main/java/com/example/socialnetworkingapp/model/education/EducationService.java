@@ -26,4 +26,20 @@ public class EducationService {
     public Optional<Education> findEducationById(Long id) {
         return this.educationRepository.findById(id);
     }
+
+    public Education setVisible(Education education) {
+        Education ed = this.educationRepository.findById(education.getId()).orElseThrow(
+                () -> new IllegalStateException("Education with id " + education.getId().toString() + " does not exist!")
+        );
+        ed.setVisible(true);
+        return this.educationRepository.save(ed);
+    }
+
+    public Education hide(Education education) {
+        Education ed = this.educationRepository.findById(education.getId()).orElseThrow(
+                () -> new IllegalStateException("Education with id " + education.getId().toString() + " does not exist!")
+        );
+        ed.setVisible(false);
+        return this.educationRepository.save(ed);
+    }
 }

@@ -55,16 +55,35 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-work">
-          <h6>INTERESTS</h6>
-          <hr>
-           <h6 *ngFor="let tag of this.account.tags">
-             <span class="badge badge-secondary">
-               {{tag?.tag.replace("_", " ")}}
-             </span>
-             <br>
-           </h6>
-          <hr>
-          <button type="button" (click)="onClickModal(null, 'interests')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+
+          <div *ngIf="this.account.visibleTags">
+            <h6>INTERESTS</h6>
+            <hr>
+             <h6 *ngFor="let tag of this.account.tags">
+               <span class="badge badge-secondary">
+                 {{tag?.tag.replace("_", " ")}}
+               </span>
+               <br>
+             </h6>
+            <hr>
+            <button type="button" (click)="onClickModal(null, 'interests')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button (click)="hide(null, 'tag')" type="button" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
+          </div>
+
+          <div *ngIf="this.account.visibleTags === false" style="background-color: #ebebeb">
+            <h6>INTERESTS</h6>
+            <hr>
+            <h6 *ngFor="let tag of this.account.tags">
+               <span class="badge badge-secondary">
+                 {{tag?.tag.replace("_", " ")}}
+               </span>
+              <br>
+            </h6>
+            <hr>
+            <button type="button" (click)="onClickModal(null, 'interests')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+            <button type="button" (click)="show(null, 'tag')" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye"></i></button>
+          </div>
+
         </div>
       </div>
 
@@ -101,8 +120,59 @@
 
           <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
             <div *ngFor="let ed of account?.education" class="row">
-              <div class="col-md-12">
+              <div *ngIf="ed.visible" class="col-md-12">
                 <button type="button" style="float: right" (click)="onClickModal(ed, 'education')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <button (click)="hide(ed, 'education')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
+                <br>
+                <div class="row">
+                  <h3><strong>{{ed?.school}}</strong></h3>
+
+                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{ed?.startDate}} - {{ed?.endDate}})
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Field</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.field}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Degree</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.degree}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>GDP</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.grade}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Description</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ed?.description}}</p>
+                  </div>
+                </div>
+                <hr>
+              </div>
+
+              <div *ngIf="ed.visible === false" style="background-color: #ebebeb" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(ed, 'education')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <button (click)="show(ed, 'education')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye"></i></button>
                 <br>
                 <div class="row">
                   <h3><strong>{{ed?.school}}</strong></h3>
@@ -150,6 +220,7 @@
                 <hr>
 
               </div>
+
             </div>
             <button (click)="onClickModal(null, 'add_education')" type="button" style="float: right" class="btn btn-outline-primary mr-3" data-original-title="New"><i class="fa fa-plus"></i></button>
           </div>
@@ -167,8 +238,9 @@
 
           <div class="tab-pane fade" id="working_experience" role="tabpanel" aria-labelledby="working-experience-tab">
             <div *ngFor="let xp of account?.experience" class="row">
-              <div class="col-md-12">
+              <div *ngIf="xp.visible" class="col-md-12">
                 <button type="button" style="float: right" (click)="onClickModal(xp, 'experience')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <button (click)="hide(xp, 'experience')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
                 <br>
                 <div class="row">
                   <h3><strong>{{xp?.headline}}</strong></h3>
@@ -223,8 +295,68 @@
                   </div>
                 </div>
                 <hr>
+              </div>
+
+              <div *ngIf="xp.visible === false" style="background-color: #ebebeb" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(xp, 'experience')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                <button (click)="show(xp, 'experience')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye"></i></button>
+                <br>
+                <div class="row">
+                  <h3><strong>{{xp?.headline}}</strong></h3>
+
+                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{xp?.startDate}} - {{xp?.endDate}})
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Title</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.title}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Company</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.company}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Employment type</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.employmentType.toString().replace("_", " ")}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Location</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.location}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Description</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.description}}</p>
+                  </div>
+                </div>
+                <hr>
 
               </div>
+
             </div>
             <button (click)="onClickModal(null, 'add_experience')" type="button" style="float: right" class="btn btn-outline-primary mr-3" data-original-title="New"><i class="fa fa-plus"></i></button>
           </div>

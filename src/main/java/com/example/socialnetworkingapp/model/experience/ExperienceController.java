@@ -32,4 +32,14 @@ public class ExperienceController {
         experienceService.deleteExperience(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/show")
+    public ResponseEntity<Experience> setExperienceVisibility(@RequestBody Experience experience) {
+        return new ResponseEntity<>(this.experienceService.setVisible(experience), HttpStatus.OK);
+    }
+
+    @PostMapping("/hide")
+    public ResponseEntity<Experience> hideExperience(@RequestBody Experience experience) {
+        return new ResponseEntity<>(this.experienceService.hide(experience), HttpStatus.OK);
+    }
 }

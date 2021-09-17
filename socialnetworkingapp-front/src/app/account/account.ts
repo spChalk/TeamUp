@@ -23,6 +23,7 @@ export class Account {
   following: Array<Account>;
   experience: Array<Experience>;
   tags: Array<Tag>;
+  visibleTags: boolean;
   education: Array<Education>;
 
   constructor(acc: Account) {
@@ -41,5 +42,6 @@ export class Account {
     this.experience = acc.experience;
     this.tags = acc.tags;
     this.education = acc.education;
+    this.visibleTags = acc.visibleTags;
   }
 }

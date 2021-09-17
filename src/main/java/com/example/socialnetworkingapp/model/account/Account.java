@@ -71,6 +71,9 @@ public class Account implements UserDetails {
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private List<Tag> tags = new ArrayList<>();
 
+    @NotNull
+    private boolean visibleTags = true;
+
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

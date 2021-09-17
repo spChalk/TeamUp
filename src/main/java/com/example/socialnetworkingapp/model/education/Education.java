@@ -37,4 +37,7 @@ public class Education implements Serializable {
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     private String description;
+
+    @NotNull
+    private Boolean visible = true;
 }

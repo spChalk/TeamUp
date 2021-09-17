@@ -88,4 +88,12 @@ export class AccountService {
   public deleteBio(id: number) {
     return this.http.delete<any>(`${this.url}/bio/delete/${id}`);
   }
+
+  public hideTags(account: Account) {
+    return this.http.put<Account>(`${this.url}/hide-tags`, account);
+  }
+
+  public showTags(account: Account) {
+    return this.http.put<Account>(`${this.url}/show-tags`, account);
+  }
 }

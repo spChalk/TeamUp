@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/job_views/**").permitAll()
                                 .antMatchers("/tags/**").permitAll()
                                 .antMatchers("/xp/**").permitAll()
+                                .antMatchers("/education/**").permitAll()
                 .anyRequest().authenticated();
 
 //        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));

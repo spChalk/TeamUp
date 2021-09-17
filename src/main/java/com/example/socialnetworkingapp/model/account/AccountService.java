@@ -90,6 +90,7 @@ public class AccountService implements UserDetailsService {
         acc.setPhone(account.getPhone());
         acc.setImageUrl(account.getImageUrl());
         acc.setBio(account.getBio());
+        acc.setVisibleTags(account.isVisibleTags());
         return this.accountRepository.save(acc);
     }
 
@@ -166,6 +167,13 @@ public class AccountService implements UserDetailsService {
         return account.getExperience();
     }
 
+    public List<Education> getEducation(String email) {
+        Account account = this.accountRepository.findAccountByEmail(email).orElseThrow(
+                () -> new UserNotFoundException("User with email " + email + " was not found!")
+        );
+        return account.getEducation();
+    }
+
     public Bio addBio(String email, Bio bio) {
         Account account = findAccountByEmail(email);
         account.setBio(this.bioService.addBio(bio));
@@ -185,5 +193,21 @@ public class AccountService implements UserDetailsService {
         );
         account.setBio(null);
         this.accountRepository.save(account);
+    }
+
+    public Account hideTags(Account acc) {
+        Account account = this.accountRepository.findAccountById(acc.getId()).orElseThrow(
+                () -> new UserNotFoundException("User with id " + acc.getId().toString() + " does not exist!")
+        );
+        account.setVisibleTags(false);
+        return this.accountRepository.save(account);
+    }
+
+    public Account showTags(Account acc) {
+        Account account = this.accountRepository.findAccountById(acc.getId()).orElseThrow(
+                () -> new UserNotFoundException("User with id " + acc.getId().toString() + " does not exist!")
+        );
+        account.setVisibleTags(true);
+        return this.accountRepository.save(account);
     }
 }

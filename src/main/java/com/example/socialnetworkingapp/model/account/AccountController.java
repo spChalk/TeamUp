@@ -4,6 +4,7 @@ import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
@@ -129,6 +130,11 @@ public class AccountController {
         return new ResponseEntity<>(this.accountService.getExperience(email), HttpStatus.OK);
     }
 
+    @GetMapping("/education/get")
+    public ResponseEntity<List<Education>> getEducation(@RequestBody String email) {
+        return new ResponseEntity<>(this.accountService.getEducation(email), HttpStatus.OK);
+    }
+
     /* Post a {email, experience} */
     @PostMapping("/experience/add")
     public ResponseEntity<Account> addExperience(@RequestBody AccountExperience accountExperience) {
@@ -154,5 +160,15 @@ public class AccountController {
     public ResponseEntity<Account> addEducation(@RequestBody AccountEducation accountEducation) {
         return new ResponseEntity<>(this.accountService.addEducation(accountEducation.getEmail(), accountEducation.getEducation()),
                 HttpStatus.OK);
+    }
+
+    @PutMapping("/hide-tags")
+    public ResponseEntity<Account> hideTags(@RequestBody Account account) {
+        return new ResponseEntity<>(this.accountService.hideTags(account), HttpStatus.OK);
+    }
+
+    @PutMapping("/show-tags")
+    public ResponseEntity<Account> showTags(@RequestBody Account account) {
+        return new ResponseEntity<>(this.accountService.showTags(account), HttpStatus.OK);
     }
 }

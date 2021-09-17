@@ -28,4 +28,20 @@ public class ExperienceService {
     public Optional<Experience> findExperienceById(Long id) {
         return this.experienceRepository.findById(id);
     }
+
+    public Experience setVisible(Experience experience) {
+        Experience xp = this.experienceRepository.findById(experience.getId()).orElseThrow(
+                () -> new IllegalStateException("Experience with id " + experience.getId().toString() + " does not exist!")
+        );
+        xp.setVisible(true);
+        return this.experienceRepository.save(xp);
+    }
+
+    public Experience hide(Experience experience) {
+        Experience xp = this.experienceRepository.findById(experience.getId()).orElseThrow(
+                () -> new IllegalStateException("Experience with id " + experience.getId().toString() + " does not exist!")
+        );
+        xp.setVisible(false);
+        return this.experienceRepository.save(xp);
+    }
 }
