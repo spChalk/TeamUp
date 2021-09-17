@@ -119,18 +119,18 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email " + email + " was not found!"));
     }
 
-    public void follow(Account sender, Account receiver) {
-        /*
+   /* public void follow(Account sender, Account receiver) {
+        *//*
         * If receiver is not in my follows, add him
         * Also, add me in receiver's followers
-        */
+        *//*
         if(sender.getFollowing().isEmpty() || sender.getFollowing().stream()
                 .filter(contact -> receiver.getEmail().equals(contact.getEmail()))
                 .findAny()
                 .orElse(null) == null) {
             sender.follow(receiver);
         }
-    }
+    }*/
 
     public void createAdmin() {
 
@@ -209,5 +209,23 @@ public class AccountService implements UserDetailsService {
         );
         account.setVisibleTags(true);
         return this.accountRepository.save(account);
+    }
+
+    public void connect(String senderEmail, String receiverEmail) {
+        Account sender = findAccountByEmail(senderEmail);
+        Account receiver = findAccountByEmail(receiverEmail);
+        sender.getNetwork().add(receiver);
+        receiver.getNetwork().add(sender);
+        this.accountRepository.save(sender);
+        this.accountRepository.save(receiver);
+    }
+
+    public void removeConnection(String user1Email, String user2Email) {
+        Account usr1 = findAccountByEmail(user1Email);
+        Account usr2 = findAccountByEmail(user2Email);
+        usr1.getNetwork().remove(usr2);
+        usr2.getNetwork().remove(usr1);
+        this.accountRepository.save(usr1);
+        this.accountRepository.save(usr2);
     }
 }

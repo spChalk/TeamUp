@@ -16,12 +16,6 @@ import java.io.Serializable;
 @Table(name = "connection_request")
 public class ConnectionRequest implements Serializable {
 
-    public enum RequestStatus {
-        PENDING,
-        ACCEPTED,
-        REJECTED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false, unique = true)
@@ -34,15 +28,6 @@ public class ConnectionRequest implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(nullable = false)
     private Account receiver;
-
-    @NotNull
-    private RequestStatus requestStatus = RequestStatus.PENDING;
-
-    public ConnectionRequest(Account sender, Account receiver, RequestStatus requestStatus) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.requestStatus = requestStatus;
-    }
 
     public ConnectionRequest(Account sender, Account receiver) {
         this.sender = sender;

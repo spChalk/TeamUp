@@ -76,14 +76,14 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-    @PutMapping("/follow")
+  /*  @PutMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody TransferAccounts accounts) {
 
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();*/
+        *//*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();*//*
         this.accountService.follow(accounts.sender, accounts.receiver);
         return new ResponseEntity<>("You have followed " + accounts.receiver.getFirstName() + "!", HttpStatus.OK);
-    }
+    }*/
 
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account){
@@ -97,10 +97,10 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/network/all/{email}")
+    /*@GetMapping("/network/all/{email}")
     public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
 
-        /* Get ALL accepted requests, the ones that the user has sent AND received */
+        *//* Get ALL accepted requests, the ones that the user has sent AND received *//*
         List<ConnectionRequest> sentRequests = this.connectionReqService.findSentAcceptedRequestsByAccEmail(email);
         List<ConnectionRequest> receivedRequests = this.connectionReqService.findReceivedAcceptedRequestsByAccEmail(email);
 
@@ -112,11 +112,16 @@ public class AccountController {
             net.add(request.getSender());
         }
         return new ResponseEntity<>(net, HttpStatus.OK);
+    }*/
+
+    @GetMapping("/network/all/{email}")
+    public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
+        return new ResponseEntity<>(this.accountService.findAccountByEmail(email).getNetwork(), HttpStatus.OK);
     }
 
     @DeleteMapping("/network/{me}/delete/{uid}")
-    public ResponseEntity<?> deleteFromNetwork(@PathVariable("me") Long me, @PathVariable("uid") Long uid){
-        this.connectionReqService.deleteRequestByAccIds(me, uid);
+    public ResponseEntity<?> deleteFromNetwork(@PathVariable("me") String myEmail, @PathVariable("uid") String otherEmail){
+        this.connectionReqService.deleteConnection(myEmail, otherEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

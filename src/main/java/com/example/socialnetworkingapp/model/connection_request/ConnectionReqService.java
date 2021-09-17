@@ -1,6 +1,8 @@
 package com.example.socialnetworkingapp.model.connection_request;
 
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
 import lombok.AllArgsConstructor;
 import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,18 @@ import java.util.Optional;
 public class ConnectionReqService {
 
     private final ConnectionReqRepository connectionReqRepository;
+    private final AccountService accountService;
 
-    public List<ConnectionRequest> findPendingRequestsByAccId(Long id) {
-        return this.connectionReqRepository.findPendingRequestsByAccId(id).
+    public List<ConnectionRequest> findRequestsByAccId(Long id) {
+        return this.connectionReqRepository.findRequestsByAccId(id).
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
 
-    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccId(Long id) {
+/*    public ConnectionRequest findAcceptedRequestByEmails(String email1, String email2) {
+        return this.connectionReqRepository.findAcceptedRequestsByEmails(email1, email2);
+    }*/
+
+/*    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccId(Long id) {
         return this.connectionReqRepository.findReceivedAcceptedRequestsByAccId(id).
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
@@ -38,11 +45,11 @@ public class ConnectionReqService {
     public List<ConnectionRequest> findSentAcceptedRequestsByAccEmail(String email) {
         return this.connectionReqRepository.findSentAcceptedRequestsByAccEmail(email).
                 orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
-    }
+    }*/
 
     public ConnectionRequest addRequest(ConnectionRequest connectionRequest) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
-                .findPendingRequestByAccIds(connectionRequest.getSender().getId(),
+                .findRequestByAccIds(connectionRequest.getSender().getId(),
                         connectionRequest.getReceiver().getId());
         return alreadyExists.orElseGet(() -> this.connectionReqRepository.save(connectionRequest));
     }
@@ -52,14 +59,17 @@ public class ConnectionReqService {
     }
 
     public void acceptRequest(ConnectionRequest connectionRequest) {
-        this.connectionReqRepository.acceptRequest(connectionRequest.getId());
+
+        this.connectionReqRepository.delete(connectionRequest);
+        this.accountService.connect(connectionRequest.getSender().getEmail(), connectionRequest.getReceiver().getEmail());
     }
 
     public void rejectRequest(ConnectionRequest connectionRequest) {
-        this.connectionReqRepository.rejectRequest(connectionRequest.getId());
+        this.connectionReqRepository.delete(connectionRequest);
     }
 
-    public void deleteRequestByAccIds(Long me, Long uid) {
-        this.connectionReqRepository.deleteByAccIds(me, uid);
+    public void deleteConnection(String usr1, String usr2) {
+
+        this.accountService.removeConnection(usr1, usr2);
     }
 }

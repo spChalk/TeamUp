@@ -28,10 +28,9 @@ public class ConnectionReqController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /* Lists all received *PENDING* connection requests */
     @GetMapping("/{uid}")
-    public ResponseEntity<List<ConnectionRequest>> getPendingConnectionRequests(@PathVariable("uid") Long uid) {
-        return new ResponseEntity<>(this.connectionReqService.findPendingRequestsByAccId(uid), HttpStatus.OK);
+    public ResponseEntity<List<ConnectionRequest>> getConnectionRequests(@PathVariable("uid") Long uid) {
+        return new ResponseEntity<>(this.connectionReqService.findRequestsByAccId(uid), HttpStatus.OK);
     }
 
     @PutMapping("/accept")

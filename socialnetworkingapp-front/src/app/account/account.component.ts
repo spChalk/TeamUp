@@ -29,7 +29,8 @@ export class AccountComponent implements OnInit {
         private route: ActivatedRoute,
         private authenticationService : AuthenticationService,
         private experienceService: ExperienceService,
-        private educationService: EducationService
+        private educationService: EducationService,
+        private router: Router
     ) {
     }
 

@@ -51,15 +51,15 @@ public class Account implements UserDetails {
     @NotNull
     private LocalDate dateCreated = LocalDate.now();
 
-    //friends , many-to-many self referencing
-    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
-    private List<Account> followers = new ArrayList<Account>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="user_connections",
-            joinColumns={@JoinColumn(name="user1_id")},
-            inverseJoinColumns={@JoinColumn(name="user2_id")})
-    private List<Account> following = new ArrayList<Account>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "network",
+            joinColumns = { @JoinColumn(name = "account1_id") },
+            inverseJoinColumns = { @JoinColumn(name = "account2_id") })
+    private List<Account> network = new ArrayList<Account>();
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -171,10 +171,10 @@ public class Account implements UserDetails {
         this.password = encodedPassword;
     }
 
-    public void follow(Account friend){
+/*    public void follow(Account friend){
         this.following.add(friend);
         friend.getFollowers().add(this);
-    }
+    }*/
 }
 
 
