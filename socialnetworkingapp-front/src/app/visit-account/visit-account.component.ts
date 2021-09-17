@@ -39,8 +39,7 @@ export class VisitAccountComponent implements OnInit {
                 (resp: Account) => {
                   this.vAccount = new Account(resp);
                     /* If requested user is in the current user's network, all info is public */
-                    if (this.vAccount.following.includes(this.myAccount) &&
-                        this.vAccount.followers.includes(this.myAccount)) {
+                    if (this.vAccount.network.includes(this.myAccount)) {
                       this.isPresentInNetwork = true;
                     /* else, the hidden info remains hidden */
                     } else {

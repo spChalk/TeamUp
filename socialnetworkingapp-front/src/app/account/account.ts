@@ -19,8 +19,7 @@ export class Account {
   imageUrl: string;
   dateCreated: Date;
   bio: Bio;
-  followers: Array<Account>;
-  following: Array<Account>;
+  network: Account[];
   experience: Array<Experience>;
   tags: Array<Tag>;
   visibleTags: boolean;
@@ -37,8 +36,7 @@ export class Account {
     this.imageUrl = acc.imageUrl;
     this.dateCreated = acc.dateCreated;
     this.bio = acc.bio;
-    this.followers = acc.followers;
-    this.following = acc.following;
+    this.network = acc.network;
     this.experience = acc.experience;
     this.tags = acc.tags;
     this.education = acc.education;

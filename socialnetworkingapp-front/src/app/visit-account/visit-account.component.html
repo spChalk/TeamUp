@@ -19,6 +19,8 @@
     </div>
     <div class="col-md-6">
       <div class="profile-head">
+        <button *ngIf="this.isPresentInNetwork" style="float: right" type="button" class="btn btn-outline-danger">Disconnect</button>
+        <button *ngIf="this.isPresentInNetwork === false" style="float: right" type="button" class="btn btn-primary">Connect</button>
         <h5>
           {{this.vAccount?.firstName}} {{this.vAccount?.lastName}}
         </h5>
@@ -41,8 +43,6 @@
             <a class="nav-link " data-toggle="tab" href="#working_experience">Experience</a>
           </li>
         </ul>
-
-
       </div>
     </div>
   </div>

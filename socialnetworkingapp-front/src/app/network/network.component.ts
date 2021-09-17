@@ -18,8 +18,8 @@ import {AuthenticationService} from "../authentication";
 })
 export class NetworkComponent implements OnInit {
 
+  public account: Account;
   public accounts: Account[];
-  private email: string;
 
   constructor(private accountService: AccountService,
               private bioService: BioService,
@@ -28,18 +28,11 @@ export class NetworkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.email = this.authenticationService.getCurrentUser();
-    this.getNetwork(this.email);
-  }
-
-  public getNetwork(email: string): void {
-    this.accountService.getNetworkByEmail(email).subscribe(
-      (response: Account[]) => {
-        this.accounts = response;
-        console.log(this.accounts);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
+    let email = this.authenticationService.getCurrentUser();
+    this.accountService.fetchUser(email).subscribe(
+      (response: Account)=> {
+        this.account = new Account(response);
+        this.accounts = this.account.network;
       }
     );
   }
