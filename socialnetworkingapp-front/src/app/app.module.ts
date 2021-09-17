@@ -31,6 +31,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { JobViewComponent } from './job-view/job-view.component';
 import { TagsComponent } from './tags/tags.component';
 import { EducationComponent } from './education/education.component';
+import { VisitAccountComponent } from './visit-account/visit-account.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { EducationComponent } from './education/education.component';
     NavBarComponent,
     JobViewComponent,
     TagsComponent,
-    EducationComponent
+    EducationComponent,
+    VisitAccountComponent
   ],
   imports: [
     BrowserModule,

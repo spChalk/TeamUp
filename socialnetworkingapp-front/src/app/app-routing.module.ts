@@ -12,6 +12,7 @@ import {AccountComponent} from "./account/account.component";
 import {AdminComponent} from "./admin/admin.component";
 import {NetworkComponent} from "./network/network.component";
 import { AuthGuardService } from './authentication';
+import {VisitAccountComponent} from "./visit-account/visit-account.component";
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuardService] },
   { path: 'chat', component: ChatComponent , canActivate: [AuthGuardService]},
   { path: 'account', component: AccountComponent ,canActivate: [AuthGuardService]},
+  { path: 'visit/:email', component: VisitAccountComponent ,canActivate: [AuthGuardService]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
   { path: 'network', component: NetworkComponent ,canActivate: [AuthGuardService]},
 
