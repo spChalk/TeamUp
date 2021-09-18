@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { AccountService } from "../account/account.service";
 import { HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse } from "@angular/common/http";
 import { Account } from "../account/account";
@@ -11,9 +11,10 @@ import { UploadFileService } from "../upload-files/upload-files.service";
 import { BioComponent } from "../bio/bio.component";
 import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
-import {repeatGroups} from "@angular/compiler/src/shadow_css";
-import {r3JitTypeSourceSpan} from "@angular/compiler";
-import {TagsService} from "../tags/tags.service";
+import { repeatGroups } from "@angular/compiler/src/shadow_css";
+import { r3JitTypeSourceSpan } from "@angular/compiler";
+import { TagsService } from "../tags/tags.service";
+import { collapseTextChangeRangesAcrossMultipleVersions, flattenDiagnosticMessageText } from 'typescript';
 
 @Component({
     selector: 'app-register',
@@ -28,6 +29,60 @@ export class RegisterComponent implements OnInit {
     currentFile: File;
     progress = 0;
     message = '';
+    TagsArray : Array<any>=[
+
+                    {name: 'TECHNOLOGY' , value:'technology'},
+                    {name: 'BUSINESS' , value:'business'},
+                    {name: 'MACHINE_LEARNING' , value:'machine_learning'},
+                    {name: 'SOFTWARE' , value:'software'},
+                    {name: 'HARDWARE' , value:'hardware'},
+                    {name: 'SALES' , value:'sales'},
+                    {name: 'RESEARCH' , value:'research'},
+                    {name: 'MAINTENANCE' , value:'maintenance'},
+                    {name: 'OPERATING_SYSTEMS' , value:'operating_systems'},
+                    {name: 'ARTIFICIAL_INTELLIGENCE' , value:'artificial_intelligence'},
+                    {name: 'DBMS' , value:'dbms'},
+                    {name: 'NETWORKING' , value:'networking'},
+                    {name: 'DATA_STRUCTURES' , value:'data_structures'},
+                    {name: 'ALGORITHMS' , value:'algorithms'},
+                    {name: 'OOP' , value:'oop'},
+                    {name: 'SQL' , value:'sql'},
+                    {name: 'UNIX' , value:'unix'},
+                    {name: 'WINDOWS' , value:'windows'},
+                    {name: 'GIT' , value:'git'},
+                    {name: 'GITHUB' , value:'github'},
+                    {name: 'MANAGEMENT' , value:'management'},
+                    {name: 'ECONOMICS' , value:'economics'},
+                    {name: 'PSYCHOLOGY' , value:'psychology'},
+                    {name: 'HISTORY' , value:'history'},
+                    {name: 'BOOKS' , value:'books'},
+                    {name: 'MUSIC' , value:'music'},
+                    {name: 'RUNNING' , value:'running'},
+                    {name: 'SWIMMING' , value:'swimming'},
+                    {name: 'LAW' , value:'law'},
+                    {name: 'MATHEMATICS' , value:'mathematics'},
+                    {name: 'PHYSICS' , value:'physics'},
+                    {name: 'ENGINEERING' , value:'engineering'},
+                    {name: 'ARCHITECTURE' , value:'architecture'},
+                    {name: 'AGRICULTURE' , value:'agriculture'},
+                    {name: 'SPACE' , value:'space'},
+                    {name: 'CHEMISTRY' , value:'chemistry'},
+                    {name: 'SCIENCE' , value:'science'},
+                    {name: 'POLITICS' , value:'politics'},
+                    {name: 'ATHLETICS' , value:'athletics'},
+                    {name: 'ROBOTICS' , value:'robotics'},
+                    {name: 'BIOINFORMATICS' , value:'bioinformatics'},
+                    {name: 'MEDICINE' , value:'medicine'},
+                    {name: 'ARCHEOLOGY' , value:'archeology'},
+                    {name: 'STOCK_MARKET' , value:'stock_market'},
+                    {name: 'CRYPTOCURRENCY' , value:'cryptocurrency'},
+                    {name: 'YACHTS' , value:'yachts'},
+                    {name: 'SHIPS' , value:'ships'},
+                    {name: 'AEROPLANE' , value:'aeroplane'},
+                    {name: 'MINERAL_RESOURCES' , value:'mineral_resources'},
+                    {name: 'MINING' , value:'mining'},
+                    {name: 'TRAVELLING' , value:'travelling'}
+    ]
 
     private account: Account;
 
@@ -38,7 +93,7 @@ export class RegisterComponent implements OnInit {
         private uploadService: UploadFileService,
         private bioService: BioService,
         private fb: FormBuilder,
-        private tagsService: TagsService
+        private tagsService: TagsService,
 
     ) { }
 
@@ -50,17 +105,42 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.fb.group({
             email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
-            /*conf_password : new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(16)]),*/
+            conf_password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
             firstName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
             lastName: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
             phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(15)]),
-            interests: new FormControl('')
-        });
+            interests: this.fb.array([],[Validators.required , Validators.minLength(2)])
+        },
+            { validator: this.checkPasswords }
+        );
 
+
+
+    }
+    onCbChange(e : any) {
+        const interests : FormArray = this.registerForm.get('interests') as FormArray;
+        if (e.target.checked) {
+           interests.push(new FormControl(e.target.value));
+        } else {
+            let i: number = 0;
+            interests.controls.forEach((item: any) => {
+                if (item.value == e.target.value) {
+                    interests.removeAt(i);
+                    return;
+                }
+                i++;
+            });
+        }
     }
 
     selectFile(event: any) {
         this.selectedFiles = event.target.files;
+    }
+
+    checkPasswords(group: FormGroup) {
+        const password = group.controls.password.value;
+        const confirm_password = group.controls.conf_password.value;
+        return password === confirm_password ? null : { notSame: true };
     }
 
     upload(email: string) {
@@ -83,51 +163,59 @@ export class RegisterComponent implements OnInit {
         this.selectedFiles = undefined;
     }
 
-    public onRegister(registerForm: FormGroup): void {
-/*        if(registerForm.get('password').value !== registerForm.get('conf_password').value){
-          console.log("passwords do not match");
-          registerForm.reset();
-          return;
-        }*/
+    public onRegister(registerForm: FormGroup, mode: string): void {
+
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
                 console.log(response);
-
-                for(let interest of registerForm.value.interests) {
-                  this.tagsService.addAccountTag(response.email, interest).subscribe(
-                    (resp: Account) => {
-                      console.log(resp);
-                    },
-                    (err: HttpErrorResponse) => {
-                      alert(err.message);
-                    }
-                  );
+                for (let interest of registerForm.value.interests) {
+                    this.tagsService.addAccountTag(response.email, interest).subscribe(
+                        (resp: Account) => {
+                            console.log(resp);
+                        },
+                        (err: HttpErrorResponse) => {
+                            alert(err.message);
+                        }
+                    );
                 }
 
+                this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
+                    (newResponse: boolean) => {
+                        this.router.navigateByUrl('/home');
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+                this.onClickModal(mode);
             },
-            (error) => {
+            (error: any) => {
                 this.correctCredentials = false;
                 this.registerForm.reset();
                 console.log(error);
             }
         );
+
+
+
     }
 
     public onClickModal(mode: string): void {
 
-      const container = document.getElementById('main-container');
+        const container = document.getElementById('main-container');
 
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.style.display = 'none';
-      button.setAttribute('data-toggle', 'modal');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.style.display = 'none';
+        button.setAttribute('data-toggle', 'modal');
 
-      if(mode === 'addPhoto') {
-        button.setAttribute('data-target', '#addPhoto');
-      }
-      if(container != null) {
-        container.appendChild(button);
-        button.click();
-      }
+        if (mode === 'addPhoto') {
+            button.setAttribute('data-target', '#addPhoto');
+        }
+        if (container != null) {
+            container.appendChild(button);
+            button.click();
+        }
+
     }
 }

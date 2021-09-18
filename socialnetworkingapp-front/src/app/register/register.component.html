@@ -10,7 +10,7 @@
 <h1 style="text-align: center">Register</h1>
 
 <div class="container" id="main-container">
-  <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm);onClickModal('addPhoto')">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm,'addPhoto')">
     <div class="row justify-content-md-center">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="login-screen">
@@ -49,6 +49,19 @@
                   </span>
                 </div>
               </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <input type="phone" formControlName="phone" class="form-control" placeholder="Phone" required>
+                  <span *ngIf="registerForm.get('phone').hasError('pattern')">
+                    Phone should consist of digits only !
+                  </span>
+                  <span *ngIf="registerForm.get('phone').hasError('maxlength')">
+                    Phone can be at max 15 digits!
+                  </span>
+                </div>
+              </div>
+ 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <input type="password" formControlName ="password" class="form-control" placeholder="Password" required>
@@ -62,87 +75,32 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <input type="phone" formControlName="phone" class="form-control" placeholder="Phone" required>
-                  <span *ngIf="registerForm.get('phone').hasError('pattern')">
-                    Phone should consist of digits only !
-                  </span>
-                  <span *ngIf="registerForm.get('phone').hasError('maxlength')">
-                    Phone can be at max 15 digits!
-                  </span>
-                </div>
-              </div>
-              <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group">
-                  <input type="password" formControlName="conf_password" class="form-control" placeholder="Confirm Password" required>
+                  <input type="password" formControlName ="conf_password" class="form-control" placeholder="Confirm Password" required>
                   <span *ngIf="registerForm.get('conf_password').hasError('minlength')">
                     Password should have at least 8 characters!
                   </span>
                   <span *ngIf="registerForm.get('conf_password').hasError('maxlength')">
                     Password should have at max 16 characters!
                   </span>
+
+                  <span *ngIf="registerForm.hasError('notSame')">
+                    <br>
+                    Passwords provided should match !
+                  </span>
                 </div>
-              </div> -->
+              </div>
               <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
-                  <label for="interests">Interests <i>(Press Ctrl to select multiple tags)</i></label>
-                  <select size="10" id="interests" formControlName="interests" class="form-control" data-role="select-dropdown" data-profile="minimal" multiple required>
-                    <option>TECHNOLOGY</option>
-                    <option>BUSINESS</option>
-                    <option>MACHINE_LEARNING</option>
-                    <option>SOFTWARE</option>
-                    <option>HARDWARE</option>
-                    <option>SALES</option>
-                    <option>RESEARCH</option>
-                    <option>MAINTENANCE</option>
-                    <option>OPERATING_SYSTEMS</option>
-                    <option>ARTIFICIAL_INTELLIGENCE</option>
-                    <option>DBMS</option>
-                    <option>NETWORKING</option>
-                    <option>DATA_STRUCTURES</option>
-                    <option>ALGORITHMS</option>
-                    <option>OOP</option>
-                    <option>SQL</option>
-                    <option>UNIX</option>
-                    <option>WINDOWS</option>
-                    <option>GIT</option>
-                    <option>GITHUB</option>
-                    <option>MANAGEMENT</option>
-                    <option>ECONOMICS</option>
-                    <option>PSYCHOLOGY</option>
-                    <option>HISTORY</option>
-                    <option>BOOKS</option>
-                    <option>MUSIC</option>
-                    <option>RUNNING</option>
-                    <option>SWIMMING</option>
-                    <option>LAW</option>
-                    <option>MATHEMATICS</option>
-                    <option>PHYSICS</option>
-                    <option>ENGINEERING</option>
-                    <option>ARCHITECTURE</option>
-                    <option>AGRICULTURE</option>
-                    <option>SPACE</option>
-                    <option>CHEMISTRY</option>
-                    <option>SCIENCE</option>
-                    <option>POLITICS</option>
-                    <option>ATHLETICS</option>
-                    <option>ROBOTICS</option>
-                    <option>BIOINFORMATICS</option>
-                    <option>MEDICINE</option>
-                    <option>ARCHEOLOGY</option>
-                    <option>STOCK_MARKET</option>
-                    <option>CRYPTOCURRENCY</option>
-                    <option>YACHTS</option>
-                    <option>SHIPS</option>
-                    <option>AEROPLANE</option>
-                    <option>MINERAL_RESOURCES</option>
-                    <option>MINING</option>
-                    <option>TRAVELLING</option>
-                  </select>
+                  <div *ngFor="let item of TagsArray; let i = index ">
+                    <label>
+                      <input type = "checkbox" [value] = "item.value" (change)="onCbChange($event)"/>
+                      {{item.name}}
+                    </label>
+
+                  </div>
                   <a class="text-muted">At least 2 tags are required.</a>
                 </div>
               </div>
-
-
 
 
             </div>
@@ -150,11 +108,12 @@
               <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-block">Sign up</button>
                 <div *ngIf="correctCredentials else wrongCredentials">
                 </div>
-                <ng-template #wrongCredentials>
+                <ng-template #wrongCredentials >
                     <span> A user with that email might already exist.</span>
                     <br>
                     <span> Try using another email address.</span>
                 </ng-template>
+
             </div>
             <a href="#" class="additional-link">Have an Account? <span>Login Now</span></a>
           </div>
