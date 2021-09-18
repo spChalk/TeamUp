@@ -1,11 +1,12 @@
 
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders} from "@angular/common/http";
 import {Account} from "./account";
 import {environment} from "../../environments/environment";
 import {Login} from "../login/login";
 import {Bio} from "../bio/bio";
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -63,8 +64,7 @@ export class AccountService {
 
                 console.log(account)
     return this.http.post<Account>(`${environment.apiBaseUrl}/register`,
-      account,
-      httpOptions);
+      account,httpOptions);
   }
 
   public updateAccount(account: Account): Observable<Account> {
