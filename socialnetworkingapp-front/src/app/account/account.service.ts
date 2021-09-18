@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 import {Login} from "../login/login";
 import {Bio} from "../bio/bio";
 import { catchError } from 'rxjs/operators';
+import { AccountUpdateRequest } from './accountUpdateRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,13 @@ export class AccountService {
     return this.http.put<Account>(`${this.url}/update`, account);
   }
 
+  public aboutUpdateAccount(account: AccountUpdateRequest): Observable<Account> {
+
+    let httpOptions = { headers: new HttpHeaders(
+      { 'Content-Type': 'application/json', })};
+    return this.http.put<Account>(`${this.url}/about-update`, account, httpOptions);
+  }
+
   public deleteAccountById(account_id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
@@ -81,8 +89,10 @@ export class AccountService {
 
   /* TODO: addFriend */
 
-  public addBio(email: string, bio: Bio) {
-    return this.http.post<Bio>(`${this.url}/bio/add`, {email, bio});
+  public addBio(email: string, bio: Bio) : Observable<Bio>{
+    let httpOptions = { headers: new HttpHeaders(
+      { 'Content-Type': 'application/json', })};
+    return this.http.post<Bio>(`${this.url}/bio/add`, {email, bio}, httpOptions);
   }
 
   public deleteBio(id: number) {
