@@ -109,8 +109,10 @@
               </td>
               <td style="width: 20%;">
                 <button (click)="onClickModal(account, 'info')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Info"> <i class="fa fa-question"></i> </button>
+<!--
                 <button (click)="onClickModal(account, 'edit')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
-                <button (click)="onClickModal(account, 'remove')" type="button" class="btn btn-outline-danger" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></button>
+-->
+                <button *ngIf="account?.id > 1" (click)="onClickModal(account, 'remove')" type="button" class="btn btn-outline-danger" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></button>
               </td>
             </tr>
             </tbody>
@@ -214,6 +216,7 @@
 </div>
 
 <!-- Edit Modal -->
+<!--
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
     <div class="modal-content">
@@ -262,6 +265,7 @@
     </div>
   </div>
 </div>
+-->
 
 <!-- Remove Modal -->
 <div class="modal fade" id="remove" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">

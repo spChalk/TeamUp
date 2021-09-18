@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
   public accounts: Account[];
   public accountsTemp: Account[];
   public deleteAccount: Account;
-  public editAccount: Account;
+  /*public editAccount: Account;*/
   public infoAccount: Account;
   public selectedUsers: Account[];
 
@@ -102,10 +102,10 @@ export class AdminComponent implements OnInit {
       this.infoAccount = account;
       button.setAttribute('data-target', '#info');
     }
-    if(mode === 'edit') {
+   /* if(mode === 'edit') {
       this.editAccount = account;
       button.setAttribute('data-target', '#edit');
-    }
+    }*/
     if(mode === 'remove') {
       this.deleteAccount = account;
       button.setAttribute('data-target', '#remove');
@@ -146,7 +146,7 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  public onUpdateAccount(account: Account): void {
+/*  public onUpdateAccount(account: Account): void {
 
     this.accountService.updateAccount(account).subscribe(
       (response: Account) => {
@@ -157,7 +157,7 @@ export class AdminComponent implements OnInit {
         alert(error.message);
       }
     );
-  }
+  }*/
 
   public onDeleteAccount(accountId: number): void {
 

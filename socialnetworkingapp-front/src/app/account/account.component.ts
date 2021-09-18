@@ -195,7 +195,6 @@ export class AccountComponent implements OnInit {
         console.log(error);
       }
     );
-
-
+    window.location.reload();
   }
 }

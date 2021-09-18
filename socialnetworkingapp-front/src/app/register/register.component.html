@@ -61,7 +61,7 @@
                   </span>
                 </div>
               </div>
- 
+
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <input type="password" formControlName ="password" class="form-control" placeholder="Password" required>
@@ -90,7 +90,9 @@
                 </div>
               </div>
               <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group">
+                Pick the tags that interest you the most!
+                <hr>
+                <div class="form-group" style="height: 190px;overflow-y: scroll">
                   <div *ngFor="let item of TagsArray; let i = index ">
                     <label>
                       <input type = "checkbox" [value] = "item.value" (change)="onCbChange($event)"/>
@@ -98,8 +100,8 @@
                     </label>
 
                   </div>
-                  <a class="text-muted">At least 2 tags are required.</a>
                 </div>
+                <a class="text-muted">At least 2 tags are required.</a>
               </div>
 
 
