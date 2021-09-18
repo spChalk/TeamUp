@@ -3,7 +3,38 @@
 }
 
 body{margin-top:20px;}
+.grid-container {
+  display: grid;
+  grid-template-columns: 170px auto auto auto;
+  grid-gap: 2px;
+  background-color: #d5d5d5;
+  padding: 2px;
+}
 
+.grid-container > div {
+  background-color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
+}
+
+.left {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.right {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+.right1 {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+.right2 {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
 
 /* USER LIST TABLE */
 .user-list tbody td > img {

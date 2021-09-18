@@ -134,131 +134,72 @@
       </div>
       <div class="modal-body">
 
+        <div class="grid-container">
+          <div class="left"><strong>Database ID</strong></div>
+          <div class="right">{{infoAccount?.id}}</div>
+          <div class="left"><strong>First Name</strong></div>
+          <div class="right">{{infoAccount?.firstName}}</div>
+          <div class="left"><strong>Last Name</strong></div>
+          <div class="right">{{infoAccount?.lastName}}</div>
+          <div class="left"><strong>Email</strong></div>
+          <div class="right">{{infoAccount?.email}}</div>
+          <div class="left"><strong>Phone</strong></div>
+          <div class="right">{{infoAccount?.phone}}</div>
+          <div class="left"><strong>Password</strong></div>
+          <div class="right" style="overflow-x: auto">{{infoAccount?.password}}</div>
+          <div class="left"><strong>Image</strong></div>
+          <div class="right">{{infoAccount?.imageUrl}}</div>
+          <div class="left"><strong>Date</strong></div>
+          <div class="right">{{infoAccount?.dateCreated}}</div>
+          <div class="left"><strong>Bio</strong></div>
+          <div class="right" style="overflow-x: scroll;overflow-y: auto">{{infoAccount?.bio?.description}}</div>
+
+          <div class="left"><strong>Interests</strong></div>
+          <div class="right"><strong>Share:</strong>
+            <a *ngIf="infoAccount?.visibleTags" > Public </a>
+            <a *ngIf="infoAccount?.visibleTags !== true" > Private </a>
+          </div>
+          <div *ngFor="let tag of infoAccount?.tags" class="right"> {{tag?.tag}} </div>
 
 
-        <div class="container emp-profile shadow ">
-          <form method="post">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="profile-img">
-                  <img src="{{infoAccount?.imageUrl}}" alt=""/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="profile-head">
-                  <h5>
-                    {{infoAccount?.firstName}} {{infoAccount?.lastName}}
-                  </h5>
-                  <h6>
-                    MORE INFO HERE
-                  </h6>
-                  <p class="profile-rating"> <i> since {{infoAccount?.dateCreated}}</i></p>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div class="left"><strong>Experience</strong></div>
+          <div class="right" *ngFor="let xp of infoAccount?.experience">
+            <div class="right"><strong>Share:</strong>
+              <a *ngIf="xp?.visible" > Public </a>
+              <a *ngIf="xp?.visible !== true" > Private </a>
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="profile-work">
-                  <p>WORK LINK</p>
-                  <a href="">Website Link</a><br/>
-                  <a href="">Bootsnipp Profile</a><br/>
-                  <a href="">Bootply Profile</a>
-                  <p>SKILLS</p>
-                  <a href="">Web Designer</a><br/>
-                  <a href="">Web Developer</a><br/>
-                  <a href="">WordPress</a><br/>
-                  <a href="">WooCommerce</a><br/>
-                  <a href="">PHP, .Net</a><br/>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Name</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{infoAccount?.lastName}} {{infoAccount?.firstName}}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Email</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{infoAccount?.email}}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Phone</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{infoAccount?.phone}}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Experience</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>Expert</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Hourly Rate</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>10$/hr</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Total Projects</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>230</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>English Level</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>Expert</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Availability</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>6 months</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label>Your Bio</label><br/>
-                        <p>Your detail description</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="right"><strong>Headline:</strong>  {{xp?.headline}}</div>
+            <div class="right"><strong>Title:</strong> {{xp?.title}}</div>
+            <div class="right"><strong>Employment Type:</strong> {{xp?.employmentType}}</div>
+            <div class="right"><strong>Company:</strong> {{xp?.company}}</div>
+            <div class="right"><strong>Location:</strong> {{xp?.location}}</div>
+            <div class="right"><strong>Start date:</strong> {{xp?.startDate}}</div>
+            <div class="right"><strong>End date:</strong> {{xp?.endDate}}</div>
+            <div class="right" style="width: 570px;overflow-x: scroll"><strong>Description:</strong> {{xp?.description}}</div>
+          </div>
+
+          <div class="left"><strong>Education</strong></div>
+          <div class="right"   *ngFor="let ed of infoAccount?.education">
+            <div class="right"><strong>Share:</strong>
+              <a *ngIf="ed?.visible" > Public </a>
+              <a *ngIf="ed?.visible !== true" > Private </a>
             </div>
-          </form>
+
+            <div class="right"><strong>School:</strong> {{ed?.school}}</div>
+            <div class="right"><strong>Degree:</strong> {{ed?.degree}}</div>
+            <div class="right"><strong>Field:</strong> {{ed?.field}}</div>
+            <div class="right"><strong>Grade:</strong> {{ed?.grade}}</div>
+            <div class="right"><strong>Start date:</strong> {{ed?.startDate}}</div>
+            <div class="right"><strong>End date:</strong> {{ed?.endDate}}</div>
+            <div class="right" style="width: 570px;overflow-x: scroll"><strong>Description:</strong> {{ed?.description}}</div>
+          </div>
+
+          <div class="left"><strong>Network</strong></div>
+          <div class="right" *ngFor="let user of infoAccount?.network">
+            <div class="right">{{user?.email}}</div>
+          </div>
+
+
         </div>
 
 
@@ -429,41 +370,3 @@
     </div>
   </div>
 </div>
-
-<!-- Select XML Modal -->
-<!--
-<div class="modal fade" id="selectXML" tabindex="-1" role="dialog" aria-labelledby="selectXMLModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="selectXMLModalLabel">Delete account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      ...
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger"  data-dismiss="modal"> Export </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-&lt;!&ndash; Select JSON Modal &ndash;&gt;
-<div class="modal fade" id="selectJSON" tabindex="-1" role="dialog" aria-labelledby="selectJSONModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="selectJSONModalLabel">Delete account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      ...
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger"  data-dismiss="modal"> Export </button>
-      </div>
-    </div>
-  </div>
-</div>
--->
