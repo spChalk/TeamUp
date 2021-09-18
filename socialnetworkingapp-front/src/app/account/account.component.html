@@ -382,28 +382,24 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #aboutForm="ngForm">
+        <form [formGroup]="aboutForm" (ngSubmit)="aboutSubmit(aboutForm)">
           <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" name="firstName" aria-describedby="firstNameHelp">
+            <input type="text" class="form-control" formControlName="firstName" aria-describedby="firstNameHelp">
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" name="lastName" aria-describedby="lastNameHelp">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" aria-describedby="emailHelp">
+            <input type="text" class="form-control" formControlName="lastName" aria-describedby="lastNameHelp">
           </div>
           <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="text" class="form-control" name="phone" aria-describedby="phoneHelp">
+            <input type="text" class="form-control" formControlName="phone" aria-describedby="phoneHelp">
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="aboutSubmit(aboutForm)" data-dismiss="modal">
           Update
         </button>
       </div>
@@ -422,16 +418,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #bioForm="ngForm">
+        <form [formGroup]="bioForm" (ngSubmit)="bioSubmit(bioForm)">
           <div class="form-group">
             <label for="biography">Your bio</label>
-            <textarea type="text" class="form-control" name="biography" aria-describedby="biographyHelp" [value]="this.account?.bio.description" ></textarea>
+            <textarea type="text" class="form-control" formControlName="description" aria-describedby="biographyHelp" [value]="this.account?.bio.description" ></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click) = "bioSubmit(bioForm)" data-dismiss="modal">
           Update
         </button>
       </div>

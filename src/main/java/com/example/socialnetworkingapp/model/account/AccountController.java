@@ -91,6 +91,12 @@ public class AccountController {
         return new ResponseEntity<>(newAccount, HttpStatus.OK);
     }
 
+    @PutMapping("/about-update")
+    public ResponseEntity<Account> aboutUpdateAccount(@RequestBody AccountUpdateRequest account){
+        Account newAccount = this.accountService.aboutUpdateAccount(account);
+        return new ResponseEntity<>(newAccount, HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
         this.accountService.deleteAccount(id);

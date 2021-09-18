@@ -228,4 +228,22 @@ public class AccountService implements UserDetailsService {
         this.accountRepository.save(usr1);
         this.accountRepository.save(usr2);
     }
+
+    public Account aboutUpdateAccount(AccountUpdateRequest account) {
+
+        Optional<Account> accPresent = this.accountRepository.findAccountByEmail(account.getEmail());
+        if(!accPresent.isPresent()) {
+            throw new UserNotFoundException("User with email " + account.getEmail() + " does not exist!");
+        }
+
+        Account acc = accPresent.get();
+
+        if(!account.getFirstName().equals(""))
+        acc.setFirstName(account.getFirstName());
+        if(!account.getLastName().equals(""))
+        acc.setLastName(account.getLastName());
+        if(!account.getPhone().equals(""))
+        acc.setPhone(account.getPhone());
+        return this.accountRepository.save(acc);
+    }
 }
