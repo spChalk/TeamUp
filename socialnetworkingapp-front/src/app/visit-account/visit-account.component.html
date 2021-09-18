@@ -24,10 +24,10 @@
         <a *ngIf="this.pendingRequestId > 0" style="float: right;color: green;font-weight: bold" ><i class="fa fa-check"></i> Connection Request Sent </a>
 
         <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork"
-                (click)="onDisconnect()" style="float: right" type="button" class="btn btn-outline-danger">Disconnect</button>
+                (click)="onDisconnect()" style="float: right" type="button" class="btn btn-outline-danger"> <i class="fa fa-user-times"></i> Disconnect</button>
 
         <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork === false"
-                (click)="onConnect()" style="float: right" type="button" class="btn btn-primary">Connect</button>
+                (click)="onConnect()" style="float: right" type="button" class="btn btn-primary"> <i class="fa fa-user-plus"> </i> Connect</button>
 
         <h5>
           {{this.vAccount?.firstName}} {{this.vAccount?.lastName}}
@@ -36,6 +36,8 @@
         <h6>
           {{this.vAccount?.email}}
         </h6>
+        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork"
+                style="float: right" type="button" class="btn btn-primary"> <i class="fa fa-comments"></i></button>
 
         <button *ngIf="this.pendingRequestId > 0"
                 (click)="onRemoveRequest()" style="float: right;margin-top: -15px" type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel request </button>
