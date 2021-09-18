@@ -8,6 +8,8 @@ import {UploadFileService} from "../upload-files/upload-files.service";
 import {Router} from "@angular/router";
 import {BioService} from "../bio/bio.service";
 import {environment} from "../../environments/environment";
+import { AuthenticationService } from '../authentication';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 
 @Component({
@@ -33,12 +35,19 @@ export class AdminComponent implements OnInit {
               private exportService: ExportService,
               private uploadService: UploadFileService,
               private bioService: BioService,
-              public router: Router) {
+              public router: Router,
+              private authenticationService : AuthenticationService) {
     this.selectedUsers = [];
   }
 
   ngOnInit() {
+
+    //users cannot access admin page
     this.getAccounts();
+    if(this.authenticationService.isAdmin() === false){
+          this.router.navigate(['/home']);
+    }
+
   }
 
   selectFile(event: any) {

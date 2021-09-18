@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.authorization;
 
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.security.jwt.JwtConfig;
 import io.jsonwebtoken.Jwts;
 import org.json.JSONObject;
@@ -43,7 +44,8 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = generateToken(authentication);
-        return new AuthResponse(loginRequest.getUsername(), token);
+        Account user = (Account) authentication.getPrincipal();
+        return new AuthResponse(loginRequest.getUsername(), token, user.getRole());
     }
 
 
