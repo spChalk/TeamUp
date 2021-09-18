@@ -2,7 +2,6 @@ package com.example.socialnetworkingapp.mapper;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.comment.Comment;
-import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,7 +15,7 @@ public interface CommentMapper {
 //    private String authorEmail;
 //    private Date date;
 
-
+/*
     @Mapping(target = "authorFirstName", expression = "java(mapFirstName(comment.getCommenter()))")
     @Mapping(target = "authorLastName", expression = "java(mapLastName(comment.getCommenter()))")
     @Mapping(target = "authorEmail", expression = "java(mapEmail(comment.getCommenter()))")
@@ -30,5 +29,5 @@ public interface CommentMapper {
     }
     default String mapEmail(Account account) {
         return account.getUsername();
-    }
+    }*/
 }

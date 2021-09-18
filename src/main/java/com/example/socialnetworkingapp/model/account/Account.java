@@ -5,7 +5,9 @@ import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.security.jwt.CustomAuthorityDeserializer;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -59,6 +61,7 @@ public class Account implements UserDetails {
     @JoinTable(name = "network",
             joinColumns = { @JoinColumn(name = "account1_id") },
             inverseJoinColumns = { @JoinColumn(name = "account2_id") })
+    @JsonSerialize(using = CustomNetworkSerializer.class)
     private List<Account> network = new ArrayList<Account>();
 
     @ManyToMany(fetch = FetchType.LAZY,

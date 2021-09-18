@@ -22,6 +22,11 @@ public class ConnectionReqController {
         return new ResponseEntity<>(newConnectionRequest, HttpStatus.CREATED);
     }
 
+    @GetMapping("/search/{sender_email}/{receiver_email}")
+    public ResponseEntity<Long> SearchRequest(@PathVariable("sender_email") String senderEmail, @PathVariable("receiver_email") String receiverEmail){
+        return new ResponseEntity<>(this.connectionReqService.findRequestByAccEmails(senderEmail, receiverEmail), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{req_id}")
     public ResponseEntity<?> deleteRequestById(@PathVariable("req_id") Long id){
         connectionReqService.deleteRequest(id);

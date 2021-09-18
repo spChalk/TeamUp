@@ -2,6 +2,7 @@ import {Bio} from "../bio/bio";
 import {Experience} from "../experience/experience";
 import {Tag} from "../tags/Tag";
 import {Education} from "../education/education";
+import {NetworkEntity} from "./network-entity";
 
 export enum AppUserRole {
   USER,
@@ -19,7 +20,7 @@ export class Account {
   imageUrl: string;
   dateCreated: Date;
   bio: Bio;
-  network: Account[];
+  network: NetworkEntity[];
   experience: Array<Experience>;
   tags: Array<Tag>;
   visibleTags: boolean;

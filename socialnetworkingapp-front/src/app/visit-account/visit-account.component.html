@@ -19,14 +19,25 @@
     </div>
     <div class="col-md-6">
       <div class="profile-head">
-        <button *ngIf="this.isPresentInNetwork" style="float: right" type="button" class="btn btn-outline-danger">Disconnect</button>
-        <button *ngIf="this.isPresentInNetwork === false" style="float: right" type="button" class="btn btn-primary">Connect</button>
+        <a *ngIf="this.pendingRequestId > 0" style="float: right;color: green;font-weight: bold" ><i class="fa fa-check"></i> Connection Request Sent </a>
+
+        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork"
+                (click)="onDisconnect()" style="float: right" type="button" class="btn btn-outline-danger">Disconnect</button>
+
+        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork === false"
+                (click)="onConnect()" style="float: right" type="button" class="btn btn-primary">Connect</button>
+
         <h5>
           {{this.vAccount?.firstName}} {{this.vAccount?.lastName}}
         </h5>
+
         <h6>
           {{this.vAccount?.email}}
         </h6>
+
+        <button *ngIf="this.pendingRequestId > 0"
+                (click)="onRemoveRequest()" style="float: right;margin-top: -15px" type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel request </button>
+
         <p class="profile-rating">Since {{this.vAccount?.dateCreated}}</p>
 
         <ul class="nav nav-tabs">
@@ -52,7 +63,7 @@
     <div class="col-md-4">
       <div class="profile-work">
 
-        <div *ngIf="this.vAccount.visibleTags">
+        <div *ngIf="this.vAccount?.visibleTags">
           <h6>INTERESTS</h6>
           <hr>
           <h6 *ngFor="let tag of this.vAccount.tags">
@@ -64,7 +75,7 @@
           <hr>
         </div>
 
-        <div *ngIf="this.isPresentInNetwork && (this.vAccount.visibleTags === false)">
+        <div *ngIf="this.isPresentInNetwork && (this.vAccount?.visibleTags === false)">
           <h6>INTERESTS</h6>
           <hr>
           <h6 *ngFor="let tag of this.vAccount.tags">
@@ -215,7 +226,7 @@
         <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
           <div class="row">
             <div class="col-md-12">
-              {{this.vAccount.bio.description}}
+              {{this.vAccount?.bio?.description}}
             </div>
           </div>
           <hr>

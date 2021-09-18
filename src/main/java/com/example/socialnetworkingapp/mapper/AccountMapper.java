@@ -1,7 +1,6 @@
 package com.example.socialnetworkingapp.mapper;
 
 import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.account.AccountResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

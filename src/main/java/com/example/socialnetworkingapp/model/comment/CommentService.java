@@ -15,7 +15,7 @@ public class CommentService {
     private final CommentMapper commentMapper;
 
 
-    public List<CommentResponse> findAll() {
+    /*public List<CommentResponse> findAll() {
         return commentRepository.findAll().stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
     }
 
@@ -30,5 +30,5 @@ public class CommentService {
     public String addComment(Comment comment){
         commentRepository.save(comment);
         return "workeeeed ";
-    }
+    }*/
 }

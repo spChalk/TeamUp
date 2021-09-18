@@ -33,7 +33,7 @@ public class CommentController {
 //    }
 
     //find all comments of a post
-    @GetMapping("/comments/{postid}/all")
+/*    @GetMapping("/comments/{postid}/all")
     public ResponseEntity<List<CommentResponse>> getAllComments(@PathVariable("postid") Long postid){
         Post post = postService.findPostById(postid);
         List<CommentResponse> comments = commentService.findAllCommentsOfPost(postid);
@@ -44,7 +44,7 @@ public class CommentController {
     public ResponseEntity<List<CommentResponse>> getAll(){
         List<CommentResponse> comments = commentService.findAll();
         return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
+    }*/
 
 //    @GetMapping("/comments/find/{id}")
 //    public ResponseEntity<Account> getById(@PathVariable("id") Long id){
@@ -52,7 +52,7 @@ public class CommentController {
 //        return new ResponseEntity<>(account, HttpStatus.OK);
 //    }
 
-    @PostMapping("/{postid}/comment/add")
+  /*  @PostMapping("/{postid}/comment/add")
     public ResponseEntity<String> addComment(@RequestBody CommentRequest request, @PathVariable("postid") Long postid){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -61,7 +61,7 @@ public class CommentController {
         Comment newComment = new Comment(request.getPayload(), user , post , new Date());
         commentService.addComment(newComment);
         return new ResponseEntity<>("Comment created", HttpStatus.CREATED);
-    }
+    }*/
 
 //    @PutMapping("/update")
 //    public ResponseEntity<Account> updateAccount(@RequestBody Account account){

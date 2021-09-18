@@ -10,6 +10,7 @@ import {Observable, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, repeat, switchMap} from "rxjs/operators";
 import {NgForm} from "@angular/forms";
 import {AuthenticationService} from "../authentication";
+import {NetworkEntity} from "../account/network-entity";
 
 @Component({
   selector: 'app-network',
@@ -19,7 +20,7 @@ import {AuthenticationService} from "../authentication";
 export class NetworkComponent implements OnInit {
 
   public account: Account;
-  public accounts: Account[];
+  public accounts: NetworkEntity[];
 
   constructor(private accountService: AccountService,
               private bioService: BioService,

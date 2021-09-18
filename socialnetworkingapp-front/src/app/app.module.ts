@@ -32,6 +32,7 @@ import { JobViewComponent } from './job-view/job-view.component';
 import { TagsComponent } from './tags/tags.component';
 import { EducationComponent } from './education/education.component';
 import { VisitAccountComponent } from './visit-account/visit-account.component';
+import { ConnectionRequestComponent } from './connection-request/connection-request.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { VisitAccountComponent } from './visit-account/visit-account.component';
     JobViewComponent,
     TagsComponent,
     EducationComponent,
-    VisitAccountComponent
+    VisitAccountComponent,
+    ConnectionRequestComponent
   ],
   imports: [
     BrowserModule,

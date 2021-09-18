@@ -23,6 +23,14 @@ public class ConnectionReqService {
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
     }
 
+    public Long findRequestByAccEmails(String senderEmail, String receiverEmail) {
+
+        Long senderId = this.accountService.findAccountByEmail(senderEmail).getId();
+        Long receiverId = this.accountService.findAccountByEmail(receiverEmail).getId();
+        Optional<ConnectionRequest> exists = this.connectionReqRepository.findRequestByAccIds(senderId, receiverId);
+        return exists.map(ConnectionRequest::getId).orElse(null);
+    }
+
 /*    public ConnectionRequest findAcceptedRequestByEmails(String email1, String email2) {
         return this.connectionReqRepository.findAcceptedRequestsByEmails(email1, email2);
     }*/
@@ -69,7 +77,6 @@ public class ConnectionReqService {
     }
 
     public void deleteConnection(String usr1, String usr2) {
-
         this.accountService.removeConnection(usr1, usr2);
     }
 }
