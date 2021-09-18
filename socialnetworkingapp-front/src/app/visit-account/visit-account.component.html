@@ -14,9 +14,11 @@
   <div class="row">
     <div class="col-md-4">
       <div class="profile-img">
-        <img src="{{this.vAccount?.imageUrl}}" alt=""/>
+        <img *ngIf="this.vAccount?.imageUrl" src="{{this.vAccount?.imageUrl}}" style="margin-bottom: 30px;width: 150px;height: auto;border-radius: 50%" alt=""/>
+        <img *ngIf="this.vAccount?.imageUrl === null" src="../../assets/images/user_default.png" style="margin-bottom: 30px;width: 150px;height: auto;border-radius: 50%" alt=""/>
       </div>
     </div>
+
     <div class="col-md-6">
       <div class="profile-head">
         <a *ngIf="this.pendingRequestId > 0" style="float: right;color: green;font-weight: bold" ><i class="fa fa-check"></i> Connection Request Sent </a>

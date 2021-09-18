@@ -14,7 +14,8 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
-          <img src="{{this.account?.imageUrl}}" alt=""/>
+          <img *ngIf="this.account?.imageUrl" src="{{this.account?.imageUrl}}" style="margin-bottom: 30px;width: 150px;height: auto;border-radius: 50%" alt=""/>
+          <img *ngIf="this.account?.imageUrl === null" src="../../assets/images/user_default.png" style="margin-bottom: 30px;width: 150px;height: auto;border-radius: 50%" alt=""/>
 
           <div class="file btn btn-lg btn-primary" routerLink="/settings">
             Change Photo

@@ -151,10 +151,11 @@
     <div class="container" *ngFor="let account of accounts">
       <div class="card shadow">
         <div class="imgBx">
-          <img src="{{account?.imageUrl}}">
+          <img *ngIf="account?.imageUrl" src="{{this.account?.imageUrl}}"/>
+          <img *ngIf="account?.imageUrl === null" src="../../assets/images/user_default.png"/>
         </div>
         <div class="contentBx">
-          <h2 style="color: black">{{account?.firstName}} {{account?.lastName}}</h2>
+          <h2 style="color: black">{{account?.firstName}} <br> {{account?.lastName}}</h2>
           <div class="size">
             <h3 style="color: black">{{account?.email}}</h3>
             <!--<span>7</span>
@@ -165,7 +166,7 @@
           <div class="color">
               <h3 style="color: black">MORE INFO</h3>
           </div>
-          <button  routerLink="../visit/{{account?.email}}" type="button" class="btn btn-danger">Visit profile</button>
+          <button routerLink="../visit/{{account?.email}}" type="button" class="btn btn-danger">Visit profile</button>
         </div>
       </div>
     </div>

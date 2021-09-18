@@ -277,7 +277,7 @@ body{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 15%;
+  opacity: 20%;
   width: 240px;
   border-radius: 50%;
 
@@ -289,8 +289,9 @@ body{
   width: 100%;
   height: 100px;
   text-align: center;
-  transition: 1s;
+  transition: 0.5s;
   z-index: 10;
+  opacity: 100%;
 }
 
 .container .card:hover .contentBx{
@@ -386,7 +387,7 @@ body{
   text-decoration: none;
   font-weight: 600;
   color: #111;
-  opacity: 0;
+  opacity: 1;
   transform: translateY(50px);
   transition: 0.5s;
   margin-top: 0;
