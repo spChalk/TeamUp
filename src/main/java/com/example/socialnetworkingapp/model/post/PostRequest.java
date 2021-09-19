@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostRequest {
 
-    private String title;
     private String payload;
 }

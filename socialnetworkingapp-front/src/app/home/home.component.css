@@ -13,6 +13,7 @@ body {
 
 .gedf-wrapper {
   margin-top: 0.97rem;
+  min-width: 150vh;
 }
 
 @media (min-width: 992px) {

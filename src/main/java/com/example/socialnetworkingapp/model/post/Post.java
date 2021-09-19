@@ -19,8 +19,7 @@ import java.util.Date;
 @Table(name="posts")
 public class Post implements Serializable {
 
-    public Post(String title, String payload, Account author) {
-        this.title = title;
+    public Post(String payload, Account author) {
         this.payload = payload;
         this.author = author;
     }
@@ -29,8 +28,7 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
 
-    //title and text of post
-    private String title;
+    @Lob
     private String payload;
 
     //author of post
@@ -41,13 +39,12 @@ public class Post implements Serializable {
     private Account author;
 
     //date of creation
-    private Date date ;
+    private String date ;
 
     //path to photo / video
     private String filePath;
 
-    public Post(String title, String payload, Account author, Date date, String filePath) {
-        this.title = title;
+    public Post(String payload, Account author, String date, String filePath) {
         this.payload = payload;
         this.author = author;
         this.date = date;

@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+<nav class="navbar navbar-expand-lg navbar-light bg-light " >
   <a class="navbar-brand" href="#" style="font-size: large"><strong>up</strong></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-link" routerLink="/home">Home </a>
+      <a class="nav-link" routerLink="/home" > Home </a>
+      <a class="nav-link" routerLink="/network">Network </a>
       <a class="nav-link" routerLink="/jobs">Jobs </a>
-      <a class="nav-link" routerLink="/chat">Chat</a>
+      <a class="nav-link" routerLink="/chat">Notifications</a>
+      <a class="nav-link" routerLink="/account">Profile</a>
       <a class="nav-link" routerLink="/settings">Settings</a>
-      <a class="nav-link" routerLink="/about">About</a>
-      <a class="nav-link" (click)="logout()">Logout</a>
-      <a class="nav-link" routerLink="/account">{{getCurrentUser()}}</a>
+      <a class="nav-link" href (click)="logout()">Logout</a>
     </div>
   </div>
 </nav>

@@ -23,9 +23,13 @@ public class PostService {
     private final PostMapper postMapper;
 
 
-    public String addPost(Post post){
-        postRepository.save(post);
-        return "workeeeed ";
+    public PostResponse addPost(Post post){
+
+        Post saved = postRepository.save(post);
+        return new PostResponse(saved.getId(), saved.getPayload(), saved.getAuthor().getFirstName(),
+                saved.getAuthor().getLastName(), saved.getAuthor().getEmail(),
+                saved.getAuthor().getImageUrl(), saved.getAuthor().getDateCreated().toString(),
+                saved.getFilePath());
     }
 
     public List<PostResponse> findAllPosts(){

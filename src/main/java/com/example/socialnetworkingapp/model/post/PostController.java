@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,21 +23,18 @@ public class PostController {
     private final PostService postService;
     private final AccountService accountService;
 
-
     @PostMapping("/add")
-    public String createPost(@RequestBody PostRequest request) {
+    public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Account user = accountService.findAccountByEmail(userDetails.getUsername());
-        Post newPost = new Post(request.getTitle(), request.getPayload(), user, new Date(), null);
-        return postService.addPost(newPost);
+        String user = authentication.getName();
+        Account newUser = accountService.findAccountByEmail(user);
+        Post newPost = new Post(request.getPayload(), newUser, LocalDate.now().toString(), null);
+        return new ResponseEntity<>(postService.addPost(newPost), HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostResponse>> getAllPosts(){
-//        List<Post> posts = postService.findAllPosts();
-        List<PostResponse> posts = postService.findAllPosts();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
+        return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
     }
 
 //    @GetMapping("/{id}")
