@@ -147,7 +147,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="this.router.navigateByUrl('/login');" >No</button>
-        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(registerForm.value.email)">
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()">
           Upload
         </button>
       </div>

@@ -28,7 +28,7 @@ public class PostController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account newUser = accountService.findAccountByEmail(user);
-        Post newPost = new Post(request.getPayload(), newUser, LocalDate.now().toString(), null);
+        Post newPost = new Post(request.getPayload(), newUser, LocalDate.now().toString(), null, null, null);
         return new ResponseEntity<>(postService.addPost(newPost), HttpStatus.CREATED);
     }
 

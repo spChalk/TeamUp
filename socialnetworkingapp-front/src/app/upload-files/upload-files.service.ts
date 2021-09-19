@@ -12,15 +12,45 @@ export class UploadFileService {
 
   constructor(private http: HttpClient) { }
 
-  upload(file: File, email: string): Observable<HttpEvent<any>> {
+  public uploadUser(file: File, token: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
-    formData.append('email',  email);
 
-    const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload`, formData, {
+    const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-user`, formData, {
       reportProgress: true,
-      responseType: 'json'
+      responseType: 'json',
+      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+    });
+
+    return this.http.request(req);
+  }
+
+  public uploadAdmin(file: File, email: string, token: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('email', email);
+
+    const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-admin`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+    });
+
+    return this.http.request(req);
+  }
+
+  public uploadPost(file: File, postId: number, token: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('postId', postId.toString());
+
+    const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-post`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
     });
 
     return this.http.request(req);

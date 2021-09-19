@@ -17,5 +17,7 @@ public class PostResponse {
     private String authorEmail;
     private String authorImage;
     private String date;
-    private String filePath;
+    private String imagePath;
+    private String videoPath;
+    private String soundPath;
 }

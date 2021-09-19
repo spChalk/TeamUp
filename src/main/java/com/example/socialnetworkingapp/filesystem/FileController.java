@@ -1,10 +1,14 @@
 package com.example.socialnetworkingapp.filesystem;
 
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,13 +28,39 @@ public class FileController {
 
     private FileDBService storageService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,
-                                                      @RequestParam("email") String email) {
+    @PostMapping("/upload-post")
+    public ResponseEntity<ResponseMessage> uploadPostFile(@RequestParam("file") MultipartFile file,
+                                                      @RequestParam("postId") String postId) {
         String message = "";
         try {
-            storageService.store(file, email);
+            this.storageService.postStore(file, Long.valueOf(postId));
+            message = "File uploaded successfully!" + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
 
+    @PostMapping("/upload-admin")
+    public ResponseEntity<ResponseMessage> adminUploadFileToUser(@RequestParam("file") MultipartFile file,
+                                                      @RequestParam("email") String userEmail) {
+        String message = "";
+        try {
+            storageService.adminStore(file, userEmail);
+            message = "File uploaded successfully!" + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
+    @PostMapping("/upload-user")
+    public ResponseEntity<ResponseMessage> uploadUserFile(@RequestParam("file") MultipartFile file) {
+        String message = "";
+        try {
+            storageService.userStore(file);
             message = "File uploaded successfully!" + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {

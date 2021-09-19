@@ -6,7 +6,9 @@ import {Bio} from "../bio/bio";
 import {AccountService} from "../account/account.service";
 import {Post} from "../post/post";
 import {PostService} from "../post/post.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {UploadFileService} from "../upload-files/upload-files.service";
 
 @Component({
   selector: 'app-home',
@@ -19,10 +21,17 @@ export class HomeComponent implements OnInit {
   public posts: Post[];
   public postToDelete: Post;
 
+  private currImageFile: File = null;
+  private currVideoFile: File = null;
+  private currSoundFile: File = null;
+  progress = 0;
+  message = '';
+
   constructor(
       private router: Router,
       public authenticationService: AuthenticationService,
       private accountService: AccountService,
+      private uploadService: UploadFileService,
       private postService: PostService) {
   };
 
@@ -46,14 +55,48 @@ export class HomeComponent implements OnInit {
   }
 
   public onAddPost(payload: string) {
+
     this.postService.addPost(payload, this.authenticationService.getJWT()).subscribe(
       (response: Post) => {
         console.log(response);
+
+        let files: File[] = [this.currImageFile, this.currVideoFile, this.currSoundFile];
+
+        console.log(files);
+
+        for(let file of files) {
+
+          if(file === null) {
+            continue;
+          }
+
+          this.progress = 0;
+          this.uploadService.uploadPost(file, response?.id, this.authenticationService.getJWT()).subscribe(
+            event => {
+              if (event.type === HttpEventType.UploadProgress) {
+                this.progress = Math.round(100 * event.loaded / event.total);
+              } else if (event instanceof HttpResponse) {
+                this.message = event.body.message;
+              }
+            },
+            err => {
+              this.progress = 0;
+              this.message = 'Could not upload the file!';
+            });
+          this.currImageFile = undefined;
+          this.currVideoFile = undefined;
+          this.currSoundFile = undefined;
+        }
+
+
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+
+/*
   window.location.reload();
+*/
   }
 
   public onClickModal(data: any, mode: string): void {
@@ -87,4 +130,18 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+  public selectImageFile(event: any) {
+    let tempFileList: FileList = event.target.files;
+    this.currImageFile = tempFileList.item(0);
+  }
+  public selectVideoFile(event: any) {
+    let tempFileList: FileList = event.target.files;
+    this.currVideoFile = tempFileList.item(0);
+  }
+  public selectSoundFile(event: any) {
+    let tempFileList: FileList = event.target.files;
+    this.currSoundFile = tempFileList.item(0);
+  }
+
 }

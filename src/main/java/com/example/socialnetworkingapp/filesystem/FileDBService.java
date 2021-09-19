@@ -13,8 +13,12 @@ import java.util.stream.Stream;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.post.Post;
+import com.example.socialnetworkingapp.model.post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,18 +29,67 @@ public class FileDBService {
 
     private FileDBRepository fileDBRepository;
     private AccountService accountService;
+    private PostService postService;
 
-    public FileDB store(MultipartFile file, String ownerMail) throws IOException {
+    public FileDB postStore(MultipartFile file, Long postId) throws IOException {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        FileDB fileDB = new FileDB(fileName, file.getContentType(), ownerMail, file.getBytes());
-
+        FileDB fileDB = new FileDB(fileName, file.getContentType(), user, file.getBytes());
         FileDB saved = fileDBRepository.save(fileDB);
+        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
 
-        /* If the file is an image, add it to user's photo */
+        /* The file is going to a post with id = postId. */
+        if (postId != null) {
+
+            Post p = this.postService.findPostById(postId);
+            if(saved.getType().contains("image")) {
+                p.setImagePath(fileURL);
+            } else if(saved.getType().contains("video")) {
+                p.setVideoPath(fileURL);
+            } else if(saved.getType().contains("audio")) {
+                p.setSoundPath(fileURL);
+            }
+            this.postService.updatePost(p);
+        }
+        return saved;
+    }
+
+    public FileDB userStore(MultipartFile file) throws IOException {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        FileDB fileDB = new FileDB(fileName, file.getContentType(), user, file.getBytes());
+        FileDB saved = fileDBRepository.save(fileDB);
+        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
+
+        /* The file is an image and is going to a user profile. */
         if(saved.getType().contains("image")) {
-            Account acc = accountService.findAccountByEmail(ownerMail);
-            acc.setImageUrl("http://localhost:8081/api/files/" + saved.getId());
-            accountService.updateAccount(acc);
+            /* If the file is an image, add it to user's photo */
+            Account acc = accountService.findAccountByEmail(user);
+            acc.setImageUrl(fileURL);
+            this.accountService.updateAccount(acc);
+        }
+        return saved;
+    }
+
+    public FileDB adminStore(MultipartFile file, String userEmail) throws IOException {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        FileDB fileDB = new FileDB(fileName, file.getContentType(), userEmail, file.getBytes());
+        FileDB saved = fileDBRepository.save(fileDB);
+        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
+
+        /* The file is an image and is going to a user profile. */
+        if(saved.getType().contains("image")) {
+            /* If the file is an image, add it to user's photo */
+            Account acc = accountService.findAccountByEmail(userEmail);
+            acc.setImageUrl(fileURL);
+            this.accountService.updateAccount(acc);
         }
         return saved;
     }

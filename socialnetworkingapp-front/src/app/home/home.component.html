@@ -88,6 +88,7 @@
             <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
             <p class="card-text">
               {{post?.payload}}
+              <!-- VIDEO, PHOTO, SOUND -->
             </p>
           </div>
           <div class="card-footer" style="background-color: white">
@@ -294,9 +295,19 @@
             <form #postForm="ngForm">
               <textarea type="text" ngModel name="payload" class="form-control" aria-describedby="postPayloadHelp" placeholder="What's on your mind?"></textarea>
               <br>
-              <button type="submit" class="btn btn-info mr-1" ><i class="fa fa-photo"></i> Photo</button>
-              <button type="submit" class="btn btn-primary mr-1" ><i class="fa fa-video-camera"></i> Video</button>
-              <button type="submit" class="btn btn-warning mr-1" ><i class="fa fa-file-sound-o"></i> Sound</button>
+
+              <button type="submit" class="btn btn-info mr-1" (change)="selectImageFile($event)"><label for="image-upload" class="custom-file-upload">
+                <i class="fa fa-photo"></i> Photo </label> <input id="image-upload" type="file" hidden/>
+              </button>
+
+              <button type="submit" class="btn btn-primary mr-1" (change)="selectVideoFile($event)"><label for="video-upload" class="custom-file-upload">
+                <i class="fa fa-camera"></i> Video </label> <input id="video-upload" type="file" hidden/>
+              </button>
+
+              <button type="submit" class="btn btn-warning mr-1" (change)="selectSoundFile($event)"><label for="sound-upload" class="custom-file-upload">
+                <i class="fa fa-file-sound-o"></i> Sound </label> <input id="sound-upload" type="file" hidden/>
+              </button>
+
             </form>
           </div>
         </div>

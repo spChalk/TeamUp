@@ -57,7 +57,7 @@ export class AdminComponent implements OnInit {
   upload(email: string) {
     this.progress = 0;
     this.currentFile = this.selectedFiles.item(0);
-    this.uploadService.upload(this.currentFile, email).subscribe(
+    this.uploadService.uploadAdmin(this.currentFile, email, this.authenticationService.getJWT()).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);

@@ -41,13 +41,16 @@ public class Post implements Serializable {
     //date of creation
     private String date ;
 
-    //path to photo / video
-    private String filePath;
+    private String imagePath;
+    private String videoPath;
+    private String soundPath;
 
-    public Post(String payload, Account author, String date, String filePath) {
+    public Post(String payload, Account author, String date, String imagePath, String videoPath, String soundPath) {
         this.payload = payload;
         this.author = author;
         this.date = date;
-        this.filePath = filePath;
+        this.imagePath = imagePath;
+        this.videoPath = videoPath;
+        this.soundPath = soundPath;
     }
 }
