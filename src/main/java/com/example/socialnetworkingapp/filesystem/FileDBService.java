@@ -35,6 +35,7 @@ public class FileDBService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
+        this.accountService.findAccountByEmail(user);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB(fileName, file.getContentType(), user, file.getBytes());
         FileDB saved = fileDBRepository.save(fileDB);

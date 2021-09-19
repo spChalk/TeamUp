@@ -3,9 +3,8 @@ package com.example.socialnetworkingapp.model.comment;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.post.Post;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Setter
+@Getter
 @Table(name = "comments")
 public class Comment {
 
@@ -23,6 +24,8 @@ public class Comment {
     private Long id ;
 
     @NotNull
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String payload;
 
     //comments of post
@@ -40,9 +43,9 @@ public class Comment {
     private Post post;
 
     //date of creation
-    private Date date;
+    private String date;
 
-    public Comment(String payload, Account commenter, Post post, Date date) {
+    public Comment(String payload, Account commenter, Post post, String date) {
         this.payload = payload;
         this.commenter = commenter;
         this.post = post;

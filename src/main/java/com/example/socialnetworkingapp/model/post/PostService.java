@@ -43,7 +43,7 @@ public class PostService {
     }
 
     public Post findPostById(Long id){
-        return postRepository.findPostById(id).orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+        return postRepository.findPostById(id).orElseThrow( () -> new IllegalStateException("Post with id "+ id.toString() + " was not found !"));
     }
 
     public Post updatePost(Post p) {

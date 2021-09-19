@@ -10,13 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class LikeResponse {
-    private String title;
-    private String payload;
-    private String authorFirstName;
-    private String authorLastName;
-    private String authorEmail;
+    private Long id;
     private String userFirstName;
     private String userLastName;
-    private String userEmail;
-    private Date date;
 }

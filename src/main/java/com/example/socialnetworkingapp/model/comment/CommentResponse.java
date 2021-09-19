@@ -10,9 +10,11 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class CommentResponse {
+    private Long id;
     private String payload;
     private String authorFirstName;
     private String authorLastName;
     private String authorEmail;
-    private Date date;
+    private String authorImage;
+    private String date;
 }

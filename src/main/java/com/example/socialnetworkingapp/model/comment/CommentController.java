@@ -12,66 +12,54 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
 @AllArgsConstructor
+@RequestMapping("/comments")
 public class CommentController {
 
     private final CommentService commentService;
     private final PostService postService;
     private final AccountService accountService;
 
-
-//all comments from all posts
-//    @GetMapping("/comments/all")
-//    public ResponseEntity<List<CommentResponse>> getAllComments(){
-//        List<CommentResponse> comments = commentService.findAllComments();
-//        return new ResponseEntity<>(comments, HttpStatus.OK);
-//    }
-
     //find all comments of a post
-/*    @GetMapping("/comments/{postid}/all")
-    public ResponseEntity<List<CommentResponse>> getAllComments(@PathVariable("postid") Long postid){
-        Post post = postService.findPostById(postid);
-        List<CommentResponse> comments = commentService.findAllCommentsOfPost(postid);
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+    @GetMapping("/all/of-post/{postId}")
+    public ResponseEntity<List<CommentResponse>> getAllCommentsOfPost(@PathVariable("postId") Long postId) {
+        Post post = this.postService.findPostById(postId);
+        return new ResponseEntity<>(this.commentService.findAllCommentsOfPost(postId), HttpStatus.OK);
     }
 
-    @GetMapping("/comments/all")
-    public ResponseEntity<List<CommentResponse>> getAll(){
-        List<CommentResponse> comments = commentService.findAll();
-        return new ResponseEntity<>(comments, HttpStatus.OK);
-    }*/
-
-//    @GetMapping("/comments/find/{id}")
-//    public ResponseEntity<Account> getById(@PathVariable("id") Long id){
-//        Account account = accountService.findAccountById(id);
-//        return new ResponseEntity<>(account, HttpStatus.OK);
-//    }
-
-  /*  @PostMapping("/{postid}/comment/add")
-    public ResponseEntity<String> addComment(@RequestBody CommentRequest request, @PathVariable("postid") Long postid){
+    @GetMapping("/all/of-user/{userEmail}")
+    public ResponseEntity<List<CommentResponse>> getAllCommentsOfUser(@PathVariable("userEmail") String email) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Account user = accountService.findAccountByEmail(userDetails.getUsername());
-        Post post = postService.findPostById(postid);
-        Comment newComment = new Comment(request.getPayload(), user , post , new Date());
-        commentService.addComment(newComment);
-        return new ResponseEntity<>("Comment created", HttpStatus.CREATED);
-    }*/
+        this.accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.commentService.findAllCommentsOfUser(this.accountService.findAccountByEmail(email).getId()),
+                HttpStatus.OK);
+    }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
-//        Account newAccount = accountService.updateAccount(account);
-//        return new ResponseEntity<>(newAccount, HttpStatus.OK);
-//    }
+    @PostMapping("/add/{postId}")
+    public ResponseEntity<CommentResponse> addComment(@RequestBody CommentRequest request, @PathVariable("postId") Long postId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account user = this.accountService.findAccountByEmail(authentication.getName());
+        Post post = this.postService.findPostById(postId);
+        Comment newComment = new Comment(request.getPayload(), user , post , LocalDate.now().toString());
+        return new ResponseEntity<>(this.commentService.addComment(newComment), HttpStatus.CREATED);
+    }
 
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
-//        accountService.deleteAccount(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PutMapping("/update/{cId}")
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable("cId") Long  commentId,
+                                                         @RequestBody CommentRequest comment) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account user = this.accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.commentService.updateComment(commentId, comment), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{cId}")
+    public ResponseEntity<HttpStatus> deleteComment(@PathVariable("cId") Long commentId) {
+        this.commentService.deleteById(commentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

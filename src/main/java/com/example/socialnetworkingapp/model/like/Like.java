@@ -28,4 +28,9 @@ public class Like implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     private Post post;
+
+    public Like(Account user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 }
