@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication';
 import {Account} from "../account/account";
-import {Bio} from "../bio/bio";
 import {AccountService} from "../account/account.service";
 import {Post} from "../post/post";
 import {PostService} from "../post/post.service";
 import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {Like} from "../like/like";
 import {LikeService} from "../like/like.service";
-import {compareNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_version";
+import {Comment} from "../comment/comment";
+import {CommentService} from "../comment/comment.service";
 
 @Component({
   selector: 'app-home',
@@ -24,7 +23,14 @@ export class HomeComponent implements OnInit {
   public posts: Post[] = [];
   /* postId => [num of likes, If i have liked this post, show the like ID, else -1] */
   public likedPosts: Map<number, [number, number]> = new Map<number, [number, number]>();
-  public postToDelete: Post;
+  /* postId => [comments of post, every comment id I have made, else null] */
+  public commentedPosts: Map<number, [Comment[], number[]]> = new Map<number, [Comment[], number[]]>();
+
+  public postIdToDelete: number;
+  public commentIdToDelete: number;
+  public commentToEdit: Comment;
+
+  public tempRefreshPostId: number;
 
   private currImageFile: File = null;
   private currVideoFile: File = null;
@@ -38,6 +44,7 @@ export class HomeComponent implements OnInit {
       private accountService: AccountService,
       private uploadService: UploadFileService,
       private likeService: LikeService,
+      private commentService: CommentService,
       private postService: PostService) {
   };
 
@@ -59,12 +66,32 @@ public loadPostLikes(pid: number) {
   this.likedPosts.set(pid, [0, -1]);
 }
 
+  public loadPostComments(pid: number) {
+    this.commentService.getCommentsOfPost(pid).subscribe(
+      (comments: any) => {
+
+        /* ids */
+        let myComments: number[] = null;
+        this.commentedPosts.set(pid, [comments, myComments]);
+
+        for(let comment of comments) {
+          if(comment.authorEmail === this.authenticationService.getCurrentUser()) {
+            myComments.push(comment.id);
+          }
+        }
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   private loadPosts() {
     this.postService.getPosts().subscribe(
       (posts: Post[]) => {
         this.posts = posts;
         for(let post of this.posts) {
           this.loadPostLikes(post.id);
+          this.loadPostComments(post.id);
         }
       }, (error: HttpErrorResponse) => {
         alert(error.message);
@@ -142,8 +169,18 @@ public loadPostLikes(pid: number) {
       button.setAttribute('data-target', '#addPost');
     }
     if(mode === 'deletePost') {
-      this.postToDelete = data;
+      this.postIdToDelete = data;
       button.setAttribute('data-target', '#deletePost');
+    }
+    if(mode === 'deleteComment') {
+      this.commentIdToDelete = data[0];
+      this.tempRefreshPostId = data[1];
+      button.setAttribute('data-target', '#deleteComment');
+    }
+    if(mode === 'editComment') {
+      this.commentToEdit = data[0];
+      this.tempRefreshPostId = data[1];
+      button.setAttribute('data-target', '#editComment');
     }
     if(container != null) {
       container.appendChild(button);
@@ -151,8 +188,8 @@ public loadPostLikes(pid: number) {
     }
   }
 
-  public onDeletePost(postToDelete: Post) {
-    this.postService.deletePost(postToDelete?.id).subscribe(
+  public onDeletePost(postIdToDelete: number) {
+    this.postService.deletePost(postIdToDelete).subscribe(
       (event: any) => {
         window.location.reload();
       }, (error: HttpErrorResponse) => {
@@ -190,6 +227,37 @@ public loadPostLikes(pid: number) {
       (response: void) => {
         console.log("Like removed");
         this.loadPostLikes(pid);
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onAddComment(postId: number, payload: string) {
+    this.commentService.addComment(postId, payload, this.authenticationService.getJWT()).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.loadPostComments(postId);
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onDeleteComment(commentIdToDelete: number) {
+    this.commentService.deleteComment(commentIdToDelete).subscribe(
+      (event: any) => {
+        this.loadPostComments(this.tempRefreshPostId);
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onEditComment(cId: number, payload: string) {
+    this.commentService.updateComment(cId, payload, this.authenticationService.getJWT()).subscribe(
+      (event: any) => {
+        this.loadPostComments(this.tempRefreshPostId);
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
