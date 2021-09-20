@@ -4,6 +4,7 @@ import {Post} from "../post/post";
 export interface Like {
 
   id: number;
-  user: Account;
-  post: Post;
+  userFirstName: string;
+  userLastName: string;
+  userEmail: string;
 }

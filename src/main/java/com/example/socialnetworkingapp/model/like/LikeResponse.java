@@ -13,4 +13,5 @@ public class LikeResponse {
     private Long id;
     private String userFirstName;
     private String userLastName;
+    private String userEmail;
 }

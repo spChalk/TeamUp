@@ -86,17 +86,36 @@
           </div>
           <div class="card-body">
             <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
-            <p class="card-text">
-              {{post?.payload}}
-              <!-- VIDEO, PHOTO, SOUND -->
-            </p>
+            <h5 class="card-text">
+
+              <a *ngIf="post?.payload && (!post?.imagePath && !post?.videoPath && !post?.soundPath)"> {{post?.payload}} </a>
+              <a *ngIf="post?.payload && (post?.imagePath || post?.videoPath || post?.soundPath)"> {{post?.payload}} <br><br></a>
+
+              <img *ngIf="post?.imagePath !== null" class="card-img mb-2" src="{{post?.imagePath}}" alt="">
+
+
+              <video *ngIf="post?.videoPath !== null" class="card-img mb-2" autoplay controls muted>
+                <source src="{{post?.videoPath}}" type="video/mp4">
+                <source src="{{post?.videoPath}}" type="video/ogg">
+                Your browser does not support the video tag.
+              </video>
+
+              <audio *ngIf="post?.soundPath !== null" class="card-img mb-2" controls>
+                <source src="{{post?.soundPath}}" type="audio/ogg">
+                <source src="{{post?.soundPath}}" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+
+              <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
+            </h5>
           </div>
           <div class="card-footer" style="background-color: white">
-            <a href="#" class="card-link"><i class="fa fa-heart" style="color: red"></i> Like</a>
-            <a href="#" class="card-link"><i class="fa fa-comment" style="color: #00c6ff"></i> Comment</a>
-  <!--
-            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-  -->
+
+            <button *ngIf="this.likedPosts.get(post?.id)[1] === -1" (click)="onLike(post?.id)" id="empty-heart" class="card-link btn btn-light"><i class="fa fa-heart-o fa-lg" style="color: grey"></i> Like</button>
+            <button *ngIf="this.likedPosts.get(post?.id)[1] !== -1" (click)="onDislike(post?.id)" id="full-heart" class="card-link btn btn-outline-danger"><i class="fa fa-heart fa-lg" style="color: red"></i> Liked</button>
+            <button class="card-link btn btn-light"><i class="fa fa-comment fa-lg" style="color: royalblue"></i> Comment</button>
+
+            <!--<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>-->
           </div>
         </div>
 

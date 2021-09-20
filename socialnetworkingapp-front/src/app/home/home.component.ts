@@ -9,6 +9,9 @@ import {PostService} from "../post/post.service";
 import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {UploadFileService} from "../upload-files/upload-files.service";
+import {Like} from "../like/like";
+import {LikeService} from "../like/like.service";
+import {compareNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_version";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,9 @@ import {UploadFileService} from "../upload-files/upload-files.service";
 export class HomeComponent implements OnInit {
 
   public account: Account;
-  public posts: Post[];
+  public posts: Post[] = [];
+  /* postId => [num of likes, If i have liked this post, show the like ID, else -1] */
+  public likedPosts: Map<number, [number, number]> = new Map<number, [number, number]>();
   public postToDelete: Post;
 
   private currImageFile: File = null;
@@ -32,8 +37,41 @@ export class HomeComponent implements OnInit {
       public authenticationService: AuthenticationService,
       private accountService: AccountService,
       private uploadService: UploadFileService,
+      private likeService: LikeService,
       private postService: PostService) {
   };
+
+public loadPostLikes(pid: number) {
+  this.likeService.getLikesOfPost(pid).subscribe(
+    (likes: Like[]) => {
+      for(let like of likes) {
+        if(like.userEmail === this.authenticationService.getCurrentUser()) {
+          this.likedPosts.set(pid, [likes.length, like.id]);
+        }
+      }
+      if(this.likedPosts.has(pid) === false) {
+        this.likedPosts.set(pid, [likes.length, -1]);
+      }
+    }, (error: HttpErrorResponse) => {
+      alert(error.message);
+    }
+  );
+  this.likedPosts.set(pid, [0, -1]);
+}
+
+  private loadPosts() {
+    this.postService.getPosts().subscribe(
+      (posts: Post[]) => {
+        this.posts = posts;
+        for(let post of this.posts) {
+          this.loadPostLikes(post.id);
+        }
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
 
   ngOnInit(): void {
     if (this.authenticationService.isAdmin()) {
@@ -45,13 +83,7 @@ export class HomeComponent implements OnInit {
         this.account = new Account(response);
       }
     );
-    this.postService.getPosts().subscribe(
-      (posts: Post[]) => {
-        this.posts = posts;
-      }, (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+    this.loadPosts();
   }
 
   public onAddPost(payload: string) {
@@ -77,6 +109,7 @@ export class HomeComponent implements OnInit {
                 this.progress = Math.round(100 * event.loaded / event.total);
               } else if (event instanceof HttpResponse) {
                 this.message = event.body.message;
+                window.location.reload();
               }
             },
             err => {
@@ -94,9 +127,6 @@ export class HomeComponent implements OnInit {
       }
     );
 
-/*
-  window.location.reload();
-*/
   }
 
   public onClickModal(data: any, mode: string): void {
@@ -144,4 +174,25 @@ export class HomeComponent implements OnInit {
     this.currSoundFile = tempFileList.item(0);
   }
 
+  public onLike(pid: number) {
+    this.likeService.addLike(pid, this.authenticationService.getJWT()).subscribe(
+      (response: Like) => {
+        console.log(response);
+        this.loadPostLikes(pid);
+      }, (error: HttpErrorResponse) => {
+       alert(error.message);
+      }
+    );
+  }
+
+  public onDislike(pid: number) {
+    this.likeService.deleteLike(this.likedPosts.get(pid)[1]).subscribe(
+      (response: void) => {
+        console.log("Like removed");
+        this.loadPostLikes(pid);
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 }

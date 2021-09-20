@@ -39,7 +39,7 @@ public class PostService {
     }
 
     public void deletePost(Long id){
-        postRepository.deletePostById(id);
+        this.postRepository.deletePostById(id);
     }
 
     public Post findPostById(Long id){

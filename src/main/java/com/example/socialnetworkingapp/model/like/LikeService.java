@@ -22,7 +22,7 @@ public class LikeService {
 
     public LikeResponse addLike(Like like) {
         Like l = this.likeRepository.save(like);
-        return new LikeResponse(l.getId(), l.getUser().getFirstName(), l.getUser().getLastName());
+        return new LikeResponse(l.getId(), l.getUser().getFirstName(), l.getUser().getLastName(), l.getUser().getEmail());
     }
 
     public void deleteLike(Long user_id, Long post_id) {

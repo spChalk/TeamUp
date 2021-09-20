@@ -12,6 +12,7 @@ public interface LikeMapper {
 
     @Mapping(target = "userFirstName", expression = "java(mapFirstName(like.getUser()))")
     @Mapping(target = "userLastName", expression = "java(mapLastName(like.getUser()))")
+    @Mapping(target = "userEmail", expression = "java(mapEmail(like.getUser()))")
     LikeResponse LikeToLikeResponse(Like like);
 
     default String mapFirstName(Account account){
@@ -19,5 +20,8 @@ public interface LikeMapper {
     }
     default String mapLastName(Account account){
         return account.getLastName();
+    }
+    default String mapEmail(Account account){
+        return account.getEmail();
     }
 }
