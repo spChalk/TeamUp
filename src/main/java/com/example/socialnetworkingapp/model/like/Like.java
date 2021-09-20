@@ -25,7 +25,7 @@ public class Like implements Serializable {
     @JoinColumn(nullable = false)
     private Account user;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     private Post post;
 

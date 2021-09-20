@@ -51,19 +51,17 @@ export class HomeComponent implements OnInit {
 public loadPostLikes(pid: number) {
   this.likeService.getLikesOfPost(pid).subscribe(
     (likes: Like[]) => {
+      this.likedPosts.set(pid, [likes.length, -1]);
+
       for(let like of likes) {
         if(like.userEmail === this.authenticationService.getCurrentUser()) {
           this.likedPosts.set(pid, [likes.length, like.id]);
         }
       }
-      if(this.likedPosts.has(pid) === false) {
-        this.likedPosts.set(pid, [likes.length, -1]);
-      }
     }, (error: HttpErrorResponse) => {
       alert(error.message);
     }
   );
-  this.likedPosts.set(pid, [0, -1]);
 }
 
   public loadPostComments(pid: number) {

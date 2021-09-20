@@ -108,6 +108,11 @@
 
               <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
             </h5>
+
+            <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}} likes <span>&#183;</span>
+            {{this.commentedPosts.get(post?.id)[0].length}} comments
+            </div>
+
           </div>
           <div class="card-footer" style="background-color: white">
 
