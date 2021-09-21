@@ -19,6 +19,11 @@ public class JobViewController {
         return jobViewService.getViewsByJobId(id);
     }
 
+    @GetMapping("/sum/{job_id}")
+    public Long getSumOfViewsByJobId(@PathVariable("job_id") Long id){
+        return jobViewService.getSumOfViewsByJobId(id);
+    }
+
     @PostMapping("/add/{uid}/{jid}")
     public ResponseEntity<JobView> addView(@PathVariable("uid") Long uid,
                                            @PathVariable("jid") Long jid) {

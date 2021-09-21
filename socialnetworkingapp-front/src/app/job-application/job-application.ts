@@ -4,11 +4,12 @@ import {Job} from "../job/job";
 export class JobApplication {
 
   id: number;
-  applicant: Account;
-  job: Job;
+  applicantEmail: string;
+  jobId: number;
 
-  constructor(applicant: Account, job: Job) {
-    this.applicant = applicant;
-    this.job = job;
+  constructor(id: number, applicantEmail: string, jobId: number) {
+    this.id = id;
+    this.applicantEmail = applicantEmail;
+    this.jobId = jobId;
   }
 }

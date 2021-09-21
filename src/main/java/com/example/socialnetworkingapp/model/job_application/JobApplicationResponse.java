@@ -8,4 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class JobApplicationResponse {
+
+    private Long id;
+    private String applicantEmail;
+    private Long jobId;
 }

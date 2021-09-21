@@ -29,4 +29,9 @@ public class JobApplication implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     private Job job;
+
+    public JobApplication(Account applicant, Job job) {
+        this.applicant = applicant;
+        this.job = job;
+    }
 }

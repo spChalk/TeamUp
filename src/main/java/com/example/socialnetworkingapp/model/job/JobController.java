@@ -2,6 +2,11 @@ package com.example.socialnetworkingapp.model.job;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.job_application.JobApplication;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
+import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +24,8 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
+    private final JobViewService jobViewService;
+    private final JobApplicationService jobApplicationService;
     private final AccountService accountService;
 
 /*    @GetMapping("/{job_id}")
@@ -56,7 +63,9 @@ public class JobController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteJobById(@PathVariable("id") Long id){
-        jobService.deleteJob(id);
+        List<JobView> views = this.jobViewService.getViewsByJobId(id);
+        List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
+        jobService.deleteJob(id, views, apps);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 /*

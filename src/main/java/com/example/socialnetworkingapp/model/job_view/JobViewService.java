@@ -1,10 +1,12 @@
 package com.example.socialnetworkingapp.model.job_view;
 
 import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.job.Job;
 import com.example.socialnetworkingapp.model.job.JobService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +47,17 @@ public class JobViewService {
         );
     }
 
+    public Long getSumOfViewsByJobId(Long id) {
+        List<JobView> views = this.jobViewRepository.getViewsByJobId(id).orElseThrow(
+                () -> new IllegalStateException("Job with id: " + id.toString() + " does not exist!")
+        );
+        Long sum = 0L;
+        for(JobView view: views) {
+            sum += view.getTimes();
+        }
+        return sum;
+    }
+
     public JobView addView(Long uid, Long jid) {
 
         Optional<JobView> jv = this.jobViewRepository.findViewByIds(uid, jid);
@@ -55,5 +68,9 @@ public class JobViewService {
         return this.jobViewRepository.save(new JobView(
                 this.accountService.findAccountById(uid),
                 this.jobService.findJobById(jid)));
+    }
+
+    public void deleteViewById(Long id) {
+        this.jobViewRepository.deleteById(id);
     }
 }

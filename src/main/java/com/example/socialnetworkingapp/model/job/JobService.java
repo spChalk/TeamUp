@@ -3,6 +3,11 @@ package com.example.socialnetworkingapp.model.job;
 import com.example.socialnetworkingapp.mapper.JobMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountRepository;
+import com.example.socialnetworkingapp.model.job_application.JobApplication;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationRepository;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
+import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
 import com.example.socialnetworkingapp.model.tags.TagService;
@@ -22,6 +27,7 @@ public class JobService {
     private final JobRepository jobRepository;
     private final AccountRepository accountRepository;
     private final JobViewRepository jobViewRepository;
+    private final JobApplicationRepository jobApplicationRepository;
     private final TagService tagService;
     private final JobMapper jobMapper;
     /*
@@ -239,13 +245,20 @@ public class JobService {
             existingJob.get().setJobType(jobr.getJobType());
             existingJob.get().setExperienceLevel(jobr.getExperienceLevel());
             existingJob.get().setInfo(jobr.getInfo());
+            existingJob.get().setTags(jobr.getTags());
         } else throw new IllegalStateException("Job not found!");
         List<Job> job = new ArrayList<>();
         job.add(this.jobRepository.save(existingJob.get()));
         return job.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);
     }
 
-    public void deleteJob(Long id) {
+    public void deleteJob(Long id, List<JobView> views, List<JobApplicationResponse> apps) {
+        for(JobView v: views) {
+            this.jobViewRepository.deleteById(v.getId());
+        }
+        for(JobApplicationResponse app: apps) {
+            this.jobApplicationRepository.deleteById(app.getId());
+        }
         this.jobRepository.deleteById(id);
     }
 /*

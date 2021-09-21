@@ -14,4 +14,8 @@ export class JobViewService {
   public addView(uid: number, jid: number) {
     return this.http.post<JobView>(`${this.url}/add/${uid}/${jid}`, {});
   }
+
+  public getViewsByJob(id: number) {
+    return this.http.get<number>(`${this.url}/sum/${id}`);
+  }
 }

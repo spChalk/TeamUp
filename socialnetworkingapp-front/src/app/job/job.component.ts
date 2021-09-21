@@ -14,6 +14,7 @@ import {JobView} from "../job-view/job-view";
 import {TagsService} from "../tags/tags.service";
 import {AuthenticationService} from "../authentication";
 import {JobRequest} from "./job-request";
+import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
 
 @Component({
   selector: 'app-job',
@@ -22,9 +23,15 @@ import {JobRequest} from "./job-request";
 })
 export class JobComponent implements OnInit {
 
-  public jobs: Job[] = [];
+  public jobs: Job[];
+  /* [job id, views] */
+  public jobViews: Map<number, number> = new Map<number, number>();
+  public hasAppliedToJob: Map<number, boolean> = new Map<number, boolean>();
   public selectedJob: Job;
   public account: Account;
+  public jobIdToDelete: number;
+  public jobIdToEdit: number;
+  public jobIdToDeleteApplicationFrom: number;
 
   constructor(private jobService: JobService,
               private jobAppService: JobApplicationService,
@@ -32,7 +39,7 @@ export class JobComponent implements OnInit {
               private accountService: AccountService,
               private route: ActivatedRoute,
               private tagsService: TagsService,
-              private authenticationService: AuthenticationService,
+              public authenticationService: AuthenticationService,
               private router: Router) {
 
     if (this.authenticationService.isAdmin()) {
@@ -52,12 +59,26 @@ export class JobComponent implements OnInit {
 
   public getJobs(): void {
     this.jobService.getAllJobs(this.authenticationService.getJWT()).subscribe(
-      (response: Job[]) => {
-        this.jobs = response;
-        console.log(this.jobs);
-    },
+      (jobs: Job[]) => {
+          this.jobs = jobs;
+          for(let job of this.jobs) {
+            this.jobViewService.getViewsByJob(job.id).subscribe(
+              (views: number) => {
+                this.jobViews.set(job.id, views);
+              }, (err: HttpErrorResponse) => {
+                alert(err.message);
+              }
+            );
+          }
+        },
       (error: HttpErrorResponse) => {
         alert(error.message);
+      });
+    this.jobAppService.getUserApplications(this.authenticationService.getJWT()).subscribe(
+      (applications: JobApplication[]) => {
+        for(let application of applications) {
+          this.hasAppliedToJob.set(application.jobId, true);
+        }
       }
     );
   }
@@ -66,7 +87,7 @@ export class JobComponent implements OnInit {
     this.selectedJob = job;
   }
 
-  public onClickModal(mode: string): void {
+  public onClickModal(data: any, mode: string): void {
 
     const container = document.getElementById('main-container');
 
@@ -81,6 +102,18 @@ export class JobComponent implements OnInit {
     if(mode === 'addJob') {
       button.setAttribute('data-target', '#addJob');
     }
+    if(mode === 'deleteJob') {
+      this.jobIdToDelete = data;
+      button.setAttribute('data-target', '#deleteJob');
+    }
+    if(mode === 'editJob') {
+      this.jobIdToEdit = data;
+      button.setAttribute('data-target', '#editJob');
+    }
+    if(mode === 'deleteApplication') {
+      this.jobIdToDeleteApplicationFrom = data;
+      button.setAttribute('data-target', '#deleteApplication');
+    }
     if(container != null) {
       container.appendChild(button);
       button.click();
@@ -89,9 +122,9 @@ export class JobComponent implements OnInit {
 
   public onApplyToJob(selectedJob: Job) {
 
-    this.jobAppService.applyToJob(this.account, selectedJob).subscribe(
+    this.jobAppService.applyToJob(selectedJob, this.authenticationService.getJWT()).subscribe(
       (response: JobApplication) => {
-        console.log(response);
+        this.getJobs();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -124,9 +157,39 @@ export class JobComponent implements OnInit {
     this.jobViewService.addView(uid, jid).subscribe(
       (response: JobView) => {
         console.log(response);
+        this.getJobs();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+      }
+    );
+  }
+
+  public onDeleteJob(jobIdToDelete: number) {
+    this.jobService.deleteJob(jobIdToDelete).subscribe(
+      (response: void) => {
+        this.getJobs();
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onDeleteJobApplication(jobIdToDeleteApplicationFrom: number) {
+    this.jobAppService.getApplicationByUserAndJobIds(this.account.id, jobIdToDeleteApplicationFrom,
+      this.authenticationService.getJWT()).subscribe(
+      (app: JobApplication) => {
+        this.jobAppService.deleteJobApplication(
+          app.id
+        ).subscribe(
+          (response: any) => {
+            window.location.reload();
+          }, (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }, (err: HttpErrorResponse) => {
+        alert(err.message);
       }
     );
   }

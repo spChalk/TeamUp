@@ -1,9 +1,14 @@
 package com.example.socialnetworkingapp.model.job_application;
 
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.job.JobService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,21 +19,33 @@ import java.util.List;
 public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
+    private final AccountService accountService;
+    private final JobService jobService;
 
-    @GetMapping("/{user_id}")
-    public List<JobApplication> getApplicationsByUserId(@PathVariable("user_id") Long id){
-        return jobApplicationService.findApplicationsByUserId(id);
+   @GetMapping("/u")
+    public List<JobApplicationResponse> getApplicationsByUserId(){
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       Account applicant = this.accountService.findAccountByEmail(authentication.getName());
+       return jobApplicationService.findApplicationsByUserId(applicant.getId());
     }
 
-    @GetMapping("/{job_id}")
-    public List<JobApplication> getApplicationsByJobId(@PathVariable("job_id") Long id){
+    @GetMapping("/j/{job_id}")
+    public List<JobApplicationResponse> getApplicationsByJobId(@PathVariable("job_id") Long id){
         return jobApplicationService.findApplicationsByJobId(id);
     }
 
-    @PostMapping("/apply")
-    public ResponseEntity<JobApplication> addJobApplication(@RequestBody JobApplication jobApplication){
-        JobApplication newJobApplication = jobApplicationService.addJobApplication(jobApplication);
-        return new ResponseEntity<>(newJobApplication, HttpStatus.CREATED);
+    @GetMapping("/uj/{user_id}/{job_id}")
+    public JobApplicationResponse getApplicationByUserAndJobIds(@PathVariable("user_id") Long userId,
+                                                                @PathVariable("job_id") Long jobId) {
+        return jobApplicationService.findApplicationByUserAndJobIds(userId, jobId);
+    }
+
+    @PostMapping("/apply/{jobId}")
+    public ResponseEntity<JobApplicationResponse> addJobApplication(@PathVariable("jobId") Long jobId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account applicant = this.accountService.findAccountByEmail(authentication.getName());
+        JobApplication jobApplication = new JobApplication(applicant, this.jobService.findJobById(jobId));
+        return new ResponseEntity<>(jobApplicationService.addJobApplication(jobApplication), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -6,4 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class JobApplicationRequest {
+
+    private Long jobId;
 }

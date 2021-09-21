@@ -31,4 +31,8 @@ export class JobService {
         })
       });
   }
+
+  public deleteJob(jobIdToDelete: number): Observable<void> {
+    return this.http.delete<any>(`${this.url}/delete/${jobIdToDelete}`);
+  }
 }
