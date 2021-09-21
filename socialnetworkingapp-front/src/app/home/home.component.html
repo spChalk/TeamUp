@@ -21,8 +21,8 @@
           </div>
           <ul class="list-group list-group-flush text-center">
             <li class="list-group-item">
-              <button type="button" routerLink="/account" class="btn btn-outline-primary mr-3">Profile</button>
-              <button type="button" routerLink="/network" class="btn btn-outline-primary">Network</button>
+              <button type="button" routerLink="/account" class="btn btn-light mr-3"><i class="fa fa-user"></i> Profile</button>
+              <button type="button" routerLink="/network" class="btn btn-light"><i class="fa fa-users"></i> Network</button>
             </li>
           </ul>
         </div>
@@ -108,8 +108,13 @@
               <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
             </h5>
 
-            <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}} likes <span>&#183;</span>
-            {{this.commentedPosts.get(post?.id)[0].length}} comments
+            <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}}
+              <a *ngIf="this.likedPosts.get(post?.id)[0] !== 1">likes</a>
+              <a *ngIf="this.likedPosts.get(post?.id)[0] === 1">like</a>
+              <span> &#183;</span>
+            {{this.commentedPosts.get(post?.id)[0].length}}
+              <a *ngIf="this.commentedPosts.get(post?.id)[0].length !== 1">comments</a>
+              <a *ngIf="this.commentedPosts.get(post?.id)[0].length === 1">comment</a>
             </div>
 
           </div>
@@ -129,10 +134,10 @@
                       <form #commentForm="ngForm">
                           <textarea type="text" ngModel name="payload" class="form-control" placeholder="Type your comment..." required></textarea>
                       </form>
-                      <button (click)="onAddComment(post.id, commentForm.value)" [disabled]="commentForm.invalid" type="submit" class="btn btn-primary mt-1" style="float: right"> <i class="fa fa-reply"></i> </button>
+                      <button (click)="onAddComment(post.id, commentForm.value);commentForm.reset();" [disabled]="commentForm.invalid" type="submit" class="btn btn-primary mt-1" style="float: right"> <i class="fa fa-reply"></i> </button>
 
                         <div class="blog-comment">
-                          <hr/>
+                          <hr *ngIf="this.commentedPosts.get(post.id)[0].length > 0">
                           <ul class="comments" style="max-height: 500px;overflow-y: scroll">
 
                             <li class="clearfix" *ngFor="let comment of this.commentedPosts.get(post.id)[0]">
