@@ -82,7 +82,9 @@ export class SettingsComponent implements OnInit {
         alert(error.message);
       }
     );
+/*
     window.location.reload();
+*/
   }
 
   upload() {
@@ -104,7 +106,7 @@ export class SettingsComponent implements OnInit {
         }
       );
     }
-    this.uploadService.upload(this.currentFile, this.account.email).subscribe(
+    this.uploadService.uploadUser(this.currentFile, this.authenticationService.getJWT()).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);

@@ -7,7 +7,7 @@
 <div class="container">
     <app-nav-bar></app-nav-bar>
 </div>
-<h1 style="text-align: center">Register</h1>
+<h1 style="text-align: center;margin-top: 50px">Register</h1>
 
 <div class="container" id="main-container">
   <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm,'addPhoto')">
@@ -112,9 +112,9 @@
                 <div *ngIf="correctCredentials else wrongCredentials">
                 </div>
                 <ng-template #wrongCredentials >
-                    <span> A user with that email might already exist.</span>
+                    <span> A user with the same email or phone number already exists.</span>
                     <br>
-                    <span> Try using another email address.</span>
+                    <span> Try using different credentials.</span>
                 </ng-template>
 
             </div>
@@ -148,7 +148,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="this.router.navigateByUrl('/login');" >No</button>
-        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload(registerForm.value.email)">
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()">
           Upload
         </button>
       </div>

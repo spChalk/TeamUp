@@ -72,7 +72,7 @@
           <hr>
           <h6 *ngFor="let tag of this.vAccount.tags">
                <span class="badge badge-secondary">
-                 {{tag?.tag.replace("_", " ")}}
+                 {{tag?.tag.replace("_", " ").toUpperCase()}}
                </span>
             <br>
           </h6>

@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
         private bioService: BioService,
         private fb: FormBuilder,
         private tagsService: TagsService,
+        private authenticationService : AuthenticationService
 
     ) { }
 
@@ -94,10 +95,10 @@ export class RegisterComponent implements OnInit {
         return password === confirm_password ? null : { notSame: true };
     }
 
-    upload(email: string) {
+    upload() {
         this.progress = 0;
         this.currentFile = this.selectedFiles.item(0);
-        this.uploadService.upload(this.currentFile, email).subscribe(
+        this.uploadService.uploadUser(this.currentFile, this.authenticationService.getJWT()).subscribe(
             event => {
                 if (event.type === HttpEventType.UploadProgress) {
                     this.progress = Math.round(100 * event.loaded / event.total);

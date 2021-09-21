@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -19,8 +20,7 @@ import java.util.Date;
 @Table(name="posts")
 public class Post implements Serializable {
 
-    public Post(String title, String payload, Account author) {
-        this.title = title;
+    public Post(String payload, Account author) {
         this.payload = payload;
         this.author = author;
     }
@@ -29,8 +29,7 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
 
-    //title and text of post
-    private String title;
+    @Lob
     private String payload;
 
     //author of post
@@ -43,14 +42,16 @@ public class Post implements Serializable {
     //date of creation
     private Date date ;
 
-    //path to photo / video
-    private String filePath;
+    private String imagePath;
+    private String videoPath;
+    private String soundPath;
 
-    public Post(String title, String payload, Account author, Date date, String filePath) {
-        this.title = title;
+    public Post(String payload, Account author, Date date, String imagePath, String videoPath, String soundPath) {
         this.payload = payload;
         this.author = author;
         this.date = date;
-        this.filePath = filePath;
+        this.imagePath = imagePath;
+        this.videoPath = videoPath;
+        this.soundPath = soundPath;
     }
 }

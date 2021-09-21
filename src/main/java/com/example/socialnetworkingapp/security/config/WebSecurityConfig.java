@@ -46,8 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/login/**").permitAll()
                                 .antMatchers("/accounts/**").permitAll()
                                 .antMatchers("/export/**").permitAll()
-                                .antMatchers("/upload/**").permitAll()
-                                .antMatchers("/files/**").permitAll()
+                .antMatchers("/upload-admin/**").permitAll()
+                .antMatchers("/upload-user/**").permitAll()
+                .antMatchers("/upload-post/**").permitAll()
+                .antMatchers("/files/**").permitAll()
                                 .antMatchers("/bio/**").permitAll()
                                 .antMatchers("/posts/**").permitAll()
                                 .antMatchers("/jobs/**").permitAll()
@@ -58,7 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/tags/**").permitAll()
                                 .antMatchers("/xp/**").permitAll()
                                 .antMatchers("/education/**").permitAll()
+
                 .antMatchers("/messages/**").permitAll()
+
+                .antMatchers("/comments/**").permitAll()
+                .antMatchers("/likes/**").permitAll()
+
+
                 .anyRequest().authenticated();
 
 //        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));
