@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AccountService} from "./account/account.service";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
@@ -33,7 +33,7 @@ import { TagsComponent } from './tags/tags.component';
 import { EducationComponent } from './education/education.component';
 import { VisitAccountComponent } from './visit-account/visit-account.component';
 import { ConnectionRequestComponent } from './connection-request/connection-request.component';
-
+import { TokenInterceptorService } from './authentication';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +62,7 @@ import { ConnectionRequestComponent } from './connection-request/connection-requ
     TagsComponent,
     EducationComponent,
     VisitAccountComponent,
-    ConnectionRequestComponent
+    ConnectionRequestComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +72,7 @@ import { ConnectionRequestComponent } from './connection-request/connection-requ
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [AccountService],
+  providers: [AccountService, {provide : HTTP_INTERCEPTORS , useClass : TokenInterceptorService , multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

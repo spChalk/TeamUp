@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Account} from "../account/account";
 import {Job} from "../job/job";
+import { Observable } from 'rxjs';
+import { Tag } from './Tag';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +21,23 @@ export class TagsService {
   public addJobTag(id: number, tag: string) {
     return this.http.post<Job>(`${this.url}/jobs/tags/add/${tag}`, id);
   }
+
+  public getAllTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.url}/tags/all`,
+      {
+        headers: new HttpHeaders( {
+          "Access-Control-Allow-Origin": "http://localhost:4200",
+        })
+      });
+  }
+
+  public getUserTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.url}/accounts/myTags`,
+      {
+        headers: new HttpHeaders( {
+          "Access-Control-Allow-Origin": "http://localhost:4200",
+        })
+      });
+  }
+
 }

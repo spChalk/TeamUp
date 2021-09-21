@@ -182,4 +182,10 @@ public class AccountController {
     public ResponseEntity<Account> showTags(@RequestBody Account account) {
         return new ResponseEntity<>(this.accountService.showTags(account), HttpStatus.OK);
     }
+
+    @GetMapping("/myTags")
+    public ResponseEntity<List<Tag>> getUserTags(){
+        return new ResponseEntity<>(this.accountService.getUserTags(), HttpStatus.OK);
+    }
+
 }

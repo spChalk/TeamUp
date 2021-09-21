@@ -60,8 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/tags/**").permitAll()
                                 .antMatchers("/xp/**").permitAll()
                                 .antMatchers("/education/**").permitAll()
+
+                .antMatchers("/messages/**").permitAll()
+
                 .antMatchers("/comments/**").permitAll()
                 .antMatchers("/likes/**").permitAll()
+
 
                 .anyRequest().authenticated();
 

@@ -1,14 +1,23 @@
 package com.example.socialnetworkingapp.model.message;
 
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.message.Message;
 import com.example.socialnetworkingapp.model.message.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/messages")
@@ -16,18 +25,32 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+    private final AccountService accountService;
 
-    @GetMapping("/chat")
-    public List<Message> getConversation(
-            @RequestParam(required = true) Long sender_id,
-            @RequestParam(required = true) Long receiver_id) {
-        return this.messageService.getConversation(sender_id, receiver_id);
+    @PostMapping("/chat")
+    public List<MessageResponse> getConversation(
+            @RequestBody Friends friends){
+        Account sender = this.accountService.findAccountByEmail(friends.getSenderEmail());
+        Account receiver = this.accountService.findAccountByEmail(friends.getReceiverEmail());
+        return this.messageService.getConversation(sender, receiver);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Message> addMessage(@RequestBody Message message){
-        Message newMessage = messageService.addMessage(message);
-        return new ResponseEntity<>(newMessage, HttpStatus.CREATED);
+    @GetMapping("/friends")
+    public Set<FriendsResponse> getMessages() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account account = this.accountService.findAccountByEmail(user);
+        return this.messageService.getFriends(account);
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity<Message> addMessage(@RequestBody MessageRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String senderMail = authentication.getName();
+        Account sender = accountService.findAccountByEmail(senderMail);
+        Account receiver = accountService.findAccountByEmail(request.getReceiverMail());
+        Message newMessage = new Message(request.getPayload(), sender, receiver, Instant.now());
+        return new ResponseEntity<>( messageService.addMessage(newMessage) , HttpStatus.CREATED);
     }
 
     @PutMapping("/update")

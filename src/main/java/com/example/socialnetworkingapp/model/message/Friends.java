@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageRequest {
-    private String payload;
-    private String receiverMail;
+public class Friends{
+    private String senderEmail;
+    private String receiverEmail;
 }
