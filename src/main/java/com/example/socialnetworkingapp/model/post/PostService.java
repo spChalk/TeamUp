@@ -13,11 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @Service
@@ -43,50 +41,43 @@ public class PostService {
 
     public List<PostResponse> findAllPosts(Account user) {
 
-        List<PostResponse> suffledPosts = postRepository.findAll().stream().map(postMapper::PostToPostResponse).collect(Collectors.toList());
+        /* Get user's network */
         List<Account> userNetwork = user.getNetwork();
-        List<PostResponse> postsToReturn = new ArrayList<>();
+        /* Get user's posts */
+        List<PostResponse> postsToReturn = this.findPostsByAuthorId(user.getId());
 
         /* If user has no friends, return only the posts he has made */
         if(userNetwork.isEmpty()) {
-            for(PostResponse post: suffledPosts) {
-                if( Objects.equals(user.getEmail(), post.getAuthorEmail()) ) {
-                    postsToReturn.add(post);
-                }
-            }
             return postsToReturn;
         }
 
-        /* For every user in my network */
+        /* For every user's connection in network */
         for(Account contact: userNetwork) {
 
-            List<Like> likedPostsByFriend = this.likeService.findLikesByUserId(contact.getId());
+            /* Get the posts of user's connections and add them to the list */
+            List<PostResponse> friendPosts = this.findPostsByAuthorId(contact.getId());
+            if(!friendPosts.isEmpty()) {
+                postsToReturn.addAll(friendPosts);
+            }
 
-            /* For every post */
-            for(PostResponse post: suffledPosts) {
-                /* If I've written this post or
-                 * the current post has been written by a connected user,
-                 * add the post to list. */
-                if( Objects.equals(user.getEmail(), post.getAuthorEmail()) ||
-                    Objects.equals(contact.getEmail(), post.getAuthorEmail())) {
-                    if(!postsToReturn.contains(post)) {
-                        postsToReturn.add(post);
-                    }
-                    continue;
-                }
-                /* Finally, check for the friend's liked posts.
-                 * If the friend has liked the current post, add it to list. */
-                for(Like likedPost: likedPostsByFriend) {
-                    if(Objects.equals(likedPost.getPost().getId(), post.getId())) {
-                        if(!postsToReturn.contains(post)) {
-                            postsToReturn.add(post);
-                        }
-                        break;
-                    }
-                }
+            /* Get user's connections' likes and extract the liked posts to 'likedPostsByFriend' */
+            List<Like> friendLikes = this.likeService.findLikesByUserId(contact.getId());
+            List<Post> likedPostsByFriend = new ArrayList<>();
+            for(Like like: friendLikes) {
+                likedPostsByFriend.add(like.getPost());
+            }
+            /* Add the posts to the list */
+            if(!likedPostsByFriend.isEmpty()) {
+                postsToReturn.addAll(likedPostsByFriend
+                        .stream().map(postMapper::PostToPostResponse).collect(Collectors.toList()));
             }
         }
-        return postsToReturn;
+        /* Return the posts without duplicates! */
+        return postsToReturn.stream().distinct().collect(Collectors.toList());
+    }
+
+    public List<PostResponse> findPostsByAuthorId(Long id) {
+        return this.postRepository.findPostsByAuthorId(id).stream().map(postMapper::PostToPostResponse).collect(Collectors.toList());
     }
 
     public void deletePost(Long id){
