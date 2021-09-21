@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TagsService } from './tags.service';
+import {Tag} from './Tag'
 
 @Component({
   selector: 'app-tags',
@@ -7,9 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TagsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tagsService : TagsService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(){}
 
 }

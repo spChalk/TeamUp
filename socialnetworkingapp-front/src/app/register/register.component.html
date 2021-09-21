@@ -89,14 +89,15 @@
                   </span>
                 </div>
               </div>
+
               <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                 Pick the tags that interest you the most!
                 <hr>
                 <div class="form-group" style="height: 190px;overflow-y: scroll">
                   <div *ngFor="let item of TagsArray; let i = index ">
                     <label>
-                      <input type = "checkbox" [value] = "item.value" (change)="onCbChange($event)"/>
-                      {{item.name}}
+                      <input type = "checkbox" [value] = "item.tag" (change)="onCbChange($event)"/>
+                      {{item.tag}}
                     </label>
 
                   </div>

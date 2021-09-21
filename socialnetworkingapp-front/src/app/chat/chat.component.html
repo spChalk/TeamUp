@@ -16,29 +16,32 @@
               <input id="input-group-icon-text" type="text" class="form-control" placeholder="Search">
               <span class="icon-addon">
                 <span class="la la-search"></span>
-                        </span>
+              </span>
             </div>
           </div>
-          <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" style="height: 800px; overflow-y: auto; padding: 0px; width: 339px;" tabindex="0">
+          <div class="ks-body ks-scrollable jspScrollable" data-auto-height=""
+            style="height: 800px; overflow-y: auto; padding: 0px; width: 339px;" tabindex="0">
 
+            <!-- start of left pane -->
             <div class="jspContainer" style="width: 339px; height: 550px;">
               <div class="jspPane" style="padding: 0px; top: 0px; width: 329px;">
                 <ul class="ks-items">
-                  <li class="ks-item ks-active">
-                    <a href="#">
+                  <li class="ks-item ks-active" *ngFor="let friend of this.friends">
+                    <a [routerLink]="['/chat']" [queryParams] = "{receiverEmail: friend.email }">
                       <span class="ks-group-amount">3</span>
                       <div class="ks-body">
                         <div class="ks-name">
-                          Group Chat
+                          {{friend.firstName}} {{friend.lastName}}
                           <span class="ks-datetime">just now</span>
                         </div>
-                        <div class="ks-message">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="18" height="18" class="rounded-circle"> The weird future of movie theater food
-                        </div>
+                        <!-- <div class="ks-message">
+                          <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="18" height="18"
+                            class="rounded-circle"> 
+                        </div> -->
                       </div>
                     </a>
                   </li>
-                  <li class="ks-item ks-unread">
+                  <!-- <li class="ks-item ks-unread">
                     <a href="#">
                       <span class="ks-group-amount">5</span>
                       <div class="ks-body">
@@ -47,16 +50,17 @@
                           <span class="ks-datetime">just now</span>
                         </div>
                         <div class="ks-message">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="18" height="18" class="rounded-circle"> Why didn't he come and talk to me...
+                          <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="18" height="18"
+                            class="rounded-circle"> Why didn't he come and talk to me...
                         </div>
                       </div>
                     </a>
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -68,10 +72,10 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
-                                            <span class="badge badge-pill badge-danger ks-badge ks-notify">7</span>
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
+                        <span class="badge badge-pill badge-danger ks-badge ks-notify">7</span>
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -83,9 +87,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -97,9 +101,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -111,9 +115,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -125,9 +129,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar ks-online">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar ks-online">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Brian Diaz
@@ -139,7 +143,8 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                      <span class="ks-group-amount">3 <span class="badge badge-pill badge-danger ks-badge ks-notify">7</span></span>
+                      <span class="ks-group-amount">3 <span
+                          class="badge badge-pill badge-danger ks-badge ks-notify">7</span></span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -151,9 +156,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar ks-offline">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar ks-offline">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -166,9 +171,9 @@
 
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -180,9 +185,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Eric George
@@ -194,9 +199,9 @@
                   </li>
                   <li class="ks-item">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Lauren Sandoval
@@ -208,9 +213,9 @@
                   </li>
                   <li class="ks-item ks-closed">
                     <a href="#">
-                                        <span class="ks-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
-                                        </span>
+                      <span class="ks-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
+                      </span>
                       <div class="ks-body">
                         <div class="ks-name">
                           Brian Diaz
@@ -219,9 +224,11 @@
                         <div class="ks-message">The weird future of movie theater food</div>
                       </div>
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
+              <!-- end of left pane -->
+
               <div class="jspVerticalBar">
                 <div class="jspCap jspCapTop"></div>
                 <div class="jspTrack" style="height: 550px;">
@@ -236,7 +243,10 @@
           </div>
         </div>
 
+        <!-- middle pane -->
         <div class="ks-messages ks-messenger__messages">
+
+          <!-- read / unread etc -->
           <div class="ks-header">
             <div class="ks-description">
               <div class="ks-name">Chat name</div>
@@ -244,7 +254,8 @@
             </div>
             <div class="ks-controls">
               <div class="dropdown">
-                <button class="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button"
+                  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="la la-ellipsis-h ks-icon"></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right ks-simple" aria-labelledby="dropdownMenuButton">
@@ -276,150 +287,44 @@
               </div>
             </div>
           </div>
-          <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" data-reduce-height=".ks-footer" data-fix-height="32" style="overflow: hidden; padding: 0px;" tabindex="0">
+
+          <!-- end of read unread etc -->
+          <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" data-reduce-height=".ks-footer"
+            data-fix-height="32" style="overflow: hidden; padding: 0px;" tabindex="0">
             <div class="jspContainer" style="width: 701px; height: 481px;">
               <div class="jspPane" style="padding: 0px; top: 0px; width: 691px;">
-                <ul class="ks-items">
-                  <li class="ks-item ks-self">
-                                    <span class="ks-avatar ks-offline">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">The weird future of movie theater food</div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-from">
-                                    <span class="ks-avatar ks-online">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">The weird future of movie theater food</div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-from">
-                                    <span class="ks-avatar ks-online">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">
-                        The weird future of movie theater food
+                <ul class="ks-items" *ngFor = " let message of this.messages">
 
-                        <div class="ks-link">
-                          <div class="ks-name">Google</div>
-                          <a href="http://www.google.com" target="_blank">www.google.com</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-self">
-                                    <span class="ks-avatar ks-offline">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36" class="rounded-circle">
-                                    </span>
+                  <li *ngIf="this.account.email === message.senderEmail" class="ks-item ks-self">
+                    <span class="ks-avatar ks-online">
+                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36"
+                        class="rounded-circle">
+                    </span>
                     <div class="ks-body">
                       <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
+                        <span class="ks-name">{{message.senderFirstName}} {{message.senderLastName}} </span>
+                        <span class="ks-datetime">{{message.date}}</span>
                       </div>
-                      <div class="ks-message">The weird future of movie theater food</div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-from ks-unread">
-                                    <span class="ks-avatar ks-online">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">1 minute ago</span>
-                      </div>
-                      <div class="ks-message">
-                        The weird future of movie theater food
-
-                        <ul class="ks-files">
-                          <li class="ks-file">
-                            <a href="#">
-                                                        <span class="ks-thumb">
-                                                            <span class="ks-icon la la-file-word-o text-info"></span>
-                                                        </span>
-                              <span class="ks-info">
-                                                            <span class="ks-name">Project...</span>
-                                                        <span class="ks-size">15 kb</span>
-                                                        </span>
-                            </a>
-                          </li>
-                          <li class="ks-file">
-                            <a href="#">
-                                                        <span class="ks-thumb">
-                                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36">
-                                                        </span>
-                              <span class="ks-info">
-                                                            <span class="ks-name">photo.jpg</span>
-                                                        <span class="ks-size">312 kb</span>
-                                                        </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <div class="ks-message">{{message.payload}}</div>
                     </div>
                   </li>
 
-                  <li class="ks-separator">Today</li>
+                  <li *ngIf="this.account.email !== message.senderEmail" class="ks-item ks-from">
+                    <span class="ks-avatar ks-online">
+                      <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36"
+                        class="rounded-circle">
+                    </span>
+                    <div class="ks-body">
+                      <div class="ks-header">
+                        <span class="ks-name">{{message.senderFirstName}} {{message.senderLastName}} </span>
+                        <span class="ks-datetime">{{message.date}}</span>
+                      </div>
+                      <div class="ks-message">{{message.payload}}</div>
+                    </div>
+                  </li>
 
-                  <li class="ks-item ks-self">
-                                    <span class="ks-avatar ks-offline">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                      </div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-self">
-                                    <span class="ks-avatar ks-offline">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                      </div>
-                    </div>
-                  </li>
-                  <li class="ks-item ks-self">
-                                    <span class="ks-avatar ks-offline">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36" class="rounded-circle">
-                                    </span>
-                    <div class="ks-body">
-                      <div class="ks-header">
-                        <span class="ks-name">Brian Diaz</span>
-                        <span class="ks-datetime">6:46 PM</span>
-                      </div>
-                      <div class="ks-message">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                      </div>
-                    </div>
-                  </li>
                 </ul>
+
               </div>
               <div class="jspVerticalBar">
                 <div class="jspCap jspCapTop"></div>
@@ -434,123 +339,126 @@
             </div>
           </div>
           <div class="ks-footer">
-            <textarea class="form-control" placeholder="Type something..."></textarea>
+            <form [formGroup]="messageForm" (ngSubmit)="sendMessage(this.messageForm,this.queryParams)" >
+            <textarea class="form-control" formControlName="payload" placeholder="Type something..."></textarea>
+            <button class="btn btn-primary" type="submit" >Send</button>
+            </form>
             <div class="ks-controls">
-              <button class="btn btn-primary">Send</button>
               <a href="#" class="la la-paperclip ks-attachment"></a>
               <div class="dropdown dropup">
                 <button class="btn btn-link ks-smile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="la la-smile-o"></span>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right ks-scrollable ks-smileys" aria-labelledby="dropdownMenuButton" style="overflow: hidden; padding: 0px; width: 200px;">
+                <div class="dropdown-menu dropdown-menu-right ks-scrollable ks-smileys"
+                  aria-labelledby="dropdownMenuButton" style="overflow: hidden; padding: 0px; width: 200px;">
 
                   <div class="jspContainer" style="width: 198px; height: 165px;">
                     <div class="jspPane" style="padding: 0px; top: 0px; left: 0px; width: 100px;">
                       <div class="ks-smileys-wrapper">
                         <table>
                           <tbody>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="20" height="20">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
-                            </td>
-                            <td>
-                              <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
-                            </td>
-                          </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="20" height="20">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="20" height="20">
+                              </td>
+                              <td>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="20" height="20">
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -561,39 +469,38 @@
             </div>
           </div>
         </div>
+        <!-- end of middle pane -->
+
+        <!-- user info / right panel-->
         <div class="ks-info ks-messenger__info">
           <div class="ks-header">
             User Info
           </div>
           <div class="ks-body">
             <div class="ks-item ks-user">
-                        <span class="ks-avatar ks-online">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36" class="rounded-circle">
-                        </span>
+              <span class="ks-avatar ks-online">
+                <img src={{this.account.imageUrl}} width="36" height="36"
+                  class="rounded-circle">
+              </span>
               <span class="ks-name">
-                            Lauren Sandoval
-                        </span>
+                {{this.account.firstName}} {{this.account.lastName}}
+              </span>
             </div>
 
             <div class="ks-item">
-              <div class="ks-name">Username</div>
-              <div class="ks-text">
-                @lauren.sandoval
-              </div>
-            </div>
-            <div class="ks-item">
               <div class="ks-name">Email</div>
               <div class="ks-text">
-                lauren.sandoval@example.com
+                {{this.account.email}}
               </div>
             </div>
             <div class="ks-item">
               <div class="ks-name">Phone Number</div>
               <div class="ks-text">
-                +1(555) 555-555
+                {{this.account.phone}}
               </div>
             </div>
           </div>
+          <!-- this is not neccessary to do  -->
           <div class="ks-footer">
             <div class="ks-item">
               <div class="ks-name">Created</div>

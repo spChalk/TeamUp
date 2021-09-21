@@ -385,21 +385,42 @@
         <form [formGroup]="aboutForm" (ngSubmit)="aboutSubmit(aboutForm)">
           <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" formControlName="firstName" aria-describedby="firstNameHelp">
+            <input type="text" class="form-control" formControlName="firstName" placeholder= {{this.account.firstName}} aria-describedby="firstNameHelp">
+                  <span class="credentialsError" *ngIf="aboutForm.get('firstName').hasError('pattern')">
+                    First Name should consist of letter only !
+                    <br>
+                  </span>
+                  <span class="credentialsError" *ngIf="aboutForm.get('firstName').hasError('maxlength')">
+                    First Name can be at max 20 characters!
+                  </span>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" formControlName="lastName" aria-describedby="lastNameHelp">
+            <input type="text" class="form-control" formControlName="lastName" placeholder= {{this.account.lastName}} aria-describedby="lastNameHelp">
+                  <span class="credentialsError" *ngIf="aboutForm.get('lastName').hasError('pattern')">
+                    Last Name should consist of letter only !
+                    <br>
+                  </span>
+                  <span class= "credentialsError" *ngIf="aboutForm.get('lastName').hasError('maxlength')">
+                    Last Name can be at max 20 characters!
+                  </span>
           </div>
           <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="text" class="form-control" formControlName="phone" aria-describedby="phoneHelp">
+            <input type="text" class="form-control" formControlName="phone" placeholder= {{this.account.phone}} aria-describedby="phoneHelp">
+                  <span class= "credentialsError" *ngIf="aboutForm.get('phone').hasError('pattern')">
+                    Phone should consist of digits only !
+                    <br>
+                  </span>
+                  <span class="credentialsError" *ngIf="aboutForm.get('phone').hasError('maxlength')">
+                    Phone can be at max 15 digits!
+                  </span>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" (click)="aboutSubmit(aboutForm)" data-dismiss="modal">
+        <button [disabled] = "aboutForm.invalid" class="btn btn-primary" (click)="aboutSubmit(aboutForm)" data-dismiss="modal">
           Update
         </button>
       </div>
@@ -421,7 +442,7 @@
         <form [formGroup]="bioForm" (ngSubmit)="bioSubmit(bioForm)">
           <div class="form-group">
             <label for="biography">Your bio</label>
-            <textarea type="text" class="form-control" formControlName="description" aria-describedby="biographyHelp" [value]="this.account?.bio.description" ></textarea>
+            <textarea type="text" class="form-control" formControlName="description" aria-describedby="biographyHelp" placeholder={{this.account.bio.description}} ></textarea>
           </div>
         </form>
       </div>
@@ -447,41 +468,43 @@
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form #eduForm="ngForm">
+
+          <form [formGroup]="editEducationForm">
             <div class="form-group">
-              <label for="edu">School</label>
-              <input type="text" class="form-control" name="edu" aria-describedby="eduHelp" [value]="selectedEdu?.school">
+              <label for="school">School</label>
+              <input type="text" class="form-control" formControlName="school" aria-describedby="eduHelp" value={{selectedEdu?.school}}>
             </div>
             <div class="form-group">
               <label for="field">Field</label>
-              <input type="text" class="form-control" name="field" aria-describedby="fieldHelp" [value]="selectedEdu?.field">
+              <input type="text" class="form-control" formControlName="field" aria-describedby="fieldHelp" value={{selectedEdu?.field}}>
             </div>
             <div class="form-group">
               <label for="degree">Degree</label>
-              <input type="text" class="form-control" name="degree" aria-describedby="degreeHelp" [value]="selectedEdu?.degree">
+              <input type="text" class="form-control" formControlName="degree" aria-describedby="degreeHelp" value={{selectedEdu?.degree}}>
             </div>
             <div class="form-group">
               <label for="gdp">GDP</label>
-              <input type="text" class="form-control" name="gdp" aria-describedby="gdpHelp" [value]="selectedEdu?.grade">
+              <input type="text" class="form-control" formControlName="grade" aria-describedby="gdpHelp" value={{selectedEdu?.grade}}>
             </div>
             <div class="form-group">
               <label for="stdate">Starting date</label>
-              <input type="text" class="form-control" name="stdate" aria-describedby="stdateHelp" [value]="selectedEdu?.startDate">
+              <input type="text" class="form-control" formControlName="startDate" aria-describedby="stdate" value={{selectedEdu?.startDate}}>
             </div>
             <div class="form-group">
               <label for="endate">Ending date</label>
-              <input type="text" class="form-control" name="endate" aria-describedby="endateHelp" [value]="selectedEdu?.endDate">
+              <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp" value={{selectedEdu?.endDate}}>
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp" [value]="selectedEdu?.description"></textarea>
+              <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" value={{selectedEdu?.description}}></textarea>
             </div>
           </form>
+
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="editEducation(editEducationForm)" data-dismiss="modal">
           Update
         </button>
       </div>
@@ -555,70 +578,25 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
+
       <div class="modal-body">
-        <form #intForm="ngForm">
+        <form [formGroup]="interestsForm">
           <div class="form-group">
-            <label for="interests">Interests <i>(Press Ctrl to select multiple tags)</i></label>
-            <select size="15" id="interestsid" formControlName="interests" class="form-control" data-role="select-dropdown" data-profile="minimal" multiple required>
-              <option>TECHNOLOGY</option>
-              <option>BUSINESS</option>
-              <option>MACHINE_LEARNING</option>
-              <option>SOFTWARE</option>
-              <option>HARDWARE</option>
-              <option>SALES</option>
-              <option>RESEARCH</option>
-              <option>MAINTENANCE</option>
-              <option>OPERATING_SYSTEMS</option>
-              <option>ARTIFICIAL_INTELLIGENCE</option>
-              <option>DBMS</option>
-              <option>NETWORKING</option>
-              <option>DATA_STRUCTURES</option>
-              <option>ALGORITHMS</option>
-              <option>OOP</option>
-              <option>SQL</option>
-              <option>UNIX</option>
-              <option>WINDOWS</option>
-              <option>GIT</option>
-              <option>GITHUB</option>
-              <option>MANAGEMENT</option>
-              <option>ECONOMICS</option>
-              <option>PSYCHOLOGY</option>
-              <option>HISTORY</option>
-              <option>BOOKS</option>
-              <option>MUSIC</option>
-              <option>RUNNING</option>
-              <option>SWIMMING</option>
-              <option>LAW</option>
-              <option>MATHEMATICS</option>
-              <option>PHYSICS</option>
-              <option>ENGINEERING</option>
-              <option>ARCHITECTURE</option>
-              <option>AGRICULTURE</option>
-              <option>SPACE</option>
-              <option>CHEMISTRY</option>
-              <option>SCIENCE</option>
-              <option>POLITICS</option>
-              <option>ATHLETICS</option>
-              <option>ROBOTICS</option>
-              <option>BIOINFORMATICS</option>
-              <option>MEDICINE</option>
-              <option>ARCHEOLOGY</option>
-              <option>STOCK_MARKET</option>
-              <option>CRYPTOCURRENCY</option>
-              <option>YACHTS</option>
-              <option>SHIPS</option>
-              <option>AEROPLANE</option>
-              <option>MINERAL_RESOURCES</option>
-              <option>MINING</option>
-              <option>TRAVELLING</option>
-            </select>
+              <div class="form-group" style="height: 190px;overflow-y: scroll">
+                <div *ngFor="let item of TagsArray; let i = index ">
+                  <label>
+                    <input type = "checkbox" [value] = "item.tag" event="onCbChange($event)"/>
+                    {{item.tag}}
+                  </label>
+                </div>
+              </div>
             <a class="text-muted">At least 2 tags are required.</a>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click) = "editInterests(interestsForm)" data-dismiss="modal" >
           Update
         </button>
       </div>
@@ -638,41 +616,41 @@
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form #eduaddForm="ngForm">
+          <form [formGroup]="addEducationForm">
             <div class="form-group">
               <label for="edu">School</label>
-              <input type="text" class="form-control" name="edu" aria-describedby="eduHelp">
+              <input type="text" class="form-control" formControlName="school" aria-describedby="eduHelp" placeholder="Your school">
             </div>
             <div class="form-group">
               <label for="field">Field</label>
-              <input type="text" class="form-control" name="field" aria-describedby="fieldHelp">
+              <input type="text" class="form-control" formControlName="field" aria-describedby="fieldHelp" placeholder="Your field">
             </div>
             <div class="form-group">
               <label for="degree">Degree</label>
-              <input type="text" class="form-control" name="degree" aria-describedby="degreeHelp">
+              <input type="text" class="form-control" formControlName="degree" aria-describedby="degreeHelp" placeholder="Your degree">
             </div>
             <div class="form-group">
               <label for="gdp">GDP</label>
-              <input type="text" class="form-control" name="gdp" aria-describedby="gdpHelp">
+              <input type="text" class="form-control" formControlName="grade" aria-describedby="gdpHelp" placeholder="Your GDP">
             </div>
             <div class="form-group">
               <label for="stdate">Starting date</label>
-              <input type="text" class="form-control" name="stdate" aria-describedby="stdateHelp">
+              <input type="text" class="form-control" formControlName="startDate" aria-describedby="stdate" placeholder="When did you start?">
             </div>
             <div class="form-group">
               <label for="endate">Ending date</label>
-              <input type="text" class="form-control" name="endate" aria-describedby="endateHelp">
+              <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp" placeholder="When did you finish?">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp"></textarea>
+              <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" placeholder="A brief Description about your education"></textarea>
             </div>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="addEducation(addEducationForm)" data-dismiss="modal">
           Update
         </button>
       </div>
