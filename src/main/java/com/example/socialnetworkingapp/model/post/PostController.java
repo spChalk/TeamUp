@@ -41,7 +41,10 @@ public class PostController {
 
     @GetMapping("/all")
     public ResponseEntity<List<PostResponse>> getAllPosts() {
-        return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account newUser = accountService.findAccountByEmail(user);
+        return new ResponseEntity<>(postService.findAllPosts(newUser), HttpStatus.OK);
     }
 
 //    @GetMapping("/{id}")

@@ -84,7 +84,7 @@ public loadPostLikes(pid: number) {
   }
 
   private loadPosts() {
-    this.postService.getPosts().subscribe(
+    this.postService.getPosts(this.authenticationService.getJWT()).subscribe(
       (posts: Post[]) => {
         this.posts = posts;
         for(let post of this.posts) {

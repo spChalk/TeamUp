@@ -20,8 +20,10 @@ export class PostService {
   }
 
   /* TODO: TEMPORARY. When homepage is ready, get posts by network etc.. */
-  public getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.url}/all`);
+  public getPosts(token: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.url}/all`, {
+      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+    });
   }
 
   public deletePost(pid: number): Observable<any> {

@@ -3,8 +3,10 @@ package com.example.socialnetworkingapp.mapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.post.Post;
 import com.example.socialnetworkingapp.model.post.PostResponse;
+import lombok.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {

@@ -3,6 +3,7 @@ package com.example.socialnetworkingapp.model.post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
 
 import java.util.Date;
 
