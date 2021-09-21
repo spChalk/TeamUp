@@ -9,10 +9,12 @@ import lombok.Data;
 @Builder
 public class MessageResponse {
     private String payload;
+    private String senderEmail;
     private String senderFirstName;
     private String senderLastName;
-    private String senderEmail;
+
+    private String receiverEmail;
     private String receiverFirstName;
     private String receiverLastName;
-    private String receiverEmail;
+    private String date;
 }

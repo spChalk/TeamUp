@@ -174,6 +174,9 @@ public class Account implements UserDetails {
         this.password = encodedPassword;
     }
 
+    public Long getId(){
+        return this.id;
+    }
 /*    public void follow(Account friend){
         this.following.add(friend);
         friend.getFollowers().add(this);

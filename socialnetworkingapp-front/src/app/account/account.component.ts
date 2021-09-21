@@ -11,7 +11,9 @@ import { Experience } from "../experience/experience";
 import { ExportService } from "../export/export.service";
 import { EducationService } from "../education/education.service";
 import { ExperienceService } from "../experience/experience.service";
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
+import { TagsService } from '../tags/tags.service';
+import { Tag } from '../tags/Tag'
 
 /* https:odecraft.tv/courses/angular/routing/parameterised-routes/ */
 
@@ -25,9 +27,14 @@ export class AccountComponent implements OnInit {
   public account: Account;
   public selectedEdu: Education;
   public selectedExp: Experience;
+  public TagsArray: Tag[];
+  public UsersTags: Tag[];
 
   aboutForm: FormGroup;
   bioForm: FormGroup;
+  addEducationForm: FormGroup;
+  editEducationForm: FormGroup;
+  interestsForm: FormGroup;
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
@@ -35,11 +42,13 @@ export class AccountComponent implements OnInit {
     private experienceService: ExperienceService,
     private educationService: EducationService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tagsService: TagsService
   ) { }
 
 
   ngOnInit(): void {
+
 
     let email = this.authenticationService.getCurrentUser();
     this.accountService.fetchUser(email).subscribe(
@@ -53,20 +62,79 @@ export class AccountComponent implements OnInit {
 
     this.aboutForm = this.fb.group({
       email: new FormControl(this.authenticationService.getCurrentUser()),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      phone: new FormControl('')
+      firstName: new FormControl('', [Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
+      lastName: new FormControl('', [Validators.maxLength(20), Validators.pattern('[a-zA-Z ]*')]),
+      phone: new FormControl('', [Validators.pattern('[0-9]*'), Validators.maxLength(15)]),
     },
     );
 
     this.bioForm = this.fb.group({
       email: new FormControl(this.authenticationService.getCurrentUser()),
-      description : new FormControl('')
+      description: new FormControl('')
     },
     );
 
+    this.addEducationForm = this.fb.group({
+      school: new FormControl(''),
+      degree: new FormControl(''),
+      field: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      grade: new FormControl(''),
+      description: new FormControl(''),
+      visible: new FormControl('true'),
+    },
+    );
+
+    this.editEducationForm = this.fb.group({
+      school: new FormControl(''),
+      degree: new FormControl(''),
+      field: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      grade: new FormControl(''),
+      description: new FormControl(''),
+      visible: new FormControl('true'),
+    },
+    );
+
+    this.tagsService.getUserTags().subscribe(
+      (response: Tag[]) => {
+        this.UsersTags = response;
+      }
+    );
+
+    this.interestsForm = this.fb.group({
+      interests: this.fb.array([], [Validators.required, Validators.minLength(2)])
+    },
+    );
+
+    this.tagsService.getAllTags().subscribe(
+      (response: Tag[]) => {
+        this.TagsArray = response;
+      }
+    );
+
+
+
+
   }
 
+  onCbChange(e: any) {
+    const interests: FormArray = this.interestsForm.get('interests') as FormArray;
+    if (e.target.checked) {
+      interests.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      interests.controls.forEach((item: any) => {
+        if (item.value == e.target.value) {
+          interests.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
   public onClickModal(data: any, mode: string): void {
 
     const container = document.getElementById('main-container');
@@ -174,6 +242,7 @@ export class AccountComponent implements OnInit {
     this.accountService.aboutUpdateAccount(aboutForm.value).subscribe(
       (response: Account) => {
         console.log(response);
+        window.location.reload();
       },
       (error: any) => {
         this.aboutForm.reset();
@@ -189,12 +258,56 @@ export class AccountComponent implements OnInit {
     this.accountService.addBio(bioSubmit.value.email, bioSubmit.value.description).subscribe(
       (response: Bio) => {
         console.log(response);
+        window.location.reload();
       },
       (error: any) => {
         this.aboutForm.reset();
         console.log(error);
       }
     );
-    window.location.reload();
+  }
+
+  public addEducation(addEducationForm: FormGroup) {
+
+    this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
+      (response: Account) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error: any) => {
+        this.aboutForm.reset();
+        console.log(error);
+      }
+    );
+  }
+
+  public editEducation(addEducationForm: FormGroup) {
+
+    this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
+      (response: Account) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error: any) => {
+        this.aboutForm.reset();
+        console.log(error);
+      }
+    );
+  }
+
+  public editInterests(interestsForm: FormGroup) {
+
+    //den paizei i allagi 
+    for (let interest of interestsForm.value.interests) {
+      this.tagsService.addAccountTag(this.authenticationService.getCurrentUser(), interest).subscribe(
+        (resp: Account) => {
+          console.log(interest);
+        },
+        (err: HttpErrorResponse) => {
+          alert(err.message);
+          console.log(interest);
+        }
+      );
+    }
   }
 }

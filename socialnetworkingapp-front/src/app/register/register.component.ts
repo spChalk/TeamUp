@@ -11,10 +11,8 @@ import { UploadFileService } from "../upload-files/upload-files.service";
 import { BioComponent } from "../bio/bio.component";
 import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
-import { repeatGroups } from "@angular/compiler/src/shadow_css";
-import { r3JitTypeSourceSpan } from "@angular/compiler";
 import { TagsService } from "../tags/tags.service";
-import { collapseTextChangeRangesAcrossMultipleVersions, flattenDiagnosticMessageText } from 'typescript';
+import {Tag} from '../tags/Tag'
 
 @Component({
     selector: 'app-register',
@@ -29,60 +27,8 @@ export class RegisterComponent implements OnInit {
     currentFile: File;
     progress = 0;
     message = '';
-    TagsArray : Array<any>=[
+  TagsArray : Tag[];
 
-                    {name: 'TECHNOLOGY' , value:'technology'},
-                    {name: 'BUSINESS' , value:'business'},
-                    {name: 'MACHINE_LEARNING' , value:'machine_learning'},
-                    {name: 'SOFTWARE' , value:'software'},
-                    {name: 'HARDWARE' , value:'hardware'},
-                    {name: 'SALES' , value:'sales'},
-                    {name: 'RESEARCH' , value:'research'},
-                    {name: 'MAINTENANCE' , value:'maintenance'},
-                    {name: 'OPERATING_SYSTEMS' , value:'operating_systems'},
-                    {name: 'ARTIFICIAL_INTELLIGENCE' , value:'artificial_intelligence'},
-                    {name: 'DBMS' , value:'dbms'},
-                    {name: 'NETWORKING' , value:'networking'},
-                    {name: 'DATA_STRUCTURES' , value:'data_structures'},
-                    {name: 'ALGORITHMS' , value:'algorithms'},
-                    {name: 'OOP' , value:'oop'},
-                    {name: 'SQL' , value:'sql'},
-                    {name: 'UNIX' , value:'unix'},
-                    {name: 'WINDOWS' , value:'windows'},
-                    {name: 'GIT' , value:'git'},
-                    {name: 'GITHUB' , value:'github'},
-                    {name: 'MANAGEMENT' , value:'management'},
-                    {name: 'ECONOMICS' , value:'economics'},
-                    {name: 'PSYCHOLOGY' , value:'psychology'},
-                    {name: 'HISTORY' , value:'history'},
-                    {name: 'BOOKS' , value:'books'},
-                    {name: 'MUSIC' , value:'music'},
-                    {name: 'RUNNING' , value:'running'},
-                    {name: 'SWIMMING' , value:'swimming'},
-                    {name: 'LAW' , value:'law'},
-                    {name: 'MATHEMATICS' , value:'mathematics'},
-                    {name: 'PHYSICS' , value:'physics'},
-                    {name: 'ENGINEERING' , value:'engineering'},
-                    {name: 'ARCHITECTURE' , value:'architecture'},
-                    {name: 'AGRICULTURE' , value:'agriculture'},
-                    {name: 'SPACE' , value:'space'},
-                    {name: 'CHEMISTRY' , value:'chemistry'},
-                    {name: 'SCIENCE' , value:'science'},
-                    {name: 'POLITICS' , value:'politics'},
-                    {name: 'ATHLETICS' , value:'athletics'},
-                    {name: 'ROBOTICS' , value:'robotics'},
-                    {name: 'BIOINFORMATICS' , value:'bioinformatics'},
-                    {name: 'MEDICINE' , value:'medicine'},
-                    {name: 'ARCHEOLOGY' , value:'archeology'},
-                    {name: 'STOCK_MARKET' , value:'stock_market'},
-                    {name: 'CRYPTOCURRENCY' , value:'cryptocurrency'},
-                    {name: 'YACHTS' , value:'yachts'},
-                    {name: 'SHIPS' , value:'ships'},
-                    {name: 'AEROPLANE' , value:'aeroplane'},
-                    {name: 'MINERAL_RESOURCES' , value:'mineral_resources'},
-                    {name: 'MINING' , value:'mining'},
-                    {name: 'TRAVELLING' , value:'travelling'}
-    ]
 
     private account: Account;
 
@@ -114,9 +60,14 @@ export class RegisterComponent implements OnInit {
             { validator: this.checkPasswords }
         );
 
-
+        this.tagsService.getAllTags().subscribe(
+        (response: Tag[]) => {
+            this.TagsArray= response;
+            }
+        );
 
     }
+
     onCbChange(e : any) {
         const interests : FormArray = this.registerForm.get('interests') as FormArray;
         if (e.target.checked) {
@@ -182,12 +133,12 @@ export class RegisterComponent implements OnInit {
                 this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
                     (newResponse: boolean) => {
                         this.router.navigateByUrl('/home');
+                        this.onClickModal(mode);
                     },
                     (error) => {
                         console.log(error);
                     }
                 )
-                this.onClickModal(mode);
             },
             (error: any) => {
                 this.correctCredentials = false;
