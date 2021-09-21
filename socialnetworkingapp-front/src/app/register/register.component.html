@@ -111,9 +111,9 @@
                 <div *ngIf="correctCredentials else wrongCredentials">
                 </div>
                 <ng-template #wrongCredentials >
-                    <span> A user with that email might already exist.</span>
+                    <span> A user with the same email or phone number already exists.</span>
                     <br>
-                    <span> Try using another email address.</span>
+                    <span> Try using different credentials.</span>
                 </ng-template>
 
             </div>
