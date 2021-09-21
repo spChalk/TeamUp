@@ -146,7 +146,7 @@ public loadPostLikes(pid: number) {
           this.currSoundFile = undefined;
         }
 
-
+        window.location.reload();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }

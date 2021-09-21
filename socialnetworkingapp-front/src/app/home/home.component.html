@@ -84,7 +84,6 @@
 
           </div>
           <div class="card-body">
-            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
             <h5 class="card-text">
 
               <a *ngIf="post?.payload && (!post?.imagePath && !post?.videoPath && !post?.soundPath)"> {{post?.payload}} </a>
@@ -108,6 +107,7 @@
               <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
             </h5>
 
+            <div class="text-muted h7 mb-2" style="float: right"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
             <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}}
               <a *ngIf="this.likedPosts.get(post?.id)[0] !== 1">likes</a>
               <a *ngIf="this.likedPosts.get(post?.id)[0] === 1">like</a>
@@ -116,6 +116,7 @@
               <a *ngIf="this.commentedPosts.get(post?.id)[0].length !== 1">comments</a>
               <a *ngIf="this.commentedPosts.get(post?.id)[0].length === 1">comment</a>
             </div>
+
 
           </div>
           <div class="card-footer" style="background-color: white">

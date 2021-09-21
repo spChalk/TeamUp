@@ -48,7 +48,10 @@ public class PostService {
 
         /* If user has no friends, return only the posts he has made */
         if(userNetwork.isEmpty()) {
-            return postsToReturn;
+            return postsToReturn
+                    .stream()
+                    .sorted(Comparator.comparing(PostResponse::getDate).reversed())
+                    .collect(Collectors.toList());
         }
 
         /* For every user's connection in network */
@@ -72,8 +75,11 @@ public class PostService {
                         .stream().map(postMapper::PostToPostResponse).collect(Collectors.toList()));
             }
         }
-        /* Return the posts without duplicates! */
-        return postsToReturn.stream().distinct().collect(Collectors.toList());
+        /* Return the posts without duplicates and with the latest posts first! */
+        return postsToReturn.stream().distinct().collect(Collectors.toList())
+                .stream()
+                .sorted(Comparator.comparing(PostResponse::getDate).reversed())
+                .collect(Collectors.toList());
     }
 
     public List<PostResponse> findPostsByAuthorId(Long id) {

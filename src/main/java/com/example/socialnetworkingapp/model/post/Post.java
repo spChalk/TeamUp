@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -39,13 +40,13 @@ public class Post implements Serializable {
     private Account author;
 
     //date of creation
-    private String date ;
+    private Date date ;
 
     private String imagePath;
     private String videoPath;
     private String soundPath;
 
-    public Post(String payload, Account author, String date, String imagePath, String videoPath, String soundPath) {
+    public Post(String payload, Account author, Date date, String imagePath, String videoPath, String soundPath) {
         this.payload = payload;
         this.author = author;
         this.date = date;
