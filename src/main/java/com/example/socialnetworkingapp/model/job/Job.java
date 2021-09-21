@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,23 +19,6 @@ import java.util.List;
 @Entity
 @Table(name = "jobs")
 public class Job implements Serializable {
-
-    private enum JobType {
-        FULL_TIME,
-        PART_TIME,
-        INTERNSHIP,
-        CONTRACT,
-        OTHER
-    }
-
-    private enum ExperienceLevel {
-        INTERNSHIP,
-        ENTRY_LEVEL,
-        ASSOCIATE,
-        MIN_SENIOR,
-        DIRECTOR,
-        EXECUTIVE
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,7 +35,7 @@ public class Job implements Serializable {
     @NotNull
     private String location;
 
-    private String Date;
+    private Date date;
 
     @NotNull
     private JobType jobType;
@@ -72,4 +56,15 @@ public class Job implements Serializable {
             joinColumns = { @JoinColumn(name = "job_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private List<Tag> tags = new ArrayList<>();
+
+    public Job(String title, Account publisher, String location, Date date, JobType jobType, ExperienceLevel experienceLevel, String info, List<Tag> tags) {
+        this.title = title;
+        this.publisher = publisher;
+        this.location = location;
+        this.date = date;
+        this.jobType = jobType;
+        this.experienceLevel = experienceLevel;
+        this.info = info;
+        this.tags = tags;
+    }
 }

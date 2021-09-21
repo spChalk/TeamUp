@@ -6,12 +6,14 @@ import {JobService} from "./job.service";
 import {JobApplicationService} from "../job-application/job-application.service";
 import {AccountService} from "../account/account.service";
 import {BioService} from "../bio/bio.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {JobApplication} from "../job-application/job-application";
 import {NgForm} from "@angular/forms";
 import {JobViewService} from "../job-view/job-view.service";
 import {JobView} from "../job-view/job-view";
 import {TagsService} from "../tags/tags.service";
+import {AuthenticationService} from "../authentication";
+import {JobRequest} from "./job-request";
 
 @Component({
   selector: 'app-job',
@@ -22,32 +24,34 @@ export class JobComponent implements OnInit {
 
   public jobs: Job[] = [];
   public selectedJob: Job;
-  public currUser: Account;
+  public account: Account;
 
   constructor(private jobService: JobService,
               private jobAppService: JobApplicationService,
               private jobViewService: JobViewService,
               private accountService: AccountService,
               private route: ActivatedRoute,
-              private tagsService: TagsService) {
+              private tagsService: TagsService,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
 
+    if (this.authenticationService.isAdmin()) {
+      this.router.navigate(['/admin']);
+    }
+    let email = this.authenticationService.getCurrentUser();
+    this.accountService.fetchUser(email).subscribe(
+      (response: Account) => {
+        this.account = new Account(response);
+      }
+    );
+    this.getJobs();
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      console.log(params);
-      if (params['uid']) {
-        this.getJobs(params['uid']);
-        this.accountService.getAccountById(params['uid']).subscribe(
-          (acc: Account) => {
-            this.currUser = acc;
-          });
-      }
-    });
   }
 
-  public getJobs(uid: number): void {
-    this.jobService.getAllJobs(uid).subscribe(
+  public getJobs(): void {
+    this.jobService.getAllJobs(this.authenticationService.getJWT()).subscribe(
       (response: Job[]) => {
         this.jobs = response;
         console.log(this.jobs);
@@ -85,7 +89,7 @@ export class JobComponent implements OnInit {
 
   public onApplyToJob(selectedJob: Job) {
 
-    this.jobAppService.applyToJob(this.currUser, selectedJob).subscribe(
+    this.jobAppService.applyToJob(this.account, selectedJob).subscribe(
       (response: JobApplication) => {
         console.log(response);
       },
@@ -97,30 +101,18 @@ export class JobComponent implements OnInit {
 
   public onAddJob(jobForm: NgForm) {
 
-    let newJob = new Job(jobForm.value.title,
-      this.currUser,
+    let newJobRequest = new JobRequest(jobForm.value.title,
       jobForm.value.location,
-      new Date(),
       jobForm.value.jobType,
       jobForm.value.experienceLevel,
       jobForm.value.info,
-      );
+      jobForm.value.interests
+    );
 
-    this.jobService.addJob(newJob).subscribe(
+    this.jobService.addJob(newJobRequest, this.authenticationService.getJWT()).subscribe(
       (response: Job) => {
         console.log(response);
-
-        for (let interest of jobForm.value.interests) {
-          this.tagsService.addJobTag(response.id, interest).subscribe(
-            (res: Job) => {
-              console.log(res);
-            },
-            (err: HttpErrorResponse) => {
-              alert(err.message);
-            }
-          );
-        }
-        this.getJobs(this.currUser.id);
+        this.getJobs();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

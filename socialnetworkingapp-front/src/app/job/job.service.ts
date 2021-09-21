@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Account} from "../account/account";
 import {Job} from "./job";
 import {environment} from "../../environments/environment";
+import {JobRequest} from "./job-request";
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,21 @@ export class JobService {
   private url = environment.apiBaseUrl + "/jobs";
   constructor(private http: HttpClient) {  }
 
-  public getAllJobs(uid: number): Observable<Job[]> {
-    return this.http.get<Job[]>(`${this.url}/all/${uid}`,
+  public getAllJobs(token: string): Observable<Job[]> {
+    return this.http.get<Job[]>(`${this.url}/all`,
       {
         headers: new HttpHeaders( {
-          "Access-Control-Allow-Origin": "http://localhost:4200",
+          "Authorization": "Bearer " + token,
         })
       });
   }
 
-  public addJob(job: Job) {
-    return this.http.post<Job>(`${this.url}/add`, job);
+  public addJob(jobr: JobRequest, token: string) {
+    return this.http.post<Job>(`${this.url}/add`, jobr,
+      {
+        headers: new HttpHeaders({
+          "Authorization": "Bearer " + token
+        })
+      });
   }
 }

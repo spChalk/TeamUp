@@ -1,11 +1,16 @@
 package com.example.socialnetworkingapp.model.job;
 
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -14,27 +19,39 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
+    private final AccountService accountService;
 
-    @GetMapping("/{job_id}")
+/*    @GetMapping("/{job_id}")
     public Job getJobById(@PathVariable("job_id") Long id){
         return jobService.findJobById(id);
-    }
+    }*/
 
-    /* Get the list of jobs, ideal for user with id <<uid>> */
-    @GetMapping("/all/{uid}")
-    public List<Job> getJobs(@PathVariable("uid") Long uid){
-        return jobService.getJobs(uid);
+    /* Get the list of jobs for user */
+    @GetMapping("/all")
+    public List<JobResponse> getJobs() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account newUser = accountService.findAccountByEmail(user);
+        return jobService.getJobs(newUser.getId());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Job> addJob(@RequestBody Job job) {
-        return new ResponseEntity<>(jobService.addJob(job), HttpStatus.CREATED);
+    public ResponseEntity<JobResponse> addJob(@RequestBody JobRequest jobr) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account me = accountService.findAccountByEmail(user);
+        Job newJob = new Job(jobr.getTitle(), me, jobr.getLocation(), new Date(),
+                jobr.getJobType(), jobr.getExperienceLevel(), jobr.getInfo(), jobr.getTags());
+        return new ResponseEntity<>(jobService.addJob(newJob), HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Job> updateJob(@RequestBody Job job){
-        Job newJob = jobService.updateJob(job);
-        return new ResponseEntity<>(newJob, HttpStatus.OK);
+    @PutMapping("/update/{jId}")
+    public ResponseEntity<JobResponse> updateJob(@PathVariable("jId") Long jobId,
+                                         @RequestBody JobRequest jobr){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account me = accountService.findAccountByEmail(user);
+        return new ResponseEntity<>(jobService.updateJob(jobId, jobr), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -42,9 +59,9 @@ public class JobController {
         jobService.deleteJob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+/*
     @PostMapping("/tags/add/{tagName}")
     public ResponseEntity<Job>addTag(@PathVariable("tagName") String tagName, @RequestBody Long id) {
         return new ResponseEntity<>(this.jobService.addTag(tagName, id), HttpStatus.OK);
-    }
+    }*/
 }

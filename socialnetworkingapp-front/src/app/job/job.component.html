@@ -14,18 +14,28 @@
 
 <div class="container mt-5 mb-3" id="main-container">
 
-  <button (click)="onClickModal('addJob')" type="button" class="btn btn-outline-primary  mb-2" data-placement="top" data-original-title="AddJob">+ Add a new job</button>
+  <div class="container" style="text-align: center;margin-top: 100px" *ngIf="this.jobs.length === 0">
+    <h4> No jobs found! Do you want to add one?
+      <button (click)="onClickModal('addJob')" type="button" class="btn btn-success  mb-2" data-placement="top" data-original-title="AddJob">
+        <i class="fa fa-plus"></i> Add a new job</button>
+    </h4>
+  </div>
+
+    <button *ngIf="this.jobs.length > 0" (click)="onClickModal('addJob')" type="button" style="margin-left: 30px" class="btn btn-outline-primary  mb-2" data-placement="top" data-original-title="AddJob">
+      <i class="fa fa-plus"></i> Add a new job</button>
+
   <div class="col">
-
-
+    <div *ngIf="this.jobs.length > 0">
     <div class="col-md-4" *ngFor="let job of this.jobs">
       <a class="card-block  text-decoration-none" >
-      <div class="card p-3 mb-2 shadow bg-body rounded">
+      <div class="card p-3 mb-2 shadow-lg bg-body rounded">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
-            <img src="{{job?.publisher.imageUrl}}" style="width: 60px;height: auto;border-radius: 30%" alt=""/>
+            <img *ngIf="job?.publisherImage" src="{{job?.publisherImage}}" style="width: 50px;height: auto;border-radius: 30%" alt=""/>
+            <img *ngIf="job?.publisherImage === null" src="../../assets/images/user_default.png" style="width: 50px;height: auto;border-radius: 30%" alt=""/>
             <div class="ms-2 c-details">
-              <h6 class="mb-0 ml-3"> <strong> {{job?.publisher.firstName}} {{job?.publisher.lastName}}</strong> </h6> <span> {{job?.datePosted}} </span>
+              <h6 class="mb-0 ml-3"> <strong> {{job?.publisherFirstName}} {{job?.publisherLastName}}</strong> </h6>
+              <span class="ml-3"> {{job?.date.slice(0, -7)}} </span>
             </div>
           </div>
         </div>
@@ -34,10 +44,10 @@
           <h3 class="heading">{{job?.title}}</h3>
           <h5>{{job?.location}}</h5>
         </div>
-        <div class="container">
-          <span class="badge badge-info mr-1"> {{job?.jobType}} </span>
-          <span class="badge badge-secondary mr-4"> {{job?.experienceLevel}} </span>
-          <button type="button" (click)="setSelectedJob(job);increaseView(this.currUser.id, job.id)" class="btn btn-outline-primary"><i class="fa fa-external-link"></i></button>
+        <div class="container" style="margin-left: -14px;">
+          <span class="badge badge-info mr-1"> {{job?.jobType.toString().replace('_', ' ')}} </span>
+          <span class="badge badge-secondary mr-4"> {{job?.experienceLevel.toString().replace('_', ' ')}} </span>
+          <button type="button" (click)="setSelectedJob(job);increaseView(this.account.id, job.id)" class="btn btn-outline-primary" style="float: right"><i class="fa fa-external-link"></i></button>
         </div>
       </div>
       </a>
@@ -84,32 +94,49 @@
     </div>
   </div>-->
 
-
+  </div>
 </div>
 
-<div class="right">
-  <div class="container" style="margin-top: 120px">
-    <div class="col">
-         <div class="card p-3 mb-2 shadow bg-body rounded">
-           <img src="{{selectedJob?.publisher.imageUrl}}" style="width: 100px;height: auto;border-radius: 30%" alt=""/>
-           <br>
-           <h1 class="heading">{{selectedJob.title}}</h1>
-           <h2 class="heading">{{selectedJob.location }}</h2>
-           <h6>
+  <div *ngIf="selectedJob === undefined && this.jobs.length > 0">
+    <div class="right">
+      <div class="container" style="margin-top: 260px">
+        <h4> Click at <i class="fa fa-external-link" style="color: blue"></i> to review the details of a job! </h4>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedJob">
+  <div class="right" *ngFor="let job of this.jobs">
+    <div class="container" style="margin-top: 120px">
+      <div class="col">
+           <div class="card p-3 mb-2 shadow bg-body rounded">
+             <div class="container">
+              <button (click)="onClickModal('apply')" type="button" class="btn btn-outline-success mr-2" data-placement="top" style="float: right" data-original-title="Info">
+                <i class="fa fa-send"></i> Apply</button>
+              </div>
+             <img *ngIf="selectedJob?.publisherImage" src="{{selectedJob?.publisherImage}}" style="width: 80px;height: auto;border-radius: 30%" alt=""/>
+             <img *ngIf="selectedJob?.publisherImage === null" src="../../assets/images/user_default.png" style="width: 80px;height: auto;border-radius: 30%" alt=""/>
              <br>
-             <strong>Job type:  </strong> <span class="badge badge-info"> {{selectedJob?.jobType}} </span>
-             <br><br>
-             <strong>Experience level:  </strong> <span class="badge badge-secondary"> {{selectedJob?.experienceLevel}} </span>
-             <br><br>
-             <strong>Uploaded:  </strong> <span class="badge badge-primary text-white"> {{selectedJob?.datePosted}} </span>
-             <br><br>
-           </h6>
-           <p>
-             {{selectedJob?.info}}
-           </p>
-         </div>
-      <button (click)="onClickModal('apply')" type="button" class="btn btn-outline-success mr-2" data-placement="top" data-original-title="Info">Apply</button>
-      <!--<button type="button" class="btn btn-outline-danger">I'm not interested</button>-->
+             <h1 class="heading">{{selectedJob.title}}</h1>
+             <h2 class="heading">{{selectedJob.location }}</h2>
+             <h5>
+               <br>
+               <strong>Job type:  </strong> <span class="badge badge-info"> {{selectedJob?.jobType.toString().replace('_', ' ')}} </span>
+               <br><br>
+               <strong>Experience level:  </strong> <span class="badge badge-secondary"> {{selectedJob?.experienceLevel.toString().replace('_', ' ')}} </span>
+               <br><br>
+               <strong>Uploaded:  </strong> <span class="badge badge-primary text-white"> {{selectedJob?.date.slice(0, -7)}} </span>
+               <br><br>
+               <strong>Tags:  </strong>
+                  <span *ngFor="let tag of selectedJob?.tags" class="badge badge-secondary text-white mr-1"> {{tag?.tag.replace('_', ' ')}}  </span>
+               <br><br>
+             </h5>
+             <p>
+               {{selectedJob?.info}}
+             </p>
+           </div>
+        <!--<button type="button" class="btn btn-outline-danger">I'm not interested</button>-->
+      </div>
     </div>
   </div>
 </div>
@@ -126,7 +153,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to apply for <strong>{{selectedJob?.publisher.firstName}}{{selectedJob?.publisher.lastName}} - {{selectedJob?.title}}</strong> ?
+          Are you sure you want to apply for <strong>{{selectedJob?.publisherFirstName}}{{selectedJob?.publisherLastName}} - {{selectedJob?.title}}</strong> ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

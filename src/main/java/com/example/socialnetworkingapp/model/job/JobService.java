@@ -1,14 +1,19 @@
 package com.example.socialnetworkingapp.model.job;
 
+import com.example.socialnetworkingapp.mapper.JobMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountRepository;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import lombok.AllArgsConstructor;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +23,7 @@ public class JobService {
     private final AccountRepository accountRepository;
     private final JobViewRepository jobViewRepository;
     private final TagService tagService;
+    private final JobMapper jobMapper;
     /*
     private final AccountInterestsService accountInterestsService;
     private final JobInterestsRepository jobInterestsRepository;
@@ -101,7 +107,7 @@ public class JobService {
         }
     }*/
 
-    public List<Job> getJobs(Long uid) {
+    public List<JobResponse> getJobs(Long uid) {
 
         //   1. Get all jobs (List<Job>) and 2. Transform List<Job> -> Array<Job>
        /* Job[] allJobs = this.jobRepository.findAll().toArray(new Job[0]);
@@ -216,21 +222,33 @@ public class JobService {
             views_JobId_Tuples.add(new Pair<Long, Long>((long)viewCount, allJobs[i++].getId()));
         }
         return tagFilter(views_JobId_Tuples, userAccountTags, allJobs, jobsMap);*/
-        return this.jobRepository.findAll();
+        return this.jobRepository.findAll().stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList());
     }
 
-    public Job addJob(Job job) {
-        return this.jobRepository.save(job);
+    public JobResponse addJob(Job job) {
+        List<Job> savedJob = new ArrayList<>();
+        savedJob.add(this.jobRepository.save(job));
+        return savedJob.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);
     }
 
-    public Job updateJob(com.example.socialnetworkingapp.model.job.Job job) {
-        return this.jobRepository.save(job);
+    public JobResponse updateJob(Long jobId, JobRequest jobr) {
+        Optional<Job> existingJob = this.jobRepository.findById(jobId);
+        if(existingJob.isPresent()) {
+            existingJob.get().setTitle(jobr.getTitle());
+            existingJob.get().setLocation(jobr.getLocation());
+            existingJob.get().setJobType(jobr.getJobType());
+            existingJob.get().setExperienceLevel(jobr.getExperienceLevel());
+            existingJob.get().setInfo(jobr.getInfo());
+        } else throw new IllegalStateException("Job not found!");
+        List<Job> job = new ArrayList<>();
+        job.add(this.jobRepository.save(existingJob.get()));
+        return job.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);
     }
 
     public void deleteJob(Long id) {
         this.jobRepository.deleteById(id);
     }
-
+/*
     public Job addTag(String tagName, Long id) {
 
         Job job = findJobById(id);
@@ -242,5 +260,5 @@ public class JobService {
         }
         return this.jobRepository.save(job);
 
-     }
+     }*/
 }

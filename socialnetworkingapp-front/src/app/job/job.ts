@@ -1,39 +1,35 @@
 import {Account} from "../account/account";
-
-enum JobType {
-  FULL_TIME,
-  PART_TIME,
-  INTERNSHIP,
-  CONTRACT
-}
-
-enum ExperienceLevel {
-  INTERNSHIP,
-  ENTRY_LEVEL,
-  ASSOCIATE,
-  MIN_SENIOR,
-  DIRECTOR,
-  EXECUTIVE
-}
+import {Tag} from "../tags/Tag";
+import {ExperienceLevel} from "./experienceLevel";
+import {JobType} from "./jobType";
 
 export class Job {
 
   id: number;
   title: string;
-  publisher: Account;
+  publisherFirstName: string;
+  publisherLastName: string;
+  publisherEmail: string;
+  publisherImage: string;
   location: string;
-  datePosted: Date;
+  date: string;
   jobType: JobType;
   experienceLevel: ExperienceLevel;
   info: string;
+  tags: Tag[];
 
-  constructor(title: string, publisher: Account, location: string, datePosted: Date, jobType: JobType, experienceLevel: ExperienceLevel, info: string) {
+  constructor(id: number, title: string, publisherFirstName: string, publisherLastName: string, publisherEmail: string, publisherImage: string, location: string, datePosted: string, jobType: JobType, experienceLevel: ExperienceLevel, info: string, tags: Tag[]) {
+    this.id = id;
     this.title = title;
-    this.publisher = publisher;
+    this.publisherFirstName = publisherFirstName;
+    this.publisherLastName = publisherLastName;
+    this.publisherEmail = publisherEmail;
+    this.publisherImage = publisherImage;
     this.location = location;
-    this.datePosted = datePosted;
+    this.date = datePosted;
     this.jobType = jobType;
     this.experienceLevel = experienceLevel;
     this.info = info;
+    this.tags = tags;
   }
 }

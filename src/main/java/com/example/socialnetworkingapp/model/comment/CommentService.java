@@ -4,6 +4,7 @@ import com.example.socialnetworkingapp.mapper.CommentMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,10 +29,9 @@ public class CommentService {
     }
 
     public CommentResponse addComment(Comment comment){
-        Comment cm =  this.commentRepository.save(comment);
-        return new CommentResponse(cm.getId(), cm.getPayload(), cm.getCommenter().getFirstName(),
-                cm.getCommenter().getLastName(), cm.getCommenter().getEmail(), cm.getCommenter().getImageUrl(),
-                cm.getDate());
+        List<Comment> cm = new ArrayList<>();
+        cm.add(this.commentRepository.save(comment));
+        return cm.stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList()).get(0);
     }
 
     public CommentResponse updateComment(Long commentId, CommentRequest payload) {
@@ -40,10 +40,9 @@ public class CommentService {
             existingComment.get().setPayload(payload.getPayload());
         } else throw  new IllegalStateException("Comment not found!");
 
-        Comment cm = this.commentRepository.save(existingComment.get());
-        return new CommentResponse(cm.getId(), cm.getPayload(), cm.getCommenter().getFirstName(),
-                cm.getCommenter().getLastName(), cm.getCommenter().getEmail(), cm.getCommenter().getImageUrl(),
-                cm.getDate());
+        List<Comment> cm = new ArrayList<>();
+        cm.add(this.commentRepository.save(existingComment.get()));
+        return cm.stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList()).get(0);
     }
 
     public void deleteById(Long commentId) {

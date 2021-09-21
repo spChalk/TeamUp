@@ -32,11 +32,9 @@ public class PostService {
 
     public PostResponse addPost(Post post){
 
-        Post saved = postRepository.save(post);
-        return new PostResponse(saved.getId(), saved.getPayload(), saved.getAuthor().getFirstName(),
-                saved.getAuthor().getLastName(), saved.getAuthor().getEmail(),
-                saved.getAuthor().getImageUrl(), saved.getAuthor().getDateCreated().toString(),
-                saved.getImagePath(), saved.getVideoPath(), saved.getSoundPath());
+        List<Post> saved = new ArrayList<>();
+        saved.add(this.postRepository.save(post));
+        return saved.stream().map(postMapper::PostToPostResponse).collect(Collectors.toList()).get(0);
     }
 
     public List<PostResponse> findAllPosts(Account user) {
