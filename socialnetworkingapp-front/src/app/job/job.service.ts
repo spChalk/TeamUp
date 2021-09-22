@@ -14,22 +14,12 @@ export class JobService {
   private url = environment.apiBaseUrl + "/jobs";
   constructor(private http: HttpClient) {  }
 
-  public getAllJobs(token: string): Observable<Job[]> {
-    return this.http.get<Job[]>(`${this.url}/all`,
-      {
-        headers: new HttpHeaders( {
-          "Authorization": "Bearer " + token,
-        })
-      });
+  public getAllJobs(): Observable<Job[]> {
+    return this.http.get<Job[]>(`${this.url}/all`);
   }
 
-  public addJob(jobr: JobRequest, token: string) {
-    return this.http.post<Job>(`${this.url}/add`, jobr,
-      {
-        headers: new HttpHeaders({
-          "Authorization": "Bearer " + token
-        })
-      });
+  public addJob(jobr: JobRequest) {
+    return this.http.post<Job>(`${this.url}/add`, jobr);
   }
 
   public deleteJob(jobIdToDelete: number): Observable<void> {

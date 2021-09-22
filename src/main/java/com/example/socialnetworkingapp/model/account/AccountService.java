@@ -236,6 +236,48 @@ public class AccountService implements UserDetailsService {
         return newEducation;
     }
 
+    public Experience updateExperience(String email, Experience experience) {
+        Account account = findAccountByEmail(email);
+        Optional<Experience> previousExperience = this.experienceService.findExperienceById(experience.getId());
+
+        if(!previousExperience.isPresent()) {
+            throw new UserNotFoundException("Could find experience with id " + experience.getId() + " while trying to update it!");
+        }
+
+
+
+        Experience prevExperience = previousExperience.get();
+
+        if(!experience.getTitle().equals(""))
+            prevExperience.setTitle(experience.getTitle());
+
+        if(!String.valueOf(experience.getEmploymentType()).equals(""))
+            prevExperience.setEmploymentType(experience.getEmploymentType());
+
+        if(!experience.getCompany().equals(""))
+            prevExperience.setCompany(experience.getCompany());
+
+        if(!experience.getLocation().equals(""))
+            prevExperience.setLocation(experience.getLocation());
+
+        if(!experience.getStartDate().equals(""))
+            prevExperience.setStartDate(experience.getStartDate());
+
+        if(!experience.getEndDate().equals(""))
+            prevExperience.setEndDate(experience.getEndDate());
+
+        if(!experience.getHeadline().equals(""))
+            prevExperience.setHeadline(experience.getHeadline());
+
+        if(!experience.getDescription().equals(""))
+            prevExperience.setDescription(experience.getDescription());
+
+
+        Experience newExperience = this.experienceService.updateExperience(prevExperience);
+        this.accountRepository.save(account);
+        return newExperience;
+    }
+
     public void deleteBio(Long uid) {
         Account account = this.accountRepository.findAccountById(uid).orElseThrow(
                 () -> new UserNotFoundException("User with id " + uid.toString() + " does not exist!")

@@ -35,6 +35,9 @@ export class AccountComponent implements OnInit {
   addEducationForm: FormGroup;
   editEducationForm: FormGroup;
   interestsForm: FormGroup;
+  experienceForm: FormGroup;
+  editExperienceForm: FormGroup;
+
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
@@ -98,6 +101,36 @@ export class AccountComponent implements OnInit {
       visible: new FormControl(''),
     },
     );
+
+    this.experienceForm = this.fb.group({
+      // id: new FormControl(''),
+      title: new FormControl(''),
+      employmentType : new FormControl(''),
+      company: new FormControl(''),
+      location: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      headline: new FormControl(''),
+      description: new FormControl(''),
+      visible: new FormControl('true'),
+    },
+    );
+
+    this.editExperienceForm = this.fb.group({
+      id: new FormControl(''),
+      title: new FormControl(''),
+      employmentType : new FormControl(''),
+      company: new FormControl(''),
+      location: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      headline: new FormControl(''),
+      description: new FormControl(''),
+      visible: new FormControl(''),
+    },
+    );
+
+
 
     this.tagsService.getUserTags().subscribe(
       (response: Tag[]) => {
@@ -276,7 +309,21 @@ export class AccountComponent implements OnInit {
         window.location.reload();
       },
       (error: any) => {
-        this.aboutForm.reset();
+        this.addEducationForm.reset();
+        console.log(error);
+      }
+    );
+  }
+
+  public addExperience(experienceForm: FormGroup) {
+
+    this.accountService.addExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
+      (response: Account) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error: any) => {
+        this.experienceForm.reset();
         console.log(error);
       }
     );
@@ -288,12 +335,27 @@ export class AccountComponent implements OnInit {
     editEducationForm.get('visible')?.setValue(selectedEdu.visible);
     this.accountService.editEducation(this.authenticationService.getCurrentUser(), editEducationForm.value).subscribe(
       (response: Education) => {
-        console.log('haha');
         console.log(response);
         window.location.reload();
       },
       (error: any) => {
         this.aboutForm.reset();
+        console.log(error);
+      }
+    );
+  }
+
+  public editExperience(experienceForm: FormGroup) {
+
+    experienceForm.get('id')?.setValue(this.selectedExp.id);
+    experienceForm.get('visible')?.setValue(this.selectedExp.visible);
+    this.accountService.editExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
+      (response: Experience) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error: any) => {
+        this.experienceForm.reset();
         console.log(error);
       }
     );

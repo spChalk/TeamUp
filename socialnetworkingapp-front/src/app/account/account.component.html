@@ -523,44 +523,44 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #expForm="ngForm">
+        <form [formGroup]="editExperienceForm">
           <div class="form-group">
             <label for="headline">Headline</label>
-            <input type="text" class="form-control" name="headline" aria-describedby="headlineHelp" [value]="selectedExp?.headline">
+            <input type="text" class="form-control" formControlName="headline" aria-describedby="headlineHelp" [value]="selectedExp?.headline">
           </div>
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" name="title" aria-describedby="titleHelp" [value]="selectedExp?.title">
+            <input type="text" class="form-control" formControlName="title" aria-describedby="titleHelp" [value]="selectedExp?.title">
           </div>
           <div class="form-group">
             <label for="company">Company</label>
-            <input type="text" class="form-control" name="company" aria-describedby="companyHelp" [value]="selectedExp?.company">
+            <input type="text" class="form-control" formControlName="company" aria-describedby="companyHelp" [value]="selectedExp?.company">
           </div>
           <div class="form-group">
             <label for="employment_type">Employment Type</label>
-            <input type="text" class="form-control" name="employment_type" aria-describedby="employment_typeHelp" [value]="selectedExp?.employmentType.toString().replace('_', ' ')">
+            <input type="text" class="form-control" formControlName="employmentType" aria-describedby="employment_typeHelp" [value]="selectedExp?.employmentType.toString().replace('_', ' ')">
           </div>
           <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" name="location" aria-describedby="locationHelp" [value]="selectedExp?.location">
+            <input type="text" class="form-control" formControlName="location" aria-describedby="locationHelp" [value]="selectedExp?.location">
           </div>
           <div class="form-group">
             <label for="stdate1">Starting date</label>
-            <input type="text" class="form-control" name="stdate1" aria-describedby="stdateHelp1" [value]="selectedExp?.startDate">
+            <input type="text" class="form-control" formControlName="startDate" aria-describedby="stdateHelp1" [value]="selectedExp?.startDate">
           </div>
           <div class="form-group">
             <label for="endate1">Ending date</label>
-            <input type="text" class="form-control" name="endate1" aria-describedby="endateHelp1" [value]="selectedExp?.endDate">
+            <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp1" [value]="selectedExp?.endDate">
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp" [value]="selectedExp?.description"></textarea>
+            <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" [value]="selectedExp?.description"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="editExperience(editExperienceForm)" data-dismiss="modal">
           Update
         </button>
       </div>
@@ -669,44 +669,44 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #expForm="ngForm">
+        <form [formGroup]="experienceForm">
           <div class="form-group">
             <label for="headline">Headline</label>
-            <input type="text" class="form-control" name="headline" aria-describedby="headlineHelp" >
+            <input type="text" class="form-control" formControlName="headline" aria-describedby="headlineHelp" placeholder="Your headline">
           </div>
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" name="title" aria-describedby="titleHelp" >
+            <input type="text" class="form-control" formControlName="title" aria-describedby="titleHelp" placeholder="Your title">
           </div>
           <div class="form-group">
             <label for="company">Company</label>
-            <input type="text" class="form-control" name="company" aria-describedby="companyHelp" >
+            <input type="text" class="form-control" formControlName="company" aria-describedby="companyHelp" placeholder="The Company you work">
           </div>
           <div class="form-group">
             <label for="employment_type">Employment Type</label>
-            <input type="text" class="form-control" name="employment_type" aria-describedby="employment_typeHelp">
+            <input type="text" class="form-control" formControlName="employmentType" aria-describedby="employment_typeHelp" placeholder="Position">
           </div>
           <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" name="location" aria-describedby="locationHelp" >
+            <input type="text" class="form-control" formControlName="location" aria-describedby="locationHelp" placeholder="Your location">
           </div>
           <div class="form-group">
             <label for="stdate1">Starting date</label>
-            <input type="text" class="form-control" name="stdate1" aria-describedby="stdateHelp1" >
+            <input type="text" class="form-control" formControlName="startDate" aria-describedby="stdateHelp1" placeholder="When did you start working there?">
           </div>
           <div class="form-group">
             <label for="endate1">Ending date</label>
-            <input type="text" class="form-control" name="endate1" aria-describedby="endateHelp1" >
+            <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp1" placeholder="When did you stop working there?">
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea type="text" class="form-control" name="description" aria-describedby="descriptionHelp" ></textarea>
+            <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" placeholder="A brief description about your experience!"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="addExperience(experienceForm)" data-dismiss="modal">
           Update
         </button>
       </div>

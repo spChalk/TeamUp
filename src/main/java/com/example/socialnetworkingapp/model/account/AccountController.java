@@ -153,9 +153,15 @@ public class AccountController {
                 HttpStatus.OK);
     }
 
+    @PostMapping("/experience/update")
+    public ResponseEntity<Experience> editExperience(@RequestBody AccountExperience accountExperience) {
+        return new ResponseEntity<Experience>(this.accountService.updateExperience(accountExperience.getEmail(), accountExperience.getXp()),
+                HttpStatus.OK);
+    }
+
     /* Post a {email, bio} */
     @PostMapping("/bio/add")
-    public ResponseEntity<Bio> addBio(@RequestBody AccountBio accountBio) {
+    public ResponseEntity<Bio> addBio(@RequestBody AccountBio accountBio){
         return new ResponseEntity<>(this.accountService.addBio(accountBio.getEmail(), accountBio.getBio()),
                 HttpStatus.OK);
     }
