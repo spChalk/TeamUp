@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,11 +36,11 @@ public class JobController {
 
     /* Get the list of jobs for user */
     @GetMapping("/all")
-    public List<JobResponse> getJobs() {
+    public List<JobResponse> getJobs() throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account newUser = accountService.findAccountByEmail(user);
-        return jobService.getJobs(newUser.getId());
+        return jobService.getJobs(newUser);
     }
 
     @PostMapping("/add")

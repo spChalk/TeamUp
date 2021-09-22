@@ -1,15 +1,15 @@
 package com.example.socialnetworkingapp.util;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /* Matrix factorization */
-@AllArgsConstructor
 public class MF {
 
-    private MatrixUtil util;
+    private final MatrixUtil util;
 
-    public MF() {
-        this.util = new MatrixUtil();
+    @Autowired
+    public MF(MatrixUtil util) {
+        this.util = util;
     }
 
     public float[][] matrix_factorization(float[][] R, float[][] P, float[][] Q, int K) {
