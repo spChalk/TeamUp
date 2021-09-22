@@ -14,25 +14,25 @@ export class ExportService {
 
   constructor(private http: HttpClient) { }
 
-  public exportJSON(accounts: any[]) {
+  public exportJSON(accountIds: number[]) {
 
     let httpOptions = { headers: new HttpHeaders(
         { 'Content-Type': 'application/json', }),
       responseType: 'text' as 'json' };
 
     return this.http.post<string>(`${environment.apiBaseUrl}/export/json`,
-      accounts,
+      accountIds,
       httpOptions);
   }
 
-  public exportXML(accounts: any[]) {
+  public exportXML(accountIds: number[]) {
 
     let httpOptions = { headers: new HttpHeaders(
         { 'Content-Type': 'application/json', }),
       responseType: 'text' as 'json' };
 
     return this.http.post<string>(`${environment.apiBaseUrl}/export/xml`,
-      accounts,
+      accountIds,
       httpOptions);
   }
 

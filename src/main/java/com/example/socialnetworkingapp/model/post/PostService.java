@@ -26,7 +26,6 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
-    private final AccountService accountService;
     private final LikeService likeService;
 
 

@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -48,7 +50,11 @@ public class AccountController {
             }
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account currUser = accountService.findAccountByEmail(user);
         List<Account> accounts = this.accountService.findAllAccounts();
+        accounts.remove(currUser);
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 

@@ -3,6 +3,8 @@ package com.example.socialnetworkingapp.export.to_json;
 import com.example.socialnetworkingapp.export.ByteArrMultipartFile;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.account.details.FullAccountDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
     https://www.baeldung.com/jackson-xml-serialization-and-deserialization
@@ -38,9 +41,12 @@ import java.util.ArrayList;
 public class exportToJSON {
 
     private FileDBService storageService;
+    private AccountService accountService;
 
     @PostMapping("/export/json")
-    public ResponseEntity<String> export(@RequestBody ArrayList<Account> accounts) throws IOException {
+    public ResponseEntity<String> export(@RequestBody ArrayList<Long> accountIds) throws IOException {
+
+        List<FullAccountDetails> accounts = this.accountService.getFullAccountsDetails(accountIds);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());

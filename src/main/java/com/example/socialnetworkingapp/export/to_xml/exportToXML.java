@@ -3,8 +3,11 @@ package com.example.socialnetworkingapp.export.to_xml;
 import com.example.socialnetworkingapp.export.ByteArrMultipartFile;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountService;
+import com.example.socialnetworkingapp.model.account.details.FullAccountDetails;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,14 +20,19 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class exportToXML {
 
     private FileDBService storageService;
+    private AccountService accountService;
 
     @PostMapping("/export/xml")
-    public ResponseEntity<String> export(@RequestBody ArrayList<Account> accounts) throws IOException {
+    public ResponseEntity<String> export(@RequestBody ArrayList<Long> accountIds) throws IOException {
+
+        List<FullAccountDetails> accounts = this.accountService.getFullAccountsDetails(accountIds);
 
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());

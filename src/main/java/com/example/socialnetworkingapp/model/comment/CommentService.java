@@ -52,4 +52,8 @@ public class CommentService {
     public List<CommentResponse> findAllCommentsOfUser(Long id) {
         return this.commentRepository.findAllByAccountId(id).stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
     }
+
+    public List<Comment> findCommentsByUserId(Long id) {
+        return this.commentRepository.findAllByAccountId(id);
+    }
 }

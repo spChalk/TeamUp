@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Getter
@@ -29,8 +30,11 @@ public class Like implements Serializable {
     @JoinColumn(nullable = false)
     private Post post;
 
-    public Like(Account user, Post post) {
+    private Date dateCreated;
+
+    public Like(Account user, Post post, Date date) {
         this.user = user;
         this.post = post;
+        this.dateCreated = date;
     }
 }

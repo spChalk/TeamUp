@@ -211,27 +211,18 @@ export class AdminComponent implements OnInit {
 
   public onExportSelectedXML(mode: string) {
 
-/*
-    let data = [];
-*/
     let accs = this.accounts;
 
     if(mode === "sel") {
       accs = this.selectedUsers;
     }
-    /*for(let account of this.accounts) {
 
-      data.push({
-        "firstName": account.firstName,
-        "lastName": account.lastName,
-        "email": account.email,
-        "phone": account.phone,
-        "crDate": account.dateCreated,
-        "role": "USER"
-      })
-    }*/
+    let ids: number[] = [];
+    for(let acc of accs) {
+      ids.push(acc.id);
+    }
 
-    this.exportService.exportXML(accs).subscribe(
+    this.exportService.exportXML(ids).subscribe(
       (resp: string) => {
 
         this.exportService.downloadFile(environment.apiBaseUrl + resp).subscribe(
@@ -267,25 +258,18 @@ export class AdminComponent implements OnInit {
 
   public onExportSelectedJSON(mode: string) {
 
-    /*let data = [];*/
     let accs = this.accounts;
 
     if(mode === "sel") {
       accs = this.selectedUsers;
     }
-   /* for(let account of this.accounts) {
 
-      data.push({
-        "firstName": account.firstName,
-        "lastName": account.lastName,
-        "email": account.email,
-        "phone": account.phone,
-        "crDate": account.dateCreated,
-        "role": "USER"
-      })
-    }*/
+    let ids: number[] = [];
+    for(let acc of accs) {
+      ids.push(acc.id);
+    }
 
-    this.exportService.exportJSON(accs).subscribe(
+    this.exportService.exportJSON(ids).subscribe(
       (resp: string) => {
 
         this.exportService.downloadFile(environment.apiBaseUrl + resp).subscribe(

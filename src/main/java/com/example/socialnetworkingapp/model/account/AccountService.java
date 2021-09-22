@@ -3,17 +3,32 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.AccountMapper;
+import com.example.socialnetworkingapp.model.account.details.*;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.bio.BioService;
+import com.example.socialnetworkingapp.model.comment.Comment;
+import com.example.socialnetworkingapp.model.comment.CommentRequest;
+import com.example.socialnetworkingapp.model.comment.CommentResponse;
+import com.example.socialnetworkingapp.model.comment.CommentService;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.education.EducationService;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.experience.ExperienceService;
+import com.example.socialnetworkingapp.model.job.Job;
+import com.example.socialnetworkingapp.model.job.JobResponse;
+import com.example.socialnetworkingapp.model.job.JobService;
+import com.example.socialnetworkingapp.model.like.Like;
+import com.example.socialnetworkingapp.model.like.LikeResponse;
+import com.example.socialnetworkingapp.model.like.LikeService;
+import com.example.socialnetworkingapp.model.post.Post;
+import com.example.socialnetworkingapp.model.post.PostResponse;
+import com.example.socialnetworkingapp.model.post.PostService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.OptionalAssert;
+import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +39,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,6 +54,10 @@ public class AccountService implements UserDetailsService {
     private final ExperienceService experienceService;
     private final EducationService educationService;
     private final BioService bioService;
+    private final PostService postService;
+    private final JobService jobService;
+    private final LikeService likeService;
+    private final CommentService commentService;
     private final AccountMapper accountMapper;
 
     /*
@@ -72,11 +93,159 @@ public class AccountService implements UserDetailsService {
         return this.accountRepository.save(checkAccount(account));
     }
 
-    public List<Account> findAllAccounts(){
-
+    public List<Account> findAllAccounts() {
         return this.accountRepository.findAll();
-        /*return accountRepository.findAll().stream().map(accountMapper::AccountToAccountResponse).collect(Collectors.toList());*/
     }
+
+    public List<FullAccountDetails> getFullAccountsDetails(List<Long> accountIds) throws IOException {
+        List<FullAccountDetails> details = new ArrayList<>();
+        for(Long id: accountIds) {
+            /* Account's personal details */
+            Account tempAccount = this.findAccountById(id);
+            /* Account's network */
+            List<AccountDetails> network = new ArrayList<>();
+            for (Account friend : tempAccount.getNetwork()) {
+                network.add(
+                        new AccountDetails(
+                                friend.getFirstName(),
+                                friend.getLastName(),
+                                friend.getEmail(),
+                                friend.getPhone(),
+                                friend.getImageUrl(),
+                                friend.getDateCreated().toString()
+                        )
+                );
+            }
+            /* Account's tags */
+            List<String> tags = new ArrayList<>();
+            for (Tag tag : tempAccount.getTags()) {
+                tags.add(tag.getTag());
+            }
+            /* Account's experience */
+            List<ExperienceDetails> experience = new ArrayList<>();
+            for (Experience xp : tempAccount.getExperience()) {
+                experience.add(
+                        new ExperienceDetails(
+                                xp.getTitle(),
+                                String.valueOf(xp.getEmploymentType()),
+                                xp.getCompany(),
+                                xp.getLocation(),
+                                xp.getStartDate(),
+                                xp.getEndDate(),
+                                xp.getHeadline(),
+                                xp.getDescription()
+                        )
+                );
+            }
+            /* Account's education */
+            List<EducationDetails> education = new ArrayList<>();
+            for (Education edu : tempAccount.getEducation()) {
+                education.add(
+                        new EducationDetails(
+                                edu.getSchool(),
+                                edu.getDegree(),
+                                edu.getField(),
+                                edu.getStartDate(),
+                                edu.getEndDate(),
+                                edu.getGrade(),
+                                edu.getDescription()
+                        )
+                );
+            }
+            /* Account's posts */
+            List<PostDetails> posts = new ArrayList<>();
+            for (PostResponse post : this.postService.findPostsByAuthorId(tempAccount.getId())) {
+                posts.add(
+                        new PostDetails(
+                                post.getPayload(),
+                                post.getDate(),
+                                post.getImagePath(),
+                                post.getVideoPath(),
+                                post.getSoundPath()
+                        )
+                );
+            }
+            /* Account's jobs */
+            List<JobDetails> jobs = new ArrayList<>();
+            for (Job job : this.jobService.getJobsUnsorted(tempAccount.getId())) {
+
+                List<String> jobTags = new ArrayList<>();
+                for (Tag tag : job.getTags()) {
+                    jobTags.add(tag.getTag());
+                }
+
+                jobs.add(
+                        new JobDetails(
+                                job.getTitle(),
+                                job.getLocation(),
+                                job.getDate().toString(),
+                                job.getJobType().toString(),
+                                job.getExperienceLevel().toString(),
+                                job.getInfo(),
+                                jobTags
+                        )
+                );
+            }
+            /* Account's likes */
+            List<LikeDetails> likes = new ArrayList<>();
+            for (Like like : this.likeService.findLikesByUserId(tempAccount.getId())) {
+                likes.add(
+                        new LikeDetails(
+                                like.getDateCreated().toString(),
+                                like.getPost().getAuthor().getFirstName(),
+                                like.getPost().getAuthor().getLastName(),
+                                like.getPost().getAuthor().getEmail(),
+                                like.getPost().getPayload(),
+                                like.getPost().getDate().toString(),
+                                like.getPost().getImagePath(),
+                                like.getPost().getVideoPath(),
+                                like.getPost().getSoundPath()
+                        )
+                );
+            }
+            /* Account's comments */
+            List<CommentDetails> comments = new ArrayList<>();
+            for (Comment comment: this.commentService.findCommentsByUserId(tempAccount.getId())) {
+                comments.add(
+                        new CommentDetails(
+                                comment.getPayload(),
+                                comment.getDate(),
+                                comment.getPost().getAuthor().getFirstName(),
+                                comment.getPost().getAuthor().getLastName(),
+                                comment.getPost().getAuthor().getEmail(),
+                                comment.getPost().getPayload(),
+                                comment.getPost().getDate().toString(),
+                                comment.getPost().getImagePath(),
+                                comment.getPost().getVideoPath(),
+                                comment.getPost().getSoundPath()
+
+                        )
+                );
+            }
+
+            details.add(
+                    new FullAccountDetails(
+                            tempAccount.getFirstName(),
+                            tempAccount.getLastName(),
+                            tempAccount.getEmail(),
+                            tempAccount.getPhone(),
+                            tempAccount.getImageUrl(),
+                            tempAccount.getDateCreated().toString(),
+                            network,
+                            tags,
+                            experience,
+                            education,
+                            tempAccount.getBio() != null ? tempAccount.getBio().getDescription() : "No bio available",
+                            posts,
+                            jobs,
+                            likes,
+                            comments
+                            )
+            );
+        }
+        return details;
+    }
+
 
     public Account updateAccount(Account account){
 

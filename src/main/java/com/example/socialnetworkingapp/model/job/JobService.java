@@ -83,6 +83,10 @@ public class JobService {
         return result;
     }
 
+    public List<Job> getJobsUnsorted(Long userId) {
+        return this.jobRepository.findJobsByPublisherId(userId);
+    }
+
     public List<JobResponse> getJobs(Account user) throws IOException {
 
         FileWriter log = new FileWriter("GetAllJobsLOG.txt");
