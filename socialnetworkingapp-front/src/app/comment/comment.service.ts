@@ -16,16 +16,12 @@ export class CommentService {
     return this.http.get<Comment[]>(`${this.url}/all/of-post/${pid}`);
   }
 
-  public addComment(pid: number, payload: string, token: string): Observable<Comment> {
-    return this.http.post<Comment>(`${this.url}/add/${pid}`, payload, {
-      headers: new HttpHeaders({"Authorization": "Bearer " + token})
-    });
+  public addComment(pid: number, payload: string): Observable<Comment> {
+    return this.http.post<Comment>(`${this.url}/add/${pid}`, payload);
   }
 
-  public updateComment(cid: number, payload: string, token: string): Observable<Comment> {
-    return this.http.put<Comment>(`${this.url}/update/${cid}`, payload, {
-      headers: new HttpHeaders({"Authorization": "Bearer " + token})
-    });
+  public updateComment(cid: number, payload: string): Observable<Comment> {
+    return this.http.put<Comment>(`${this.url}/update/${cid}`, payload);
   }
 
   public deleteComment(lid: number): Observable<any> {

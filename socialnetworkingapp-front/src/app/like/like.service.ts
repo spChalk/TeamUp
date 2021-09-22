@@ -16,10 +16,8 @@ export class LikeService {
     return this.http.get<Like[]>(`${this.url}/all/of-post/${pid}`);
   }
 
-  public addLike(pid: number, token: string): Observable<Like> {
-    return this.http.post<Like>(`${this.url}/add/${pid}`, {}, {
-      headers: new HttpHeaders({"Authorization": "Bearer " + token})
-    });
+  public addLike(pid: number): Observable<Like> {
+    return this.http.post<Like>(`${this.url}/add/${pid}`, {},);
   }
 
   public deleteLike(lid: number): Observable<any> {

@@ -13,17 +13,13 @@ export class PostService {
   private url = environment.apiBaseUrl + '/posts';
   constructor(private http: HttpClient) {  }
 
-  public addPost(payload: string, token: string): Observable<Post> {
-    return this.http.post<Post>(`${this.url}/add`, payload , {
-      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
-    });
+  public addPost(payload: string): Observable<Post> {
+    return this.http.post<Post>(`${this.url}/add`, payload );
   }
 
   /* TODO: TEMPORARY. When homepage is ready, get posts by network etc.. */
-  public getPosts(token: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.url}/all`, {
-      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
-    });
+  public getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.url}/all`);
   }
 
   public deletePost(pid: number): Observable<any> {
