@@ -13,6 +13,7 @@ import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
+import org.assertj.core.api.OptionalAssert;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -194,6 +195,45 @@ public class AccountService implements UserDetailsService {
         Account account = findAccountByEmail(email);
         account.getEducation().add(this.educationService.addEducation(education));
         return this.accountRepository.save(account);
+    }
+
+    public Education updateEducation(String email, Education education) {
+        Account account = findAccountByEmail(email);
+
+        Optional<Education> previousEducation = this.educationService.findEducationById(education.getId());
+
+        if(!previousEducation.isPresent()) {
+            throw new UserNotFoundException("Could find education with id " + education.getId() + " while trying to update it!");
+        }
+
+
+
+        Education prevEducation = previousEducation.get();
+
+        if(!education.getSchool().equals(""))
+            prevEducation.setSchool(education.getSchool());
+
+        if(!education.getDegree().equals(""))
+            prevEducation.setDegree(education.getDegree());
+
+        if(!education.getField().equals(""))
+            prevEducation.setField(education.getField());
+
+        if(!education.getStartDate().equals(""))
+            prevEducation.setStartDate(education.getStartDate());
+
+        if(!education.getEndDate().equals(""))
+            prevEducation.setEndDate(education.getEndDate());
+
+        if(!String.valueOf(education.getGrade()).equals(""))
+            prevEducation.setGrade(education.getGrade());
+
+        if(!education.getDescription().equals(""))
+            prevEducation.setDescription(education.getDescription());
+
+        Education newEducation = this.educationService.updateEducation(prevEducation);
+        this.accountRepository.save(account);
+        return newEducation;
     }
 
     public void deleteBio(Long uid) {

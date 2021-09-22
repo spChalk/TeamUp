@@ -103,6 +103,12 @@ export class AccountService {
     return this.http.post<Account>(`${this.url}/education/add`, {email, education}, httpOptions);
   }
 
+  public editEducation(email: string, education: Education) : Observable<Education>{
+    let httpOptions = { headers: new HttpHeaders(
+      { 'Content-Type': 'application/json', })};
+    return this.http.post<Education>(`${this.url}/education/update`, {email, education}, httpOptions);
+  }
+
   public deleteBio(id: number) {
     return this.http.delete<any>(`${this.url}/bio/delete/${id}`);
   }
