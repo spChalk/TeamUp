@@ -21,12 +21,12 @@ import {Tag} from '../tags/Tag'
 })
 export class RegisterComponent implements OnInit {
 
-    registerForm: FormGroup;
-    correctCredentials = true;
-    selectedFiles: FileList;
-    currentFile: File;
-    progress = 0;
-    message = '';
+  registerForm: FormGroup;
+  correctCredentials = true;
+  selectedFiles: FileList;
+  currentFile: File;
+  progress = 0;
+  message = '';
   TagsArray : Tag[];
 
 

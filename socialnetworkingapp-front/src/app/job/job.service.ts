@@ -35,4 +35,11 @@ export class JobService {
   public deleteJob(jobIdToDelete: number): Observable<void> {
     return this.http.delete<any>(`${this.url}/delete/${jobIdToDelete}`);
   }
+
+  public editJob(jId: number, newJobRequest: JobRequest, token: any): Observable<Job> {
+    return this.http.put<Job>(`${this.url}/update/${jId}`, newJobRequest,
+      {
+        headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+      })
+  }
 }

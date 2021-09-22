@@ -8,13 +8,14 @@ import {AccountService} from "../account/account.service";
 import {BioService} from "../bio/bio.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {JobApplication} from "../job-application/job-application";
-import {NgForm} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {JobViewService} from "../job-view/job-view.service";
 import {JobView} from "../job-view/job-view";
 import {TagsService} from "../tags/tags.service";
 import {AuthenticationService} from "../authentication";
 import {JobRequest} from "./job-request";
 import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
+import {Tag} from "../tags/Tag";
 
 @Component({
   selector: 'app-job',
@@ -24,14 +25,20 @@ import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/com
 export class JobComponent implements OnInit {
 
   public jobs: Job[];
+
   /* [job id, views] */
   public jobViews: Map<number, number> = new Map<number, number>();
   public hasAppliedToJob: Map<number, boolean> = new Map<number, boolean>();
-  public selectedJob: Job;
+
   public account: Account;
+
+  public selectedJob: Job;
   public jobIdToDelete: number;
   public jobIdToEdit: number;
   public jobIdToDeleteApplicationFrom: number;
+
+  public jobForm: FormGroup;
+  public TagsArray: Tag[];
 
   constructor(private jobService: JobService,
               private jobAppService: JobApplicationService,
@@ -40,7 +47,8 @@ export class JobComponent implements OnInit {
               private route: ActivatedRoute,
               private tagsService: TagsService,
               public authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private fb: FormBuilder) {
 
     if (this.authenticationService.isAdmin()) {
       this.router.navigate(['/admin']);
@@ -55,6 +63,20 @@ export class JobComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.jobForm = this.fb.group({
+        title: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.pattern('^[\.a-zA-Z0-9\-,!? ]*$')]),
+        location: new FormControl('', [Validators.required, Validators.maxLength(40), Validators.pattern('^[\.a-zA-Z0-9\-,!? ]*$')]),
+        interests: this.fb.array([],[Validators.required , Validators.minLength(2)]),
+        jobType: new FormControl(''),
+        experienceLevel: new FormControl(''),
+        info: new FormControl(''),
+    }
+    );
+    this.tagsService.getAllTags().subscribe(
+      (response: Tag[]) => {
+        this.TagsArray= response;
+      }
+    );
   }
 
   public getJobs(): void {
@@ -85,6 +107,22 @@ export class JobComponent implements OnInit {
 
   public setSelectedJob(job: Job): void {
     this.selectedJob = job;
+  }
+
+  onCbChange(e : any) {
+    const interests : FormArray = this.jobForm.get('interests') as FormArray;
+    if (e.target.checked) {
+      interests.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      interests.controls.forEach((item: any) => {
+        if (item.value == e.target.value) {
+          interests.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
   }
 
   public onClickModal(data: any, mode: string): void {
@@ -132,7 +170,7 @@ export class JobComponent implements OnInit {
     );
   }
 
-  public onAddJob(jobForm: NgForm) {
+  public onAddJob(jobForm: FormGroup) {
 
     let newJobRequest = new JobRequest(jobForm.value.title,
       jobForm.value.location,
@@ -168,6 +206,7 @@ export class JobComponent implements OnInit {
   public onDeleteJob(jobIdToDelete: number) {
     this.jobService.deleteJob(jobIdToDelete).subscribe(
       (response: void) => {
+        this.selectedJob = undefined;
         this.getJobs();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
@@ -190,6 +229,26 @@ export class JobComponent implements OnInit {
         );
       }, (err: HttpErrorResponse) => {
         alert(err.message);
+      }
+    );
+  }
+
+  public onEditJob(jobId: number, jobForm: FormGroup) {
+    let newJobRequest = new JobRequest(jobForm.value.title,
+      jobForm.value.location,
+      jobForm.value.jobType,
+      jobForm.value.experienceLevel,
+      jobForm.value.info,
+      jobForm.value.interests
+    );
+
+    this.jobService.editJob(jobId, newJobRequest, this.authenticationService.getJWT()).subscribe(
+      (response: Job) => {
+        console.log(response);
+        this.getJobs();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
       }
     );
   }
