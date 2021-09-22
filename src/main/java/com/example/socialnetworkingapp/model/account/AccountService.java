@@ -375,8 +375,6 @@ public class AccountService implements UserDetailsService {
             throw new UserNotFoundException("Could find education with id " + education.getId() + " while trying to update it!");
         }
 
-
-
         Education prevEducation = previousEducation.get();
 
         if(!education.getSchool().equals(""))
@@ -413,8 +411,6 @@ public class AccountService implements UserDetailsService {
             throw new UserNotFoundException("Could find experience with id " + experience.getId() + " while trying to update it!");
         }
 
-
-
         Experience prevExperience = previousExperience.get();
 
         if(!experience.getTitle().equals(""))
@@ -422,6 +418,9 @@ public class AccountService implements UserDetailsService {
 
         if(!String.valueOf(experience.getEmploymentType()).equals(""))
             prevExperience.setEmploymentType(experience.getEmploymentType());
+
+        if(!String.valueOf(experience.getExperienceLevel()).equals(""))
+            prevExperience.setExperienceLevel(experience.getExperienceLevel());
 
         if(!experience.getCompany().equals(""))
             prevExperience.setCompany(experience.getCompany());

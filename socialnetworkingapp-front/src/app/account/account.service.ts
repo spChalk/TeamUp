@@ -110,7 +110,7 @@ export class AccountService {
       { 'Content-Type': 'application/json', })};
     return this.http.post<Education>(`${this.url}/education/update`, {email, education}, httpOptions);
   }
-  
+
   public addExperience(email: string, xp: Experience) : Observable<Account>{
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};

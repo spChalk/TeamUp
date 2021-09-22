@@ -20,17 +20,6 @@ import java.util.List;
 @Table(name="experience")
 public class Experience implements Serializable {
 
-    private enum EmploymentType {
-        FULL_TIME,
-        PART_TIME,
-        SELF_EMPLOYED,
-        FREELANCE,
-        CONTRACT,
-        INTERNSHIP,
-        APPRENTICESHIP,
-        SEASONAL
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false, unique = true)
@@ -41,6 +30,9 @@ public class Experience implements Serializable {
 
     @NotNull
     private EmploymentType employmentType;
+
+    @NotNull
+    private ExperienceLevel experienceLevel;
 
     @NotNull
     private String company;

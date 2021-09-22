@@ -49,10 +49,7 @@ export class AccountComponent implements OnInit {
     private tagsService: TagsService
   ) { }
 
-
-  ngOnInit(): void {
-
-
+  public fetchUserInfo() {
     let email = this.authenticationService.getCurrentUser();
     this.accountService.fetchUser(email).subscribe(
       (response: Account) => {
@@ -62,6 +59,11 @@ export class AccountComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnInit(): void {
+
+    this.fetchUserInfo();
 
     this.aboutForm = this.fb.group({
       email: new FormControl(this.authenticationService.getCurrentUser()),
@@ -106,6 +108,7 @@ export class AccountComponent implements OnInit {
       // id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
+      experienceLevel : new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -120,6 +123,7 @@ export class AccountComponent implements OnInit {
       id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
+      experienceLevel : new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -129,8 +133,6 @@ export class AccountComponent implements OnInit {
       visible: new FormControl(''),
     },
     );
-
-
 
     this.tagsService.getUserTags().subscribe(
       (response: Tag[]) => {
@@ -148,10 +150,6 @@ export class AccountComponent implements OnInit {
         this.TagsArray = response;
       }
     );
-
-
-
-
   }
 
   onCbChange(e: any) {
@@ -212,7 +210,7 @@ export class AccountComponent implements OnInit {
     if (mode == 'tag') {
       this.accountService.hideTags(this.account).subscribe(
         (response: Account) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
@@ -221,7 +219,7 @@ export class AccountComponent implements OnInit {
     if (mode == 'experience') {
       this.experienceService.hideExperience(data).subscribe(
         (response: Experience) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
@@ -230,13 +228,13 @@ export class AccountComponent implements OnInit {
     if (mode == 'education') {
       this.educationService.hideEducation(data).subscribe(
         (response: Education) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
       );
     }
-    window.location.reload();
+    this.fetchUserInfo();
   }
 
   public show(data: any, mode: string) {
@@ -244,7 +242,7 @@ export class AccountComponent implements OnInit {
     if (mode == 'tag') {
       this.accountService.showTags(this.account).subscribe(
         (response: Account) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
@@ -253,7 +251,7 @@ export class AccountComponent implements OnInit {
     if (mode == 'experience') {
       this.experienceService.showExperience(data).subscribe(
         (response: Experience) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
@@ -262,21 +260,19 @@ export class AccountComponent implements OnInit {
     if (mode == 'education') {
       this.educationService.showEducation(data).subscribe(
         (response: Education) => {
-          console.log(response);
+          this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
         }
       );
     }
-    window.location.reload();
   }
 
   public aboutSubmit(aboutForm: FormGroup) {
 
     this.accountService.aboutUpdateAccount(aboutForm.value).subscribe(
       (response: Account) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.aboutForm.reset();
@@ -291,8 +287,7 @@ export class AccountComponent implements OnInit {
 
     this.accountService.addBio(bioSubmit.value.email, bioSubmit.value.description).subscribe(
       (response: Bio) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.aboutForm.reset();
@@ -305,8 +300,7 @@ export class AccountComponent implements OnInit {
 
     this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
       (response: Account) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.addEducationForm.reset();
@@ -317,10 +311,10 @@ export class AccountComponent implements OnInit {
 
   public addExperience(experienceForm: FormGroup) {
 
+    console.log(experienceForm.value);
     this.accountService.addExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
       (response: Account) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.experienceForm.reset();
@@ -335,8 +329,7 @@ export class AccountComponent implements OnInit {
     editEducationForm.get('visible')?.setValue(selectedEdu.visible);
     this.accountService.editEducation(this.authenticationService.getCurrentUser(), editEducationForm.value).subscribe(
       (response: Education) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.aboutForm.reset();
@@ -351,8 +344,7 @@ export class AccountComponent implements OnInit {
     experienceForm.get('visible')?.setValue(this.selectedExp.visible);
     this.accountService.editExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
       (response: Experience) => {
-        console.log(response);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (error: any) => {
         this.experienceForm.reset();
@@ -363,11 +355,11 @@ export class AccountComponent implements OnInit {
 
   public editInterests(interestsForm: FormGroup) {
 
-    //den paizei i allagi 
+    //den paizei i allagi
     for (let interest of interestsForm.value.interests) {
       this.tagsService.addAccountTag(this.authenticationService.getCurrentUser(), interest).subscribe(
         (resp: Account) => {
-          console.log(interest);
+          this.fetchUserInfo();
         },
         (err: HttpErrorResponse) => {
           alert(err.message);

@@ -58,7 +58,7 @@
       <div class="col-md-4">
         <div class="profile-work">
 
-          <div *ngIf="this.account.visibleTags">
+          <div *ngIf="this.account?.visibleTags">
             <h6>INTERESTS</h6>
             <hr>
              <h6 *ngFor="let tag of this.account.tags">
@@ -72,7 +72,7 @@
             <button (click)="hide(null, 'tag')" type="button" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
           </div>
 
-          <div *ngIf="this.account.visibleTags === false" style="background-color: #ebebeb">
+          <div *ngIf="this.account?.visibleTags === false" style="background-color: #ebebeb">
             <h6>INTERESTS</h6>
             <hr>
             <h6 *ngFor="let tag of this.account.tags">
@@ -231,7 +231,7 @@
           <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
             <div class="row">
               <div class="col-md-12">
-                {{this.account.bio.description}}
+                {{this.account?.bio.description}}
               </div>
             </div>
             <hr>
@@ -276,6 +276,15 @@
                   </div>
                   <div class="col-md-6">
                     <p>{{xp?.employmentType.toString().replace("_", " ")}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Experience level</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.experienceLevel.toString().replace("_", " ")}}</p>
                   </div>
                 </div>
 
@@ -336,6 +345,15 @@
                   </div>
                   <div class="col-md-6">
                     <p>{{xp?.employmentType.toString().replace("_", " ")}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Experience level</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{xp?.experienceLevel.toString().replace("_", " ")}}</p>
                   </div>
                 </div>
 
@@ -442,7 +460,7 @@
         <form [formGroup]="bioForm" (ngSubmit)="bioSubmit(bioForm)">
           <div class="form-group">
             <label for="biography">Your bio</label>
-            <textarea type="text" class="form-control" formControlName="description" aria-describedby="biographyHelp" placeholder={{this.account.bio.description}} ></textarea>
+            <textarea type="text" class="form-control" formControlName="description" aria-describedby="biographyHelp" placeholder={{this.account?.bio.description}} ></textarea>
           </div>
         </form>
       </div>
@@ -537,9 +555,31 @@
             <input type="text" class="form-control" formControlName="company" aria-describedby="companyHelp" [value]="selectedExp?.company">
           </div>
           <div class="form-group">
-            <label for="employment_type">Employment Type</label>
-            <input type="text" class="form-control" formControlName="employmentType" aria-describedby="employment_typeHelp" [value]="selectedExp?.employmentType.toString().replace('_', ' ')">
+            <label>Job Type</label>
+            <select formControlName="employmentType" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>FULL_TIME</option>
+              <option>PART_TIME</option>
+              <option>SELF_EMPLOYED</option>
+              <option>FREELANCE</option>
+              <option>CONTRACT</option>
+              <option>INTERNSHIP</option>
+              <option>APPRENTICESHIP</option>
+              <option>SEASONAL</option>
+            </select>
           </div>
+
+          <div class="form-group">
+            <label >Experience Level</label>
+            <select formControlName="experienceLevel" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>INTERNSHIP</option>
+              <option>ENTRY_LEVEL</option>
+              <option>ASSOCIATE</option>
+              <option>MIN_SENIOR</option>
+              <option>DIRECTOR</option>
+              <option>EXECUTIVE</option>
+            </select>
+          </div>
+
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" formControlName="location" aria-describedby="locationHelp" [value]="selectedExp?.location">
@@ -639,7 +679,7 @@
             </div>
             <div class="form-group">
               <label for="endate">Ending date</label>
-              <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp" placeholder="When did you finish?">
+              <input type="text" class="form-control" formControlName="endDate" aria-describedby="endateHelp" placeholder="When did you graduate?">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
@@ -651,7 +691,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button class="btn btn-primary" (click)="addEducation(addEducationForm)" data-dismiss="modal">
-          Update
+          Add
         </button>
       </div>
     </div>
@@ -682,10 +722,33 @@
             <label for="company">Company</label>
             <input type="text" class="form-control" formControlName="company" aria-describedby="companyHelp" placeholder="The Company you work">
           </div>
+
           <div class="form-group">
-            <label for="employment_type">Employment Type</label>
-            <input type="text" class="form-control" formControlName="employmentType" aria-describedby="employment_typeHelp" placeholder="Position">
+            <label for="jobtype">Job Type</label>
+            <select id="jobtype" name="jobType" formControlName="employmentType" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>FULL_TIME</option>
+              <option>PART_TIME</option>
+              <option>SELF_EMPLOYED</option>
+              <option>FREELANCE</option>
+              <option>CONTRACT</option>
+              <option>INTERNSHIP</option>
+              <option>APPRENTICESHIP</option>
+              <option>SEASONAL</option>
+            </select>
           </div>
+
+          <div class="form-group">
+            <label for="experiencelevel">Experience Level</label>
+            <select id="experiencelevel" name="experienceLevel" formControlName="experienceLevel" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+              <option>INTERNSHIP</option>
+              <option>ENTRY_LEVEL</option>
+              <option>ASSOCIATE</option>
+              <option>MIN_SENIOR</option>
+              <option>DIRECTOR</option>
+              <option>EXECUTIVE</option>
+            </select>
+          </div>
+
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" formControlName="location" aria-describedby="locationHelp" placeholder="Your location">
@@ -707,7 +770,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button class="btn btn-primary" (click)="addExperience(experienceForm)" data-dismiss="modal">
-          Update
+          Add
         </button>
       </div>
     </div>

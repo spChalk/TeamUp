@@ -1,21 +1,13 @@
 import {Account} from "../account/account";
-
-export enum EmploymentType {
-  FULL_TIME,
-  PART_TIME,
-  SELF_EMPLOYED,
-  FREELANCE,
-  CONTRACT,
-  INTERNSHIP,
-  APPRENTICESHIP,
-  SEASONAL
-}
+import {ExperienceLevel} from "../job/experienceLevel";
+import {JobType} from "../job/jobType";
 
 export class Experience {
 
   id: number;
   title: string;
-  employmentType: EmploymentType;
+  employmentType: JobType;
+  experienceLevel: ExperienceLevel;
   company: string;
   location: string;
   startDate: string;
@@ -24,10 +16,11 @@ export class Experience {
   description: string;
   visible: boolean;
 
-  constructor(id: number, title: string, employmentType: EmploymentType, company: string, location: string, startDate: string, endDate: string, headline: string, description: string, visible: boolean) {
+  constructor(id: number, title: string, employmentType: JobType, experienceLevel: ExperienceLevel, company: string, location: string, startDate: string, endDate: string, headline: string, description: string, visible: boolean) {
     this.id = id;
     this.title = title;
     this.employmentType = employmentType;
+    this.experienceLevel = experienceLevel;
     this.company = company;
     this.location = location;
     this.startDate = startDate;
