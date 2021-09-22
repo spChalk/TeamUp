@@ -63,6 +63,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.fetchUserInfo();
 
     this.aboutForm = this.fb.group({
@@ -108,7 +109,6 @@ export class AccountComponent implements OnInit {
       // id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
-      experienceLevel : new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -123,7 +123,6 @@ export class AccountComponent implements OnInit {
       id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
-      experienceLevel : new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -133,6 +132,8 @@ export class AccountComponent implements OnInit {
       visible: new FormControl(''),
     },
     );
+
+
 
     this.tagsService.getUserTags().subscribe(
       (response: Tag[]) => {
@@ -150,6 +151,10 @@ export class AccountComponent implements OnInit {
         this.TagsArray = response;
       }
     );
+
+
+
+
   }
 
   onCbChange(e: any) {
@@ -208,7 +213,7 @@ export class AccountComponent implements OnInit {
   public hide(data: any, mode: string) {
 
     if (mode == 'tag') {
-      this.accountService.hideTags(this.account).subscribe(
+      this.accountService.hideTags().subscribe(
         (response: Account) => {
           this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
@@ -222,6 +227,7 @@ export class AccountComponent implements OnInit {
           this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
@@ -240,7 +246,7 @@ export class AccountComponent implements OnInit {
   public show(data: any, mode: string) {
 
     if (mode == 'tag') {
-      this.accountService.showTags(this.account).subscribe(
+      this.accountService.showTags().subscribe(
         (response: Account) => {
           this.fetchUserInfo();
         }, (error: HttpErrorResponse) => {
@@ -311,7 +317,6 @@ export class AccountComponent implements OnInit {
 
   public addExperience(experienceForm: FormGroup) {
 
-    console.log(experienceForm.value);
     this.accountService.addExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
       (response: Account) => {
         this.fetchUserInfo();
@@ -355,17 +360,16 @@ export class AccountComponent implements OnInit {
 
   public editInterests(interestsForm: FormGroup) {
 
-    //den paizei i allagi
-    for (let interest of interestsForm.value.interests) {
-      this.tagsService.addAccountTag(this.authenticationService.getCurrentUser(), interest).subscribe(
-        (resp: Account) => {
-          this.fetchUserInfo();
-        },
-        (err: HttpErrorResponse) => {
-          alert(err.message);
-          console.log(interest);
-        }
-      );
-    }
+    this.tagsService.addAllAccountTags(interestsForm.value.interests).subscribe(
+      (resp: Account) => {
+        console.log(resp);
+        window.location.reload();
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        this.interestsForm.reset();
+      }
+    );
+
   }
 }

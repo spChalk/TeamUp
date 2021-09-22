@@ -625,7 +625,7 @@
               <div class="form-group" style="height: 190px;overflow-y: scroll">
                 <div *ngFor="let item of TagsArray; let i = index ">
                   <label>
-                    <input type = "checkbox" [value] = "item.tag" event="onCbChange($event)"/>
+                    <input type="checkbox" [value]="item.tag" (change)="onCbChange($event)"/>
                     {{item.tag}}
                   </label>
                 </div>
@@ -636,7 +636,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" (click) = "editInterests(interestsForm)" data-dismiss="modal" >
+        <button [disabled]="interestsForm.invalid "class="btn btn-primary" (click)="editInterests(interestsForm)" data-dismiss="modal" >
           Update
         </button>
       </div>

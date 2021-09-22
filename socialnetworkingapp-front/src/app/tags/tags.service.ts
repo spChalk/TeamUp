@@ -14,8 +14,12 @@ export class TagsService {
   private url = environment.apiBaseUrl;
   constructor(private http: HttpClient) {}
 
-  public addAccountTag(email: string, tag: string) {
-    return this.http.post<Account>(`${this.url}/accounts/tags/add/${tag}`, email);
+  public addAccountTag(tag: string) {
+    return this.http.post<Account>(`${this.url}/accounts/tags/add`, tag);
+  }
+
+  public addAllAccountTags(tags: string[]) {
+    return this.http.post<Account>(`${this.url}/accounts/tags/add/all`, tags);
   }
 
   public addJobTag(id: number, tag: string) {

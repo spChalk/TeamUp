@@ -127,12 +127,12 @@ export class AccountService {
     return this.http.delete<any>(`${this.url}/bio/delete/${id}`);
   }
 
-  public hideTags(account: Account) {
-    return this.http.put<Account>(`${this.url}/hide-tags`, account);
+  public hideTags() {
+    return this.http.put<Account>(`${this.url}/hide-tags`, null);
   }
 
-  public showTags(account: Account) {
-    return this.http.put<Account>(`${this.url}/show-tags`, account);
+  public showTags() {
+    return this.http.put<Account>(`${this.url}/show-tags`,null);
   }
 
 
