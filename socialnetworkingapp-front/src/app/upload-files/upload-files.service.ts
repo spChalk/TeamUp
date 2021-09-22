@@ -19,8 +19,7 @@ export class UploadFileService {
 
     const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-user`, formData, {
       reportProgress: true,
-      responseType: 'json',
-      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+      responseType: 'json'
     });
 
     return this.http.request(req);
@@ -34,8 +33,7 @@ export class UploadFileService {
 
     const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-admin`, formData, {
       reportProgress: true,
-      responseType: 'json',
-      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+      responseType: 'json'
     });
 
     return this.http.request(req);
@@ -49,8 +47,7 @@ export class UploadFileService {
 
     const req = new HttpRequest("POST", `${environment.apiBaseUrl}/upload-post`, formData, {
       reportProgress: true,
-      responseType: 'json',
-      headers: new HttpHeaders({"Authorization" : "Bearer " + token})
+      responseType: 'json'
     });
 
     return this.http.request(req);

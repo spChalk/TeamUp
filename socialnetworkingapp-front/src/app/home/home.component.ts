@@ -134,7 +134,7 @@ public loadPostLikes(pid: number) {
                 this.progress = Math.round(100 * event.loaded / event.total);
               } else if (event instanceof HttpResponse) {
                 this.message = event.body.message;
-                window.location.reload();
+                this.loadPosts();
               }
             },
             err => {
@@ -146,7 +146,6 @@ public loadPostLikes(pid: number) {
           this.currSoundFile = undefined;
         }
 
-        window.location.reload();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
