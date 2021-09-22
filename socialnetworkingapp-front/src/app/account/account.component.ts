@@ -109,6 +109,7 @@ export class AccountComponent implements OnInit {
       // id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
+      experienceLevel: new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -123,6 +124,7 @@ export class AccountComponent implements OnInit {
       id: new FormControl(''),
       title: new FormControl(''),
       employmentType : new FormControl(''),
+      experienceLevel: new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       startDate: new FormControl(''),
@@ -203,6 +205,14 @@ export class AccountComponent implements OnInit {
     }
     if (mode === 'interests') {
       button.setAttribute('data-target', '#interests');
+    }
+    if (mode === 'deleteEducation') {
+      this.selectedEdu = data;
+      button.setAttribute('data-target', '#educationdelete');
+    }
+    if (mode === 'deleteExperience') {
+      this.selectedExp = data;
+      button.setAttribute('data-target', '#experiencedelete');
     }
     if (container != null) {
       container.appendChild(button);
@@ -307,6 +317,7 @@ export class AccountComponent implements OnInit {
     this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
       (response: Account) => {
         this.fetchUserInfo();
+        addEducationForm.reset();
       },
       (error: any) => {
         this.addEducationForm.reset();
@@ -320,6 +331,7 @@ export class AccountComponent implements OnInit {
     this.accountService.addExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
       (response: Account) => {
         this.fetchUserInfo();
+        experienceForm.reset();
       },
       (error: any) => {
         this.experienceForm.reset();
@@ -362,8 +374,7 @@ export class AccountComponent implements OnInit {
 
     this.tagsService.addAllAccountTags(interestsForm.value.interests).subscribe(
       (resp: Account) => {
-        console.log(resp);
-        window.location.reload();
+        this.fetchUserInfo();
       },
       (err: HttpErrorResponse) => {
         console.log(err);
@@ -371,5 +382,29 @@ export class AccountComponent implements OnInit {
       }
     );
 
+  }
+
+  public deleteEducation(selectedEdu: Education) {
+    this.accountService.deleteEducation(selectedEdu.id).subscribe(
+      (response: void) => {
+        this.fetchUserInfo();
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        this.interestsForm.reset();
+      }
+    );
+  }
+
+  public deleteExperience(selectedExp: Experience) {
+    this.accountService.deleteExperience(selectedExp.id).subscribe(
+      (response: void) => {
+        this.fetchUserInfo();
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        this.interestsForm.reset();
+      }
+    );
   }
 }

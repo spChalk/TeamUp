@@ -109,6 +109,24 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/education/delete/{id}")
+    public ResponseEntity<?> deleteEducationById(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account currUser = accountService.findAccountByEmail(user);
+        this.accountService.deleteEducation(currUser, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/experience/delete/{id}")
+    public ResponseEntity<?> deleteExperienceById(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account currUser = accountService.findAccountByEmail(user);
+        this.accountService.deleteExperience(currUser, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /*@GetMapping("/network/all/{email}")
     public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
 

@@ -19,4 +19,8 @@ export class ExperienceService {
   public showExperience(experience: Experience) {
     return this.http.post<Experience>(`${this.url}/show`, experience);
   }
+
+  public deleteExperience(id: number) {
+    return this.http.delete<any>(`${this.url}/delete/${id}`);
+  }
 }

@@ -123,6 +123,7 @@
           <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
             <div *ngFor="let ed of account?.education" class="row">
               <div *ngIf="ed.visible" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(ed, 'deleteEducation')" class="btn btn-outline-danger mr-3"  data-original-title="Delete"><i class="fa fa-times"></i></button>
                 <button type="button" style="float: right" (click)="onClickModal(ed, 'education')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
                 <button (click)="hide(ed, 'education')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
                 <br>
@@ -173,6 +174,7 @@
               </div>
 
               <div *ngIf="ed.visible === false" style="background-color: #ebebeb" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(ed, 'deleteEducation')" class="btn btn-outline-danger mr-3"  data-original-title="Delete"><i class="fa fa-times"></i></button>
                 <button type="button" style="float: right" (click)="onClickModal(ed, 'education')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
                 <button (click)="show(ed, 'education')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye"></i></button>
                 <br>
@@ -241,6 +243,7 @@
           <div class="tab-pane fade" id="working_experience" role="tabpanel" aria-labelledby="working-experience-tab">
             <div *ngFor="let xp of account?.experience" class="row">
               <div *ngIf="xp.visible" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(xp, 'deleteExperience')" class="btn btn-outline-danger mr-3"  data-original-title="Delete"><i class="fa fa-times"></i></button>
                 <button type="button" style="float: right" (click)="onClickModal(xp, 'experience')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
                 <button (click)="hide(xp, 'experience')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye-slash"></i></button>
                 <br>
@@ -309,6 +312,7 @@
               </div>
 
               <div *ngIf="xp.visible === false" style="background-color: #ebebeb" class="col-md-12">
+                <button type="button" style="float: right" (click)="onClickModal(xp, 'deleteExperience')" class="btn btn-outline-danger mr-3"  data-original-title="Delete"><i class="fa fa-times"></i></button>
                 <button type="button" style="float: right" (click)="onClickModal(xp, 'experience')" class="btn btn-outline-info mr-3" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
                 <button (click)="show(xp, 'experience')" type="button" style="float: right" class="btn btn-outline-dark mr-3"  data-original-title="Visibility"><i class="fa fa-eye"></i></button>
                 <br>
@@ -725,7 +729,7 @@
 
           <div class="form-group">
             <label for="jobtype">Job Type</label>
-            <select id="jobtype" name="jobType" formControlName="employmentType" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+            <select id="jobtype" formControlName="employmentType" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
               <option>FULL_TIME</option>
               <option>PART_TIME</option>
               <option>SELF_EMPLOYED</option>
@@ -739,7 +743,7 @@
 
           <div class="form-group">
             <label for="experiencelevel">Experience Level</label>
-            <select id="experiencelevel" name="experienceLevel" formControlName="experienceLevel" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+            <select id="experiencelevel" formControlName="experienceLevel" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
               <option>INTERNSHIP</option>
               <option>ENTRY_LEVEL</option>
               <option>ASSOCIATE</option>
@@ -771,6 +775,52 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button class="btn btn-primary" (click)="addExperience(experienceForm)" data-dismiss="modal">
           Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Education Modal -->
+<div class="modal fade" id="educationdelete" tabindex="-1" role="dialog" aria-labelledby="educationdeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="educationdeleteModalLabel">Delete education</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this event?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteEducation(this.selectedEdu)" data-dismiss="modal">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Experience Modal -->
+<div class="modal fade" id="experiencedelete" tabindex="-1" role="dialog" aria-labelledby="experiencedeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="experiencedeleteModalLabel">Delete working experience</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this event?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteExperience(this.selectedExp)" data-dismiss="modal">
+          Yes
         </button>
       </div>
     </div>

@@ -135,5 +135,11 @@ export class AccountService {
     return this.http.put<Account>(`${this.url}/show-tags`,null);
   }
 
+  public deleteEducation(id: number) {
+    return this.http.delete<any>(`${this.url}/education/delete/${id}`);
+  }
 
+  public deleteExperience(id: number) {
+    return this.http.delete<any>(`${this.url}/experience/delete/${id}`);
+  }
 }

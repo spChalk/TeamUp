@@ -530,4 +530,20 @@ public class AccountService implements UserDetailsService {
         acc.setPhone(account.getPhone());
         return this.accountRepository.save(acc);
     }
+
+    public void deleteExperience(Account user, Long id) {
+        Experience xp = this.experienceService.findExperienceById(id).orElseThrow(
+                () -> new IllegalStateException("Experience with id " + id.toString() + " does not exist!")
+        );
+        user.getExperience().remove(xp);
+        this.experienceService.deleteExperience(id);
+    }
+
+    public void deleteEducation(Account user, Long id) {
+        Education edu = this.educationService.findEducationById(id).orElseThrow(
+                () -> new IllegalStateException("Education with id " + id.toString() + " does not exist!")
+        );
+        user.getEducation().remove(edu);
+        this.educationService.deleteEducation(id);
+    }
 }

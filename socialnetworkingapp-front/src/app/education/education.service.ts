@@ -19,4 +19,8 @@ export class EducationService {
   public showEducation(edu: Education) {
     return this.http.post<Education>(`${this.url}/show`, edu);
   }
+
+  public deleteEducation(id: number) {
+    return this.http.delete<any>(`${this.url}/delete/${id}`);
+  }
 }
