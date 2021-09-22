@@ -140,7 +140,7 @@ export class AccountComponent implements OnInit {
 
     this.interestsForm = this.fb.group({
       interests: this.fb.array([], [Validators.required, Validators.minLength(2)])
-    },
+    }
     );
 
     this.tagsService.getAllTags().subscribe(
@@ -148,9 +148,6 @@ export class AccountComponent implements OnInit {
         this.TagsArray = response;
       }
     );
-
-
-
 
   }
 
@@ -169,6 +166,7 @@ export class AccountComponent implements OnInit {
       });
     }
   }
+
   public onClickModal(data: any, mode: string): void {
 
     const container = document.getElementById('main-container');
@@ -210,11 +208,13 @@ export class AccountComponent implements OnInit {
   public hide(data: any, mode: string) {
 
     if (mode == 'tag') {
-      this.accountService.hideTags(this.account).subscribe(
+      this.accountService.hideTags().subscribe(
         (response: Account) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
@@ -222,8 +222,10 @@ export class AccountComponent implements OnInit {
       this.experienceService.hideExperience(data).subscribe(
         (response: Experience) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
@@ -231,22 +233,25 @@ export class AccountComponent implements OnInit {
       this.educationService.hideEducation(data).subscribe(
         (response: Education) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
-    window.location.reload();
   }
 
   public show(data: any, mode: string) {
 
     if (mode == 'tag') {
-      this.accountService.showTags(this.account).subscribe(
+      this.accountService.showTags().subscribe(
         (response: Account) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
@@ -254,8 +259,10 @@ export class AccountComponent implements OnInit {
       this.experienceService.showExperience(data).subscribe(
         (response: Experience) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
@@ -263,12 +270,13 @@ export class AccountComponent implements OnInit {
       this.educationService.showEducation(data).subscribe(
         (response: Education) => {
           console.log(response);
+          window.location.reload();
         }, (error: HttpErrorResponse) => {
           alert(error.message);
+          window.location.reload();
         }
       );
     }
-    window.location.reload();
   }
 
   public aboutSubmit(aboutForm: FormGroup) {
@@ -363,17 +371,16 @@ export class AccountComponent implements OnInit {
 
   public editInterests(interestsForm: FormGroup) {
 
-    //den paizei i allagi 
-    for (let interest of interestsForm.value.interests) {
-      this.tagsService.addAccountTag(this.authenticationService.getCurrentUser(), interest).subscribe(
+      this.tagsService.addAllAccountTags(interestsForm.value.interests).subscribe(
         (resp: Account) => {
-          console.log(interest);
+          console.log(resp);
+          window.location.reload();
         },
         (err: HttpErrorResponse) => {
-          alert(err.message);
-          console.log(interest);
+          console.log(err);
+          this.interestsForm.reset();
         }
       );
-    }
+    
   }
 }

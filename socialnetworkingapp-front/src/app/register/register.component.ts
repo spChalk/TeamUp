@@ -120,17 +120,6 @@ export class RegisterComponent implements OnInit {
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
                 console.log(response);
-                for (let interest of registerForm.value.interests) {
-                    this.tagsService.addAccountTag(response.email, interest).subscribe(
-                        (resp: Account) => {
-                            console.log(resp);
-                        },
-                        (err: HttpErrorResponse) => {
-                            alert(err.message);
-                        }
-                    );
-                }
-
                 this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
                     (newResponse: boolean) => {
                         this.router.navigateByUrl('/home');
@@ -147,8 +136,6 @@ export class RegisterComponent implements OnInit {
                 console.log(error);
             }
         );
-
-
 
     }
 
