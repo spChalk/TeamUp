@@ -69,6 +69,16 @@ public class AccountService implements UserDetailsService {
     public Account accountSignUp(RegistrationRequest request){
 
         Account account = new Account(AccountRole.USER, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), request.getPhone());
+        List<Tag> tags = request.getInterests();
+        for(Tag tag: tags){
+            Tag existingTag = this.tagService.getTagByName(tag.getTag());
+            if(existingTag == null) {
+                account.getTags().add(this.tagService.addTag(new Tag(tag.getTag())));
+            } else {
+                account.getTags().add(existingTag);
+            }
+
+        }
         return this.accountRepository.save(checkAccount(account));
     }
 
@@ -148,9 +158,24 @@ public class AccountService implements UserDetailsService {
         Account account = findAccountByEmail(email);
         Tag existingTag = this.tagService.getTagByName(tagName);
         if(existingTag == null) {
-            account.getTags().add(this.tagService.addTag(new Tag(tagName)));
+            return account;
         } else {
             account.getTags().add(existingTag);
+        }
+        return this.accountRepository.save(account);
+    }
+
+    public Account addAccountTags(List<String> tags, String email) {
+
+        Account account = findAccountByEmail(email);
+        account.getTags().clear();
+        for(String tagName : tags){
+            Tag existingTag = this.tagService.getTagByName(tagName);
+            if(existingTag == null) {
+                continue;
+            } else {
+                account.getTags().add(existingTag);
+            }
         }
         return this.accountRepository.save(account);
     }

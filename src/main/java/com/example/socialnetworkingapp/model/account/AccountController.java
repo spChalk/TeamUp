@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -131,9 +133,18 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/tags/add/{tagName}")
-    public ResponseEntity<Account> addTag(@PathVariable("tagName") String tagName, @RequestBody String email) {
-        return new ResponseEntity<>(this.accountService.addTag(tagName, email), HttpStatus.OK);
+    @PostMapping("/tags/add")
+    public ResponseEntity<Account> addTag(@RequestBody String tag) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return new ResponseEntity<Account>(this.accountService.addTag(tag, email), HttpStatus.OK);
+    }
+
+    @PostMapping("/tags/add/all")
+    public ResponseEntity<Account> addTag(@RequestBody List<String> tags) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return new ResponseEntity<Account>(this.accountService.addAccountTags(tags, email), HttpStatus.OK);
     }
 
     @GetMapping("/experience/get")
@@ -186,12 +197,16 @@ public class AccountController {
     }
 
     @PutMapping("/hide-tags")
-    public ResponseEntity<Account> hideTags(@RequestBody Account account) {
+    public ResponseEntity<Account> hideTags() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = this.accountService.findAccountByEmail(authentication.getName());
         return new ResponseEntity<>(this.accountService.hideTags(account), HttpStatus.OK);
     }
 
     @PutMapping("/show-tags")
-    public ResponseEntity<Account> showTags(@RequestBody Account account) {
+    public ResponseEntity<Account> showTags() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = this.accountService.findAccountByEmail(authentication.getName());
         return new ResponseEntity<>(this.accountService.showTags(account), HttpStatus.OK);
     }
 

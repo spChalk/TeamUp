@@ -1,9 +1,12 @@
 package com.example.socialnetworkingapp.registration;
 
+import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -15,4 +18,6 @@ public class RegistrationRequest {
     private final String email;
     private final String password;
     private final String phone;
+    private final List<Tag> interests;
+
 }
