@@ -9,6 +9,7 @@ import {Bio} from "../bio/bio";
 import { catchError } from 'rxjs/operators';
 import { AccountUpdateRequest } from './accountUpdateRequest';
 import { Education } from '../education/education';
+import { Experience } from '../experience/experience';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,7 @@ export class AccountService {
   }
 
   public addEducation(email: string, education: Education) : Observable<Account>{
+    console.log(education);
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
     return this.http.post<Account>(`${this.url}/education/add`, {email, education}, httpOptions);
@@ -107,6 +109,18 @@ export class AccountService {
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
     return this.http.post<Education>(`${this.url}/education/update`, {email, education}, httpOptions);
+  }
+  
+  public addExperience(email: string, xp: Experience) : Observable<Account>{
+    let httpOptions = { headers: new HttpHeaders(
+      { 'Content-Type': 'application/json', })};
+    return this.http.post<Account>(`${this.url}/experience/add`, {email, xp}, httpOptions);
+  }
+
+  public editExperience(email: string, xp: Experience) : Observable<Experience>{
+    let httpOptions = { headers: new HttpHeaders(
+      { 'Content-Type': 'application/json', })};
+    return this.http.post<Experience>(`${this.url}/experience/update`, {email, xp}, httpOptions);
   }
 
   public deleteBio(id: number) {

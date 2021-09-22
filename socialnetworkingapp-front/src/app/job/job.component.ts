@@ -80,7 +80,7 @@ export class JobComponent implements OnInit {
   }
 
   public getJobs(): void {
-    this.jobService.getAllJobs(this.authenticationService.getJWT()).subscribe(
+    this.jobService.getAllJobs().subscribe(
       (jobs: Job[]) => {
           this.jobs = jobs;
           for(let job of this.jobs) {
@@ -180,7 +180,7 @@ export class JobComponent implements OnInit {
       jobForm.value.interests
     );
 
-    this.jobService.addJob(newJobRequest, this.authenticationService.getJWT()).subscribe(
+    this.jobService.addJob(newJobRequest).subscribe(
       (response: Job) => {
         console.log(response);
         this.getJobs();

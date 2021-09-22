@@ -1,6 +1,6 @@
 import {Account} from "../account/account";
 
-enum EmploymentType {
+export enum EmploymentType {
   FULL_TIME,
   PART_TIME,
   SELF_EMPLOYED,
