@@ -87,6 +87,7 @@ export class AccountComponent implements OnInit {
     );
 
     this.editEducationForm = this.fb.group({
+      id: new FormControl(''),
       school: new FormControl(''),
       degree: new FormControl(''),
       field: new FormControl(''),
@@ -94,7 +95,7 @@ export class AccountComponent implements OnInit {
       endDate: new FormControl(''),
       grade: new FormControl(''),
       description: new FormControl(''),
-      visible: new FormControl('true'),
+      visible: new FormControl(''),
     },
     );
 
@@ -281,10 +282,13 @@ export class AccountComponent implements OnInit {
     );
   }
 
-  public editEducation(addEducationForm: FormGroup) {
+  public editEducation(editEducationForm: FormGroup, selectedEdu: Education) {
 
-    this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
-      (response: Account) => {
+    editEducationForm.get('id')?.setValue(selectedEdu.id);
+    editEducationForm.get('visible')?.setValue(selectedEdu.visible);
+    this.accountService.editEducation(this.authenticationService.getCurrentUser(), editEducationForm.value).subscribe(
+      (response: Education) => {
+        console.log('haha');
         console.log(response);
         window.location.reload();
       },

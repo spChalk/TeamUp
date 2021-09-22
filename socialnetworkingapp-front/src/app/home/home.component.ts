@@ -84,7 +84,7 @@ public loadPostLikes(pid: number) {
   }
 
   private loadPosts() {
-    this.postService.getPosts(this.authenticationService.getJWT()).subscribe(
+    this.postService.getPosts().subscribe(
       (posts: Post[]) => {
         this.posts = posts;
         for(let post of this.posts) {
@@ -113,7 +113,7 @@ public loadPostLikes(pid: number) {
 
   public onAddPost(payload: string) {
 
-    this.postService.addPost(payload, this.authenticationService.getJWT()).subscribe(
+    this.postService.addPost(payload).subscribe(
       (response: Post) => {
         console.log(response);
 
@@ -210,7 +210,7 @@ public loadPostLikes(pid: number) {
   }
 
   public onLike(pid: number) {
-    this.likeService.addLike(pid, this.authenticationService.getJWT()).subscribe(
+    this.likeService.addLike(pid).subscribe(
       (response: Like) => {
         console.log(response);
         this.loadPostLikes(pid);
@@ -232,7 +232,7 @@ public loadPostLikes(pid: number) {
   }
 
   public onAddComment(postId: number, payload: string) {
-    this.commentService.addComment(postId, payload, this.authenticationService.getJWT()).subscribe(
+    this.commentService.addComment(postId, payload).subscribe(
       (response: any) => {
         console.log(response);
         this.loadPostComments(postId);
@@ -253,7 +253,7 @@ public loadPostLikes(pid: number) {
   }
 
   public onEditComment(cId: number, payload: string) {
-    this.commentService.updateComment(cId, payload, this.authenticationService.getJWT()).subscribe(
+    this.commentService.updateComment(cId, payload).subscribe(
       (event: any) => {
         this.loadPostComments(this.tempRefreshPostId);
       }, (error: HttpErrorResponse) => {

@@ -173,6 +173,12 @@ public class AccountController {
                 HttpStatus.OK);
     }
 
+    @PostMapping("/education/update")
+    public ResponseEntity<Education> editEducation(@RequestBody AccountEducation accountEducation) {
+        return new ResponseEntity<Education>(this.accountService.updateEducation(accountEducation.getEmail(), accountEducation.getEducation()),
+                HttpStatus.OK);
+    }
+
     @PutMapping("/hide-tags")
     public ResponseEntity<Account> hideTags(@RequestBody Account account) {
         return new ResponseEntity<>(this.accountService.hideTags(account), HttpStatus.OK);
