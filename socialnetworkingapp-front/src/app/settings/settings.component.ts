@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public addBio(email: string, bio: Bio) {
-    this.accountService.addBio(email, bio).subscribe(
+    this.accountService.addBio(bio.description).subscribe(
       (responseBio: Bio) => {
         console.log(responseBio);
       },

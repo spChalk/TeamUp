@@ -86,41 +86,37 @@ export class AccountService {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
 
-  public getNetworkByEmail(email: string) {
-    return this.http.get<Account[]>(`${this.url}/network/all/${email}`);
-  }
-
   /* TODO: addFriend */
 
-  public addBio(email: string, bio: Bio) : Observable<Bio>{
+  public addBio(bio: string) : Observable<Bio>{
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-    return this.http.post<Bio>(`${this.url}/bio/add`, {email, bio}, httpOptions);
+    return this.http.post<Bio>(`${this.url}/bio/add`, bio, httpOptions);
   }
 
-  public addEducation(email: string, education: Education) : Observable<Account>{
+  public addEducation(education: Education) : Observable<Account>{
     console.log(education);
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-    return this.http.post<Account>(`${this.url}/education/add`, {email, education}, httpOptions);
+    return this.http.post<Account>(`${this.url}/education/add`, education, httpOptions);
   }
 
-  public editEducation(email: string, education: Education) : Observable<Education>{
+  public editEducation(education: Education) : Observable<Education>{
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-    return this.http.post<Education>(`${this.url}/education/update`, {email, education}, httpOptions);
+    return this.http.post<Education>(`${this.url}/education/update`, education, httpOptions);
   }
 
-  public addExperience(email: string, xp: Experience) : Observable<Account>{
+  public addExperience(experience: Experience) : Observable<Account>{
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-    return this.http.post<Account>(`${this.url}/experience/add`, {email, xp}, httpOptions);
+    return this.http.post<Account>(`${this.url}/experience/add`, experience, httpOptions);
   }
 
-  public editExperience(email: string, xp: Experience) : Observable<Experience>{
+  public editExperience(experience: Experience) : Observable<Experience>{
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-    return this.http.post<Experience>(`${this.url}/experience/update`, {email, xp}, httpOptions);
+    return this.http.post<Experience>(`${this.url}/experience/update`, experience, httpOptions);
   }
 
   public deleteBio(id: number) {

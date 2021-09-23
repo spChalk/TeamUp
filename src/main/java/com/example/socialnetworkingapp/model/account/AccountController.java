@@ -3,13 +3,10 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.tags.Tag;
-import com.example.socialnetworkingapp.model.tags.TagService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -82,15 +78,6 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-  /*  @PutMapping("/follow")
-    public ResponseEntity<String> follow(@RequestBody TransferAccounts accounts) {
-
-        *//*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();*//*
-        this.accountService.follow(accounts.sender, accounts.receiver);
-        return new ResponseEntity<>("You have followed " + accounts.receiver.getFirstName() + "!", HttpStatus.OK);
-    }*/
-
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account){
         Account newAccount = this.accountService.updateAccount(account);
@@ -105,6 +92,9 @@ public class AccountController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account currUser = accountService.findAccountByEmail(user);
         this.accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -127,28 +117,6 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*@GetMapping("/network/all/{email}")
-    public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
-
-        *//* Get ALL accepted requests, the ones that the user has sent AND received *//*
-        List<ConnectionRequest> sentRequests = this.connectionReqService.findSentAcceptedRequestsByAccEmail(email);
-        List<ConnectionRequest> receivedRequests = this.connectionReqService.findReceivedAcceptedRequestsByAccEmail(email);
-
-        List<Account> net = new ArrayList<>();
-        for (ConnectionRequest request: sentRequests) {
-            net.add(request.getReceiver());
-        }
-        for (ConnectionRequest request: receivedRequests) {
-            net.add(request.getSender());
-        }
-        return new ResponseEntity<>(net, HttpStatus.OK);
-    }*/
-
-    @GetMapping("/network/all/{email}")
-    public ResponseEntity<List<Account>> getNetwork(@PathVariable("email") String email) {
-        return new ResponseEntity<>(this.accountService.findAccountByEmail(email).getNetwork(), HttpStatus.OK);
-    }
-
     @DeleteMapping("/network/delete/{uid}")
     public ResponseEntity<?> deleteFromNetwork(@PathVariable("uid") String otherEmail){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -160,63 +128,78 @@ public class AccountController {
     @PostMapping("/tags/add")
     public ResponseEntity<Account> addTag(@RequestBody String tag) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return new ResponseEntity<Account>(this.accountService.addTag(tag, email), HttpStatus.OK);
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<Account>(this.accountService.addTag(tag, currUser), HttpStatus.OK);
     }
 
     @PostMapping("/tags/add/all")
     public ResponseEntity<Account> addTag(@RequestBody List<String> tags) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return new ResponseEntity<Account>(this.accountService.addAccountTags(tags, email), HttpStatus.OK);
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<Account>(this.accountService.addAccountTags(tags, currUser), HttpStatus.OK);
     }
 
     @GetMapping("/experience/get")
-    public ResponseEntity<List<Experience>> getExperience(@RequestBody String email) {
-        return new ResponseEntity<>(this.accountService.getExperience(email), HttpStatus.OK);
+    public ResponseEntity<List<Experience>> getExperience() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(currUser.getExperience(), HttpStatus.OK);
     }
 
     @GetMapping("/education/get")
-    public ResponseEntity<List<Education>> getEducation(@RequestBody String email) {
-        return new ResponseEntity<>(this.accountService.getEducation(email), HttpStatus.OK);
+    public ResponseEntity<List<Education>> getEducation() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(currUser.getEducation(), HttpStatus.OK);
     }
 
     /* Post a {email, experience} */
     @PostMapping("/experience/add")
-    public ResponseEntity<Account> addExperience(@RequestBody AccountExperience accountExperience) {
-        return new ResponseEntity<>(this.accountService.addExperience(accountExperience.getEmail(), accountExperience.getXp()),
+    public ResponseEntity<Account> addExperience(@RequestBody Experience experience) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.accountService.addExperience(currUser, experience),
                 HttpStatus.OK);
     }
 
     @PostMapping("/experience/update")
-    public ResponseEntity<Experience> editExperience(@RequestBody AccountExperience accountExperience) {
-        return new ResponseEntity<Experience>(this.accountService.updateExperience(accountExperience.getEmail(), accountExperience.getXp()),
+    public ResponseEntity<Experience> editExperience(@RequestBody Experience experience) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<Experience>(this.accountService.updateExperience(currUser, experience),
                 HttpStatus.OK);
     }
 
-    /* Post a {email, bio} */
     @PostMapping("/bio/add")
-    public ResponseEntity<Bio> addBio(@RequestBody AccountBio accountBio){
-        return new ResponseEntity<>(this.accountService.addBio(accountBio.getEmail(), accountBio.getBio()),
+    public ResponseEntity<Bio> addBio(@RequestBody String bio){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.accountService.addBio(currUser, new Bio(bio)),
                 HttpStatus.OK);
     }
 
     @DeleteMapping("/bio/delete/{uid}")
     public ResponseEntity<HttpStatus> deleteBio(@PathVariable("uid") Long uid) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         this.accountService.deleteBio(uid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /* Post a {email, education} */
     @PostMapping("/education/add")
-    public ResponseEntity<Account> addEducation(@RequestBody AccountEducation accountEducation) {
-        return new ResponseEntity<>(this.accountService.addEducation(accountEducation.getEmail(), accountEducation.getEducation()),
+    public ResponseEntity<Account> addEducation(@RequestBody Education education) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.accountService.addEducation(currUser, education),
                 HttpStatus.OK);
     }
 
     @PostMapping("/education/update")
-    public ResponseEntity<Education> editEducation(@RequestBody AccountEducation accountEducation) {
-        return new ResponseEntity<Education>(this.accountService.updateEducation(accountEducation.getEmail(), accountEducation.getEducation()),
+    public ResponseEntity<Education> editEducation(@RequestBody Education education) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<Education>(this.accountService.updateEducation(currUser, education),
                 HttpStatus.OK);
     }
 

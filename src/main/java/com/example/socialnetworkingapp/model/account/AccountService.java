@@ -322,9 +322,8 @@ public class AccountService implements UserDetailsService {
         this.accountRepository.save(account);
     }
 
-    public Account addTag(String tagName, String email) {
+    public Account addTag(String tagName, Account account) {
 
-        Account account = findAccountByEmail(email);
         Tag existingTag = this.tagService.getTagByName(tagName);
         if(existingTag == null) {
             return account;
@@ -334,9 +333,8 @@ public class AccountService implements UserDetailsService {
         return this.accountRepository.save(account);
     }
 
-    public Account addAccountTags(List<String> tags, String email) {
+    public Account addAccountTags(List<String> tags, Account account) {
 
-        Account account = findAccountByEmail(email);
         account.getTags().clear();
         for(String tagName : tags){
             Tag existingTag = this.tagService.getTagByName(tagName);
@@ -356,9 +354,8 @@ public class AccountService implements UserDetailsService {
         return account.getTags();
     }
 
-    public Account addExperience(String email, Experience xp) {
+    public Account addExperience(Account account, Experience xp) {
 
-        Account account = findAccountByEmail(email);
         account.getExperience().add(this.experienceService.addExperience(xp));
         return this.accountRepository.save(account);
     }
@@ -378,22 +375,18 @@ public class AccountService implements UserDetailsService {
         return account.getEducation();
     }
 
-    public Bio addBio(String email, Bio bio) {
-        Account account = findAccountByEmail(email);
+    public Bio addBio(Account account, Bio bio) {
         account.setBio(this.bioService.addBio(bio));
         this.accountRepository.save(account);
         return account.getBio();
     }
 
-    public Account addEducation(String email, Education education) {
-        Account account = findAccountByEmail(email);
+    public Account addEducation(Account account, Education education) {
         account.getEducation().add(this.educationService.addEducation(education));
         return this.accountRepository.save(account);
     }
 
-    public Education updateEducation(String email, Education education) {
-        Account account = findAccountByEmail(email);
-
+    public Education updateEducation(Account account, Education education) {
         Optional<Education> previousEducation = this.educationService.findEducationById(education.getId());
 
         if(!previousEducation.isPresent()) {
@@ -428,8 +421,7 @@ public class AccountService implements UserDetailsService {
         return newEducation;
     }
 
-    public Experience updateExperience(String email, Experience experience) {
-        Account account = findAccountByEmail(email);
+    public Experience updateExperience(Account account, Experience experience) {
         Optional<Experience> previousExperience = this.experienceService.findExperienceById(experience.getId());
 
         if(!previousExperience.isPresent()) {

@@ -301,7 +301,7 @@ export class AccountComponent implements OnInit {
 
   public bioSubmit(bioSubmit: FormGroup) {
 
-    this.accountService.addBio(bioSubmit.value.email, bioSubmit.value.description).subscribe(
+    this.accountService.addBio(bioSubmit.value.description).subscribe(
       (response: Bio) => {
         this.fetchUserInfo();
       },
@@ -314,7 +314,7 @@ export class AccountComponent implements OnInit {
 
   public addEducation(addEducationForm: FormGroup) {
 
-    this.accountService.addEducation(this.authenticationService.getCurrentUser(), addEducationForm.value).subscribe(
+    this.accountService.addEducation(addEducationForm.value).subscribe(
       (response: Account) => {
         this.fetchUserInfo();
         addEducationForm.reset();
@@ -328,7 +328,7 @@ export class AccountComponent implements OnInit {
 
   public addExperience(experienceForm: FormGroup) {
 
-    this.accountService.addExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
+    this.accountService.addExperience(experienceForm.value).subscribe(
       (response: Account) => {
         this.fetchUserInfo();
         experienceForm.reset();
@@ -344,7 +344,7 @@ export class AccountComponent implements OnInit {
 
     editEducationForm.get('id')?.setValue(selectedEdu.id);
     editEducationForm.get('visible')?.setValue(selectedEdu.visible);
-    this.accountService.editEducation(this.authenticationService.getCurrentUser(), editEducationForm.value).subscribe(
+    this.accountService.editEducation(editEducationForm.value).subscribe(
       (response: Education) => {
         this.fetchUserInfo();
       },
@@ -359,7 +359,7 @@ export class AccountComponent implements OnInit {
 
     experienceForm.get('id')?.setValue(this.selectedExp.id);
     experienceForm.get('visible')?.setValue(this.selectedExp.visible);
-    this.accountService.editExperience(this.authenticationService.getCurrentUser(), experienceForm.value).subscribe(
+    this.accountService.editExperience(experienceForm.value).subscribe(
       (response: Experience) => {
         this.fetchUserInfo();
       },
