@@ -288,12 +288,16 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email "+ email + " was not found!"));
     }
 
-    public List<Account> findAccountsBySimilarEmail(String keyword) {
-        return accountRepository.findAccountBySimilarEmail(keyword).get();
-    }
-
     public List<Account> findAccountsBySimilarName(String keyword) {
-        return accountRepository.findAccountBySimilarName(keyword).get();
+        List<Account> accounts = accountRepository.findAccountBySimilarName(keyword).get();
+        /* Remove admin. We don't want him in network entities. */
+        for(Account account: accounts) {
+            if(account.getRole() == AccountRole.ADMIN) {
+                accounts.remove(account);
+                break;
+            }
+        }
+        return accounts;
     }
 
     @Override

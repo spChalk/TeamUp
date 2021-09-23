@@ -105,6 +105,7 @@ export class RegisterComponent implements OnInit {
                 } else if (event instanceof HttpResponse) {
                     this.message = event.body.message;
                 }
+                this.onClickModal('uploadSuccessful');
             },
             err => {
                 this.progress = 0;
@@ -115,15 +116,14 @@ export class RegisterComponent implements OnInit {
         this.selectedFiles = undefined;
     }
 
-    public onRegister(registerForm: FormGroup, mode: string): void {
+    public onRegister(registerForm: FormGroup): void {
 
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
                 console.log(response);
                 this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
                     (newResponse: boolean) => {
-                        this.router.navigateByUrl('/home');
-                        this.onClickModal(mode);
+                      this.onClickModal('addPhoto');
                     },
                     (error) => {
                         console.log(error);
@@ -151,10 +151,18 @@ export class RegisterComponent implements OnInit {
         if (mode === 'addPhoto') {
             button.setAttribute('data-target', '#addPhoto');
         }
+        if (mode === 'uploadSuccessful') {
+          button.setAttribute('data-target', '#uploadSuccessful');
+        }
         if (container != null) {
             container.appendChild(button);
             button.click();
         }
 
     }
+
+  public goToHomePage() {
+    window.location.reload();
+    this.router.navigateByUrl('/home');
+  }
 }

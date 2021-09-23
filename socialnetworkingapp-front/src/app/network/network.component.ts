@@ -42,7 +42,6 @@ export class NetworkComponent implements OnInit {
 
     this.accountService.getAccountsBySimilarName(form.value.keyword).subscribe(
       (response: Account[]) => {
-        console.log(response);
         this.accounts = response;
       },
       (error: HttpErrorResponse) => {
