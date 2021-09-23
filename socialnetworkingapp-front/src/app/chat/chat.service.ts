@@ -16,13 +16,14 @@ export interface Message{
 
   receiverFirstName: string;
   receiverLastName: string;
-  date : string;
+  date : Date;
 }
 
 export interface Friends{
   firstName:string;
   lastName:String;
   email:String;
+  imageUrl :String;
 }
 
 @Injectable({
@@ -33,18 +34,10 @@ export class ChatService {
 
   private url = environment.apiBaseUrl + '/messages';
   // private allMessages$ : Observable<Message[]>;
-  public allFriends$ : Observable<Set<Friends>>;
+  public allFriends$ : Observable<Friends[]>;
   private stopPolling = new Subject();
 
   constructor(private http: HttpClient) {
-
-    // this.allFriends$ = timer(1, 3000).pipe(
-    //   switchMap(() => 
-    //   this.http.get<Set<Friends>> (this.url + "/friends")),
-    //   retry(),
-    //   share(),
-    //   takeUntil(this.stopPolling)
-    // );
   }
 
   getAllMessages(user : string, friend : string ): Observable<Message[]>{
@@ -54,15 +47,6 @@ export class ChatService {
     return this.http.post<Message[]>(`${this.url}/chat`,
       {"senderEmail" :user, "receiverEmail": friend},httpOptions);
 
-
-    // this.allMessages$ = timer(1, 3000).pipe(
-    //   switchMap(() => 
-    //   this.http.get<Message[]> (`${this.url}/chat`), {headers:myHeaders, params: myParams}),
-    //   retry(),
-    //   share(),
-    //   takeUntil(this.stopPolling)
-    // );
-    // return this.allMessages$;
   }
 
   sendMessage(payload: string, receiverMail: string ): Observable<Message>{
@@ -73,6 +57,7 @@ export class ChatService {
     return this.http.post<Message>(`${this.url}/send`,
       {receiverMail, payload},httpOptions);
     }
+
   // getAllFriends(): Observable<Set<Friends>>{
     // this.allFriends$ = timer(1, 3000).pipe(
     //   switchMap(() => 
