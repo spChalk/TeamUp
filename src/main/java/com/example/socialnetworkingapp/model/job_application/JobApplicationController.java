@@ -37,6 +37,8 @@ public class JobApplicationController {
     @GetMapping("/uj/{user_id}/{job_id}")
     public JobApplicationResponse getApplicationByUserAndJobIds(@PathVariable("user_id") Long userId,
                                                                 @PathVariable("job_id") Long jobId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         return jobApplicationService.findApplicationByUserAndJobIds(userId, jobId);
     }
 
@@ -50,6 +52,8 @@ public class JobApplicationController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteJobApplicationById(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         jobApplicationService.deleteJobApplication(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

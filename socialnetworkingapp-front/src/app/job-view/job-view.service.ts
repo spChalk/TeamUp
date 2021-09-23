@@ -11,8 +11,8 @@ export class JobViewService {
   private url = environment.apiBaseUrl + "/job_views";
   constructor(private http: HttpClient) {  }
 
-  public addView(uid: number, jid: number) {
-    return this.http.post<JobView>(`${this.url}/add/${uid}/${jid}`, {});
+  public addView(jid: number) {
+    return this.http.post<JobView>(`${this.url}/add/${jid}`, {});
   }
 
   public getViewsByJob(id: number) {

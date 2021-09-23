@@ -40,6 +40,8 @@ public class ConnectionReqController {
 
     @DeleteMapping("/delete/{req_id}")
     public ResponseEntity<HttpStatus> deleteRequestById(@PathVariable("req_id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         connectionReqService.deleteRequest(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

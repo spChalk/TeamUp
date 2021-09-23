@@ -59,6 +59,8 @@ public class CommentController {
 
     @DeleteMapping("/delete/{cId}")
     public ResponseEntity<HttpStatus> deleteComment(@PathVariable("cId") Long commentId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account user = this.accountService.findAccountByEmail(authentication.getName());
         this.commentService.deleteById(commentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

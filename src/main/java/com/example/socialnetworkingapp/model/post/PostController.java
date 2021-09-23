@@ -60,7 +60,8 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePostById(@PathVariable("id") Long id){
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         for(LikeResponse like: this.likeService.findAllLikesOfPost(id)) {
             this.likeService.deleteLikeById(like.getId());
         }

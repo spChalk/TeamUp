@@ -191,8 +191,8 @@ export class JobComponent implements OnInit {
     );
   }
 
-  public increaseView(uid: number, jid: number) {
-    this.jobViewService.addView(uid, jid).subscribe(
+  public increaseView(jid: number) {
+    this.jobViewService.addView(jid).subscribe(
       (response: JobView) => {
         console.log(response);
         this.getJobs();

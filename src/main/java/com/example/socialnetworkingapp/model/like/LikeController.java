@@ -50,6 +50,8 @@ public class LikeController {
 
     @DeleteMapping("/delete/{likeId}")
     public ResponseEntity<HttpStatus> deleteLike (@PathVariable("likeId") Long likeId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         this.likeService.deleteLikeById(likeId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -53,7 +53,7 @@
           </button>
 
           <button *ngIf="authenticationService.getCurrentUser() !== job?.publisherEmail" type="button" (click)="setSelectedJob(job);
-            increaseView(this.account.id, job.id)" class="btn btn-outline-primary" style="float: right"><i class="fa fa-external-link"></i>
+            increaseView(job.id)" class="btn btn-outline-primary" style="float: right"><i class="fa fa-external-link"></i>
           </button>
         </div>
       </div>

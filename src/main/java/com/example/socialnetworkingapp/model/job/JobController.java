@@ -29,11 +29,6 @@ public class JobController {
     private final JobApplicationService jobApplicationService;
     private final AccountService accountService;
 
-/*    @GetMapping("/{job_id}")
-    public Job getJobById(@PathVariable("job_id") Long id){
-        return jobService.findJobById(id);
-    }*/
-
     /* Get the list of jobs for user */
     @GetMapping("/all")
     public List<JobResponse> getJobs() throws IOException {
@@ -64,14 +59,11 @@ public class JobController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteJobById(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
         List<JobView> views = this.jobViewService.getViewsByJobId(id);
         List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
         jobService.deleteJob(id, views, apps);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-/*
-    @PostMapping("/tags/add/{tagName}")
-    public ResponseEntity<Job>addTag(@PathVariable("tagName") String tagName, @RequestBody Long id) {
-        return new ResponseEntity<>(this.jobService.addTag(tagName, id), HttpStatus.OK);
-    }*/
 }
