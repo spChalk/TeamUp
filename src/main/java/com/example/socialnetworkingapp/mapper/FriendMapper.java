@@ -16,11 +16,15 @@ public interface FriendMapper {
     @Mapping(target = "firstName", expression = "java(mapFirstName(account))")
     @Mapping(target = "senderLastName", expression = "java(mapLastName(account))")
     @Mapping(target = "senderEmail", expression = "java(mapEmail(account))")
+    @Mapping(target = "imageUrl", expression = "java(mapImage(account))")
 
     default String mapFirstName(Account account){
         return account.getFirstName();
     }
 
+    default String mapImage(Account account){
+        return account.getImageUrl();
+    }
     default String mapLastName(Account account){
         return account.getLastName();
     }
