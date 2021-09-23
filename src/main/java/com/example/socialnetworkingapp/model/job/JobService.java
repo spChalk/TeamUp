@@ -7,6 +7,7 @@ import com.example.socialnetworkingapp.model.job_application.JobApplication;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationRepository;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
 import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
 import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
@@ -271,8 +272,8 @@ public class JobService {
         return job.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);
     }
 
-    public void deleteJob(Long id, List<JobView> views, List<JobApplicationResponse> apps) {
-        for(JobView v: views) {
+    public void deleteJob(Long id, List<JobViewResponse> views, List<JobApplicationResponse> apps) {
+        for(JobViewResponse v: views) {
             this.jobViewRepository.deleteById(v.getId());
         }
         for(JobApplicationResponse app: apps) {

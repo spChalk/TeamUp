@@ -16,6 +16,7 @@ import {AuthenticationService} from "../authentication";
 import {JobRequest} from "./job-request";
 import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
 import {Tag} from "../tags/Tag";
+import {NetworkEntity} from "../account/network-entity";
 
 @Component({
   selector: 'app-job',
@@ -27,7 +28,7 @@ export class JobComponent implements OnInit {
   public jobs: Job[];
 
   /* [job id, views] */
-  public jobViews: Map<number, number> = new Map<number, number>();
+  public jobViews: Map<number, JobView[]> = new Map<number, JobView[]>();
   public hasAppliedToJob: Map<number, boolean> = new Map<number, boolean>();
 
   public account: Account;
@@ -85,7 +86,7 @@ export class JobComponent implements OnInit {
           this.jobs = jobs;
           for(let job of this.jobs) {
             this.jobViewService.getViewsByJob(job.id).subscribe(
-              (views: number) => {
+              (views: JobView[]) => {
                 this.jobViews.set(job.id, views);
               }, (err: HttpErrorResponse) => {
                 alert(err.message);
@@ -151,6 +152,9 @@ export class JobComponent implements OnInit {
     if(mode === 'deleteApplication') {
       this.jobIdToDeleteApplicationFrom = data;
       button.setAttribute('data-target', '#deleteApplication');
+    }
+    if(mode === 'seeViews') {
+      button.setAttribute('data-target', '#seeViews');
     }
     if(container != null) {
       container.appendChild(button);

@@ -13,6 +13,7 @@ import com.example.socialnetworkingapp.model.job.JobService;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
 import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
 import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.like.Like;
 import com.example.socialnetworkingapp.model.like.LikeService;
@@ -105,10 +106,10 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account currUser = accountService.findAccountByEmail(user);
-
+/*
         List<Job> jobs = this.jobService.getJobsUnsorted(id);
         for(Job job: jobs) {
-            List<JobView> views = this.jobViewService.getViewsByJobId(id);
+            List<JobViewResponse> views = this.jobViewService.getViewsByJobId(id);
             List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
             this.jobService.deleteJob(job.getId(), views, apps);
         }
@@ -126,7 +127,7 @@ public class AccountController {
         }
         for(Account acc: currUser.getNetwork()) {
             this.connectionReqService.deleteConnection(currUser.getEmail(), acc.getEmail());
-        }
+        }*/
 
         this.accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -4,13 +4,16 @@ import {Job} from "../job/job";
 export class JobView {
 
   id: number;
-  viewer: Account;
-  job: Job;
-  times: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  imageUrl: string;
 
-  constructor(viewer: Account, job: Job, times: number) {
-    this.viewer = viewer;
-    this.job = job;
-    this.times = times;
+  constructor(id: number, firstName: string, lastName: string, email: string, imageUrl: string) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.imageUrl = imageUrl;
   }
 }

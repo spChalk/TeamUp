@@ -6,6 +6,7 @@ import com.example.socialnetworkingapp.model.job_application.JobApplication;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
 import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
 import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -61,7 +62,7 @@ public class JobController {
     public ResponseEntity<?> deleteJobById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        List<JobView> views = this.jobViewService.getViewsByJobId(id);
+        List<JobViewResponse> views = this.jobViewService.getViewsByJobId(id);
         List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
         jobService.deleteJob(id, views, apps);
         return new ResponseEntity<>(HttpStatus.OK);

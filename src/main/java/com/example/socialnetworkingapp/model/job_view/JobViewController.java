@@ -20,7 +20,7 @@ public class JobViewController {
     private final AccountService accountService;
 
     @GetMapping("/{job_id}")
-    public List<JobView> getViewsByJobId(@PathVariable("job_id") Long id){
+    public List<JobViewResponse> getViewsByJobId(@PathVariable("job_id") Long id){
         return jobViewService.getViewsByJobId(id);
     }
 

@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.job_view;
 
+import com.example.socialnetworkingapp.mapper.JobViewMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.job.Job;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +19,7 @@ public class JobViewService {
 
     private final JobViewRepository jobViewRepository;
     private final JobService jobService;
+    private final JobViewMapper jobViewMapper;
 /*
 
     public JobView findJobById(Long id) {
@@ -41,10 +44,12 @@ public class JobViewService {
     }
 */
 
-    public List<JobView> getViewsByJobId(Long id) {
-        return this.jobViewRepository.getViewsByJobId(id).orElseThrow(
-                () -> new IllegalStateException("Job with id: " + id.toString() + " does not exist!")
-        );
+    public List<JobViewResponse> getViewsByJobId(Long id) {
+        Optional<List<JobView>> views = this.jobViewRepository.getViewsByJobId(id);
+        if(!views.isPresent()) {
+            throw new IllegalStateException("Job with id: " + id.toString() + " does not exist!");
+        }
+        return views.get().stream().map(jobViewMapper::JobViewToJobViewResponse).collect(Collectors.toList());
     }
 
     public Long getSumOfViewsByJobId(Long id) {
