@@ -29,7 +29,7 @@ export class SettingsComponent implements OnInit {
               private bioService: BioService,
               private route: ActivatedRoute,
               private uploadService: UploadFileService,
-              private authenticationService : AuthenticationService ) {
+              public authenticationService : AuthenticationService ) {
   }
 
   ngOnInit(): void {

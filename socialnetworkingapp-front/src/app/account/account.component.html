@@ -10,7 +10,9 @@
 </head>
 <!------ Include the above in your HEAD tag ---------->
 
-<app-nav-bar-authenticated></app-nav-bar-authenticated>
+<app-nav-bar-admin *ngIf="authenticationService.isAdmin() === true"></app-nav-bar-admin>
+<app-nav-bar-authenticated *ngIf="authenticationService.isAdmin() === false"></app-nav-bar-authenticated>
+
 <div class="container emp-profile shadow " style="margin-top: 100px" id="main-container">
     <div class="row">
       <div class="col-md-4">

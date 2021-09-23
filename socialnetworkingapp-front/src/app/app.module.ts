@@ -34,6 +34,7 @@ import { EducationComponent } from './education/education.component';
 import { VisitAccountComponent } from './visit-account/visit-account.component';
 import { ConnectionRequestComponent } from './connection-request/connection-request.component';
 import { TokenInterceptorService } from './authentication';
+import {NavBarAdminComponent} from "./nav-bar-admin/nav-bar-admin.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { TokenInterceptorService } from './authentication';
     UploadFilesComponent,
     NavBarAuthenticatedComponent,
     NavBarComponent,
+    NavBarAdminComponent,
     JobViewComponent,
     TagsComponent,
     EducationComponent,

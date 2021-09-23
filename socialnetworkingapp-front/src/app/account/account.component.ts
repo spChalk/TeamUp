@@ -41,7 +41,7 @@ export class AccountComponent implements OnInit {
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,
     private experienceService: ExperienceService,
     private educationService: EducationService,
     private router: Router,
