@@ -33,9 +33,9 @@ public class Message implements Serializable {
     @JoinColumn(nullable = false)
     private Account receiver;
 
-    private Instant date;
+    private LocalDateTime date;
 
-    public Message(String payload, Account sender, Account receiver, Instant date) {
+    public Message(String payload, Account sender, Account receiver, LocalDateTime date) {
         this.payload = payload;
         this.sender = sender;
         this.receiver = receiver;

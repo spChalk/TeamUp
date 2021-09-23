@@ -2,11 +2,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <app-nav-bar-authenticated>
 
 </app-nav-bar-authenticated>
-<div class="container" style="margin-left: 5%; ">
+<br>
+<br>
+<br>
+<br>
+
+<div class="container" style="margin-left: 5%; " id="main-container">
+
+  <button (click)="onClickModal(null, 'send')" type="button" style="margin-left: 30px"
+    class="btn btn-outline-primary mb-2" data-placement="top" data-original-title="send">
+    <i class="fa fa-plus"></i> Send a new messsage</button>
   <div class="ks-page-content">
     <div class="ks-page-content-body">
       <div class="ks-messenger">
@@ -26,205 +36,26 @@
             <div class="jspContainer" style="width: 339px; height: 550px;">
               <div class="jspPane" style="padding: 0px; top: 0px; width: 329px;">
                 <ul class="ks-items">
-                  <li class="ks-item ks-active" *ngFor="let friend of this.friends">
-                    <a [routerLink]="['/chat']" [queryParams] = "{receiverEmail: friend.email }">
-                      <span class="ks-group-amount">3</span>
+                  <li class="ks-item ks-unread" *ngFor="let friend of this.friends">
+                    <a [routerLink]="['/chat']" [queryParams]="{receiverEmail: friend.email }">
+
+
+                      <span class="ks-avatar ks-online">
+                        <img *ngIf="friend.imageUrl === null" src="../../assets/images/user_default.png" width="36"
+                          height="36" class="rounded-circle">
+                        <img *ngIf="friend.imageUrl" src={{friend.imageUrl}} width="36" height="36"
+                          class="rounded-circle">
+                      </span>
+
+
                       <div class="ks-body">
                         <div class="ks-name">
                           {{friend.firstName}} {{friend.lastName}}
-                          <span class="ks-datetime">just now</span>
                         </div>
-                        <!-- <div class="ks-message">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="18" height="18"
-                            class="rounded-circle"> 
-                        </div> -->
-                      </div>
-                    </a>
-                  </li>
-                  <!-- <li class="ks-item ks-unread">
-                    <a href="#">
-                      <span class="ks-group-amount">5</span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="18" height="18"
-                            class="rounded-circle"> Why didn't he come and talk to me...
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
-                        <span class="badge badge-pill badge-danger ks-badge ks-notify">7</span>
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar ks-online">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Brian Diaz
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">The weird future of movie theater food</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-group-amount">3 <span
-                          class="badge badge-pill badge-danger ks-badge ks-notify">7</span></span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar ks-offline">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
                       </div>
                     </a>
                   </li>
 
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Eric George
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">Why didn't he come and talk to me himse...</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Lauren Sandoval
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">The weird future of movie theater food</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="ks-item ks-closed">
-                    <a href="#">
-                      <span class="ks-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36">
-                      </span>
-                      <div class="ks-body">
-                        <div class="ks-name">
-                          Brian Diaz
-                          <span class="ks-datetime">just now</span>
-                        </div>
-                        <div class="ks-message">The weird future of movie theater food</div>
-                      </div>
-                    </a>
-                  </li> -->
                 </ul>
               </div>
               <!-- end of left pane -->
@@ -249,8 +80,7 @@
           <!-- read / unread etc -->
           <div class="ks-header">
             <div class="ks-description">
-              <div class="ks-name">Chat name</div>
-              <div class="ks-amount">2 members</div>
+              <div class="ks-name">here na to ftiaksw</div>
             </div>
             <div class="ks-controls">
               <div class="dropdown">
@@ -288,16 +118,18 @@
             </div>
           </div>
 
-          <!-- end of read unread etc -->
+
           <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" data-reduce-height=".ks-footer"
-            data-fix-height="32" style="overflow: hidden; padding: 0px;" tabindex="0">
+            data-fix-height="32" style="overflow-y: scroll; padding: 0px;" tabindex="0">
             <div class="jspContainer" style="width: 701px; height: 481px;">
               <div class="jspPane" style="padding: 0px; top: 0px; width: 691px;">
-                <ul class="ks-items" *ngFor = " let message of this.messages">
+                <ul class="ks-items" *ngFor=" let message of this.messages">
 
                   <li *ngIf="this.account.email === message.senderEmail" class="ks-item ks-self">
                     <span class="ks-avatar ks-online">
-                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="36" height="36"
+                      <img *ngIf="this.account?.imageUrl === null" src="../../assets/images/user_default.png" width="36"
+                        height="36" class="rounded-circle">
+                      <img *ngIf="this.account?.imageUrl" src={{this.account?.imageUrl}} width="36" height="36"
                         class="rounded-circle">
                     </span>
                     <div class="ks-body">
@@ -310,10 +142,16 @@
                   </li>
 
                   <li *ngIf="this.account.email !== message.senderEmail" class="ks-item ks-from">
+
                     <span class="ks-avatar ks-online">
-                      <img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="36" height="36"
-                        class="rounded-circle">
+                      <img *ngIf="getImage(message.senderEmail)=== null" src="../../assets/images/user_default.png"
+                        width="36" height="36" class="rounded-circle">
+                      <img *ngIf="getImage(message.senderEmail)" src={{getImage(message.senderEmail)}} width="36"
+                        height="36" class="rounded-circle">
                     </span>
+
+
+
                     <div class="ks-body">
                       <div class="ks-header">
                         <span class="ks-name">{{message.senderFirstName}} {{message.senderLastName}} </span>
@@ -339,9 +177,9 @@
             </div>
           </div>
           <div class="ks-footer">
-            <form [formGroup]="messageForm" (ngSubmit)="sendMessage(this.messageForm,this.queryParams)" >
-            <textarea class="form-control" formControlName="payload" placeholder="Type something..."></textarea>
-            <button class="btn btn-primary" type="submit" >Send</button>
+            <form [formGroup]="messageForm" (ngSubmit)="sendMessage(this.messageForm,this.queryParams)">
+              <textarea class="form-control" formControlName="payload" placeholder="Type something..."></textarea>
+              <button class="btn btn-primary" type="submit">Send</button>
             </form>
             <div class="ks-controls">
               <a href="#" class="la la-paperclip ks-attachment"></a>
@@ -471,6 +309,48 @@
         </div>
         <!-- end of middle pane -->
 
+
+        <!-- send new message modal -->
+        <div class="modal fade" id="send" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="sendModalLabel">Send message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+
+                <form [formGroup]="sendForm">
+
+                  <div class="form-group">
+                    <label for="receiver">Your Friend</label>
+                    <input type="text" class="form-control" formControlName="receiver" id="receiver" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="payload">Type Your Message Here</label>
+                    <input type="text" class="form-control" formControlName="payload" id="payload" required>
+                  </div>
+
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button [disabled]="sendForm.invalid" (click)="onSendMessage(sendForm)" type="submit"
+                  class="btn btn-success" data-dismiss="modal">Send</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- end of send new message modal -->
         <!-- user info / right panel-->
         <div class="ks-info ks-messenger__info">
           <div class="ks-header">
@@ -478,10 +358,14 @@
           </div>
           <div class="ks-body">
             <div class="ks-item ks-user">
+
               <span class="ks-avatar ks-online">
-                <img src={{this.account.imageUrl}} width="36" height="36"
+                <img *ngIf="this.account.imageUrl === null" src="../../assets/images/user_default.png" width="36"
+                  height="36" class="rounded-circle">
+                <img *ngIf="this.account.imageUrl" src={{this.account.imageUrl}} width="36" height="36"
                   class="rounded-circle">
               </span>
+
               <span class="ks-name">
                 {{this.account.firstName}} {{this.account.lastName}}
               </span>
@@ -501,7 +385,8 @@
             </div>
           </div>
           <!-- this is not neccessary to do  -->
-          <div class="ks-footer">
+
+          <!-- <div class="ks-footer">
             <div class="ks-item">
               <div class="ks-name">Created</div>
               <div class="ks-text">
@@ -514,7 +399,9 @@
                 1 minute ago
               </div>
             </div>
-          </div>
+          </div> -->
+
+
         </div>
       </div>
     </div>

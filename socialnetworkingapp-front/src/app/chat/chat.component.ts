@@ -24,18 +24,19 @@ export class ChatComponent implements OnInit {
 
   messages: Message[];
   account: Account;
-  friends: Set<Friends>;
-  allFriends$: Observable<Set<Friends>>;
+  friends: Friends[];
+  allFriends$: Observable<Friends[]>;
   private stopPolling = new Subject();
   private url = environment.apiBaseUrl + '/messages';
   public queryParams: string;
   public messageForm: FormGroup;
+  public sendForm: FormGroup;
 
   constructor(private chatService: ChatService, private accountService: AccountService, private authenticationService: AuthenticationService, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient) {
 
     this.allFriends$ = timer(1, 10000).pipe(
       switchMap(() =>
-        this.http.get<Set<Friends>>(this.url + "/friends")),
+        this.http.get<Friends[]>(this.url + "/friends")),
       retry(),
       share(),
       takeUntil(this.stopPolling)
@@ -49,6 +50,12 @@ export class ChatComponent implements OnInit {
       payload: new FormControl('')
     },
     );
+
+    this.sendForm = this.fb.group({
+      receiver: new FormControl(''),
+      payload: new FormControl('')
+    },
+    );
     this.accountService.fetchUser(this.authenticationService.getCurrentUser()).subscribe(
       (response: Account) => {
         this.account = response;
@@ -57,17 +64,16 @@ export class ChatComponent implements OnInit {
         console.log(error);
       }
     )
-
     this.allFriends$.subscribe(
-      (response: Set<Friends>) => {
+      (response: Friends[]) => {
         this.friends = response;
         console.log(response);
       },
       (error: any) => {
         console.log(error);
       }
-
     )
+
     this.route.queryParams.subscribe(params => {
       this.getMessages(params.receiverEmail);
       this.queryParams = params.receiverEmail;
@@ -96,6 +102,42 @@ export class ChatComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  public onClickModal(data: any, mode: string): void {
+
+    const container = document.getElementById('main-container');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+
+    if (mode === 'send') {
+      button.setAttribute('data-target', '#send');
+    }
+    if (container != null) {
+      container.appendChild(button);
+      button.click();
+    }
+  }
+
+  public onSendMessage(sendForm: FormGroup) {
+    this.chatService.sendMessage(sendForm.get('payload')?.value, sendForm.get('receiver')?.value).subscribe(
+      (resp: Message) => {
+        console.log(resp);
+        window.location.reload();
+      },
+      (error: any) => {
+        console.log(error);
+        this.sendForm.reset();
+      }
+    )
+  }
+  public getImage(friend : string){
+
+    return this.friends.find(x => x.email == friend)?.imageUrl;
+    
   }
 
   ngOnDestroy() {

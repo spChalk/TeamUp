@@ -49,7 +49,7 @@ public class MessageController {
         String senderMail = authentication.getName();
         Account sender = accountService.findAccountByEmail(senderMail);
         Account receiver = accountService.findAccountByEmail(request.getReceiverMail());
-        Message newMessage = new Message(request.getPayload(), sender, receiver, Instant.now());
+        Message newMessage = new Message(request.getPayload(), sender, receiver, LocalDateTime.now());
         return new ResponseEntity<>( messageService.addMessage(newMessage) , HttpStatus.CREATED);
     }
 
