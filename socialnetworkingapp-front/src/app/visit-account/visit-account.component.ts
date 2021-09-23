@@ -43,7 +43,7 @@ export class VisitAccountComponent implements OnInit {
         /* If the current auth user is not in visited user's network,
         *  check if there's a pending request */
         if(this.isPresentInNetwork === false) {
-          this.connectionRequestService.checkForPendingRequest(this.myAccount.email, this.vAccount.email).subscribe(
+          this.connectionRequestService.checkForPendingRequest(this.vAccount.email).subscribe(
             (requestId: number) => {
               if(requestId !== null) {
                 this.pendingRequestId = requestId;
@@ -81,7 +81,7 @@ export class VisitAccountComponent implements OnInit {
   }
 
   public onConnect() {
-    this.connectionRequestService.addRequest(new ConnectionRequest(this.myAccount, this.vAccount)).subscribe(
+    this.connectionRequestService.addRequest(this.vAccount.email).subscribe(
       (response: ConnectionRequest) => {
         this.fetchUser();
       }, (error: HttpErrorResponse) => {
@@ -91,7 +91,7 @@ export class VisitAccountComponent implements OnInit {
   }
 
   public onDisconnect() {
-    this.connectionRequestService.deleteFromNetwork(this.myAccount.email, this.vAccount.email).subscribe(
+    this.connectionRequestService.deleteFromNetwork(this.vAccount.email).subscribe(
       (status: any) => {
         window.location.reload();
       }, (error: HttpErrorResponse) => {

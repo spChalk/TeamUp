@@ -12,19 +12,19 @@ export class ConnectionRequestService {
   private url = environment.apiBaseUrl + '/crequest';
   constructor(private http: HttpClient) {  }
 
-  public checkForPendingRequest(senderEmail: string, receiverEmail: string): Observable<number> {
-    return this.http.get<number>(`${this.url}/search/${senderEmail}/${receiverEmail}`)
+  public checkForPendingRequest(receiverEmail: string): Observable<number> {
+    return this.http.get<number>(`${this.url}/search/${receiverEmail}`)
   }
 
-  public addRequest(connectionRequest: ConnectionRequest): Observable<ConnectionRequest> {
-    return this.http.post<ConnectionRequest>(`${this.url}/add`, connectionRequest);
+  public addRequest(email: string): Observable<any> {
+    return this.http.post<any>(`${this.url}/add/${email}`, {});
   }
 
   public removeRequest(connectionRequestId: number): Observable<any> {
     return this.http.delete<any>(`${this.url}/delete/${connectionRequestId}`);
   }
 
-  public deleteFromNetwork(myEmail: string, otherEmail: string): Observable<any> {
-    return this.http.delete<any>(`${environment.apiBaseUrl}/accounts/network/${myEmail}/delete/${otherEmail}`);
+  public deleteFromNetwork(otherEmail: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiBaseUrl}/accounts/network/delete/${otherEmail}`);
   }
 }

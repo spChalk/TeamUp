@@ -1,6 +1,7 @@
 package com.example.socialnetworkingapp.model.connection_request;
 
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
+import com.example.socialnetworkingapp.mapper.ConnectionRequestMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,10 @@ import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,10 +20,13 @@ public class ConnectionReqService {
 
     private final ConnectionReqRepository connectionReqRepository;
     private final AccountService accountService;
+    private final ConnectionRequestMapper connectionRequestMapper;
 
-    public List<ConnectionRequest> findRequestsByAccId(Long id) {
-        return this.connectionReqRepository.findRequestsByAccId(id).
+    public List<ConnectionRequestResponse> findRequestsByAccId(Long id) {
+
+        List<ConnectionRequest> connReqs = this.connectionReqRepository.findRequestsByAccId(id).
                 orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+        return connReqs.stream().map(connectionRequestMapper::ConnectionRequestToConnectionRequestResponse).collect(Collectors.toList());
     }
 
     public Long findRequestByAccEmails(String senderEmail, String receiverEmail) {
@@ -55,25 +61,36 @@ public class ConnectionReqService {
                 orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
     }*/
 
-    public ConnectionRequest addRequest(ConnectionRequest connectionRequest) {
+    public ConnectionRequestResponse addRequest(ConnectionRequest connectionRequest) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
                 .findRequestByAccIds(connectionRequest.getSender().getId(),
                         connectionRequest.getReceiver().getId());
-        return alreadyExists.orElseGet(() -> this.connectionReqRepository.save(connectionRequest));
+        List<ConnectionRequest> newReq = new ArrayList<>();
+        if(alreadyExists.isPresent()) {
+            newReq.add(alreadyExists.get());
+        } else {
+            newReq.add(this.connectionReqRepository.save(connectionRequest));
+        }
+        return newReq.stream().map(connectionRequestMapper::ConnectionRequestToConnectionRequestResponse).collect(Collectors.toList()).get(0);
     }
 
     public void deleteRequest(Long id) {
         this.connectionReqRepository.deleteById(id);
     }
 
-    public void acceptRequest(ConnectionRequest connectionRequest) {
-
-        this.connectionReqRepository.delete(connectionRequest);
-        this.accountService.connect(connectionRequest.getSender().getEmail(), connectionRequest.getReceiver().getEmail());
+    public void acceptRequest(Account myAcc, Account otherAcc) {
+        Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
+                .findRequestByAccIds(myAcc.getId(), otherAcc.getId());
+        if(alreadyExists.isPresent()) {
+            this.connectionReqRepository.delete(alreadyExists.get());
+            this.accountService.connect(myAcc.getEmail(), otherAcc.getEmail());
+        }
     }
 
-    public void rejectRequest(ConnectionRequest connectionRequest) {
-        this.connectionReqRepository.delete(connectionRequest);
+    public void rejectRequest(Account myAcc, Account otherAcc) {
+        Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
+                .findRequestByAccIds(myAcc.getId(), otherAcc.getId());
+        alreadyExists.ifPresent(this.connectionReqRepository::delete);
     }
 
     public void deleteConnection(String usr1, String usr2) {

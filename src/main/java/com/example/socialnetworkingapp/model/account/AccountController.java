@@ -149,9 +149,11 @@ public class AccountController {
         return new ResponseEntity<>(this.accountService.findAccountByEmail(email).getNetwork(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/network/{me}/delete/{uid}")
-    public ResponseEntity<?> deleteFromNetwork(@PathVariable("me") String myEmail, @PathVariable("uid") String otherEmail){
-        this.connectionReqService.deleteConnection(myEmail, otherEmail);
+    @DeleteMapping("/network/delete/{uid}")
+    public ResponseEntity<?> deleteFromNetwork(@PathVariable("uid") String otherEmail){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        this.connectionReqService.deleteConnection(currUser.getEmail(), otherEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
