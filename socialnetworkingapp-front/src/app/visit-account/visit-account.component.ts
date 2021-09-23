@@ -26,7 +26,38 @@ export class VisitAccountComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  public getRequestedUser(email: string) {
+    this.accountService.getAccountByEmail(email).subscribe(
+      (resp: Account) => {
+        this.vAccount = new Account(resp);
+        /* If requested user is in the current user's network, all info is public */
+        for(let entity of this.vAccount.network) {
+          if (entity.firstName === this.myAccount.firstName &&
+            entity.lastName === this.myAccount.lastName &&
+            entity.email === this.myAccount.email &&
+            entity.imageUrl === this.myAccount.imageUrl) {
+            this.isPresentInNetwork = true;
+            break;
+          }
+        }
+        /* If the current auth user is not in visited user's network,
+        *  check if there's a pending request */
+        if(this.isPresentInNetwork === false) {
+          this.connectionRequestService.checkForPendingRequest(this.myAccount.email, this.vAccount.email).subscribe(
+            (requestId: number) => {
+              if(requestId !== null) {
+                this.pendingRequestId = requestId;
+              }},
+            (fail: HttpErrorResponse) => {
+              alert(fail.message);
+            });
+        }
+      }, (err: HttpErrorResponse) => {
+        alert(err.message);
+      });
+  }
+
+  public fetchUser() {
     /* Fetch the email of current user */
     let email = this.authenticationService.getCurrentUser();
     this.accountService.fetchUser(email).subscribe(
@@ -39,70 +70,43 @@ export class VisitAccountComponent implements OnInit {
               this.router.navigateByUrl("/account");
             } else {
               /* Else, get requested user */
-              this.accountService.getAccountByEmail(params['email']).subscribe(
-                (resp: Account) => {
-                  this.vAccount = new Account(resp);
-                    /* If requested user is in the current user's network, all info is public */
-                  for(let entity of this.vAccount.network) {
-                    if (entity.firstName === this.myAccount.firstName &&
-                      entity.lastName === this.myAccount.lastName &&
-                      entity.email === this.myAccount.email &&
-                      entity.imageUrl === this.myAccount.imageUrl) {
-                      this.isPresentInNetwork = true;
-                      break;
-                    }
-                  }
-                    /* If the current auth user is not in visited user's network,
-                    *  check if there's a pending request */
-                    if(this.isPresentInNetwork === false) {
-                      this.connectionRequestService.checkForPendingRequest(this.myAccount.email, this.vAccount.email).subscribe(
-                        (requestId: number) => {
-                          if(requestId !== null) {
-                            this.pendingRequestId = requestId;
-                          }},
-                        (fail: HttpErrorResponse) => {
-                          alert(fail.message);
-                        });
-                    }
-                }, (err: HttpErrorResponse) => {
-                  alert(err.message);
-                });
+              this.getRequestedUser(params['email']);
             }}
         });
       });
   }
 
+  ngOnInit(): void {
+    this.fetchUser();
+  }
+
   public onConnect() {
     this.connectionRequestService.addRequest(new ConnectionRequest(this.myAccount, this.vAccount)).subscribe(
       (response: ConnectionRequest) => {
-        console.log(response);
+        this.fetchUser();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    window.location.reload();
   }
 
   public onDisconnect() {
     this.connectionRequestService.deleteFromNetwork(this.myAccount.email, this.vAccount.email).subscribe(
       (status: any) => {
-        console.log(status);
+        window.location.reload();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    window.location.reload();
   }
 
   public onRemoveRequest() {
     this.connectionRequestService.removeRequest(this.pendingRequestId).subscribe(
       (status: any) => {
-        console.log(status);
+        window.location.reload();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    window.location.reload();
   }
-
 }
