@@ -10,6 +10,9 @@ import com.example.socialnetworkingapp.model.comment.Comment;
 import com.example.socialnetworkingapp.model.comment.CommentRequest;
 import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.comment.CommentService;
+import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
+import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
+import com.example.socialnetworkingapp.model.connection_request.ConnectionRequestResponse;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.education.EducationService;
 import com.example.socialnetworkingapp.model.experience.Experience;
@@ -17,6 +20,10 @@ import com.example.socialnetworkingapp.model.experience.ExperienceService;
 import com.example.socialnetworkingapp.model.job.Job;
 import com.example.socialnetworkingapp.model.job.JobResponse;
 import com.example.socialnetworkingapp.model.job.JobService;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
+import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.like.Like;
 import com.example.socialnetworkingapp.model.like.LikeResponse;
 import com.example.socialnetworkingapp.model.like.LikeService;
@@ -58,7 +65,6 @@ public class AccountService implements UserDetailsService {
     private final JobService jobService;
     private final LikeService likeService;
     private final CommentService commentService;
-    private final AccountMapper accountMapper;
 
     /*
     *   In Account, 3 fields are unique:

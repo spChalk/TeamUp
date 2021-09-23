@@ -33,6 +33,6 @@ public class JobViewController {
     public ResponseEntity<JobView> addView(@PathVariable("jid") Long jid) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(jobViewService.addView(currUser.getId(), jid), HttpStatus.CREATED);
+        return new ResponseEntity<>(jobViewService.addView(currUser, jid), HttpStatus.CREATED);
     }
 }

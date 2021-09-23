@@ -20,7 +20,7 @@ export class VisitAccountComponent implements OnInit {
   public isPresentInNetwork: boolean = false;
   public pendingRequestId: number = -1;
 
-  constructor(private authenticationService : AuthenticationService,
+  constructor(public authenticationService : AuthenticationService,
               private accountService: AccountService,
               private connectionRequestService: ConnectionRequestService,
               private router: Router,

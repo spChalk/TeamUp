@@ -88,7 +88,7 @@ export class AccountComponent implements OnInit {
       endDate: new FormControl(''),
       grade: new FormControl(''),
       description: new FormControl(''),
-      visible: new FormControl('true'),
+      visible: new FormControl(true),
     },
     );
 
@@ -116,7 +116,7 @@ export class AccountComponent implements OnInit {
       endDate: new FormControl(''),
       headline: new FormControl(''),
       description: new FormControl(''),
-      visible: new FormControl('true'),
+      visible: new FormControl(true),
     },
     );
 

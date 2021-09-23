@@ -88,7 +88,7 @@
 <!--
                 <img src="#" alt="">
 -->
-                <a class="user-link"> {{account?.firstName}} {{account?.lastName}} </a>
+                <a class="user-link" routerLink="/visit/{{account?.email}}"> {{account?.firstName}} {{account?.lastName}} </a>
                 <!--<span class="user-subhead">{{account?.dateCreated}}</span>-->
 <!--
                 <span class="user-subhead">PROFESSION</span>
@@ -146,8 +146,6 @@
           <div class="right">{{infoAccount?.email}}</div>
           <div class="left"><strong>Phone</strong></div>
           <div class="right">{{infoAccount?.phone}}</div>
-          <div class="left"><strong>Password</strong></div>
-          <div class="right" style="overflow-x: auto">{{infoAccount?.password}}</div>
           <div class="left"><strong>Image</strong></div>
           <div class="right">{{infoAccount?.imageUrl}}</div>
           <div class="left"><strong>Date</strong></div>

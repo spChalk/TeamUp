@@ -9,7 +9,9 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <!------ Include the above in your HEAD tag ---------->
-<app-nav-bar-authenticated></app-nav-bar-authenticated>
+<app-nav-bar-admin *ngIf="authenticationService.isAdmin() === true"></app-nav-bar-admin>
+<app-nav-bar-authenticated *ngIf="authenticationService.isAdmin() === false"></app-nav-bar-authenticated>
+
 <div class="container emp-profile shadow " style="margin-top: 100px" id="main-container">
   <div class="row">
     <div class="col-md-4">
@@ -26,7 +28,7 @@
         <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork"
                 (click)="onDisconnect()" style="float: right" type="button" class="btn btn-outline-danger"> <i class="fa fa-user-times"></i> Disconnect</button>
 
-        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork === false"
+        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork === false && this.authenticationService.isAdmin() === false"
                 (click)="onConnect()" style="float: right" type="button" class="btn btn-primary"> <i class="fa fa-user-plus"> </i> Connect</button>
 
         <h5>

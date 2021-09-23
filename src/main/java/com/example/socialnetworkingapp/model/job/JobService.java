@@ -99,9 +99,8 @@ public class JobService {
             return new ArrayList<JobResponse>();
         }
 
-        //   3. Get all users (List<Account>) and 4. Transform List<Account> -> Array<Account>
-        List<Account> allAccountsList = this.accountRepository.findAll();
-        allAccountsList.remove(this.accountRepository.getById(1L));
+        //   3. Get all users from network (List<Account>) and 4. Transform List<Account> -> Array<Account>
+        List<Account> allAccountsList = user.getNetwork();
         Account[] allAccounts = allAccountsList.toArray(new Account[0]);
 
         // 5. Map {Job.id: index in Array<Job>}
@@ -132,6 +131,16 @@ public class JobService {
             for(JobResponse job: allJobs) {
                 log.write("Adding pair { " + 0L + ", " + job.getId() + " }" + "\n");
                 views_JobId_Tuples.add(new Pair<Long, Long>(0L, job.getId()));
+            }
+            return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
+        }
+        //      7.2 If there's no one in the network, create an array of tuples (views, job-id) for all the jobs and proceed to (13).
+        if(allAccounts.length == 0) {
+            log.write("There's no one in the network!" + "\n");
+            ArrayList<Pair<Long, Long>> views_JobId_Tuples = new ArrayList<>();
+            for(JobView view: allJobViews) {
+                log.write("Adding pair { " + view.getTimes() + ", " + view.getJob().getId() + " }" + "\n");
+                views_JobId_Tuples.add(new Pair<Long, Long>(view.getTimes(), view.getJob().getId()));
             }
             return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
         }

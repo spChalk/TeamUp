@@ -1,5 +1,6 @@
 package com.example.socialnetworkingapp.model.job_view;
 
+import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.job.Job;
 import com.example.socialnetworkingapp.model.job.JobService;
@@ -15,7 +16,6 @@ import java.util.Optional;
 public class JobViewService {
 
     private final JobViewRepository jobViewRepository;
-    private final AccountService accountService;
     private final JobService jobService;
 /*
 
@@ -58,15 +58,15 @@ public class JobViewService {
         return sum;
     }
 
-    public JobView addView(Long uid, Long jid) {
+    public JobView addView(Account account, Long jid) {
 
-        Optional<JobView> jv = this.jobViewRepository.findViewByIds(uid, jid);
+        Optional<JobView> jv = this.jobViewRepository.findViewByIds(account.getId(), jid);
         if(jv.isPresent()) {
             jv.get().increaseViews();
             return this.jobViewRepository.save(jv.get());
         }
         return this.jobViewRepository.save(new JobView(
-                this.accountService.findAccountById(uid),
+                account,
                 this.jobService.findJobById(jid)));
     }
 

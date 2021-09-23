@@ -29,6 +29,13 @@ public class ConnectionReqService {
         return connReqs.stream().map(connectionRequestMapper::ConnectionRequestToConnectionRequestResponse).collect(Collectors.toList());
     }
 
+    public List<ConnectionRequestResponse> findAllRequestsByAccId(Long id) {
+
+        List<ConnectionRequest> connReqs = this.connectionReqRepository.findAllRequestsByAccId(id).
+                orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
+        return connReqs.stream().map(connectionRequestMapper::ConnectionRequestToConnectionRequestResponse).collect(Collectors.toList());
+    }
+
     public Long findRequestByAccEmails(String senderEmail, String receiverEmail) {
 
         Long senderId = this.accountService.findAccountByEmail(senderEmail).getId();
@@ -80,7 +87,7 @@ public class ConnectionReqService {
 
     public void acceptRequest(Account myAcc, Account otherAcc) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
-                .findRequestByAccIds(myAcc.getId(), otherAcc.getId());
+                .findRequestByAccIds(otherAcc.getId(), myAcc.getId());
         if(alreadyExists.isPresent()) {
             this.connectionReqRepository.delete(alreadyExists.get());
             this.accountService.connect(myAcc.getEmail(), otherAcc.getEmail());
@@ -89,7 +96,7 @@ public class ConnectionReqService {
 
     public void rejectRequest(Account myAcc, Account otherAcc) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
-                .findRequestByAccIds(myAcc.getId(), otherAcc.getId());
+                .findRequestByAccIds(otherAcc.getId(), myAcc.getId());
         alreadyExists.ifPresent(this.connectionReqRepository::delete);
     }
 

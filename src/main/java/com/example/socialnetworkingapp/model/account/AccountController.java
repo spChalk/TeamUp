@@ -2,9 +2,20 @@ package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.bio.Bio;
+import com.example.socialnetworkingapp.model.comment.Comment;
+import com.example.socialnetworkingapp.model.comment.CommentService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
+import com.example.socialnetworkingapp.model.connection_request.ConnectionRequestResponse;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
+import com.example.socialnetworkingapp.model.job.Job;
+import com.example.socialnetworkingapp.model.job.JobService;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
+import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
+import com.example.socialnetworkingapp.model.job_view.JobView;
+import com.example.socialnetworkingapp.model.job_view.JobViewService;
+import com.example.socialnetworkingapp.model.like.Like;
+import com.example.socialnetworkingapp.model.like.LikeService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +37,11 @@ public class AccountController {
     private final AccountService accountService;
     private final ConnectionReqService connectionReqService;
     private final FileDBService fileDBService;
+    private final JobService jobService;
+    private final JobApplicationService jobApplicationService;
+    private final JobViewService jobViewService;
+    private final CommentService commentService;
+    private final LikeService likeService;
 
     @PostConstruct
     public void createAdmin(){
@@ -89,6 +105,29 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account currUser = accountService.findAccountByEmail(user);
+
+        List<Job> jobs = this.jobService.getJobsUnsorted(id);
+        for(Job job: jobs) {
+            List<JobView> views = this.jobViewService.getViewsByJobId(id);
+            List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
+            this.jobService.deleteJob(job.getId(), views, apps);
+        }
+        List<Comment> comments = this.commentService.findCommentsByUserId(id);
+        for(Comment comment: comments) {
+            this.commentService.deleteById(comment.getId());
+        }
+        List<Like> likes = this.likeService.findLikesByUserId(id);
+        for(Like like: likes) {
+            this.likeService.deleteLikeById(like.getId());
+        }
+        List<ConnectionRequestResponse> requests = this.connectionReqService.findAllRequestsByAccId(id);
+        for(ConnectionRequestResponse req: requests) {
+            this.connectionReqService.deleteRequest(req.getId());
+        }
+        for(Account acc: currUser.getNetwork()) {
+            this.connectionReqService.deleteConnection(currUser.getEmail(), acc.getEmail());
+        }
+
         this.accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -111,8 +150,8 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/network/delete/{uid}")
-    public ResponseEntity<?> deleteFromNetwork(@PathVariable("uid") String otherEmail){
+    @DeleteMapping("/network/delete/{email}")
+    public ResponseEntity<?> deleteFromNetwork(@PathVariable("email") String otherEmail){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
         this.connectionReqService.deleteConnection(currUser.getEmail(), otherEmail);

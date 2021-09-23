@@ -13,6 +13,9 @@ import java.util.Optional;
 @Transactional
 public interface ConnectionReqRepository extends JpaRepository<ConnectionRequest, Long> {
 
+    @Query("SELECT cr FROM ConnectionRequest cr WHERE cr.receiver.id = ?1 OR cr.sender.id = ?1")
+    Optional<List<ConnectionRequest>> findAllRequestsByAccId(Long id);
+
     @Query("SELECT cr FROM ConnectionRequest cr WHERE cr.receiver.id = ?1")
     Optional<List<ConnectionRequest>> findRequestsByAccId(Long id);
 
