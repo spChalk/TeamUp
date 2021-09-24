@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ public class AccountController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Account>> getAllAccounts() throws IOException {
+    public ResponseEntity<List<AccountResponse>> getAllAccounts() throws IOException {
 
         /* Utility method to move all dangling files to the corresponding folders */
         Set<String> files = this.fileDBService.listDir(".");
@@ -68,37 +69,46 @@ public class AccountController {
         Account currUser = accountService.findAccountByEmail(user);
         List<Account> accounts = this.accountService.findAllAccounts();
         accounts.remove(currUser);
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+
+        List<AccountResponse> accs = new ArrayList<>();
+        for(Account acc: accounts) {
+            accs.add(new AccountResponse(acc));
+        }
+        return new ResponseEntity<>(accs, HttpStatus.OK);
     }
 
     @GetMapping("/find/id/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id){
+    public ResponseEntity<AccountResponse> getAccountById(@PathVariable("id") Long id){
         Account account = this.accountService.findAccountById(id);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(account), HttpStatus.OK);
     }
 
     @GetMapping("/find/mail/{email}")
-    public ResponseEntity<Account> getAccountByEmail(@PathVariable("email") String email) {
+    public ResponseEntity<AccountResponse> getAccountByEmail(@PathVariable("email") String email) {
         Account account = this.accountService.findAccountByEmail(email);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(account), HttpStatus.OK);
     }
 
     @GetMapping("/find/names/{keyword}")
-    public ResponseEntity<List<Account>> getAccountsBySimilarName(@PathVariable("keyword") String keyword) {
+    public ResponseEntity<List<AccountResponse>> getAccountsBySimilarName(@PathVariable("keyword") String keyword) {
         List<Account> accounts = this.accountService.findAccountsBySimilarName(keyword);
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+        List<AccountResponse> accs = new ArrayList<>();
+        for(Account acc: accounts) {
+            accs.add(new AccountResponse(acc));
+        }
+        return new ResponseEntity<>(accs, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
+    public ResponseEntity<AccountResponse> updateAccount(@RequestBody Account account){
         Account newAccount = this.accountService.updateAccount(account);
-        return new ResponseEntity<>(newAccount, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(newAccount), HttpStatus.OK);
     }
 
     @PutMapping("/about-update")
-    public ResponseEntity<Account> aboutUpdateAccount(@RequestBody AccountUpdateRequest account){
+    public ResponseEntity<AccountResponse> aboutUpdateAccount(@RequestBody AccountUpdateRequest account){
         Account newAccount = this.accountService.aboutUpdateAccount(account);
-        return new ResponseEntity<>(newAccount, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(newAccount), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -142,17 +152,17 @@ public class AccountController {
     }
 
     @PostMapping("/tags/add")
-    public ResponseEntity<Account> addTag(@RequestBody String tag) {
+    public ResponseEntity<AccountResponse> addTag(@RequestBody String tag) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<Account>(this.accountService.addTag(tag, currUser), HttpStatus.OK);
+        return new ResponseEntity<AccountResponse>(new AccountResponse(this.accountService.addTag(tag, currUser)), HttpStatus.OK);
     }
 
     @PostMapping("/tags/add/all")
-    public ResponseEntity<Account> addTag(@RequestBody List<String> tags) {
+    public ResponseEntity<AccountResponse> addTag(@RequestBody List<String> tags) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<Account>(this.accountService.addAccountTags(tags, currUser), HttpStatus.OK);
+        return new ResponseEntity<AccountResponse>(new AccountResponse(this.accountService.addAccountTags(tags, currUser)), HttpStatus.OK);
     }
 
     @GetMapping("/experience/get")
@@ -171,10 +181,10 @@ public class AccountController {
 
     /* Post a {email, experience} */
     @PostMapping("/experience/add")
-    public ResponseEntity<Account> addExperience(@RequestBody Experience experience) {
+    public ResponseEntity<AccountResponse> addExperience(@RequestBody Experience experience) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(this.accountService.addExperience(currUser, experience),
+        return new ResponseEntity<>(new AccountResponse(this.accountService.addExperience(currUser, experience)),
                 HttpStatus.OK);
     }
 
@@ -204,10 +214,10 @@ public class AccountController {
 
     /* Post a {email, education} */
     @PostMapping("/education/add")
-    public ResponseEntity<Account> addEducation(@RequestBody Education education) {
+    public ResponseEntity<AccountResponse> addEducation(@RequestBody Education education) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(this.accountService.addEducation(currUser, education),
+        return new ResponseEntity<>(new AccountResponse(this.accountService.addEducation(currUser, education)),
                 HttpStatus.OK);
     }
 
@@ -220,17 +230,17 @@ public class AccountController {
     }
 
     @PutMapping("/hide-tags")
-    public ResponseEntity<Account> hideTags() {
+    public ResponseEntity<AccountResponse> hideTags() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account account = this.accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(this.accountService.hideTags(account), HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(this.accountService.hideTags(account)), HttpStatus.OK);
     }
 
     @PutMapping("/show-tags")
-    public ResponseEntity<Account> showTags() {
+    public ResponseEntity<AccountResponse> showTags() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account account = this.accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(this.accountService.showTags(account), HttpStatus.OK);
+        return new ResponseEntity<>(new AccountResponse(this.accountService.showTags(account)), HttpStatus.OK);
     }
 
     @GetMapping("/myTags")

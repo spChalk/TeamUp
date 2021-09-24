@@ -120,7 +120,6 @@ export class RegisterComponent implements OnInit {
 
         this.accountService.registerAccount(registerForm.value).subscribe(
             (response: Account) => {
-                console.log(response);
                 this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
                     (newResponse: boolean) => {
                       this.onClickModal('addPhoto');

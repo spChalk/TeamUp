@@ -15,7 +15,6 @@ export class Account {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   phone: string;
   imageUrl: string;
   dateCreated: Date;
@@ -32,7 +31,6 @@ export class Account {
     this.firstName = acc.firstName;
     this.lastName = acc.lastName;
     this.email = acc.email;
-    this.password = acc.password;
     this.phone = acc.phone;
     this.imageUrl = acc.imageUrl;
     this.dateCreated = acc.dateCreated;

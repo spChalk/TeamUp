@@ -177,8 +177,8 @@ export class SettingsComponent implements OnInit {
   }
 
   public updatePassword(passwordForm: NgForm, confirmation: string): void {
-
- /*   this.accountService.confirmPassword(confirmation, this.account.password).subscribe(
+/*
+    this.accountService.confirmPassword(confirmation, this.account.password).subscribe(
       (response: boolean) => {
         if (!response) {
           alert("Error, user was not authenticated. Update failed.");
@@ -189,7 +189,7 @@ export class SettingsComponent implements OnInit {
         alert(error.message);
       }
     );
-*/
+
     if(passwordForm.value.password !== this.account.password) {
       this.account.password = passwordForm.value.password;
     }
@@ -203,6 +203,7 @@ export class SettingsComponent implements OnInit {
       }
     );
     window.location.reload();
+    */
   }
 
   public deleteBio() {
