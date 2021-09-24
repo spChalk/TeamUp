@@ -140,6 +140,9 @@ export class SettingsComponent implements OnInit {
     if(mode === 'updatePass') {
       button.setAttribute('data-target', '#updatePass');
     }
+    if(mode === 'deleteAccount') {
+      button.setAttribute('data-target', '#deleteAccount');
+    }
     if(container != null) {
       container.appendChild(button);
       button.click();

@@ -67,7 +67,7 @@
                   <input type="file" (change)="selectFile($event)" />
                 </label>
                 <div class="alert alert-light" role="alert">{{ message }}</div>
-              </div>`
+              </div>
               <hr>
               <div class="form-group">
                 <label for="bio">Your Bio</label>
@@ -97,7 +97,13 @@
                 <input type="password" class="form-control" ngModel name="password" id="password" aria-describedby="passwordHelp" placeholder="Enter your password" required>
               </div>
               <button (click)="onClickModal('updatePass')" [disabled]="passwordForm.invalid" class="btn btn-danger" type="button">Change password</button>
-            </form>
+            <hr>
+              </form>
+
+            <div style="outline-style: dotted;  outline-color: orangered;">
+              <h5 style="margin-top: 5px;margin-left: 5px"> Danger Zone </h5> <br>
+              <button (click)="onClickModal('deleteAccount')" class="btn btn-danger ml-2 mb-1" type="button">Delete account</button>
+            </div>
           </div>
 
 
@@ -151,6 +157,28 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button (click)="updatePassword(passwordForm, confirmPassword.value.password)" type="button" class="btn btn-danger"  data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete account modal -->
+<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAccountModalLabel">Remove account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account? <br>
+        <strong>Everything</strong> related to you will be removed <a style="color: red;font-weight: bold">permanently</a>.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button (click)="updatePassword(passwordForm, confirmPassword.value.password)" type="button" class="btn btn-danger"  data-dismiss="modal">Delete my account</button>
       </div>
     </div>
   </div>
