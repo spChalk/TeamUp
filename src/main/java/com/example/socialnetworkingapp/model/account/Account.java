@@ -48,7 +48,7 @@ public class Account implements UserDetails {
 
     @Column(unique = true)
     private String phone;
-    private String imageUrl ;
+    private String imageUrl;
 
     @NotNull
     private LocalDate dateCreated = LocalDate.now();

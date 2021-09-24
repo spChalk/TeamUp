@@ -274,7 +274,7 @@ public class AccountService implements UserDetailsService {
         acc.setFirstName(account.getFirstName());
         acc.setLastName(account.getLastName());
         acc.setEmail(account.getEmail());
-        acc.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+        acc.setPassword(account.getPassword());
         acc.setPhone(account.getPhone());
         acc.setImageUrl(account.getImageUrl());
         acc.setBio(account.getBio());
