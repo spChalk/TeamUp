@@ -78,15 +78,17 @@
         <div class="ks-messages ks-messenger__messages">
 
           <!-- read / unread etc -->
-          <div class="ks-header">
+          <div class="ks-header" *ngFor="let message of this.messages">
+
             <div class="ks-description">
-              <div class="ks-name">here na to ftiaksw</div>
+              <div class="ks-name" *ngIf="this.account.email === message.senderEmail" >Chating with {{message.receiverFirstName}} {{message.receiverLastName}} (at {{message.receiverEmail}})</div>
             </div>
+
             <div class="ks-controls">
               <div class="dropdown">
                 <button class="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button"
                   id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="la la-ellipsis-h ks-icon"></span>
+                  <span class="la la-ellipsis-h ks-icon">Options</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right ks-simple" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#">
@@ -144,9 +146,9 @@
                   <li *ngIf="this.account.email !== message.senderEmail" class="ks-item ks-from">
 
                     <span class="ks-avatar ks-online">
-                      <img *ngIf="getImage(message.senderEmail)=== null" src="../../assets/images/user_default.png"
+                      <img *ngIf="message.senderImageUrl=== null" src="../../assets/images/user_default.png"
                         width="36" height="36" class="rounded-circle">
-                      <img *ngIf="getImage(message.senderEmail)" src={{getImage(message.senderEmail)}} width="36"
+                      <img *ngIf="message.senderImageUrl" src={{message.senderImageUrl}} width="36"
                         height="36" class="rounded-circle">
                     </span>
 
@@ -351,39 +353,68 @@
         </div>
 
         <!-- end of send new message modal -->
+
         <!-- user info / right panel-->
-        <div class="ks-info ks-messenger__info">
+
+        <div class="ks-info ks-messenger__info" *ngFor="let message of this.messages">
           <div class="ks-header">
             User Info
           </div>
           <div class="ks-body">
             <div class="ks-item ks-user">
 
-              <span class="ks-avatar ks-online">
-                <img *ngIf="this.account.imageUrl === null" src="../../assets/images/user_default.png" width="36"
+              <span class="ks-avatar ks-online" *ngIf="this.account.email === message.senderEmail">
+                <img *ngIf="message.receiverImageUrl == null" src="../../assets/images/user_default.png" width="36"
                   height="36" class="rounded-circle">
-                <img *ngIf="this.account.imageUrl" src={{this.account.imageUrl}} width="36" height="36"
+                <img *ngIf="message.receiverImageUrl" src={{message.receiverImageUrl}} width="36" height="36"
                   class="rounded-circle">
               </span>
 
-              <span class="ks-name">
-                {{this.account.firstName}} {{this.account.lastName}}
+              <span class="ks-avatar ks-online" *ngIf="this.account.email === message.receiverEmail">
+                <img *ngIf="message.senderImageUrl === null" src="../../assets/images/user_default.png" width="36"
+                  height="36" class="rounded-circle">
+                <img *ngIf="message.receiverImageUrl" src={{message.receiverImageUrl}} width="36" height="36"
+                  class="rounded-circle">
+              </span>
+
+              <span class="ks-name" *ngIf="this.account.email === message.senderEmail">
+                {{message.receiverFirstName}} {{message.receiverLastName}}
+              </span>
+
+              <span class="ks-name" *ngIf="this.account.email === message.receiverEmail">
+                {{message.senderFirstName}} {{message.senderLastName}}
               </span>
             </div>
 
-            <div class="ks-item">
+            <div class="ks-item" *ngIf="this.account.email === message.senderEmail">
               <div class="ks-name">Email</div>
               <div class="ks-text">
-                {{this.account.email}}
+                {{message.receiverEmail}}
               </div>
             </div>
-            <div class="ks-item">
+
+            <div class="ks-item" *ngIf="this.account.email === message.receiverEmail">
+              <div class="ks-name">Email</div>
+              <div class="ks-text">
+                {{message.senderEmail}}
+              </div>
+            </div>
+
+            <div class="ks-item" *ngIf="this.account.email === message.senderEmail">
               <div class="ks-name">Phone Number</div>
               <div class="ks-text">
-                {{this.account.phone}}
+                {{message.receiverPhone}}
+              </div>
+            </div>
+
+            <div class="ks-item" *ngIf="this.account.email === message.receiverEmail">
+              <div class="ks-name">Phone Number</div>
+              <div class="ks-text">
+                {{message.senderPhone}}
               </div>
             </div>
           </div>
+
           <!-- this is not neccessary to do  -->
 
           <!-- <div class="ks-footer">
