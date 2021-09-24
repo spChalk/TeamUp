@@ -1,9 +1,1 @@
-Mapping Job 55 to Index 0
-USER 53 HAS 4 TAGS.
-List of job views is empty!
-Adding pair { 0, 55 }
-Equal Tags!  
-Equal Tags!  
-Equal Tags!  
-Equal Tags!  
-Pushing Job 55 with SCORE: 4
+There are 0 jobs. Returning an empty array..

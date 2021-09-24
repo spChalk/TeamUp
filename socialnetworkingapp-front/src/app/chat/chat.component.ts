@@ -134,11 +134,11 @@ export class ChatComponent implements OnInit {
       }
     )
   }
-  public getImage(friend : string){
+//   public getImage(friend : string){
 
-    return this.friends.find(x => x.email == friend)?.imageUrl;
+//     return this.friends.find(x => x.email == friend)?.imageUrl;
     
-  }
+//   }
 
   ngOnDestroy() {
     this.stopPolling.next();
