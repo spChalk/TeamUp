@@ -4,6 +4,8 @@ import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.post.Post;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -33,6 +35,7 @@ public class Comment {
     //1 commenter -> many comments
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name ="account_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account commenter;
 
     //comments of post

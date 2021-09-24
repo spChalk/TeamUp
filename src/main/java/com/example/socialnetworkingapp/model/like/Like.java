@@ -3,6 +3,8 @@ package com.example.socialnetworkingapp.model.like;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.post.Post;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +26,7 @@ public class Like implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

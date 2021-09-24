@@ -4,6 +4,8 @@ import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.job.Job;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,11 +27,13 @@ public class JobView implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account viewer;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Job job;
 
     @NotNull

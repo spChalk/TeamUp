@@ -1,5 +1,9 @@
-Mapping Job 54 to Index 0
-USER 53 HAS 2 TAGS.
-There's no one in the network!
-Adding pair { 31, 54 }
-Pushing Job 54 with SCORE: 31
+Mapping Job 55 to Index 0
+USER 53 HAS 4 TAGS.
+List of job views is empty!
+Adding pair { 0, 55 }
+Equal Tags!  
+Equal Tags!  
+Equal Tags!  
+Equal Tags!  
+Pushing Job 55 with SCORE: 4

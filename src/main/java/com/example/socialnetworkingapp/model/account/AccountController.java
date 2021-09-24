@@ -106,28 +106,10 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account currUser = accountService.findAccountByEmail(user);
-/*
-        List<Job> jobs = this.jobService.getJobsUnsorted(id);
-        for(Job job: jobs) {
-            List<JobViewResponse> views = this.jobViewService.getViewsByJobId(id);
-            List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
-            this.jobService.deleteJob(job.getId(), views, apps);
-        }
-        List<Comment> comments = this.commentService.findCommentsByUserId(id);
-        for(Comment comment: comments) {
-            this.commentService.deleteById(comment.getId());
-        }
-        List<Like> likes = this.likeService.findLikesByUserId(id);
-        for(Like like: likes) {
-            this.likeService.deleteLikeById(like.getId());
-        }
-        List<ConnectionRequestResponse> requests = this.connectionReqService.findAllRequestsByAccId(id);
-        for(ConnectionRequestResponse req: requests) {
-            this.connectionReqService.deleteRequest(req.getId());
-        }
+
         for(Account acc: currUser.getNetwork()) {
-            this.connectionReqService.deleteConnection(currUser.getEmail(), acc.getEmail());
-        }*/
+            this.accountService.removeConnection(acc.getEmail(), currUser.getEmail());
+        }
 
         this.accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -4,6 +4,8 @@ import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ public class Job implements Serializable {
 
     @NotNull
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account publisher;
 
     @NotNull
@@ -49,9 +52,9 @@ public class Job implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.MERGE
             })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "job_tags",
             joinColumns = { @JoinColumn(name = "job_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })

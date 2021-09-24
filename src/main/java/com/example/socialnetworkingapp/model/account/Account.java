@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,8 +57,7 @@ public class Account implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.ALL
             })
     @JoinTable(name = "network",
             joinColumns = { @JoinColumn(name = "account1_id") },
@@ -66,9 +67,9 @@ public class Account implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.MERGE
             })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "account_tags",
             joinColumns = { @JoinColumn(name = "account_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
@@ -79,7 +80,7 @@ public class Account implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
+                    CascadeType.REMOVE,
                     CascadeType.MERGE
             })
     @JoinTable(name = "account_experience",
@@ -89,7 +90,7 @@ public class Account implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
+                    CascadeType.REMOVE,
                     CascadeType.MERGE
             })
     @JoinTable(name = "account_education",
@@ -99,7 +100,7 @@ public class Account implements UserDetails {
 
     @OneToOne(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
+                    CascadeType.REMOVE,
                     CascadeType.MERGE
             })
     @JoinTable(name = "account_bio",

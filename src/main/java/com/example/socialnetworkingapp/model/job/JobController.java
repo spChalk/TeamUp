@@ -62,9 +62,7 @@ public class JobController {
     public ResponseEntity<?> deleteJobById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        List<JobViewResponse> views = this.jobViewService.getViewsByJobId(id);
-        List<JobApplicationResponse> apps = this.jobApplicationService.findApplicationsByJobId(id);
-        jobService.deleteJob(id, views, apps);
+        jobService.deleteJob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

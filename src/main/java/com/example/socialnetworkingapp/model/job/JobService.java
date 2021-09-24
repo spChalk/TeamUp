@@ -280,13 +280,7 @@ public class JobService {
         return job.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);
     }
 
-    public void deleteJob(Long id, List<JobViewResponse> views, List<JobApplicationResponse> apps) {
-        for(JobViewResponse v: views) {
-            this.jobViewRepository.deleteById(v.getId());
-        }
-        for(JobApplicationResponse app: apps) {
-            this.jobApplicationRepository.deleteById(app.getId());
-        }
+    public void deleteJob(Long id) {
         this.jobRepository.deleteById(id);
     }
 /*
