@@ -41,8 +41,6 @@ public class TagService {
     public void createTags() {
         JSONParser parser = new JSONParser();
         try{
-
-
             Object tags = parser.parse(new FileReader("src/main/java/com/example/socialnetworkingapp/model/tags/tags.json"));
             JSONObject json = (JSONObject) tags;
             JSONArray array = (JSONArray) json.get("Tags");

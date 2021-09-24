@@ -252,6 +252,14 @@ public class JobService {
     }
 
     public JobResponse addJob(Job job) {
+
+        for(Tag tag: job.getTags()) {
+            Tag existingTag = this.tagService.getTagByName(tag.getTag());
+            if(existingTag != null) {
+                job.getTags().set(job.getTags().indexOf(tag), existingTag);
+            }
+        }
+
         List<Job> savedJob = new ArrayList<>();
         savedJob.add(this.jobRepository.save(job));
         return savedJob.stream().map(jobMapper::JobToJobResponse).collect(Collectors.toList()).get(0);

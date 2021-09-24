@@ -34,6 +34,7 @@ export class JobComponent implements OnInit {
   public account: Account;
 
   public selectedJob: Job;
+  public selectedJobApplicants: JobApplication[] = [];
   public jobIdToDelete: number;
   public jobIdToEdit: number;
   public jobIdToDeleteApplicationFrom: number;
@@ -97,7 +98,7 @@ export class JobComponent implements OnInit {
       (error: HttpErrorResponse) => {
         alert(error.message);
       });
-    this.jobAppService.getUserApplications(this.authenticationService.getJWT()).subscribe(
+    this.jobAppService.getUserApplications().subscribe(
       (applications: JobApplication[]) => {
         for(let application of applications) {
           this.hasAppliedToJob.set(application.jobId, true);
@@ -156,6 +157,16 @@ export class JobComponent implements OnInit {
     if(mode === 'seeViews') {
       button.setAttribute('data-target', '#seeViews');
     }
+    if(mode === 'seeApplicants') {
+      this.jobAppService.getJobApplicants(data).subscribe(
+        (applications: JobApplication[]) => {
+          this.selectedJobApplicants = applications;
+        }, (err: HttpErrorResponse) => {
+          alert(err.message);
+        }
+      );
+      button.setAttribute('data-target', '#seeApplicants');
+    }
     if(container != null) {
       container.appendChild(button);
       button.click();
@@ -164,7 +175,7 @@ export class JobComponent implements OnInit {
 
   public onApplyToJob(selectedJob: Job) {
 
-    this.jobAppService.applyToJob(selectedJob, this.authenticationService.getJWT()).subscribe(
+    this.jobAppService.applyToJob(selectedJob).subscribe(
       (response: JobApplication) => {
         this.getJobs();
       },
@@ -219,8 +230,7 @@ export class JobComponent implements OnInit {
   }
 
   public onDeleteJobApplication(jobIdToDeleteApplicationFrom: number) {
-    this.jobAppService.getApplicationByUserAndJobIds(this.account.id, jobIdToDeleteApplicationFrom,
-      this.authenticationService.getJWT()).subscribe(
+    this.jobAppService.getApplicationByUserAndJobIds(this.account.id, jobIdToDeleteApplicationFrom).subscribe(
       (app: JobApplication) => {
         this.jobAppService.deleteJobApplication(
           app.id
@@ -246,7 +256,7 @@ export class JobComponent implements OnInit {
       jobForm.value.interests
     );
 
-    this.jobService.editJob(jobId, newJobRequest, this.authenticationService.getJWT()).subscribe(
+    this.jobService.editJob(jobId, newJobRequest).subscribe(
       (response: Job) => {
         console.log(response);
         this.getJobs();

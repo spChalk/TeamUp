@@ -126,6 +126,11 @@
                          type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-pencil"></i></button>
                </div>
 
+               <button *ngIf="this.authenticationService.getCurrentUser() === selectedJob?.publisherEmail" (click)="onClickModal(selectedJob?.id, 'seeApplicants')"
+                       type="button" class="btn btn-info mr-2" data-placement="top" style="float: right" data-original-title="Info">
+                 <i class="fa fa-eye"></i> See Applicants
+               </button>
+
                <button *ngIf="this.authenticationService.getCurrentUser() !== selectedJob?.publisherEmail && this.hasAppliedToJob.has(selectedJob.id) === false" (click)="onClickModal(null, 'apply')"
                        type="button" class="btn btn-primary mr-2" data-placement="top" style="float: right" data-original-title="Info">
                       <i class="fa fa-send"></i> Apply
@@ -161,7 +166,7 @@
              <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length === 1)">
                {{this.jobViews.get(selectedJob?.id).length}} view
              </div>
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length > 1)">
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length !== 1)">
                {{this.jobViews.get(selectedJob?.id).length}} views
              </div>
 
@@ -170,7 +175,7 @@
                  {{this.jobViews.get(selectedJob?.id).length}} view
                </button>
              </div>
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length > 1)">
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length !== 1)">
                <button type="button" class="btn btn-outline-info" (click)="onClickModal(selectedJob?.id, 'seeViews')">
                  {{this.jobViews.get(selectedJob?.id).length}} views
                </button>
@@ -445,9 +450,38 @@
           <a *ngFor="let view of jobViews.get(selectedJob?.id)">
             <img *ngIf="view?.imageUrl !== null" src="{{view?.imageUrl}}" style="width: 40px;height: auto;">
             <img *ngIf="view?.imageUrl === null" src="../../assets/images/user_default.png" style="width: 40px;height: auto">
-            {{view?.firstName}} - {{view?.lastName}} -
+            {{view?.firstName}}  {{view?.lastName}} - {{view?.email}}
+          </a>
+        </div>
 
-            {{view?.email}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- See applicants modal -->
+<div class="modal fade" id="seeApplicants" tabindex="-1" role="dialog" aria-labelledby="seeApplicantsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="seeApplicantsModalLabel">Applicants</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a *ngIf="selectedJobApplicants?.length === 0">
+          No applicants yet!
+        </a>
+
+        <div style="max-height: 300px;overflow-y: auto">
+          <a *ngFor="let app of selectedJobApplicants">
+            <img *ngIf="app?.applicantImage !== null" src="{{app?.applicantImage}}" style="width: 40px;height: auto;">
+            <img *ngIf="app?.applicantImage === null" src="../../assets/images/user_default.png" style="width: 40px;height: auto">
+            {{app?.applicantFirstName}}  {{app?.applicantFirstName}} - {{app?.applicantEmail}}
           </a>
         </div>
 

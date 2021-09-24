@@ -10,6 +10,9 @@ import lombok.Data;
 public class JobApplicationResponse {
 
     private Long id;
+    private String applicantFirstName;
+    private String applicantLastName;
     private String applicantEmail;
+    private String applicantImage;
     private Long jobId;
 }

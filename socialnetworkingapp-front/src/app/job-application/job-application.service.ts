@@ -15,28 +15,23 @@ export class JobApplicationService {
 
   constructor(private http: HttpClient) { }
 
-  public applyToJob(selectedJob: Job, token: string) {
-    return this.http.post<JobApplication>(`${this.url}/apply/${selectedJob.id}`, {},
-      {
-        headers: new HttpHeaders({"Authorization": "Bearer " + token})
-      });
+  public applyToJob(selectedJob: Job) {
+    return this.http.post<JobApplication>(`${this.url}/apply/${selectedJob.id}`, {});
   }
 
-  public getUserApplications(token: string) {
-    return this.http.get<JobApplication[]>(`${this.url}/u`,
-      {
-        headers: new HttpHeaders({"Authorization": "Bearer " + token})
-      });
+  public getUserApplications() {
+    return this.http.get<JobApplication[]>(`${this.url}/u`);
+  }
+
+  public getJobApplicants(jobId: number) {
+    return this.http.get<JobApplication[]>(`${this.url}/j/${jobId}`);
   }
 
   public deleteJobApplication(id: number) {
     return this.http.delete<any>(`${this.url}/delete/${id}`);
   }
 
-  public getApplicationByUserAndJobIds(id: number, jobIdToDeleteApplicationFrom: number, token: string): Observable<JobApplication> {
-    return this.http.get<JobApplication>(`${this.url}/uj/${id}/${jobIdToDeleteApplicationFrom}`,
-      {
-        headers: new HttpHeaders({"Authorization": "Bearer " + token})
-      });
+  public getApplicationByUserAndJobIds(id: number, jobIdToDeleteApplicationFrom: number): Observable<JobApplication> {
+    return this.http.get<JobApplication>(`${this.url}/uj/${id}/${jobIdToDeleteApplicationFrom}`);
   }
 }
