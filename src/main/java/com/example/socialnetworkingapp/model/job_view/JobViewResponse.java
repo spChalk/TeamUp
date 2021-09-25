@@ -14,4 +14,5 @@ public class JobViewResponse {
     private String lastName;
     private String email;
     private String imageUrl;
+    private Long times;
 }

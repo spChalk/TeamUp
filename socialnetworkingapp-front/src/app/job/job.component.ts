@@ -107,6 +107,16 @@ export class JobComponent implements OnInit {
     );
   }
 
+  public getTotalViews(views: JobView[]) {
+    if(views === undefined) return 0;
+
+    let sum = 0;
+    for(let view of views) {
+      sum += view.times;
+    }
+    return sum;
+  }
+
   public setSelectedJob(job: Job): void {
     this.selectedJob = job;
   }

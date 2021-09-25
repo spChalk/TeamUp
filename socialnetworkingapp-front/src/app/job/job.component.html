@@ -163,21 +163,21 @@
                   <span *ngFor="let tag of selectedJob?.tags" class="badge badge-secondary text-white mr-1"> {{tag?.tag.replace('_', ' ')}}  </span>
                <br><br>
              </h5>
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length === 1)">
-               {{this.jobViews.get(selectedJob?.id).length}} view
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (getTotalViews(this.jobViews.get(selectedJob?.id)) === 1)">
+               {{getTotalViews(this.jobViews.get(selectedJob?.id))}} view
              </div>
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length !== 1)">
-               {{this.jobViews.get(selectedJob?.id).length}} views
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail !== this.authenticationService.getCurrentUser() && (getTotalViews(this.jobViews.get(selectedJob?.id)) !== 1)">
+               {{getTotalViews(this.jobViews.get(selectedJob?.id))}} views
              </div>
 
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length === 1)">
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (getTotalViews(this.jobViews.get(selectedJob?.id)) === 1)">
                <button type="button" class="btn btn-outline-info" (click)="onClickModal(selectedJob?.id, 'seeViews')">
-                 {{this.jobViews.get(selectedJob?.id).length}} view
+                 {{getTotalViews(this.jobViews.get(selectedJob?.id))}} view
                </button>
              </div>
-             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (this.jobViews.get(selectedJob?.id).length !== 1)">
+             <div class="text-muted" *ngIf="selectedJob?.publisherEmail === this.authenticationService.getCurrentUser() && (getTotalViews(this.jobViews.get(selectedJob?.id)) !== 1)">
                <button type="button" class="btn btn-outline-info" (click)="onClickModal(selectedJob?.id, 'seeViews')">
-                 {{this.jobViews.get(selectedJob?.id).length}} views
+                 {{getTotalViews(this.jobViews.get(selectedJob?.id))}} views
                </button>
              </div>
              <br>
@@ -442,7 +442,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <a *ngIf="jobViews.get(selectedJob?.id)?.length === 0">
+        <a *ngIf="getTotalViews(jobViews.get(selectedJob?.id)) === 0">
           No views yet!
         </a>
 
@@ -450,7 +450,7 @@
           <a *ngFor="let view of jobViews.get(selectedJob?.id)">
             <img *ngIf="view?.imageUrl !== null" src="{{view?.imageUrl}}" style="width: 40px;height: auto;">
             <img *ngIf="view?.imageUrl === null" src="../../assets/images/user_default.png" style="width: 40px;height: auto">
-            {{view?.firstName}}  {{view?.lastName}} - {{view?.email}}
+            {{view?.firstName}}  {{view?.lastName}} - {{view?.email}} <br><br>
           </a>
         </div>
 
@@ -481,7 +481,7 @@
           <a *ngFor="let app of selectedJobApplicants">
             <img *ngIf="app?.applicantImage !== null" src="{{app?.applicantImage}}" style="width: 40px;height: auto;">
             <img *ngIf="app?.applicantImage === null" src="../../assets/images/user_default.png" style="width: 40px;height: auto">
-            {{app?.applicantFirstName}}  {{app?.applicantFirstName}} - {{app?.applicantEmail}}
+            {{app?.applicantFirstName}}  {{app?.applicantFirstName}} - {{app?.applicantEmail}} <br><br>
           </a>
         </div>
 

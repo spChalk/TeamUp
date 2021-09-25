@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface JobViewMapper {
 
     @Mapping(target = "id", expression = "java(mapId(jobView.getId()))")
+    @Mapping(target = "times", expression = "java(mapTimes(jobView.getTimes()))")
     @Mapping(target = "firstName", expression = "java(mapFirstName(jobView.getViewer()))")
     @Mapping(target = "lastName", expression = "java(mapLastName(jobView.getViewer()))")
     @Mapping(target = "email", expression = "java(mapEmail(jobView.getViewer()))")
@@ -18,6 +19,9 @@ public interface JobViewMapper {
 
     default Long mapId(Long id) {
         return id;
+    }
+    default Long mapTimes(Long times) {
+        return times;
     }
     default String mapFirstName(Account account){
         return account.getFirstName();

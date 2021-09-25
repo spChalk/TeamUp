@@ -29,7 +29,7 @@ public class JobApplication implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account applicant;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Job job;
