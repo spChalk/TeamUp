@@ -8,15 +8,19 @@ import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 
 export interface Message{
   payload : string;
-  senderEmail : string;
-  receiverEmail : string;
+  date : Date;
 
+  senderEmail : string;
   senderFirstName: string;
   senderLastName: string;
+  senderImageUrl: string;
+  senderPhone: string;
 
   receiverFirstName: string;
   receiverLastName: string;
-  date : Date;
+  receiverEmail : string;
+  receiverImageUrl: string;
+  receiverPhone: string;
 }
 
 export interface Friends{
@@ -33,9 +37,6 @@ export interface Friends{
 export class ChatService {
 
   private url = environment.apiBaseUrl + '/messages';
-  // private allMessages$ : Observable<Message[]>;
-  public allFriends$ : Observable<Friends[]>;
-  private stopPolling = new Subject();
 
   constructor(private http: HttpClient) {
   }
@@ -58,18 +59,4 @@ export class ChatService {
       {receiverMail, payload},httpOptions);
     }
 
-  // getAllFriends(): Observable<Set<Friends>>{
-    // this.allFriends$ = timer(1, 3000).pipe(
-    //   switchMap(() => 
-    //   this.http.get<Set<Friends>> (this.url + "/friends")),
-    //   retry(),
-    //   share(),
-    //   takeUntil(this.stopPolling)
-    // );
-    // return this.allFriends$;
-  // }
-
-  // ngOnDestroy(){
-  //   this.stopPolling.next();
-  // }
 }
