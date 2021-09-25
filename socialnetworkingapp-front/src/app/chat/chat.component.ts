@@ -12,14 +12,6 @@ import { Observable, Subject, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
-interface FriendInfo{
-  firstName : string;
-  lastName: string;
-  email: string;
-  phone: string;
-  imageUrl: string;
-}
-
 
 @Component({
   selector: 'app-chat',
@@ -33,7 +25,6 @@ export class ChatComponent implements OnInit {
   account: Account;
   friends: Friends[];
   allFriends$: Observable<Friends[]>;
-  friend : FriendInfo;
   private stopPolling = new Subject();
   private url = environment.apiBaseUrl + '/messages';
   public queryParams: string;
@@ -92,23 +83,6 @@ export class ChatComponent implements OnInit {
     this.chatService.getAllMessages(this.authenticationService.getCurrentUser(), withFriend).subscribe(
       (resp: Message[]) => {
         this.messages = resp;
-        let m = this.messages[0];
-        if(m.receiverEmail == this.account.email){
-          this.friend.email = m.senderEmail;
-          this.friend.firstName = m.senderFirstName;
-          this.friend.lastName= m.senderLastName;
-          this.friend.phone= m.senderPhone;
-          this.friend.imageUrl= m.senderImageUrl;
-        }
-        else{
-          this.friend.email = m.receiverEmail;
-          this.friend.firstName = m.receiverFirstName;
-          this.friend.lastName= m.receiverLastName;
-          this.friend.phone= m.receiverPhone;
-          this.friend.imageUrl= m.receiverImageUrl;
-        }
-        console.log(this.friend);
-
       },
       (error: any) => {
         console.log(error);
@@ -158,11 +132,6 @@ export class ChatComponent implements OnInit {
       }
     )
   }
-//   public getImage(friend : string){
-
-//     return this.friends.find(x => x.email == friend)?.imageUrl;
-    
-//   }
 
   ngOnDestroy() {
     this.stopPolling.next();
