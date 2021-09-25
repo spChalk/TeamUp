@@ -33,8 +33,14 @@ import com.example.socialnetworkingapp.model.post.PostService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.OptionalAssert;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,11 +52,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.DataInput;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -324,12 +330,45 @@ public class AccountService implements UserDetailsService {
         }
     }*/
 
-    public void createAdmin() {
+    public void createAccounts() {
 
         Account account = new Account(AccountRole.ADMIN, "admin", "admin", "admin@admin.com", "adminadmin", "12345");
         String encodedPassword = bCryptPasswordEncoder.encode(account.getPassword());
         account.setPassword(encodedPassword);
         this.accountRepository.save(account);
+
+        JSONParser parser = new JSONParser();
+        try{
+            Object accounts = parser.parse(new FileReader("src/main/java/com/example/socialnetworkingapp/data/accounts.json"));
+            JSONObject json = (JSONObject) accounts;
+            JSONArray array = (JSONArray) json.get("Accounts");
+
+            Iterator<JSONObject> iterator = array.iterator();
+            while(iterator.hasNext()) {
+                ObjectMapper mapper = new ObjectMapper();
+                RegistrationRequest req = mapper.readValue(iterator.next().toJSONString(), RegistrationRequest.class);
+                Account newAccount = new Account(AccountRole.USER, req.getFirstName(), req.getLastName(), req.getEmail(),
+                        bCryptPasswordEncoder.encode(req.getPassword()), req.getPhone());
+                this.accountRepository.save(newAccount);
+            }
+
+            /*List<Account> allAccounts = this.accountRepository.findAll();
+            for(Account acc: allAccounts) {
+                for(int i = 0; i < 2; i++) {
+                    this.connect(acc.getEmail(), allAccounts.get(0).getEmail());
+                }
+            }*/
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+
     }
 
     public Account addTag(String tagName, Account account) {

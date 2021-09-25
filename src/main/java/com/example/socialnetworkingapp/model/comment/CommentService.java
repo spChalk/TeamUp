@@ -28,6 +28,10 @@ public class CommentService {
         return this.commentRepository.findCommentsOfPostById(postId).stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
     }
 
+    public List<CommentResponse> findCommentsOfUserInAPost(Long uid, Long pid) {
+        return this.commentRepository.findCommentsOfUserInAPost(uid, pid).stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
+    }
+
     public CommentResponse addComment(Comment comment){
         List<Comment> cm = new ArrayList<>();
         cm.add(this.commentRepository.save(comment));

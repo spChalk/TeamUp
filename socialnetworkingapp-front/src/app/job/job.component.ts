@@ -197,7 +197,6 @@ export class JobComponent implements OnInit {
 
     this.jobService.addJob(newJobRequest).subscribe(
       (response: Job) => {
-        console.log(response);
         this.getJobs();
       },
       (error: HttpErrorResponse) => {
@@ -209,7 +208,6 @@ export class JobComponent implements OnInit {
   public increaseView(jid: number) {
     this.jobViewService.addView(jid).subscribe(
       (response: JobView) => {
-        console.log(response);
         this.getJobs();
       },
       (error: HttpErrorResponse) => {
@@ -258,7 +256,6 @@ export class JobComponent implements OnInit {
 
     this.jobService.editJob(jobId, newJobRequest).subscribe(
       (response: Job) => {
-        console.log(response);
         this.getJobs();
       },
       (error: HttpErrorResponse) => {

@@ -46,8 +46,8 @@ public class AccountController {
     private final LikeService likeService;
 
     @PostConstruct
-    public void createAdmin(){
-        accountService.createAdmin();
+    public void createAccounts() {
+        accountService.createAccounts();
     }
 
     @GetMapping("/all")

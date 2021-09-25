@@ -34,18 +34,6 @@
               <button (click)="onClickModal(null, 'addPost')" type="button" class="btn btn-light btn-lg btn-block"> <i class="fa fa-pencil-square-o"></i> Post something </button>
             </div>
             <div class="btn-toolbar justify-content-between">
-              <!--<div class="btn-group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                  <i class="fa fa-globe"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                  <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
-                  <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
-                  <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
-                </div>
-              </div>-->
-
           </div>
         </div>
 
@@ -72,284 +60,88 @@
                 </div>
               </div>
               <button (click)="onClickModal(post.id, 'deletePost')" *ngIf="this.authenticationService.getCurrentUser() === post?.authorEmail" type="button" class="btn" style="color: dimgray"><i class="fa fa-times"></i></button>
-
-              <!--<div>
-                <div class="dropdown">
-                  <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-h"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                    <div class="h6 dropdown-header">Configuration</div>
-                    <a class="dropdown-item" href="#">Save</a>
-                    <a class="dropdown-item" href="#">Hide</a>
-                    <a class="dropdown-item" href="#">Report</a>
-                  </div>
-                </div>
-              </div>-->
             </div>
 
           </div>
-          <div class="card-body">
-            <h5 class="card-text">
 
-              <a *ngIf="post?.payload && (!post?.imagePath && !post?.videoPath && !post?.soundPath)"> {{post?.payload}} </a>
-              <a *ngIf="post?.payload && (post?.imagePath || post?.videoPath || post?.soundPath)"> {{post?.payload}} <br><br></a>
+          <a *ngIf="post?.authorEmail === this.authenticationService.getCurrentUser()" (click)="onClickModal(post, 'viewPost')">
 
-              <img *ngIf="post?.imagePath !== null" class="card-img mb-2" src="{{post?.imagePath}}" alt="">
+            <div class="card-body" >
+              <h5 class="card-text">
 
-
-              <video *ngIf="post?.videoPath !== null" class="card-img mb-2" autoplay controls muted>
-                <source src="{{post?.videoPath}}" type="video/mp4">
-                <source src="{{post?.videoPath}}" type="video/ogg">
-                Your browser does not support the video tag.
-              </video>
-
-              <audio *ngIf="post?.soundPath !== null" class="card-img mb-2" controls>
-                <source src="{{post?.soundPath}}" type="audio/ogg">
-                <source src="{{post?.soundPath}}" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-
-              <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
-            </h5>
-
-            <div class="text-muted h7 mb-2" style="float: right"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
-            <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}}
-              <a *ngIf="this.likedPosts.get(post?.id)[0] !== 1">likes</a>
-              <a *ngIf="this.likedPosts.get(post?.id)[0] === 1">like</a>
-              <span> &#183;</span>
-            {{this.commentedPosts.get(post?.id)[0].length}}
-              <a *ngIf="this.commentedPosts.get(post?.id)[0].length !== 1">comments</a>
-              <a *ngIf="this.commentedPosts.get(post?.id)[0].length === 1">comment</a>
-            </div>
-
-
-          </div>
-          <div class="card-footer" style="background-color: white">
-
-            <button *ngIf="this.likedPosts.get(post?.id)[1] === -1" (click)="onLike(post?.id)" id="empty-heart" class="card-link btn btn-light"><i class="fa fa-heart-o fa-lg" style="color: grey"></i> Like</button>
-            <button *ngIf="this.likedPosts.get(post?.id)[1] !== -1" (click)="onDislike(post?.id)" id="full-heart" class="card-link btn btn-outline-danger"><i class="fa fa-heart fa-lg" style="color: red"></i> Liked</button>
-            <button class="card-link btn btn-light" data-toggle="collapse" [attr.data-target]="'#collapse' + post.id"
-                    aria-expanded="true" aria-controls="collapseOne">
-              <i class="fa fa-comment fa-lg" style="color: royalblue"></i> Comment
-            </button>
-
-            <div id="accordion">
-                  <div id="collapse{{post.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-
-                      <form #commentForm="ngForm">
-                          <textarea type="text" ngModel name="payload" class="form-control" placeholder="Type your comment..." required></textarea>
-                      </form>
-                      <button (click)="onAddComment(post.id, commentForm.value);commentForm.reset();" [disabled]="commentForm.invalid" type="submit" class="btn btn-primary mt-1" style="float: right"> <i class="fa fa-reply"></i> </button>
-
-                        <div class="blog-comment">
-                          <hr *ngIf="this.commentedPosts.get(post.id)[0].length > 0">
-                          <ul class="comments" style="max-height: 500px;overflow-y: scroll">
-
-                            <li class="clearfix" *ngFor="let comment of this.commentedPosts.get(post.id)[0]">
-                              <img *ngIf="comment?.authorImage" src="{{comment?.authorImage}}" class="avatar" alt="">
-                              <img *ngIf="comment?.authorImage === null" src="../../assets/images/user_default.png" class="avatar" alt="">
-                              <div class="post-comments">
-                                <p class="meta"> <button (click)="onClickModal([comment.id, post.id], 'deleteComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-times"></i></button>
-                                  <button (click)="onClickModal([comment, post.id], 'editComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-pencil"></i></button>
-                                  {{comment?.date}} <a routerLink="/visit/{{comment?.authorEmail}}">{{comment?.authorFirstName}} {{comment?.authorLastName}}</a> says :
-                                </p>
-
-                                <p>
-                                  {{comment?.payload}}
-                                </p>
-                              </div>
-                            </li>
-
-                          </ul>
-                        </div>
-
-                    </div>
-
-
-
-
-
-
-
-
-            <!--<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>-->
-          </div>
-        </div>
-
-
-  <!--
-        <div class="card gedf-card">
-          <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-2">
-                  <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                <div style="max-height: 100px;overflow-y: auto">
+                  <a *ngIf="post?.payload && (!post?.imagePath && !post?.videoPath && !post?.soundPath)" > {{post?.payload}} </a>
+                  <a *ngIf="post?.payload && (post?.imagePath || post?.videoPath || post?.soundPath)" > {{post?.payload}} <br><br></a>
                 </div>
-                <div class="ml-2">
-                  <div class="h5 m-0">@LeeCross</div>
-                  <div class="h7 text-muted">Miracles Lee Cross</div>
-                </div>
-              </div>
-              <div>
-                <div class="dropdown">
-                  <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-h"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                    <div class="h6 dropdown-header">Configuration</div>
-                    <a class="dropdown-item" href="#">Save</a>
-                    <a class="dropdown-item" href="#">Hide</a>
-                    <a class="dropdown-item" href="#">Report</a>
-                  </div>
-                </div>
+
+                <img *ngIf="post?.imagePath !== null" class="card-img mb-2" src="{{post?.imagePath}}" alt="">
+
+
+                <video *ngIf="post?.videoPath !== null" class="card-img mb-2" autoplay controls muted>
+                  <source src="{{post?.videoPath}}" type="video/mp4">
+                  <source src="{{post?.videoPath}}" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+
+                <audio *ngIf="post?.soundPath !== null" class="card-img mb-2" controls>
+                  <source src="{{post?.soundPath}}" type="audio/ogg">
+                  <source src="{{post?.soundPath}}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+
+                <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
+              </h5>
+
+              <div class="text-muted h7 mb-2" style="float: right"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
+              <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}}
+                <a *ngIf="this.likedPosts.get(post?.id)[0] !== 1">likes</a>
+                <a *ngIf="this.likedPosts.get(post?.id)[0] === 1">like</a>
+                <span> &#183;</span>
+              {{this.commentedPosts.get(post?.id)[0].length}}
+                <a *ngIf="this.commentedPosts.get(post?.id)[0].length !== 1">comments</a>
+                <a *ngIf="this.commentedPosts.get(post?.id)[0].length === 1">comment</a>
               </div>
             </div>
+          </a>
 
-          </div>
-          <div class="card-body">
-            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
-            <a class="card-link" href="#">
-              <h5 class="card-title"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit consectetur
-                deserunt illo esse distinctio.</h5>
-            </a>
+          <a *ngIf="post?.authorEmail !== this.authenticationService.getCurrentUser()" (click)="onClickModal(post, 'viewPost');increaseView(post.id)">
+            <div class="card-body" >
+              <h5 class="card-text">
 
-            <p class="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta
-              alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit!
-              Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae.
-              Consectetur id molestias itaque facere? Hic!
-            </p>
-            <div>
-              <span class="badge badge-primary">JavaScript</span>
-              <span class="badge badge-primary">Android</span>
-              <span class="badge badge-primary">PHP</span>
-              <span class="badge badge-primary">Node.js</span>
-              <span class="badge badge-primary">Ruby</span>
-              <span class="badge badge-primary">Paython</span>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-            <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-          </div>
-        </div>
-         Post /////
-
-
-        - \\\\\\\Post
-        <div class="card gedf-card">
-          <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-2">
-                  <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                <div style="max-height: 100px;overflow-y: auto">
+                  <a *ngIf="post?.payload && (!post?.imagePath && !post?.videoPath && !post?.soundPath)" > {{post?.payload}} </a>
+                  <a *ngIf="post?.payload && (post?.imagePath || post?.videoPath || post?.soundPath)" > {{post?.payload}} <br><br></a>
                 </div>
-                <div class="ml-2">
-                  <div class="h5 m-0">@LeeCross</div>
-                  <div class="h7 text-muted">Miracles Lee Cross</div>
-                </div>
-              </div>
-              <div>
-                <div class="dropdown">
-                  <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-h"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                    <div class="h6 dropdown-header">Configuration</div>
-                    <a class="dropdown-item" href="#">Save</a>
-                    <a class="dropdown-item" href="#">Hide</a>
-                    <a class="dropdown-item" href="#">Report</a>
-                  </div>
-                </div>
+
+                <img *ngIf="post?.imagePath !== null" class="card-img mb-2" src="{{post?.imagePath}}" alt="">
+
+
+                <video *ngIf="post?.videoPath !== null" class="card-img mb-2" autoplay controls muted>
+                  <source src="{{post?.videoPath}}" type="video/mp4">
+                  <source src="{{post?.videoPath}}" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+
+                <audio *ngIf="post?.soundPath !== null" class="card-img mb-2" controls>
+                  <source src="{{post?.soundPath}}" type="audio/ogg">
+                  <source src="{{post?.soundPath}}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+
+                <img width="45" height="auto" src="{{post?.soundPath}}" alt="">
+              </h5>
+
+              <div class="text-muted h7 mb-2" style="float: right"> <i class="fa fa-clock-o"></i> {{post?.date}}</div>
+              <div class="text-muted"> {{this.likedPosts.get(post?.id)[0]}}
+                <a *ngIf="this.likedPosts.get(post?.id)[0] !== 1">likes</a>
+                <a *ngIf="this.likedPosts.get(post?.id)[0] === 1">like</a>
+                <span> &#183;</span>
+                {{this.commentedPosts.get(post?.id)[0].length}}
+                <a *ngIf="this.commentedPosts.get(post?.id)[0].length !== 1">comments</a>
+                <a *ngIf="this.commentedPosts.get(post?.id)[0].length === 1">comment</a>
               </div>
             </div>
-
-          </div>
-          <div class="card-body">
-            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
-            <a class="card-link" href="#">
-              <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
-                cum.</h5>
-            </a>
-
-            <p class="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
-              quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
-              eius maxime quaerat.
-              <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
-            </p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-            <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-          </div>
-        </div>
-         Post /////
-
-
-  -->
-      </div>
-<!--      <div class="col-md-3">
-        <div class="card gedf-card">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-              card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div>
-        <div class="card gedf-card">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-              card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div>
-      </div>-->
-
-<!--      <div class="col-md-3">
-      <div id="accordion">
-        <div class="card shadow-lg">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Notifications
-              </button>
-            </h5>
-          </div>
-
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
-        <div class="card shadow-lg">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button class="btn btn-outline-primary collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Chat
-              </button>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            <div class="card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>-->
+          </a>
 
     </div>
   </div>
@@ -392,7 +184,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-        <button (click)="onAddPost(postForm.value)" type="submit" class="btn btn-outline-success" data-dismiss="modal">Post</button>
+        <button (click)="onAddPost(postForm.value);postForm.reset()" type="submit" class="btn btn-outline-success" data-dismiss="modal">Post</button>
       </div>
     </div>
   </div>
@@ -462,6 +254,107 @@
         <button (click)="onEditComment(this.commentToEdit.id, editCommentForm.value)" [disabled]="editCommentForm.invalid" type="submit" class="btn btn-primary"
                 data-dismiss="modal" style="float: right"> Update </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Post Modal -->
+<div class="modal fade" id="viewPost" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mr-2">
+              <img *ngIf="this.selectedPost?.authorImage" class="rounded-circle" width="45" src="{{this.selectedPost?.authorImage}}" alt="">
+              <img *ngIf="this.selectedPost?.authorImage === null" class="rounded-circle" width="45" src="../../assets/images/user_default.png" alt="">
+            </div>
+            <div class="ml-2">
+              <div class="h5 m-0">{{this.selectedPost?.authorFirstName}} {{this.selectedPost?.authorLastName}}</div>
+              <div class="h7 text-muted">{{this.selectedPost?.authorEmail}}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-body" *ngIf="selectedPost !== undefined">
+
+        <h5 class="card-text">
+
+          <a *ngIf="this.selectedPost?.payload && (!this.selectedPost?.imagePath && !this.selectedPost?.videoPath && !this.selectedPost?.soundPath)" style="color: black"> {{this.selectedPost?.payload}} </a>
+          <a *ngIf="this.selectedPost?.payload && (this.selectedPost?.imagePath || this.selectedPost?.videoPath || this.selectedPost?.soundPath)" style="color: black"> {{this.selectedPost?.payload}} <br><br></a>
+
+          <img *ngIf="this.selectedPost?.imagePath !== null" class="card-img mb-2" src="{{this.selectedPost?.imagePath}}" style="max-width: 800px;height: auto" alt="">
+
+
+          <video *ngIf="this.selectedPost?.videoPath !== null" class="card-img mb-2" style="max-width: 800px;height: auto" autoplay controls muted>
+            <source src="{{this.selectedPost?.videoPath}}" type="video/mp4">
+            <source src="{{this.selectedPost?.videoPath}}" type="video/ogg">
+            Your browser does not support the video tag.
+          </video>
+
+          <audio *ngIf="this.selectedPost?.soundPath !== null" class="card-img mb-2" controls>
+            <source src="{{this.selectedPost?.soundPath}}" type="audio/ogg">
+            <source src="{{this.selectedPost?.soundPath}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+
+          <img width="45" height="auto" src="{{this.selectedPost?.soundPath}}" alt="">
+        </h5>
+
+        <div class="text-muted h7 mb-2" style="float: right"> <i class="fa fa-clock-o"></i> {{this.selectedPost?.date}}</div>
+        <div class="text-muted"> {{this.likedPosts.get(this.selectedPost?.id)[0]}}
+          <a *ngIf="this.likedPosts.get(this.selectedPost?.id)[0] !== 1">likes</a>
+          <a *ngIf="this.likedPosts.get(this.selectedPost?.id)[0] === 1">like</a>
+          <span> &#183;</span>
+          {{this.commentedPosts.get(this.selectedPost?.id)[0].length}}
+          <a *ngIf="this.commentedPosts.get(this.selectedPost?.id)[0].length !== 1">comments</a>
+          <a *ngIf="this.commentedPosts.get(this.selectedPost?.id)[0].length === 1">comment</a>
+        </div>
+        <br>
+        <button *ngIf="this.likedPosts.get(this.selectedPost?.id)[1] === -1" (click)="onLike(this.selectedPost?.id)" id="empty-heart" class="card-link btn btn-light"><i class="fa fa-heart-o fa-lg" style="color: grey"></i> Like</button>
+        <button *ngIf="this.likedPosts.get(this.selectedPost?.id)[1] !== -1" (click)="onDislike(this.selectedPost?.id)" id="full-heart" class="card-link btn btn-outline-danger"><i class="fa fa-heart fa-lg" style="color: red"></i> Liked</button>
+        <button class="card-link btn btn-light" data-toggle="collapse" [attr.data-target]="'#collapse' + this.selectedPost.id"
+                aria-expanded="true" aria-controls="collapseOne">
+          <i class="fa fa-comment fa-lg" style="color: royalblue"></i> Comment
+        </button>
+        <hr>
+        <div id="accordion">
+          <div id="collapse{{this.selectedPost.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+
+            <form #commentForm="ngForm">
+              <textarea type="text" ngModel name="payload" class="form-control" placeholder="Type your comment..." required></textarea>
+            </form>
+            <button (click)="onAddComment(this.selectedPost.id, commentForm.value);commentForm.reset();" [disabled]="commentForm.invalid" type="submit" class="btn btn-primary mt-1" style="float: right"> <i class="fa fa-reply"></i> </button>
+
+            <div class="blog-comment">
+              <hr *ngIf="this.commentedPosts.get(this.selectedPost.id)[0].length > 0">
+              <ul class="comments">
+
+                <li class="clearfix" *ngFor="let comment of this.commentedPosts.get(this.selectedPost.id)[0]">
+                  <img *ngIf="comment?.authorImage" src="{{comment?.authorImage}}" class="avatar" alt="">
+                  <img *ngIf="comment?.authorImage === null" src="../../assets/images/user_default.png" class="avatar" alt="">
+                  <div class="post-comments">
+                    <p class="meta"> <button (click)="onClickModal([comment.id, this.selectedPost.id], 'deleteComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-times"></i></button>
+                      <button (click)="onClickModal([comment, this.selectedPost.id], 'editComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-pencil"></i></button>
+                      {{comment?.date}} <a routerLink="/visit/{{comment?.authorEmail}}">{{comment?.authorFirstName}} {{comment?.authorLastName}}</a> says :
+                    </p>
+
+                    <p>
+                      {{comment?.payload}}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
     </div>
   </div>
 </div>

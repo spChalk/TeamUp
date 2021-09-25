@@ -1,0 +1,350 @@
+{
+  "Accounts": [
+      {
+        "firstName": "Adi",
+        "lastName": "Degli Antoni",
+        "email": "adegliantoni23@abc.net.au",
+        "password": "JKWVzzZTWb",
+        "phone": "3455698540",
+        "interests": [
+          "MANAGEMENT",
+          "BIOINFORMATICS",
+          "MINERAL RESOURCES"
+        ]
+      },
+      {
+        "firstName": "Tabbie",
+        "lastName": "Van Vuuren",
+        "email": "tvanvuuren24@mit.edu",
+        "password": "eRfkqOgP5a",
+        "phone": "5406017105",
+        "interests": [
+          "RUNNING",
+          "MANAGEMENT",
+          "MAINTENANCE",
+          "BUSINESS",
+          "SHIPS",
+          "LAW",
+          "OOP"
+        ]
+      },
+      {
+        "firstName": "Kylen",
+        "lastName": "Handasyde",
+        "email": "khandasyde25@reverbnation.com",
+        "password": "OTLvl8PA",
+        "phone": "4011062978",
+        "interests": [
+          "BUSINESS",
+          "UNIX",
+          "MINING",
+          "LAW",
+          "AGRICULTURE",
+          "MANAGEMENT",
+          "SQL"
+        ]
+      },
+      {
+        "firstName": "Ceil",
+        "lastName": "Mainson",
+        "email": "cmainson26@github.com",
+        "password": "EtTT83s",
+        "phone": "7932420695",
+        "interests": [
+          "PSYCHOLOGY",
+          "SCIENCE",
+          "SWIMMING",
+          "STOCK_MARKET",
+          "SOFTWARE"
+        ]
+      },
+      {
+        "firstName": "Leonie",
+        "lastName": "Pedrozzi",
+        "email": "lpedrozzi27@friendfeed.com",
+        "password": "ynFV3WgLpfq8",
+        "phone": "1846546184",
+        "interests": [
+          "OPERATING SYSTEMS",
+          "TECHNOLOGY",
+          "CRYPTOCURRENCY",
+          "AEROPLANE"
+        ]
+      },
+      {
+        "firstName": "Nick",
+        "lastName": "Wisniowski",
+        "email": "nwisniowski28@last.fm",
+        "password": "6A0eG7",
+        "phone": "1426241650",
+        "interests": [
+          "GITHUB",
+          "ENGINEERING",
+          "MINERAL RESOURCES",
+          "POLITICS",
+          "RUNNING"
+        ]
+      },
+      {
+        "firstName": "Ondrea",
+        "lastName": "Allnatt",
+        "email": "oallnatt29@adobe.com",
+        "password": "qGGZsvWCGVl",
+        "phone": "2123082058",
+        "interests": [
+          "MANAGEMENT",
+          "UNIX",
+          "PSYCHOLOGY",
+          "ENGINEERING",
+          "MINING",
+          "OPERATING SYSTEMS"
+        ]
+      },
+      {
+        "firstName": "Laura",
+        "lastName": "Chancellor",
+        "email": "lchancellor2a@businesswire.com",
+        "password": "WOkXPUeEkj",
+        "phone": "4549742355",
+        "interests": [
+          "STOCK_MARKET",
+          "MINING",
+          "SPACE",
+          "SALES",
+          "PSYCHOLOGY"
+        ]
+      },
+      {
+        "firstName": "Nicol",
+        "lastName": "Harrell",
+        "email": "nharrell2b@hostgator.com",
+        "password": "CNMKGL1",
+        "phone": "2636924276",
+        "interests": [
+          "RUNNING",
+          "HARDWARE",
+          "TECHNOLOGY"
+        ]
+      },
+      {
+        "firstName": "Wilfred",
+        "lastName": "Hustings",
+        "email": "whustings2c@wikia.com",
+        "password": "uRK5KXl3v7q",
+        "phone": "8038959192",
+        "interests": [
+          "ROBOTICS",
+          "SOFTWARE",
+          "MACHINE LEARNING",
+          "BOOKS",
+          "MUSIC",
+          "DBMS",
+          "STOCK_MARKET"
+        ]
+      },
+      {
+        "firstName": "Giustino",
+        "lastName": "Lehrahan",
+        "email": "glehrahan2d@typepad.com",
+        "password": "JpF76lRd",
+        "phone": "8269965252",
+        "interests": [
+          "SOFTWARE",
+          "BIOINFORMATICS",
+          "MACHINE LEARNING",
+          "MANAGEMENT"
+        ]
+      },
+      {
+        "firstName": "Aileen",
+        "lastName": "Paulo",
+        "email": "apaulo2e@imgur.com",
+        "password": "y6qyucXUBm",
+        "phone": "1787450676",
+        "interests": [
+          "TECHNOLOGY",
+          "ARCHITECTURE",
+          "ALGORITHMS",
+          "ARTIFICIAL INTELLIGENCE",
+          "BUSINESS",
+          "ROBOTICS",
+          "POLITICS"
+        ]
+      },
+      {
+        "firstName": "Amandi",
+        "lastName": "Philippeaux",
+        "email": "aphilippeaux2f@exblog.jp",
+        "password": "i3nEH3U",
+        "phone": "6607895467",
+        "interests": [
+          "BIOINFORMATICS",
+          "GIT",
+          "DATA STRUCTURES",
+          "HARDWARE",
+          "TRAVELLING"
+        ]
+      },
+      {
+        "firstName": "Keith",
+        "lastName": "Aitchison",
+        "email": "kaitchison2g@mlb.com",
+        "password": "DWbQ1jyV8Jb",
+        "phone": "9519929599",
+        "interests": [
+          "HISTORY",
+          "RESEARCH"
+        ]
+      },
+      {
+        "firstName": "Lona",
+        "lastName": "Griffiths",
+        "email": "lgriffiths2h@hubpages.com",
+        "password": "S6l44Ye5t47",
+        "phone": "8711779693",
+        "interests": [
+          "PHYSICS",
+          "SQL",
+          "LAW",
+          "MANAGEMENT",
+          "TECHNOLOGY"
+        ]
+      },
+      {
+        "firstName": "Geoffry",
+        "lastName": "Jennery",
+        "email": "gjennery2i@cornell.edu",
+        "password": "fqNZ1edK",
+        "phone": "8951882412",
+        "interests": [
+          "SQL",
+          "MAINTENANCE",
+          "TECHNOLOGY"
+        ]
+      },
+      {
+        "firstName": "Terence",
+        "lastName": "Massow",
+        "email": "tmassow2j@bloglines.com",
+        "password": "gHiv4U",
+        "phone": "9778389965",
+        "interests": [
+          "MANAGEMENT",
+          "TRAVELLING",
+          "MINERAL RESOURCES"
+        ]
+      },
+      {
+        "firstName": "Reba",
+        "lastName": "Haddington",
+        "email": "rhaddington2k@w3.org",
+        "password": "lgRzDlDtqxb",
+        "phone": "3592354228",
+        "interests": [
+          "SQL",
+          "HISTORY",
+          "DBMS",
+          "SPACE",
+          "MINING",
+          "AEROPLANE"
+        ]
+      },
+      {
+        "firstName": "Anallese",
+        "lastName": "Chastan",
+        "email": "achastan2l@elpais.com",
+        "password": "Al0RRBWkIS",
+        "phone": "2242107527",
+        "interests": [
+          "BIOINFORMATICS",
+          "MAINTENANCE",
+          "TRAVELLING",
+          "YACHTS",
+          "MEDICINE",
+          "NETWORKING"
+        ]
+      },
+      {
+        "firstName": "Corinna",
+        "lastName": "Solesbury",
+        "email": "csolesbury2m@netlog.com",
+        "password": "xGEO4jy",
+        "phone": "7388971821",
+        "interests": [
+          "BUSINESS",
+          "MUSIC",
+          "ROBOTICS",
+          "OOP",
+          "BOOKS",
+          "AEROPLANE"
+        ]
+      },
+      {
+        "firstName": "Aland",
+        "lastName": "Boykett",
+        "email": "aboykett2n@ed.gov",
+        "password": "nHrvseZZztd0",
+        "phone": "8213480396",
+        "interests": [
+          "ATHLETICS",
+          "ROBOTICS"
+        ]
+      },
+      {
+        "firstName": "Ricky",
+        "lastName": "Oldam",
+        "email": "roldam2o@opensource.org",
+        "password": "g9c7cMnQo0",
+        "phone": "8275368849",
+        "interests": [
+          "ROBOTICS",
+          "ARCHITECTURE",
+          "AGRICULTURE"
+        ]
+      },
+      {
+        "firstName": "Noni",
+        "lastName": "Ludwell",
+        "email": "nludwell2p@weebly.com",
+        "password": "ZyR9qXFTwD",
+        "phone": "7255758291",
+        "interests": [
+          "HARDWARE",
+          "ROBOTICS",
+          "SOFTWARE",
+          "NETWORKING"
+        ]
+      },
+      {
+        "firstName": "Carolin",
+        "lastName": "Hatherell",
+        "email": "chatherell2q@eepurl.com",
+        "password": "nYh90klJ44l6",
+        "phone": "7708949096",
+        "interests": [
+          "DBMS",
+          "YACHTS",
+          "OPERATING SYSTEMS",
+          "BIOINFORMATICS",
+          "NETWORKING",
+          "ROBOTICS"
+        ]
+      },
+      {
+        "firstName": "Raynard",
+        "lastName": "Daud",
+        "email": "rdaud2r@dyndns.org",
+        "password": "YrQdPop",
+        "phone": "5272063193",
+        "interests": [
+          "MINERAL RESOURCES",
+          "GITHUB",
+          "RESEARCH",
+          "CRYPTOCURRENCY",
+          "RUNNING",
+          "UNIX",
+          "ARTIFICIAL INTELLIGENCE"
+        ]
+      }
+  ]
+}

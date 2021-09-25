@@ -11,6 +11,9 @@ import {Like} from "../like/like";
 import {LikeService} from "../like/like.service";
 import {Comment} from "../comment/comment";
 import {CommentService} from "../comment/comment.service";
+import {JobView} from "../job-view/job-view";
+import {PostView} from "../post-view/post-view";
+import {PostViewService} from "../post-view/post-view.service";
 
 @Component({
   selector: 'app-home',
@@ -29,6 +32,7 @@ export class HomeComponent implements OnInit {
   public postIdToDelete: number;
   public commentIdToDelete: number;
   public commentToEdit: Comment;
+  public selectedPost: Post = undefined;
 
   public tempRefreshPostId: number;
 
@@ -45,6 +49,7 @@ export class HomeComponent implements OnInit {
       private uploadService: UploadFileService,
       private likeService: LikeService,
       private commentService: CommentService,
+      private postViewService: PostViewService,
       private postService: PostService) {
   };
 
@@ -115,11 +120,8 @@ public loadPostLikes(pid: number) {
 
     this.postService.addPost(payload).subscribe(
       (response: Post) => {
-        console.log(response);
 
         let files: File[] = [this.currImageFile, this.currVideoFile, this.currSoundFile];
-
-        console.log(files);
 
         for(let file of files) {
 
@@ -136,6 +138,7 @@ public loadPostLikes(pid: number) {
                 this.message = event.body.message;
                 this.loadPosts();
               }
+
             },
             err => {
               this.progress = 0;
@@ -145,6 +148,7 @@ public loadPostLikes(pid: number) {
           this.currVideoFile = undefined;
           this.currSoundFile = undefined;
         }
+        this.loadPosts();
 
       }, (error: HttpErrorResponse) => {
         alert(error.message);
@@ -178,6 +182,10 @@ public loadPostLikes(pid: number) {
       this.commentToEdit = data[0];
       this.tempRefreshPostId = data[1];
       button.setAttribute('data-target', '#editComment');
+    }
+    if(mode === 'viewPost') {
+      this.selectedPost = data;
+      button.setAttribute('data-target', '#viewPost');
     }
     if(container != null) {
       container.appendChild(button);
@@ -256,6 +264,17 @@ public loadPostLikes(pid: number) {
       (event: any) => {
         this.loadPostComments(this.tempRefreshPostId);
       }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public increaseView(pid: number) {
+    this.postViewService.addView(pid).subscribe(
+      (response: PostView) => {
+        this.loadPosts();
+      },
+      (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );

@@ -1,7 +1,7 @@
-package com.example.socialnetworkingapp.model.job_view;
+package com.example.socialnetworkingapp.model.post_view;
 
 import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.job.Job;
+import com.example.socialnetworkingapp.model.post.Post;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -16,8 +16,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "job_views")
-public class JobView implements Serializable {
+@Table(name = "post_views")
+public class PostView implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +34,7 @@ public class JobView implements Serializable {
     @JoinColumn(nullable = false)
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Job job;
+    private Post post;
 
     @NotNull
     private Long times;
@@ -43,9 +43,9 @@ public class JobView implements Serializable {
         this.times++;
     }
 
-    public JobView(Account viewer, Job job) {
+    public PostView(Account viewer, Post post) {
         this.viewer = viewer;
-        this.job = job;
+        this.post = post;
         this.times = 1L;
     }
 }

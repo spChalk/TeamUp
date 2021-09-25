@@ -1,5 +1,5 @@
 
-export class JobView {
+export class PostView {
 
   id: number;
   firstName: string;

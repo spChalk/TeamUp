@@ -6,7 +6,9 @@ import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +20,11 @@ public class LikeService {
 
     public List<Like> findLikesByUserId(Long id) {
         return this.likeRepository.findAllByUserId(id).orElseThrow(() -> new UserNotFoundException("User by id "+ id + "was not found !"));
+    }
+
+    public Like findLikeOfUserInAPost(Long uid, Long pid) {
+        Optional<Like> like = this.likeRepository.findLikeOfUserInAPost(uid, pid);
+        return like.orElse(null);
     }
 
     public LikeResponse addLike(Like like) {

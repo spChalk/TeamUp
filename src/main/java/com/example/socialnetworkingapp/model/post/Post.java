@@ -37,7 +37,7 @@ public class Post implements Serializable {
     //author of post
     //1 post -> 1 author
     //1 author -> many posts
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account author;

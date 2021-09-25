@@ -102,6 +102,7 @@ public class JobService {
 
         //   3. Get all users from network (List<Account>) and 4. Transform List<Account> -> Array<Account>
         List<Account> allAccountsList = user.getNetwork();
+        allAccountsList.add(user);
         Account[] allAccounts = allAccountsList.toArray(new Account[0]);
 
         // 5. Map {Job.id: index in Array<Job>}
@@ -136,7 +137,7 @@ public class JobService {
             return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
         }
         //      7.2 If there's no one in the network, create an array of tuples (views, job-id) for all the jobs and proceed to (13).
-        if(allAccounts.length == 0) {
+        /*if(allAccounts.length == 1) {
             log.write("There's no one in the network!" + "\n");
             ArrayList<Pair<Long, Long>> views_JobId_Tuples = new ArrayList<>();
             for(JobView view: allJobViews) {
@@ -145,7 +146,7 @@ public class JobService {
             }
             return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
         }
-
+*/
         /*
          *   8. Make a zeroed 2D matrix, where   (index in x axis === index in array of Jobs),
          *                                       (index in y axis === index in array of Accounts)
@@ -170,8 +171,10 @@ public class JobService {
 
         log.write("\n Adding views.." + "\n\n");
         for(JobView view: allJobViews) {
-            matrixToFactorize[accountsMap.get(view.getViewer().getId())][jobsMap.get(view.getJob().getId())] = (float)view.getTimes();
-            log.write("Added to [" + accountsMap.get(view.getViewer().getId()) + ", " + jobsMap.get(view.getJob().getId()) + "]" + " : " + (float)view.getTimes() + " views\n");
+            if(accountsMap.containsKey(view.getViewer().getId()) && jobsMap.containsKey(view.getJob().getId())) {
+                matrixToFactorize[accountsMap.get(view.getViewer().getId())][jobsMap.get(view.getJob().getId())] = (float) view.getTimes();
+                log.write("Added to [" + accountsMap.get(view.getViewer().getId()) + ", " + jobsMap.get(view.getJob().getId()) + "]" + " : " + (float) view.getTimes() + " views\n");
+            }
         }
 
          // 9. If Current user has seen EVERY job, (his row has NO zeros), proceed to (11).
