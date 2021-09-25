@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -22,7 +21,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 export class ChatComponent implements OnInit {
 
-  messages: Message[];
+  messages : Message[] ;
   account: Account;
   friends: Friends[];
   allFriends$: Observable<Friends[]>;
@@ -84,7 +83,6 @@ export class ChatComponent implements OnInit {
     this.chatService.getAllMessages(this.authenticationService.getCurrentUser(), withFriend).subscribe(
       (resp: Message[]) => {
         this.messages = resp;
-        console.log(resp);
       },
       (error: any) => {
         console.log(error);
@@ -134,11 +132,6 @@ export class ChatComponent implements OnInit {
       }
     )
   }
-//   public getImage(friend : string){
-
-//     return this.friends.find(x => x.email == friend)?.imageUrl;
-    
-//   }
 
   ngOnDestroy() {
     this.stopPolling.next();

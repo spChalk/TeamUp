@@ -78,13 +78,13 @@
         <div class="ks-messages ks-messenger__messages">
 
           <!-- read / unread etc -->
-          <div class="ks-header" *ngFor="let message of this.messages">
+          <div class="ks-header" *ngIf="this.messages">
 
             <div class="ks-description">
-              <div class="ks-name" *ngIf="this.account.email === message.senderEmail" >Chating with {{message.receiverFirstName}} {{message.receiverLastName}} (at {{message.receiverEmail}})</div>
+              <div class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail" >Chating with {{this.messages[0].receiverFirstName}} {{this.messages[0].receiverLastName}} (at {{this.messages[0].receiverEmail}})</div>
             </div>
 
-            <div class="ks-controls">
+            <!-- <div class="ks-controls">
               <div class="dropdown">
                 <button class="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button"
                   id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,7 +117,7 @@
                   </a>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
 
@@ -136,7 +136,7 @@
                     </span>
                     <div class="ks-body">
                       <div class="ks-header">
-                        <span class="ks-name">{{message.senderFirstName}} {{message.senderLastName}} </span>
+                        <span class="ks-name">me</span>
                         <span class="ks-datetime">{{message.date}}</span>
                       </div>
                       <div class="ks-message">{{message.payload}}</div>
@@ -356,61 +356,61 @@
 
         <!-- user info / right panel-->
 
-        <div class="ks-info ks-messenger__info" *ngFor="let message of this.messages">
+        <div class="ks-info ks-messenger__info" *ngIf="this.messages">
           <div class="ks-header">
             User Info
           </div>
           <div class="ks-body">
             <div class="ks-item ks-user">
 
-              <span class="ks-avatar ks-online" *ngIf="this.account.email === message.senderEmail">
-                <img *ngIf="message.receiverImageUrl == null" src="../../assets/images/user_default.png" width="36"
+              <span class="ks-avatar ks-online" *ngIf="this.account.email === this.messages[0].senderEmail">
+                <img *ngIf="this.messages[0].receiverImageUrl == null" src="../../assets/images/user_default.png" width="36"
                   height="36" class="rounded-circle">
-                <img *ngIf="message.receiverImageUrl" src={{message.receiverImageUrl}} width="36" height="36"
+                <img *ngIf="this.messages[0].receiverImageUrl" src={{this.messages[0].receiverImageUrl}} width="36" height="36"
                   class="rounded-circle">
               </span>
 
-              <span class="ks-avatar ks-online" *ngIf="this.account.email === message.receiverEmail">
-                <img *ngIf="message.senderImageUrl === null" src="../../assets/images/user_default.png" width="36"
+              <span class="ks-avatar ks-online" *ngIf="this.account.email === this.messages[0].receiverEmail">
+                <img *ngIf="this.messages[0].senderImageUrl === null" src="../../assets/images/user_default.png" width="36"
                   height="36" class="rounded-circle">
-                <img *ngIf="message.receiverImageUrl" src={{message.receiverImageUrl}} width="36" height="36"
+                <img *ngIf="this.messages[0].senderImageUrl" src={{this.messages[0].senderImageUrl}} width="36" height="36"
                   class="rounded-circle">
               </span>
 
-              <span class="ks-name" *ngIf="this.account.email === message.senderEmail">
-                {{message.receiverFirstName}} {{message.receiverLastName}}
+              <span class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail">
+                {{this.messages[0].receiverFirstName}} {{this.messages[0].receiverLastName}}
               </span>
 
-              <span class="ks-name" *ngIf="this.account.email === message.receiverEmail">
-                {{message.senderFirstName}} {{message.senderLastName}}
+              <span class="ks-name" *ngIf="this.account.email === this.messages[0].receiverEmail">
+                {{this.messages[0].senderFirstName}} {{this.messages[0].senderLastName}}
               </span>
             </div>
 
-            <div class="ks-item" *ngIf="this.account.email === message.senderEmail">
+            <div class="ks-item" *ngIf="this.account.email === this.messages[0].senderEmail">
               <div class="ks-name">Email</div>
               <div class="ks-text">
-                {{message.receiverEmail}}
+                {{this.messages[0].receiverEmail}}
               </div>
             </div>
 
-            <div class="ks-item" *ngIf="this.account.email === message.receiverEmail">
+            <div class="ks-item" *ngIf="this.account.email === this.messages[0].receiverEmail">
               <div class="ks-name">Email</div>
               <div class="ks-text">
-                {{message.senderEmail}}
+                {{this.messages[0].senderEmail}}
               </div>
             </div>
 
-            <div class="ks-item" *ngIf="this.account.email === message.senderEmail">
+            <div class="ks-item" *ngIf="this.account.email === this.messages[0].senderEmail">
               <div class="ks-name">Phone Number</div>
               <div class="ks-text">
-                {{message.receiverPhone}}
+                {{this.messages[0].receiverPhone}}
               </div>
             </div>
 
-            <div class="ks-item" *ngIf="this.account.email === message.receiverEmail">
+            <div class="ks-item" *ngIf="this.account.email === this.messages[0].receiverEmail">
               <div class="ks-name">Phone Number</div>
               <div class="ks-text">
-                {{message.senderPhone}}
+                {{this.messages[0].senderPhone}}
               </div>
             </div>
           </div>
