@@ -126,7 +126,7 @@ export class ChatComponent implements OnInit {
     this.chatService.sendMessage(sendForm.get('payload')?.value, sendForm.get('receiver')?.value).subscribe(
       (resp: Message) => {
         console.log(resp);
-        window.location.reload();
+        // window.location.reload();
       },
       (error: any) => {
         console.log(error);
@@ -134,12 +134,28 @@ export class ChatComponent implements OnInit {
       }
     )
   }
-//   public getImage(friend : string){
 
-//     return this.friends.find(x => x.email == friend)?.imageUrl;
-    
-//   }
-
+  public getFriend(){
+    let msg = this.messages[0];
+    if(this.account.email === msg.senderEmail){
+      return {
+        "firstName":msg.receiverFirstName,
+        "lastName":msg.receiverLastName,
+        "imageUrl":msg.receiverImageUrl,
+        "phone":msg.receiverPhone,
+        "email":msg.receiverEmail
+      }
+    }
+    else{
+      return {
+        "firstName":msg.senderFirstName,
+        "lastName":msg.senderLastName,
+        "imageUrl":msg.senderImageUrl,
+        "phone":msg.senderPhone,
+        "email":msg.senderEmail
+      }
+    }
+  }
   ngOnDestroy() {
     this.stopPolling.next();
   }
