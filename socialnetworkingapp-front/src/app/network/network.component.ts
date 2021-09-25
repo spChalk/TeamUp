@@ -47,26 +47,23 @@ export class NetworkComponent implements OnInit {
     );
   }
 
-  public onSearch(form: NgForm): void {
-
-    this.accountService.getAccountsBySimilarName(form.value.keyword).subscribe(
-      (response: Account[]) => {
-        this.accounts = response;
-      },
-      (error: HttpErrorResponse) => {
-        if(error.status === 500) {
-          alert("No user found!");
-        }
-      }
-    );
-  }
-
   public onSearchSimilar(form: NgForm) {
     this.accounts = [];
     for(let account of this.similarAccs) {
       if(account.firstName.toLowerCase().includes(form.value.keyword.toLowerCase()) ||
         account.lastName.toLowerCase().includes(form.value.keyword.toLowerCase())) {
-        this.accounts.push(account);
+
+        let net: NetworkEntity = new NetworkEntity(account.firstName, account.lastName, account.email,
+          account.imageUrl, null, null);
+
+        for(let xp of account.experience) {
+          if (xp.endDate === null) {
+            net.position = xp.headline;
+            net.company = xp.company;
+            break;
+          }
+        }
+        this.accounts.push(net);
       }
     }
   }

@@ -223,7 +223,7 @@ body{
 
 .container .card{
   position: relative;
-  width: 220px;
+  width: 450px;
   height: 280px;
   background: #ffffff;
   border-radius: 20px;
@@ -332,7 +332,7 @@ body{
 .container .card .contentBx .size h3, .container .card .contentBx .color h3{
   color: #fff;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 2px;
   margin-right: 10px;
 }
@@ -402,9 +402,9 @@ body{
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto;
   padding: 10px;
-  margin-left: 340px;
+  margin-left: 250px;
   margin-right: 250px;
 }
 

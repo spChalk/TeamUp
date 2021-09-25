@@ -252,8 +252,11 @@
                 <div class="row">
                   <h3><strong>{{xp?.headline}}</strong></h3>
 
-                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                  <div *ngIf="xp?.endDate !== ''" class="col-md-6 mt-2" style="font-size: smaller;">
                     ({{xp?.startDate}} - {{xp?.endDate}})
+                  </div>
+                  <div *ngIf="xp?.endDate === ''" class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{xp?.startDate}} - Now)
                   </div>
                 </div>
                 <br>
@@ -322,8 +325,11 @@
                   <h3><strong>{{xp?.headline}}</strong></h3>
 
 
-                  <div class="col-md-6 mt-2" style="font-size: smaller;">
+                  <div *ngIf="xp?.endDate !== ''" class="col-md-6 mt-2" style="font-size: smaller;">
                     ({{xp?.startDate}} - {{xp?.endDate}})
+                  </div>
+                  <div *ngIf="xp?.endDate === ''" class="col-md-6 mt-2" style="font-size: smaller;">
+                    ({{xp?.startDate}} - Now)
                   </div>
                 </div>
                 <br>
@@ -594,10 +600,16 @@
             <label for="stdate1">Starting date</label>
             <input type="date" class="form-control" formControlName="startDate" aria-describedby="stdateHelp1" [value]="selectedExp?.startDate">
           </div>
-          <div class="form-group">
-            <label for="endate1">Ending date</label>
-            <input type="date" class="form-control" formControlName="endDate" aria-describedby="endateHelp1" [value]="selectedExp?.endDate">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch" (change)="changeEndingDateVisibility()">
+            <label class="custom-control-label" style="margin-left: 13px" for="customSwitch">Ending Date</label>
           </div>
+          <div *ngIf="this.endingDateVisibility">
+            <div class="form-group">
+              <input type="date" id="endate" class="form-control" formControlName="endDate" aria-describedby="endateHelp">
+            </div>
+          </div>
+          <hr>
           <div class="form-group">
             <label for="description">Description</label>
             <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" [value]="selectedExp?.description"></textarea>
@@ -763,10 +775,17 @@
             <label for="stdate1">Starting date</label>
             <input type="date" class="form-control" formControlName="startDate" aria-describedby="stdateHelp1" placeholder="When did you start working there?">
           </div>
-          <div class="form-group">
-            <label for="endate1">Ending date</label>
-            <input type="date" class="form-control" formControlName="endDate" aria-describedby="endateHelp1" placeholder="When did you stop working there?">
+
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" (change)="changeEndingDateVisibility()">
+            <label class="custom-control-label" style="margin-left: 13px" for="customSwitch1">Ending Date</label>
           </div>
+          <div *ngIf="this.endingDateVisibility">
+            <div class="form-group">
+              <input type="date" id="endate1" class="form-control" formControlName="endDate" aria-describedby="endateHelp1" placeholder="When did you stop working there?">
+            </div>
+          </div>
+          <hr>
           <div class="form-group">
             <label for="description">Description</label>
             <textarea type="text" class="form-control" formControlName="description" aria-describedby="descriptionHelp" placeholder="A brief description about your experience!"></textarea>

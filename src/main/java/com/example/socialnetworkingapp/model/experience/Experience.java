@@ -42,7 +42,6 @@ public class Experience implements Serializable {
     @NotNull
     private String startDate;
 
-    @NotNull
     private String endDate;
 
     private String headline;

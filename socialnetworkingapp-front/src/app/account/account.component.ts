@@ -30,6 +30,8 @@ export class AccountComponent implements OnInit {
   public TagsArray: Tag[];
   public UsersTags: Tag[];
 
+  public endingDateVisibility: boolean = false;
+
   aboutForm: FormGroup;
   bioForm: FormGroup;
   addEducationForm: FormGroup;
@@ -330,8 +332,8 @@ export class AccountComponent implements OnInit {
 
     this.accountService.addExperience(experienceForm.value).subscribe(
       (response: Account) => {
-        this.fetchUserInfo();
         experienceForm.reset();
+        window.location.reload();
       },
       (error: any) => {
         this.experienceForm.reset();
@@ -361,7 +363,7 @@ export class AccountComponent implements OnInit {
     experienceForm.get('visible')?.setValue(this.selectedExp.visible);
     this.accountService.editExperience(experienceForm.value).subscribe(
       (response: Experience) => {
-        this.fetchUserInfo();
+        window.location.reload();
       },
       (error: any) => {
         this.experienceForm.reset();
@@ -406,5 +408,13 @@ export class AccountComponent implements OnInit {
         this.interestsForm.reset();
       }
     );
+  }
+
+  public changeEndingDateVisibility() {
+    if(this.endingDateVisibility) {
+      this.endingDateVisibility = false;
+    } else {
+      this.endingDateVisibility = true;
+    }
   }
 }

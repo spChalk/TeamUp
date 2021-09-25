@@ -35,24 +35,22 @@
 
 <div class="grid-container">
     <div class="container" *ngFor="let account of accounts">
-      <div class="card shadow">
+      <div routerLink="../visit/{{account?.email}}" class="card shadow">
         <div class="imgBx">
           <img *ngIf="account?.imageUrl" src="{{this.account?.imageUrl}}"/>
           <img *ngIf="account?.imageUrl === null" src="../../assets/images/user_default.png"/>
         </div>
         <div class="contentBx">
-          <h2 style="color: black">{{account?.firstName}} <br> {{account?.lastName}}</h2>
+          <h2 style="color: black;margin-bottom: 10px">{{account?.firstName}}  {{account?.lastName}}</h2>
+
           <div class="size">
             <h3 style="color: black">{{account?.email}}</h3>
-            <!--<span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>-->
+            <br><br>
           </div>
-          <div class="color">
-              <h3 style="color: black">MORE INFO</h3>
+          <div *ngIf="account?.position !== null && account?.company !== null" class="color">
+              <h3 style="color: black"> Working as {{account?.position}} at {{account?.company}} </h3>
           </div>
-          <button routerLink="../visit/{{account?.email}}" type="button" class="btn btn-danger">Visit profile</button>
+
         </div>
       </div>
     </div>

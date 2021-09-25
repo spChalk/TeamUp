@@ -97,7 +97,13 @@ public class AccountService implements UserDetailsService {
     }
 
     public List<Account> findAllAccounts() {
-        return this.accountRepository.findAll();
+        List<Account> accounts = this.accountRepository.findAll();
+        for(int i = 0; i < accounts.size(); i++) {
+            if(accounts.get(i).getId() == 1) {
+                accounts.remove(accounts.get(i));
+            }
+        }
+        return accounts;
     }
 
     public List<FullAccountDetails> getFullAccountsDetails(List<Long> accountIds) throws IOException {
@@ -500,8 +506,7 @@ public class AccountService implements UserDetailsService {
         if(!experience.getStartDate().equals(""))
             prevExperience.setStartDate(experience.getStartDate());
 
-        if(!experience.getEndDate().equals(""))
-            prevExperience.setEndDate(experience.getEndDate());
+        prevExperience.setEndDate(experience.getEndDate());
 
         if(!experience.getHeadline().equals(""))
             prevExperience.setHeadline(experience.getHeadline());

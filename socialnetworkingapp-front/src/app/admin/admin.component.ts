@@ -20,7 +20,7 @@ import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 export class AdminComponent implements OnInit {
 
   public accounts: Account[];
-  public accountsTemp: Account[];
+  public similarAccs: Account[];
   public deleteAccount: Account;
   /*public editAccount: Account;*/
   public infoAccount: Account;
@@ -47,7 +47,6 @@ export class AdminComponent implements OnInit {
     if(this.authenticationService.isAdmin() === false){
           this.router.navigate(['/home']);
     }
-
   }
 
   selectFile(event: any) {
@@ -78,7 +77,7 @@ export class AdminComponent implements OnInit {
     this.accountService.getAllAccounts().subscribe(
       (response: Account[]) => {
         this.accounts = response;
-        console.log(this.accounts);
+        this.similarAccs = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -119,19 +118,15 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  public onSearch(form: NgForm): void {
+  public onSearchSimilar(form: NgForm): void {
+    this.accounts = [];
 
-    this.accountService.getAccountsBySimilarName(form.value.keyword).subscribe(
-      (response: Account[]) => {
-        console.log(response);
-        this.accounts = response;
-      },
-      (error: HttpErrorResponse) => {
-        if(error.status === 500) {
-          alert("No user found!");
-        }
+    for(let account of this.similarAccs) {
+      if(account.firstName.toLowerCase().includes(form.value.keyword.toLowerCase()) ||
+        account.lastName.toLowerCase().includes(form.value.keyword.toLowerCase())) {
+          this.accounts.push(account);
       }
-    );
+    }
   }
 
   public onInfo(accountId: number): void {
@@ -145,19 +140,6 @@ export class AdminComponent implements OnInit {
       }
     );
   }
-
-/*  public onUpdateAccount(account: Account): void {
-
-    this.accountService.updateAccount(account).subscribe(
-      (response: Account) => {
-        console.log(response);
-        this.getAccounts();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }*/
 
   public onDeleteAccount(account: Account): void {
 
