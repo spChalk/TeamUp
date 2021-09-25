@@ -2,41 +2,26 @@ package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
-import com.example.socialnetworkingapp.mapper.AccountMapper;
 import com.example.socialnetworkingapp.model.account.details.*;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.bio.BioService;
 import com.example.socialnetworkingapp.model.comment.Comment;
-import com.example.socialnetworkingapp.model.comment.CommentRequest;
-import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.comment.CommentService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequestResponse;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.education.EducationService;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.experience.ExperienceService;
 import com.example.socialnetworkingapp.model.job.Job;
-import com.example.socialnetworkingapp.model.job.JobResponse;
 import com.example.socialnetworkingapp.model.job.JobService;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
-import com.example.socialnetworkingapp.model.job_view.JobView;
-import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.like.Like;
-import com.example.socialnetworkingapp.model.like.LikeResponse;
 import com.example.socialnetworkingapp.model.like.LikeService;
-import com.example.socialnetworkingapp.model.post.Post;
 import com.example.socialnetworkingapp.model.post.PostResponse;
 import com.example.socialnetworkingapp.model.post.PostService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
-import org.assertj.core.api.OptionalAssert;
-import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,11 +30,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -271,11 +254,22 @@ public class AccountService implements UserDetailsService {
         }
 
         Account acc = accPresent.get();
-        acc.setFirstName(account.getFirstName());
-        acc.setLastName(account.getLastName());
-        acc.setEmail(account.getEmail());
-        acc.setPassword(account.getPassword());
-        acc.setPhone(account.getPhone());
+        if(!account.getFirstName().equals(""))
+            acc.setFirstName(account.getFirstName());
+
+        if(!account.getLastName().equals(""))
+            acc.setLastName(account.getLastName());
+
+        if(!account.getEmail().equals("")){
+            acc.setEmail(account.getEmail());
+        }
+
+        if(account.getPassword() != null && !account.getPassword().equals(""))
+            acc.setPassword(account.getPassword());
+
+        if(!account.getPhone().equals(""))
+            acc.setPhone(account.getPhone());
+
         acc.setImageUrl(account.getImageUrl());
         acc.setBio(account.getBio());
         acc.setVisibleTags(account.isVisibleTags());
@@ -547,5 +541,18 @@ public class AccountService implements UserDetailsService {
         );
         user.getEducation().remove(edu);
         this.educationService.deleteEducation(id);
+    }
+
+    public boolean passwordConfirmation(String password) {
+        Account account = this.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        return this.bCryptPasswordEncoder.matches(password, account.getPassword());
+    }
+
+    public boolean updatePassword(String newPassword) {
+        Account account = this.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        account.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        this.accountRepository.save(account);
+        return true;
     }
 }

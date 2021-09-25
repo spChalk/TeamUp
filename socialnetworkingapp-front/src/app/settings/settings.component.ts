@@ -10,6 +10,7 @@ import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/com
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {environment} from "../../environments/environment";
 import {AuthenticationService} from "../authentication";
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 @Component({
   selector: 'app-settings',
@@ -149,12 +150,34 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public updateEmail(emailForm: NgForm, confirmation: string): void {
+  public updateEmail(newEmail :string , password:string): void {
 
-/*
-    this.accountService.confirmPassword(confirmation, this.account.password).subscribe(
+    this.accountService.confirmPassword(password).subscribe(
       (response: boolean) => {
-        if (!response) {
+
+        if(response){
+          this.account.email = newEmail;
+          this.accountService.updateAccount(this.account).subscribe(
+            (resp:any) =>{
+              console.log("email changed!");
+              this.authenticationService.logOut();
+              this.authenticationService.logIn({"username":newEmail, "password":password}).subscribe(
+                (response:any)=>{
+                  console.log("success in update email");
+                },
+                (error:any)=>{
+                  console.log("error in update email");
+                }
+
+              );
+
+            },
+            (error :any)=>{
+              console.log("error while trying to update email");
+            }
+          )
+        }
+        if(!response) {
           alert("Error, user was not authenticated. Update failed.");
           return;
         }
@@ -163,47 +186,41 @@ export class SettingsComponent implements OnInit {
           alert(error.message);
         }
     );
-*/
-
-    this.accountService.updateAccount(this.account).subscribe(
-      (response: Account) => {
-        console.log(response);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    window.location.reload();
   }
 
-  public updatePassword(passwordForm: NgForm, confirmation: string): void {
-/*
-    this.accountService.confirmPassword(confirmation, this.account.password).subscribe(
+  public updatePassword(newPassword: string , confirmationPassword: string): void {
+    this.accountService.confirmPassword(confirmationPassword).subscribe(
       (response: boolean) => {
-        if (!response) {
-          alert("Error, user was not authenticated. Update failed.");
+        if(response){
+          this.accountService.updatePassword(newPassword).subscribe(
+            (resp:any) =>{
+              console.log("password changed!");
+              this.authenticationService.logOut();
+              this.authenticationService.logIn({"username":this.account.email, "password":newPassword}).subscribe(
+                (response:any)=>{
+                  console.log("password updated");
+                },
+                (error:any)=>{
+                  console.log("error while updating password");
+                }
+
+              );
+
+            },
+            (error :any)=>{
+              console.log("error while trying to update password");
+            }
+          )
+        }
+        if(!response) {
+          console.log("Error, user was not authenticated. Update failed (password).");
           return;
         }
       },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
+        (error: HttpErrorResponse) => {
+          console.log(error.message);
+        }
     );
-
-    if(passwordForm.value.password !== this.account.password) {
-      this.account.password = passwordForm.value.password;
-    }
-
-    this.accountService.updateAccount(this.account).subscribe(
-      (response: Account) => {
-        console.log(response);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    window.location.reload();
-    */
   }
 
   public deleteBio() {

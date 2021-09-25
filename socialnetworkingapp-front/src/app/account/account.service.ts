@@ -74,11 +74,19 @@ export class AccountService {
     return this.http.put<Account>(`${this.url}/about-update`, account, httpOptions);
   }
 
+  public updatePassword(newPassword: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.url}/update-password`, newPassword);
+  }
+
   public deleteAccountById(account_id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/delete/${account_id}`);
   }
 
   /* TODO: addFriend */
+
+  public confirmPassword(password : string):Observable<boolean>{
+    return this.http.post<boolean>(`${this.url}/confirmation`, password);
+  }
 
   public addBio(bio: string) : Observable<Bio>{
     let httpOptions = { headers: new HttpHeaders(
