@@ -111,6 +111,16 @@ public class AccountController {
         return new ResponseEntity<>(new AccountResponse(newAccount), HttpStatus.OK);
     }
 
+    @PostMapping("/confirmation")
+    public ResponseEntity<Boolean> passwordConfirmation(@RequestBody String password){
+        return new ResponseEntity<Boolean>(this.accountService.passwordConfirmation(password), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody String newPassword){
+        return new ResponseEntity<Boolean>(this.accountService.updatePassword(newPassword), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -132,7 +132,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button (click)="updateEmail(emailForm, confirmEmail.value.password)" type="button" class="btn btn-warning"  data-dismiss="modal">Yes</button>
+        <button (click)="updateEmail(emailForm.value.email, confirmEmail.value.password)" type="button" class="btn btn-warning"  data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button (click)="updatePassword(passwordForm, confirmPassword.value.password)" type="button" class="btn btn-danger"  data-dismiss="modal">Yes</button>
+        <button (click)="updatePassword(passwordForm.value.password, confirmPassword.value.password)" type="button" class="btn btn-danger"  data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
