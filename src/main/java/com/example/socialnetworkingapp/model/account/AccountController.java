@@ -125,10 +125,11 @@ public class AccountController {
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
-        Account currUser = accountService.findAccountByEmail(user);
+        accountService.findAccountByEmail(user);
 
-        for(Account acc: currUser.getNetwork()) {
-            this.accountService.removeConnection(acc.getEmail(), currUser.getEmail());
+        Account currUser = accountService.findAccountById(id);
+        for(int i = 0; i < currUser.getNetwork().size(); i++) {
+            this.connectionReqService.deleteConnection(currUser.getEmail(), currUser.getNetwork().get(i).getEmail());
         }
 
         this.accountService.deleteAccount(id);

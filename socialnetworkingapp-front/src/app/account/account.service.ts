@@ -78,11 +78,9 @@ export class AccountService {
     return this.http.post<boolean>(`${this.url}/update-password`, newPassword);
   }
 
-  public deleteAccountById(account_id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/delete/${account_id}`);
+  public deleteAccountById(account_id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/delete/${account_id}`);
   }
-
-  /* TODO: addFriend */
 
   public confirmPassword(password : string):Observable<boolean>{
     return this.http.post<boolean>(`${this.url}/confirmation`, password);

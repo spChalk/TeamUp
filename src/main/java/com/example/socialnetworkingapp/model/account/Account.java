@@ -55,10 +55,7 @@ public class Account implements UserDetails {
     @NotNull
     private LocalDate dateCreated = LocalDate.now();
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "network",
             joinColumns = { @JoinColumn(name = "account1_id") },
             inverseJoinColumns = { @JoinColumn(name = "account2_id") })

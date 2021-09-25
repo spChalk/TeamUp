@@ -13,7 +13,7 @@
   <form #searchForm="ngForm">
   <div class="input-group">
     <div class="form-outline mr-1">
-      <input id="search-input" ngModel (ngModelChange)="onSearchSimilar(searchForm)" name="keyword" type="search" id="form1" class="form-control" placeholder="Search by email" required />
+      <input id="search-input" ngModel (ngModelChange)="onSearchSimilar(searchForm)" name="keyword" type="search" id="form1" class="form-control" placeholder="Search by name" required />
     </div>
     <button [disabled]="searchForm.invalid" (click)="onSearchSimilar(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
       <i class="fa fa-search"></i>
@@ -84,7 +84,8 @@
 
             <tr *ngFor="let account of this.accounts">
               <td>
-                <img src="{{account?.imageUrl}}" alt="">
+                <img *ngIf="account?.imageUrl !== null" src="{{account?.imageUrl}}" alt="">
+                <img *ngIf="account?.imageUrl === null" src="../../assets/images/user_default.png" alt="">
 <!--
                 <img src="#" alt="">
 -->

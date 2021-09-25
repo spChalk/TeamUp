@@ -242,4 +242,15 @@ export class SettingsComponent implements OnInit {
       }
     );
   }
+
+  public deleteAccount() {
+    this.accountService.deleteAccountById(this.account.id).subscribe(
+      (response: any) => {
+        this.authenticationService.logOut();
+        window.location.reload();
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 }
