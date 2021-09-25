@@ -2,41 +2,30 @@ package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.exception.UserAlreadyRegisteredException;
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
-import com.example.socialnetworkingapp.mapper.AccountMapper;
 import com.example.socialnetworkingapp.model.account.details.*;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.bio.BioService;
 import com.example.socialnetworkingapp.model.comment.Comment;
-import com.example.socialnetworkingapp.model.comment.CommentRequest;
-import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.comment.CommentService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequest;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequestResponse;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.education.EducationService;
 import com.example.socialnetworkingapp.model.experience.Experience;
 import com.example.socialnetworkingapp.model.experience.ExperienceService;
 import com.example.socialnetworkingapp.model.job.Job;
-import com.example.socialnetworkingapp.model.job.JobResponse;
 import com.example.socialnetworkingapp.model.job.JobService;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
-import com.example.socialnetworkingapp.model.job_view.JobView;
-import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.like.Like;
-import com.example.socialnetworkingapp.model.like.LikeResponse;
 import com.example.socialnetworkingapp.model.like.LikeService;
-import com.example.socialnetworkingapp.model.post.Post;
 import com.example.socialnetworkingapp.model.post.PostResponse;
 import com.example.socialnetworkingapp.model.post.PostService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.registration.RegistrationRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.assertj.core.api.OptionalAssert;
-import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
-import org.springframework.http.ResponseEntity;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,12 +34,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -334,12 +321,57 @@ public class AccountService implements UserDetailsService {
         }
     }*/
 
-    public void createAdmin() {
+    public void createAccounts() {
 
         Account account = new Account(AccountRole.ADMIN, "admin", "admin", "admin@admin.com", "adminadmin", "12345");
         String encodedPassword = bCryptPasswordEncoder.encode(account.getPassword());
         account.setPassword(encodedPassword);
         this.accountRepository.save(account);
+
+        JSONParser parser = new JSONParser();
+        try{
+            Object accounts = parser.parse(new FileReader("src/main/java/com/example/socialnetworkingapp/data/accounts.json"));
+            JSONObject json = (JSONObject) accounts;
+            JSONArray array = (JSONArray) json.get("Accounts");
+
+            Iterator<JSONObject> iterator = array.iterator();
+            while(iterator.hasNext()) {
+                ObjectMapper mapper = new ObjectMapper();
+                RegistrationRequest req = mapper.readValue(iterator.next().toJSONString(), RegistrationRequest.class);
+                Account newAccount = new Account(AccountRole.USER, req.getFirstName(), req.getLastName(), req.getEmail(),
+                        bCryptPasswordEncoder.encode(req.getPassword()), req.getPhone());
+                this.accountRepository.save(newAccount);
+            }
+
+            /*List<Account> allAccounts = this.accountRepository.findAll();
+            for(Account acc: allAccounts) {
+                for(int i = 0; i < 2; i++) {
+                    this.connect(acc.getEmail(), allAccounts.get(0).getEmail());
+                }
+            }*/
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean passwordConfirmation(String password) {
+        Account account = this.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        return this.bCryptPasswordEncoder.matches(password, account.getPassword());
+    }
+
+    public boolean updatePassword(String newPassword) {
+        Account account = this.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        account.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        this.accountRepository.save(account);
+        return true;
     }
 
     public Account addTag(String tagName, Account account) {
