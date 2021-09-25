@@ -14,9 +14,9 @@
 <form #searchForm="ngForm" style="float: right; margin-right: 200px">
   <div class="input-group">
     <div class="form-outline mr-1">
-      <input id="search-input" ngModel (ngModelChange)="onSearch(searchForm)" name="keyword" type="search" id="form1" class="form-control" placeholder="Search by email" required />
+      <input id="search-input" ngModel (ngModelChange)="onSearchSimilar(searchForm)" name="keyword" type="search" id="form1" class="form-control" placeholder="Search by email" required />
     </div>
-    <button [disabled]="searchForm.invalid" (click)="onSearch(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
+    <button [disabled]="searchForm.invalid" (click)="onSearchSimilar(searchForm)" id="search-button" type="submit" class="btn btn-primary mr-1">
       <i class="fa fa-search"></i>
     </button>
     <button (click)="refresh();" id="reload" type="submit" class="btn btn-primary mr-1">

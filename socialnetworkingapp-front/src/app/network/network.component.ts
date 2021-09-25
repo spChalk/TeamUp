@@ -21,6 +21,7 @@ export class NetworkComponent implements OnInit {
 
   public account: Account;
   public accounts: NetworkEntity[];
+  public similarAccs: Account[] = [];
 
   constructor(private accountService: AccountService,
               private bioService: BioService,
@@ -34,6 +35,14 @@ export class NetworkComponent implements OnInit {
       (response: Account)=> {
         this.account = new Account(response);
         this.accounts = this.account.network;
+      }
+    );
+
+    this.accountService.getAllAccounts().subscribe(
+      (response: Account[]) => {
+        this.similarAccs = response;
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
       }
     );
   }
@@ -50,6 +59,16 @@ export class NetworkComponent implements OnInit {
         }
       }
     );
+  }
+
+  public onSearchSimilar(form: NgForm) {
+    this.accounts = [];
+    for(let account of this.similarAccs) {
+      if(account.firstName.toLowerCase().includes(form.value.keyword.toLowerCase()) ||
+        account.lastName.toLowerCase().includes(form.value.keyword.toLowerCase())) {
+        this.accounts.push(account);
+      }
+    }
   }
 
   refresh(): void {
