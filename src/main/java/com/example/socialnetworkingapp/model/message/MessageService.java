@@ -21,8 +21,9 @@ public class MessageService {
     private final MessageMapper messageMapper;
     private final FriendMapper friendMapper;
 
-    public List<MessageResponse> getConversation(Account sender, Account receiver) {
-        List<Message> messages = this.messageRepository.getConversation(sender, receiver).
+    public List<MessageResponse> getConversation(Account me, Account friend) {
+
+        List<Message> messages = this.messageRepository.getConversation(me , friend).
                 orElseThrow(() -> new UserNotFoundException("One or more users not found!"));
 
         return messages.stream().map(messageMapper::MessageToMessageResponse).collect(Collectors.toList());

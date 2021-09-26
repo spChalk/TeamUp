@@ -25,7 +25,10 @@ export class ChatComponent implements OnInit {
   account: Account;
   friends: Friends[];
   allFriends$: Observable<Friends[]>;
+  allMessages$: Observable<Message[]>;
+
   private stopPolling = new Subject();
+
   private url = environment.apiBaseUrl + '/messages';
   public queryParams: string;
   public messageForm: FormGroup;
@@ -36,6 +39,14 @@ export class ChatComponent implements OnInit {
     this.allFriends$ = timer(1, 10000).pipe(
       switchMap(() =>
         this.http.get<Friends[]>(this.url + "/friends")),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
+    this.allMessages$ = timer(1, 10000).pipe(
+      switchMap(() =>
+        this.http.post<Message[]>(this.url + "/chat", this.queryParams)),
       retry(),
       share(),
       takeUntil(this.stopPolling)
@@ -74,9 +85,17 @@ export class ChatComponent implements OnInit {
     )
 
     this.route.queryParams.subscribe(params => {
-      this.getMessages(params.receiverEmail);
       this.queryParams = params.receiverEmail;
+      this.allMessages$.subscribe(
+          (resp: Message[])=>{
+              this.messages = resp;
+          },
+          (error : any)=>{
+              console.log(error);
+          }
+      )
     });
+
   }
 
   public getMessages(withFriend: string) {
@@ -94,7 +113,9 @@ export class ChatComponent implements OnInit {
     this.chatService.sendMessage(messageForm.get('payload')?.value, receiver).subscribe(
       (resp: Message) => {
         console.log(resp);
-        window.location.reload();
+        // window.location.reload();
+        this.messageForm.reset();
+
       },
       (error: any) => {
         console.log(error);

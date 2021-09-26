@@ -907,3 +907,7 @@ body{
     margin-bottom: 20px
   }
 }
+.ks-footer .form-control{
+    position: inherit;
+    width: 100%;
+}
