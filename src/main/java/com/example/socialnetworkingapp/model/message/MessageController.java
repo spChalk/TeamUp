@@ -28,11 +28,10 @@ public class MessageController {
     private final AccountService accountService;
 
     @PostMapping("/chat")
-    public List<MessageResponse> getConversation(
-            @RequestBody Friends friends){
-        Account sender = this.accountService.findAccountByEmail(friends.getSenderEmail());
-        Account receiver = this.accountService.findAccountByEmail(friends.getReceiverEmail());
-        return this.messageService.getConversation(sender, receiver);
+    public List<MessageResponse> getConversation(@RequestBody String receiver){
+        Account account = this.accountService.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account friend = this.accountService.findAccountByEmail(receiver);
+        return this.messageService.getConversation(account, friend);
     }
 
     @GetMapping("/friends")

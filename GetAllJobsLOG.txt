@@ -1,6 +1,0 @@
-Mapping Job 56 to Index 0
-USER 53 HAS 3 TAGS.
-List of job views is empty!
-Adding pair { 0, 56 }
-Equal Tags!  
-Pushing Job 56 with SCORE: 1
