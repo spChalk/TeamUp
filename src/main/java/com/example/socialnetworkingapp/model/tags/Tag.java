@@ -19,7 +19,8 @@ import java.util.List;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(name = "Id_Gen", initialValue = 52)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Id_Gen")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 

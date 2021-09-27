@@ -16,7 +16,11 @@ export class ConnectionRequestService {
     return this.http.get<ConnectionRequest[]>(`${this.url}/all-requests`)
   }
   public checkForPendingRequest(receiverEmail: string): Observable<number> {
-    return this.http.get<number>(`${this.url}/search/${receiverEmail}`)
+    return this.http.get<number>(`${this.url}/search-pending/${receiverEmail}`)
+  }
+
+  public checkIfHasReceivedRequest(email: string): Observable<number> {
+    return this.http.get<number>(`${this.url}/search-received/${email}`)
   }
 
   public addRequest(email: string): Observable<any> {
@@ -37,5 +41,9 @@ export class ConnectionRequestService {
 
   public deleteFromNetwork(otherEmail: string): Observable<any> {
     return this.http.delete<any>(`${environment.apiBaseUrl}/accounts/network/delete/${otherEmail}`);
+  }
+
+  public acceptRequest(reqId: number): Observable<any> {
+    return this.http.put<any>(`${this.url}/accept/${reqId}`, {});
   }
 }

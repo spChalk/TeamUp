@@ -101,7 +101,7 @@ public class JobService {
         }
 
         //   3. Get all users from network (List<Account>) and 4. Transform List<Account> -> Array<Account>
-        List<Account> allAccountsList = user.getNetwork();
+        List<Account> allAccountsList = new ArrayList<>(user.getNetwork());
         allAccountsList.add(user);
         Account[] allAccounts = allAccountsList.toArray(new Account[0]);
 

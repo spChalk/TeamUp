@@ -19,11 +19,12 @@ export class VisitAccountComponent implements OnInit {
   public vAccount: Account;
   public isPresentInNetwork: boolean = false;
   public pendingRequestId: number = -1;
+  public receivedRequestId: number = -1;
 
   constructor(public authenticationService : AuthenticationService,
               private accountService: AccountService,
               private connectionRequestService: ConnectionRequestService,
-              private router: Router,
+              public router: Router,
               private route: ActivatedRoute) { }
 
   public getRequestedUser(email: string) {
@@ -47,6 +48,15 @@ export class VisitAccountComponent implements OnInit {
             (requestId: number) => {
               if(requestId !== null) {
                 this.pendingRequestId = requestId;
+              }},
+            (fail: HttpErrorResponse) => {
+              alert(fail.message);
+            });
+
+          this.connectionRequestService.checkIfHasReceivedRequest(this.vAccount.email).subscribe(
+            (requestId: number) => {
+              if(requestId !== null) {
+                this.receivedRequestId = requestId;
               }},
             (fail: HttpErrorResponse) => {
               alert(fail.message);
@@ -100,8 +110,18 @@ export class VisitAccountComponent implements OnInit {
     );
   }
 
-  public onRemoveRequest() {
-    this.connectionRequestService.removeRequest(this.pendingRequestId).subscribe(
+  public onRemoveRequest(reqId: number) {
+    this.connectionRequestService.removeRequest(reqId).subscribe(
+      (status: any) => {
+        window.location.reload();
+      }, (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onAcceptRequest(reqId: number) {
+    this.connectionRequestService.acceptRequest(reqId).subscribe(
       (status: any) => {
         window.location.reload();
       }, (error: HttpErrorResponse) => {

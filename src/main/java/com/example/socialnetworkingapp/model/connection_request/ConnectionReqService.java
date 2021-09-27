@@ -36,11 +36,19 @@ public class ConnectionReqService {
         return connReqs.stream().map(connectionRequestMapper::ConnectionRequestToConnectionRequestResponse).collect(Collectors.toList());
     }
 
-    public Long findRequestByAccEmails(String senderEmail, String receiverEmail) {
+    public Long findPendingRequestByAccEmails(String senderEmail, String receiverEmail) {
 
         Long senderId = this.accountService.findAccountByEmail(senderEmail).getId();
         Long receiverId = this.accountService.findAccountByEmail(receiverEmail).getId();
         Optional<ConnectionRequest> exists = this.connectionReqRepository.findRequestByAccIds(senderId, receiverId);
+        return exists.map(ConnectionRequest::getId).orElse(null);
+    }
+
+    public Long findReceivedRequestByAccEmails(String senderEmail, String receiverEmail) {
+
+        Long senderId = this.accountService.findAccountByEmail(senderEmail).getId();
+        Long receiverId = this.accountService.findAccountByEmail(receiverEmail).getId();
+        Optional<ConnectionRequest> exists = this.connectionReqRepository.findRequestByAccIds(receiverId, senderId);
         return exists.map(ConnectionRequest::getId).orElse(null);
     }
 
@@ -85,12 +93,12 @@ public class ConnectionReqService {
         this.connectionReqRepository.deleteById(id);
     }
 
-    public void acceptRequest(Account myAcc, Account otherAcc) {
+    public void acceptRequest(Account myAcc, Long reqId) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository
-                .findRequestByAccIds(otherAcc.getId(), myAcc.getId());
+                .findById(reqId);
         if(alreadyExists.isPresent()) {
             this.connectionReqRepository.delete(alreadyExists.get());
-            this.accountService.connect(myAcc.getEmail(), otherAcc.getEmail());
+            this.accountService.connect(myAcc.getEmail(), alreadyExists.get().getSender().getEmail());
         }
     }
 

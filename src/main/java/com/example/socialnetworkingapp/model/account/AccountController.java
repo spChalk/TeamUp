@@ -2,21 +2,9 @@ package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.bio.Bio;
-import com.example.socialnetworkingapp.model.comment.Comment;
-import com.example.socialnetworkingapp.model.comment.CommentService;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
-import com.example.socialnetworkingapp.model.connection_request.ConnectionRequestResponse;
 import com.example.socialnetworkingapp.model.education.Education;
 import com.example.socialnetworkingapp.model.experience.Experience;
-import com.example.socialnetworkingapp.model.job.Job;
-import com.example.socialnetworkingapp.model.job.JobService;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
-import com.example.socialnetworkingapp.model.job_view.JobView;
-import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
-import com.example.socialnetworkingapp.model.job_view.JobViewService;
-import com.example.socialnetworkingapp.model.like.Like;
-import com.example.socialnetworkingapp.model.like.LikeService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +26,6 @@ public class AccountController {
     private final AccountService accountService;
     private final ConnectionReqService connectionReqService;
     private final FileDBService fileDBService;
-    private final JobService jobService;
-    private final JobApplicationService jobApplicationService;
-    private final JobViewService jobViewService;
-    private final CommentService commentService;
-    private final LikeService likeService;
-
-    @PostConstruct
-    public void createAccounts() {
-        accountService.createAccounts();
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<AccountResponse>> getAllAccounts() throws IOException {

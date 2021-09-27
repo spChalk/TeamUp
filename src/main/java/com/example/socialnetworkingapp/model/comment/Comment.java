@@ -21,7 +21,8 @@ import java.util.Date;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(name = "Id_Gen", initialValue = 101)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Id_Gen")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id ;
 

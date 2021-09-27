@@ -125,7 +125,7 @@ public loadPostLikes(pid: number) {
 
         for(let file of files) {
 
-          if(file === null) {
+          if(file === null || file === undefined) {
             continue;
           }
 
@@ -272,7 +272,7 @@ public loadPostLikes(pid: number) {
   public increaseView(pid: number) {
     this.postViewService.addView(pid).subscribe(
       (response: PostView) => {
-        this.loadPosts();
+
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

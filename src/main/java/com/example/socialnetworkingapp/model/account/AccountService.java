@@ -314,46 +314,6 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email " + email + " was not found!"));
     }
 
-    public void createAccounts() {
-
-        Account account = new Account(AccountRole.ADMIN, "admin", "admin", "admin@admin.com", "adminadmin", "12345");
-        String encodedPassword = bCryptPasswordEncoder.encode(account.getPassword());
-        account.setPassword(encodedPassword);
-        this.accountRepository.save(account);
-
-        JSONParser parser = new JSONParser();
-        try{
-            Object accounts = parser.parse(new FileReader("src/main/java/com/example/socialnetworkingapp/data/accounts.json"));
-            JSONObject json = (JSONObject) accounts;
-            JSONArray array = (JSONArray) json.get("Accounts");
-
-            Iterator<JSONObject> iterator = array.iterator();
-            while(iterator.hasNext()) {
-                ObjectMapper mapper = new ObjectMapper();
-                RegistrationRequest req = mapper.readValue(iterator.next().toJSONString(), RegistrationRequest.class);
-                Account newAccount = new Account(AccountRole.USER, req.getFirstName(), req.getLastName(), req.getEmail(),
-                        bCryptPasswordEncoder.encode(req.getPassword()), req.getPhone());
-                this.accountRepository.save(newAccount);
-            }
-
-            /*List<Account> allAccounts = this.accountRepository.findAll();
-            for(Account acc: allAccounts) {
-                for(int i = 0; i < 2; i++) {
-                    this.connect(acc.getEmail(), allAccounts.get(0).getEmail());
-                }
-            }*/
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        catch (ParseException e){
-            e.printStackTrace();
-        }
-    }
-
     public boolean passwordConfirmation(String password) {
         Account account = this.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 
