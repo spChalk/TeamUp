@@ -465,10 +465,9 @@ public class AccountService implements UserDetailsService {
         if(!education.getStartDate().equals(""))
             prevEducation.setStartDate(education.getStartDate());
 
-        if(!education.getEndDate().equals(""))
-            prevEducation.setEndDate(education.getEndDate());
+        prevEducation.setEndDate(education.getEndDate());
 
-        if(!String.valueOf(education.getGrade()).equals(""))
+        if(education.getGrade() != 0)
             prevEducation.setGrade(education.getGrade());
 
         if(!education.getDescription().equals(""))

@@ -56,6 +56,8 @@ export class AccountComponent implements OnInit {
     this.accountService.fetchUser(email).subscribe(
       (response: Account) => {
         this.account = new Account(response);
+        this.account.experience = this.account.experience.reverse();
+        this.account.education = this.account.education.reverse();
         if (this.account.bio === null) {
           this.account.bio = new Bio("No available bio.");
         }
@@ -318,8 +320,8 @@ export class AccountComponent implements OnInit {
 
     this.accountService.addEducation(addEducationForm.value).subscribe(
       (response: Account) => {
-        this.fetchUserInfo();
         addEducationForm.reset();
+        window.location.reload();
       },
       (error: any) => {
         this.addEducationForm.reset();
@@ -348,7 +350,8 @@ export class AccountComponent implements OnInit {
     editEducationForm.get('visible')?.setValue(selectedEdu.visible);
     this.accountService.editEducation(editEducationForm.value).subscribe(
       (response: Education) => {
-        this.fetchUserInfo();
+        editEducationForm.reset();
+        window.location.reload();
       },
       (error: any) => {
         this.aboutForm.reset();

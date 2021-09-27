@@ -24,10 +24,13 @@ public class Education implements Serializable {
     @NotNull
     private String school;
 
+    @NotNull
     private String degree;
 
+    @NotNull
     private String field;
 
+    @NotNull
     private String startDate;
 
     private String endDate;

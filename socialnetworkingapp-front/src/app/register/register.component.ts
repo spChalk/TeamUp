@@ -116,27 +116,27 @@ export class RegisterComponent implements OnInit {
         this.selectedFiles = undefined;
     }
 
-    public onRegister(registerForm: FormGroup): void {
+  public onRegister(registerForm: FormGroup): void {
 
-        this.accountService.registerAccount(registerForm.value).subscribe(
-            (response: Account) => {
-                this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
-                    (newResponse: boolean) => {
-                      this.onClickModal('addPhoto');
-                    },
-                    (error) => {
-                        console.log(error);
-                    }
-                )
-            },
-            (error: any) => {
-                this.correctCredentials = false;
-                this.registerForm.reset();
-                console.log(error);
-            }
-        );
+    this.accountService.registerAccount(registerForm.value).subscribe(
+      (response: Account) => {
+        this.authService.logIn({ 'username': registerForm.get('email')?.value, 'password': registerForm.get('password')?.value }).subscribe(
+          (newResponse: boolean) => {
+            this.onClickModal('addPhoto');
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      },
+      (error: any) => {
+        this.correctCredentials = false;
+        this.registerForm.reset();
+        console.log(error);
+      }
+    );
 
-    }
+  }
 
     public onClickModal(mode: string): void {
 
