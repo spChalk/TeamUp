@@ -37,30 +37,4 @@ public class TagService {
     public Tag getTagByName(String tagName) {
         return this.tagRepository.findByTagName(tagName);
     }
-
-    public void createTags() {
-        JSONParser parser = new JSONParser();
-        try{
-            Object tags = parser.parse(new FileReader("src/main/java/com/example/socialnetworkingapp/data/tags.json"));
-            JSONObject json = (JSONObject) tags;
-            JSONArray array = (JSONArray) json.get("Tags");
-
-            Iterator<String> iterator = array.iterator();
-            while(iterator.hasNext()) {
-                Tag tag = new Tag(iterator.next());
-                this.tagRepository.save(tag);
-            }
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        catch (ParseException e){
-            e.printStackTrace();
-        }
-
-    }
-
 }

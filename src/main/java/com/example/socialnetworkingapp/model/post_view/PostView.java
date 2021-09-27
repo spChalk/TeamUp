@@ -20,7 +20,8 @@ import java.io.Serializable;
 public class PostView implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(name = "Id_Gen", initialValue = 501)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Id_Gen")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 

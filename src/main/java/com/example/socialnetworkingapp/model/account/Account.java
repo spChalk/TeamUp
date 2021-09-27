@@ -21,6 +21,11 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.*;
 
+/**
+ * TECHNOLOGY,     BUSINESS,     MACHINE LEARNING,     SOFTWARE,     HARDWARE,     SALES,     RESEARCH,     MAINTENANCE,     OPERATING SYSTEMS,     ARTIFICIAL INTELLIGENCE,     DBMS,     NETWORKING,     DATA STRUCTURES,     ALGORITHMS,     OOP,     SQL,     UNIX,     WINDOWS,     GIT,     GITHUB,     MANAGEMENT,     ECONOMICS,     PSYCHOLOGY,     HISTORY,     BOOKS,     MUSIC,     RUNNING,     SWIMMING,     LAW,     MATHEMATICS,     PHYSICS,     ENGINEERING,     ARCHITECTURE,     AGRICULTURE,     SPACE,     CHEMISTRY,     SCIENCE,     POLITICS,     ATHLETICS,     ROBOTICS,     BIOINFORMATICS,     MEDICINE,     ARCHEOLOGY,     STOCK_MARKET,     CRYPTOCURRENCY,     YACHTS,     SHIPS,     AEROPLANE,     MINERAL RESOURCES,     MINING,     TRAVELLING
+ *
+ */
+
 @Data
 @Getter
 @Setter
@@ -32,7 +37,8 @@ import java.util.*;
 public class Account implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(name = "Id_Gen", initialValue = 101)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Id_Gen")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 

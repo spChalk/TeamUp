@@ -15,10 +15,6 @@ public class TagController {
 
     private TagService tagService;
 
-    @PostConstruct
-    public void createTags(){
-        this.tagService.createTags();
-    }
     @PostMapping("/add")
     public ResponseEntity<Tag> addTag(@RequestBody Tag tag) {
         return new ResponseEntity<>(this.tagService.addTag(tag), HttpStatus.CREATED);

@@ -39,16 +39,6 @@ public class AccountController {
     private final AccountService accountService;
     private final ConnectionReqService connectionReqService;
     private final FileDBService fileDBService;
-    private final JobService jobService;
-    private final JobApplicationService jobApplicationService;
-    private final JobViewService jobViewService;
-    private final CommentService commentService;
-    private final LikeService likeService;
-
-    @PostConstruct
-    public void createAccounts() {
-        accountService.createAccounts();
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<AccountResponse>> getAllAccounts() throws IOException {
