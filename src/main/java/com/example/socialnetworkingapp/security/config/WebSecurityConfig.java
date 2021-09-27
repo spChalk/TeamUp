@@ -41,33 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/register/**").permitAll()
                                 .antMatchers("/login/**").permitAll()
-                                .antMatchers("/accounts/**").permitAll()
-                                .antMatchers("/export/**").permitAll()
-                .antMatchers("/upload-admin/**").permitAll()
-                .antMatchers("/upload-user/**").permitAll()
-                .antMatchers("/upload-post/**").permitAll()
-                .antMatchers("/files/**").permitAll()
-                                .antMatchers("/bio/**").permitAll()
-                                .antMatchers("/posts/**").permitAll()
-                                .antMatchers("/jobs/**").permitAll()
-                                .antMatchers("/crequest/**").permitAll()
-                                .antMatchers("/download/**").permitAll()
-                                .antMatchers("/jobapp/**").permitAll()
-                                .antMatchers("/job_views/**").permitAll()
-                .antMatchers("/post_views/**").permitAll()
                                 .antMatchers("/tags/**").permitAll()
-                                .antMatchers("/xp/**").permitAll()
-                                .antMatchers("/education/**").permitAll()
-
-                .antMatchers("/messages/**").permitAll()
-
-                .antMatchers("/comments/**").permitAll()
-                .antMatchers("/likes/**").permitAll()
-
-
                 .anyRequest().authenticated();
 
 //        http.addFilter(new JwtUsernamePasswordAuthFilter(authenticationManagerBean(),jwtConfig, secretKey));
