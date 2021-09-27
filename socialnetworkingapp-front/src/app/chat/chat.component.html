@@ -12,15 +12,14 @@
 <br>
 <br>
 
-<div class="container" style="margin-left: 5%; " id="main-container">
+<div class="container" style="justify-content: center;margin-top: -50px" id="main-container">
 
-  <button (click)="onClickModal(null, 'send')" type="button" style="margin-left: 30px"
-    class="btn btn-outline-primary mb-2" data-placement="top" data-original-title="send">
-    <i class="fa fa-plus"></i> Send a new messsage</button>
   <div class="ks-page-content">
     <div class="ks-page-content-body">
       <div class="ks-messenger">
         <div class="ks-discussions">
+          <h4> <strong> Chats </strong>   <button class="btn btn-light btn-lg ml-4" (click)="onClickModal(null, 'send')" ><i class="fa fa-pencil-square-o "></i></button>    </h4>
+          <hr>
           <div class="ks-search">
             <div class="input-icon icon-right icon icon-lg icon-color-primary">
               <input id="input-group-icon-text" type="text" class="form-control" placeholder="Search">
@@ -82,7 +81,7 @@
           <div class="ks-header" *ngIf="this.messages">
 
             <div class="ks-description">
-              <div class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail" >Chating with {{this.messages[0].receiverFirstName}} {{this.messages[0].receiverLastName}} (at {{this.messages[0].receiverEmail}})</div>
+              <div class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail" >{{this.messages[0].receiverFirstName}} {{this.messages[0].receiverLastName}}</div>
             </div>
 
           </div>
@@ -103,10 +102,10 @@
                     </span>
                     <div class="ks-body">
                       <div class="ks-header">
-                        <span class="ks-name">me</span>
+                        <span class="ks-name" style="font-size: 10px" >Me</span>
                         <span class="ks-datetime"> <i class="fa fa-clock-o"></i> {{message?.date}}</span>
                       </div>
-                      <div class="ks-message"> {{message.payload}}</div>
+                      <div class="ks-message" style="font-size: 15px"> {{message.payload}}</div>
                     </div>
                   </li>
 
@@ -123,10 +122,10 @@
 
                     <div class="ks-body">
                       <div class="ks-header">
-                        <span class="ks-name">{{message.senderFirstName}} {{message.senderLastName}} </span>
+                        <span class="ks-name" style="font-size: 10px">{{message.senderFirstName}} {{message.senderLastName}} </span>
                         <span class="ks-datetime">{{message.date}}</span>
                       </div>
-                      <div class="ks-message">{{message.payload}}</div>
+                      <div class="ks-message" style="font-size: 15px">{{message.payload}}</div>
                     </div>
                   </li>
 
@@ -147,8 +146,10 @@
           </div>
           <div class="ks-footer">
             <form [formGroup]="messageForm" (ngSubmit)="sendMessage(this.messageForm,this.queryParams)">
-              <textarea class="form-control" formControlName="payload" placeholder="Type something..."></textarea>
-              <button class="btn btn-primary" type="submit">Send</button>
+              <div class="row">
+              <textarea class="form-control" formControlName="payload" style="width: 610px" placeholder="Type something..."></textarea>
+              <button class="btn btn-primary ml-1" type="submit"><i class="fa fa-send"></i></button>
+              </div>
             </form>
             <div class="ks-controls">
               <a href="#" class="la la-paperclip ks-attachment"></a>
@@ -173,7 +174,7 @@
             <div class="modal-content">
 
               <div class="modal-header">
-                <h5 class="modal-title" id="sendModalLabel">Send message</h5>
+                <h5 class="modal-title" id="sendModalLabel">New message</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -184,7 +185,7 @@
                 <form [formGroup]="sendForm">
 
                   <div class="form-group">
-                    <label for="receiver">Your Friend</label>
+                    <label for="receiver">Pick a Friend</label>
                     <select *ngFor="let friend of myFriends" formControlName="receiver" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
                     <option  value={{friend.email}} >{{friend.firstName}} {{friend.lastName}}</option>
                     </select>
@@ -192,7 +193,7 @@
 
                   <div class="form-group">
                     <label for="payload">Type Your Message Here</label>
-                    <input type="text" class="form-control" formControlName="payload" id="payload" required>
+                    <textarea type="text" class="form-control" formControlName="payload" id="payload" required></textarea>
                   </div>
 
                 </form>
@@ -233,11 +234,11 @@
                   class="rounded-circle">
               </span>
 
-              <span class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail">
+              <span routerLink="/visit/{{this.messages[0].receiverEmail}}" class="ks-name" *ngIf="this.account.email === this.messages[0].senderEmail">
                 {{this.messages[0].receiverFirstName}} {{this.messages[0].receiverLastName}}
               </span>
 
-              <span class="ks-name" *ngIf="this.account.email === this.messages[0].receiverEmail">
+              <span routerLink="/visit/{{this.messages[0].receiverEmail}}" class="ks-name" *ngIf="this.account.email === this.messages[0].receiverEmail">
                 {{this.messages[0].senderFirstName}} {{this.messages[0].senderLastName}}
               </span>
             </div>

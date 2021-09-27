@@ -21,7 +21,8 @@ body{
 .ks-messenger .ks-discussions {
   background: #fff;
   width: 340px;
-  border-right: 1px solid #dee0e1
+  border-right: 1px solid #dee0e1;
+  margin-left: -100px;
 }
 
 .ks-messenger .ks-discussions>.ks-search {
@@ -58,7 +59,7 @@ body{
 }
 
 .ks-messenger .ks-discussions>.ks-body .ks-items>.ks-item {
-  border-bottom: 1px solid #dee0e1
+  border-bottom: 1px solid #a0b4bf;
 }
 
 .ks-messenger .ks-discussions>.ks-body .ks-items>.ks-item>a {
@@ -121,7 +122,7 @@ body{
 }
 
 .ks-messenger .ks-discussions>.ks-body .ks-items>.ks-item>a>.ks-body>.ks-message {
-  font-size: 12px;
+  font-size: 17px;
   color: #858585;
   display: -webkit-box;
   display: -webkit-flex;
@@ -182,7 +183,7 @@ body{
 }
 
 .ks-messenger .ks-discussions>.ks-body .ks-items>.ks-item.ks-unread {
-  background: rgba(247, 202, 24, .1)
+  background: whitesmoke;
 }
 
 .ks-messenger .ks-discussions>.ks-body .ks-items>.ks-item.ks-unread>a>.ks-body>.ks-message {
@@ -223,18 +224,18 @@ body{
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 60px;
+  height: 65px;
   border-bottom: 1px solid #dee0e1;
   padding: 9px 20px;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .ks-messenger .ks-messages>.ks-header>.ks-description>.ks-name,
 .ks-messenger__messages>.ks-header>.ks-description>.ks-name {
-  font-size: 14px;
+  font-size: 20px;
   line-height: 14px;
   margin-bottom: 5px;
   font-weight: 500
@@ -252,7 +253,7 @@ body{
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1
+  flex-grow: 1;
 }
 
 .ks-messenger .ks-messages>.ks-body .ks-items,
@@ -537,13 +538,11 @@ body{
   height: 38px;
   overflow: hidden;
   resize: none;
-  margin-right: 20px
 }
 
 .ks-messenger .ks-messages>.ks-footer>.ks-controls,
 .ks-messenger__messages>.ks-footer>.ks-controls {
   text-align: right;
-  width: 207px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -698,6 +697,7 @@ body{
 .ks-messenger .ks-info>.ks-header,
 .ks-messenger__info>.ks-header {
   border-bottom: 1px solid #dee0e1;
+  font-size: 20px;
   line-height: 15px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -708,7 +708,7 @@ body{
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 60px;
+  height: 65px;
   padding: 20px
 }
 

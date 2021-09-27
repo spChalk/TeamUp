@@ -24,7 +24,7 @@ export class VisitAccountComponent implements OnInit {
   constructor(public authenticationService : AuthenticationService,
               private accountService: AccountService,
               private connectionRequestService: ConnectionRequestService,
-              private router: Router,
+              public router: Router,
               private route: ActivatedRoute) { }
 
   public getRequestedUser(email: string) {

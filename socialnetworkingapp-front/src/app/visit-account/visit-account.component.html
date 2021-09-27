@@ -48,7 +48,7 @@
           {{this.vAccount?.email}}
         </h6>
 
-        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork" routerLink="/chat"
+        <button *ngIf="this.pendingRequestId === -1 && this.isPresentInNetwork" [routerLink]="['/chat']" [queryParams]="{receiverEmail: this.vAccount.email }"
                 style="float: right" type="button" class="btn btn-primary"> <i class="fa fa-comments"></i></button>
 
         <button *ngIf="this.pendingRequestId > 0"
