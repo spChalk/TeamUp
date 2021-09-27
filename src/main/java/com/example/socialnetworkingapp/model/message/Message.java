@@ -5,9 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Getter
@@ -33,9 +31,9 @@ public class Message implements Serializable {
     @JoinColumn(nullable = false)
     private Account receiver;
 
-    private LocalDateTime date;
+    private Date date;
 
-    public Message(String payload, Account sender, Account receiver, LocalDateTime date) {
+    public Message(String payload, Account sender, Account receiver, Date date) {
         this.payload = payload;
         this.sender = sender;
         this.receiver = receiver;

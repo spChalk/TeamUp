@@ -5,12 +5,13 @@ import { AuthenticationService } from '../authentication';
 import { ChatService, Friends } from './chat.service';
 import { Message } from './chat.service';
 import { DomSanitizer, SafeHtml, SafeScript } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute  , Router} from '@angular/router';
 import { retry, switchMap, takeUntil, share } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { NetworkEntity } from '../account/network-entity';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class ChatComponent implements OnInit {
   friends: Friends[];
   allFriends$: Observable<Friends[]>;
   allMessages$: Observable<Message[]>;
+  myFriends: NetworkEntity[];
 
   private stopPolling = new Subject();
 
@@ -34,7 +36,7 @@ export class ChatComponent implements OnInit {
   public messageForm: FormGroup;
   public sendForm: FormGroup;
 
-  constructor(private chatService: ChatService, private accountService: AccountService, private authenticationService: AuthenticationService, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private router : Router , private chatService: ChatService, private accountService: AccountService, private authenticationService: AuthenticationService, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient) {
 
     this.allFriends$ = timer(1, 10000).pipe(
       switchMap(() =>
@@ -56,6 +58,10 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if (this.authenticationService.isAdmin()) {
+          this.router.navigate(['/admin']);
+    }
+
     this.messageForm = this.fb.group({
       payload: new FormControl('')
     },
@@ -69,6 +75,7 @@ export class ChatComponent implements OnInit {
     this.accountService.fetchUser(this.authenticationService.getCurrentUser()).subscribe(
       (response: Account) => {
         this.account = response;
+        this.myFriends = this.account.network;
       },
       (error: any) => {
         console.log(error);
@@ -142,6 +149,7 @@ export class ChatComponent implements OnInit {
   }
 
   public onSendMessage(sendForm: FormGroup) {
+      console.log(sendForm.get('receiver')?.value);
     this.chatService.sendMessage(sendForm.get('payload')?.value, sendForm.get('receiver')?.value).subscribe(
       (resp: Message) => {
         console.log(resp);

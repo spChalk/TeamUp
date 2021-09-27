@@ -104,9 +104,9 @@
                     <div class="ks-body">
                       <div class="ks-header">
                         <span class="ks-name">me</span>
-                        <span class="ks-datetime">{{message.date}}</span>
+                        <span class="ks-datetime"> <i class="fa fa-clock-o"></i> {{message?.date}}</span>
                       </div>
-                      <div class="ks-message">{{message.payload}}</div>
+                      <div class="ks-message"> {{message.payload}}</div>
                     </div>
                   </li>
 
@@ -185,7 +185,9 @@
 
                   <div class="form-group">
                     <label for="receiver">Your Friend</label>
-                    <input type="text" class="form-control" formControlName="receiver" id="receiver" required>
+                    <select *ngFor="let friend of myFriends" formControlName="receiver" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+                    <option  value={{friend.email}} >{{friend.firstName}} {{friend.lastName}}</option>
+                    </select>
                   </div>
 
                   <div class="form-group">
@@ -269,7 +271,6 @@
             </div>
           </div>
 
-          <!-- this is not neccessary to do  -->
 
         </div>
       </div>

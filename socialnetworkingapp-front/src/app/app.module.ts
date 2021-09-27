@@ -36,6 +36,7 @@ import { ConnectionRequestComponent } from './connection-request/connection-requ
 import { TokenInterceptorService } from './authentication';
 import {NavBarAdminComponent} from "./nav-bar-admin/nav-bar-admin.component";
 import { PostViewComponent } from './post-view/post-view.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { PostViewComponent } from './post-view/post-view.component';
     VisitAccountComponent,
     ConnectionRequestComponent,
     PostViewComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
