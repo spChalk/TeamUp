@@ -37,7 +37,7 @@ export class NavBarAuthenticatedComponent implements OnInit {
     }
 
     accept(email : string){
-        this.connectionRequestService.acceptRequest(email).subscribe(
+        this.connectionRequestService.acceptRequestWithEmail(email).subscribe(
             (resp:any)=>{
                 window.location.reload();
             },

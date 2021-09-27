@@ -27,7 +27,7 @@ export class ConnectionRequestService {
     return this.http.post<any>(`${this.url}/add/${email}`, {});
   }
 
-  public acceptRequest(email: string): Observable<any> {
+  public acceptRequestWithEmail(email: string): Observable<any> {
     return this.http.put<any>(`${this.url}/accept/${email}`, {});
   }
 
