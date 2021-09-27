@@ -125,7 +125,7 @@ public loadPostLikes(pid: number) {
 
         for(let file of files) {
 
-          if(file === null) {
+          if(file === null || file === undefined) {
             continue;
           }
 

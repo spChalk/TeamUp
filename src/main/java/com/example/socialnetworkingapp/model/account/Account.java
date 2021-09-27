@@ -60,7 +60,7 @@ public class Account implements UserDetails {
     @JoinTable(name = "network",
             joinColumns = { @JoinColumn(name = "account1_id") },
             inverseJoinColumns = { @JoinColumn(name = "account2_id") })
-    @JsonSerialize(converter = NetworkConverter.class)
+    @JsonSerialize(using = CustomNetworkSerializer.class)
     private List<Account> network = new ArrayList<Account>();
 
     @ManyToMany(fetch = FetchType.LAZY,
