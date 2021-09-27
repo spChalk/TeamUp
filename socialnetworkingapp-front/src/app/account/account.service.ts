@@ -24,31 +24,18 @@ export class AccountService {
     return this.http.get<Account>(`${this.url}/find/mail/${email}`);
   }
   public getAllAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.url}/all`,
-      {
-        headers: new HttpHeaders( {
-          "Access-Control-Allow-Origin": "http://localhost:4200",
-        })
-      });
+    return this.http.get<Account[]>(`${this.url}/all`);
   }
   public getAccountById(account_id: number): Observable<Account> {
     return this.http.get<Account>(`${this.url}/find/id/${account_id}`);
   }
 
   public getAccountByEmail(email: string): Observable<Account> {
-    return this.http.get<Account>(`${this.url}/find/mail/${email}`, {
-      headers: new HttpHeaders( {
-        "Access-Control-Allow-Origin": "http://localhost:4200",
-      })
-    });
+    return this.http.get<Account>(`${this.url}/find/mail/${email}`);
   }
 
   public getAccountsBySimilarName(keyword: string): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.url}/find/names/${keyword}`, {
-      headers: new HttpHeaders( {
-        "Access-Control-Allow-Origin": "http://localhost:4200",
-      })
-    });
+    return this.http.get<Account[]>(`${this.url}/find/names/${keyword}`);
   }
 
   public registerAccount(account: Account): Observable<Account> {
@@ -56,9 +43,6 @@ export class AccountService {
     /* https://www.gitmemory.com/issue/angular/angular/18396/490910837 */
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
-
-                console.log(account)
-
     return this.http.post<Account>(`${environment.apiBaseUrl}/register`,
       account,httpOptions);
   }

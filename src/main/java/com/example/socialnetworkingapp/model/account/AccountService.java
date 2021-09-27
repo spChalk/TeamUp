@@ -314,19 +314,6 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAccountByEmail(email).orElseThrow( () -> new UserNotFoundException("User with email " + email + " was not found!"));
     }
 
-   /* public void follow(Account sender, Account receiver) {
-        *//*
-        * If receiver is not in my follows, add him
-        * Also, add me in receiver's followers
-        *//*
-        if(sender.getFollowing().isEmpty() || sender.getFollowing().stream()
-                .filter(contact -> receiver.getEmail().equals(contact.getEmail()))
-                .findAny()
-                .orElse(null) == null) {
-            sender.follow(receiver);
-        }
-    }*/
-
     public void createAccounts() {
 
         Account account = new Account(AccountRole.ADMIN, "admin", "admin", "admin@admin.com", "adminadmin", "12345");
