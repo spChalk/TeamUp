@@ -17,7 +17,6 @@ export class PostService {
     return this.http.post<Post>(`${this.url}/add`, payload );
   }
 
-  /* TODO: TEMPORARY. When homepage is ready, get posts by network etc.. */
   public getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.url}/all`);
   }
