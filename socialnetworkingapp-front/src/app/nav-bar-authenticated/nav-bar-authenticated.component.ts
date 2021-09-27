@@ -36,8 +36,8 @@ export class NavBarAuthenticatedComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
-    accept(email : string){
-        this.connectionRequestService.acceptRequestWithEmail(email).subscribe(
+    accept(id: number){
+        this.connectionRequestService.acceptRequest(id).subscribe(
             (resp:any)=>{
                 window.location.reload();
             },

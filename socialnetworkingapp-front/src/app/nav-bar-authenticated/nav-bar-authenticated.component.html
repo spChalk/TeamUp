@@ -60,7 +60,7 @@
 
             <div class="modal-body" *ngFor="let req of requests">
                     <div *ngIf="req.receiver == account"> You have a new friend request from {{req.sender}} 
-                    <button (click)="accept(req.sender)" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+                    <button (click)="accept(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
                         data-placement="top" data-original-title="accept">
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>Accept</button>
 
