@@ -5,6 +5,7 @@ import { retry, switchMap, takeUntil, share } from 'rxjs/operators';
 import { Account } from '../account/account';
 import { environment } from 'src/environments/environment';
 import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
+import { EMPTY } from 'rxjs'
 
 export interface Message{
   payload : string;
@@ -41,13 +42,11 @@ export class ChatService {
   constructor(private http: HttpClient) {
   }
 
-  getAllMessages(user : string, friend : string ): Observable<Message[]>{
-    let httpOptions = { headers: new HttpHeaders(
-      { 'Content-Type': 'application/json', })};
+  getAllMessages(friend : string ): Observable<Message[]> {
+      if(friend != null && friend != "")
+        return this.http.post<Message[]>(this.url + "/chat", friend);
 
-    return this.http.post<Message[]>(`${this.url}/chat`,
-      {"senderEmail" :user, "receiverEmail": friend},httpOptions);
-
+        return EMPTY;
   }
 
   sendMessage(payload: string, receiverMail: string ): Observable<Message>{

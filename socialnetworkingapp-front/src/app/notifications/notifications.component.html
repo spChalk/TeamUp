@@ -1,1 +1,111 @@
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+</head>
+
 <app-nav-bar-authenticated></app-nav-bar-authenticated>
+<br>
+<br>
+<br>
+<br>
+
+
+<!-- modal -->
+<div class="container" style="margin-left: 5%; " id="main-container">
+
+
+  <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left: 30px"
+    class="btn btn-outline-primary mb-2" data-placement="top" data-original-title="comments">
+    <i class="fa fa-comments" aria-hidden="true"></i>Comments </button>
+
+  <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left: 30px"
+    class="btn btn-outline-primary mb-2" data-placement="top" data-original-title="likes">
+    <i class="fa fa-heart" aria-hidden="true"></i>Likes </button>
+
+  <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left: 30px"
+    class="btn btn-outline-primary mb-2" data-placement="top" data-original-title="friends">
+    <i class="fa fa-address-book" aria-hidden="true"></i>Friend Requests </button>
+
+
+    <!-- friends modal -->
+    <div class="modal fade" id="friends" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="friends">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Friend Requests</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                hello
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+<!-- end friends modal -->
+
+<!-- comments modal -->
+    <div class="modal fade" id="comments" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="comments">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Comments</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                hello
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+<!-- end of comments modal -->
+
+<!-- likes modal -->
+    <div class="modal fade" id="likes" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="likes">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Likes</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                hello
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+</div>

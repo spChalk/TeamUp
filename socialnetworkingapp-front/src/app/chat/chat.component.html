@@ -185,10 +185,12 @@
                 <form [formGroup]="sendForm">
 
                   <div class="form-group">
+
                     <label for="receiver">Pick a Friend</label>
                     <a *ngIf="myFriends.length === 0" class="text-muted" ><br>No friends to talk with yet!</a>
                     <select *ngIf="myFriends.length > 0" formControlName="receiver" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
                     <option *ngFor="let friend of myFriends" value={{friend.email}} >{{friend.firstName}} {{friend.lastName}}</option>
+
                     </select>
                   </div>
 

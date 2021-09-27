@@ -40,4 +40,29 @@ export class NotificationsComponent implements OnInit {
         // this.loadPosts();
     }
 
+  public onClickModal(data: any, mode: string): void {
+
+    const container = document.getElementById('main-container');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+
+    if (mode === 'friends') {
+      button.setAttribute('data-target', '#friends');
+    }
+    if (mode === 'comments') {
+      button.setAttribute('data-target', '#comments');
+    }
+
+    if (mode === 'likes') {
+      button.setAttribute('data-target', '#likes');
+    }
+    if (container != null) {
+      container.appendChild(button);
+      button.click();
+    }
+  }
+
 }

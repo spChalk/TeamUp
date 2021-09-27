@@ -12,6 +12,9 @@ export class ConnectionRequestService {
   private url = environment.apiBaseUrl + '/crequest';
   constructor(private http: HttpClient) {  }
 
+  public getAllRequests(): Observable<ConnectionRequest[]> {
+    return this.http.get<ConnectionRequest[]>(`${this.url}/all-requests`)
+  }
   public checkForPendingRequest(receiverEmail: string): Observable<number> {
     return this.http.get<number>(`${this.url}/search-pending/${receiverEmail}`)
   }
@@ -22,6 +25,14 @@ export class ConnectionRequestService {
 
   public addRequest(email: string): Observable<any> {
     return this.http.post<any>(`${this.url}/add/${email}`, {});
+  }
+
+  public acceptRequest(email: string): Observable<any> {
+    return this.http.put<any>(`${this.url}/accept/${email}`, {});
+  }
+
+  public rejectRequest(email: string): Observable<any> {
+    return this.http.put<any>(`${this.url}/reject/${email}`, {});
   }
 
   public removeRequest(connectionRequestId: number): Observable<any> {

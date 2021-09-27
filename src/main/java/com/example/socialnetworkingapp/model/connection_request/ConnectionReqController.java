@@ -76,4 +76,10 @@ public class ConnectionReqController {
         this.connectionReqService.rejectRequest(currUser, this.accountService.findAccountByEmail(email));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/all-requests")
+    public ResponseEntity<List<ConnectionRequestResponse>> getAllConnectionRequests() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.connectionReqService.findAllRequestsByAccId(currUser.getId()), HttpStatus.OK);
+    }
 }

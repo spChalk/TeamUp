@@ -46,9 +46,10 @@ export class ChatComponent implements OnInit {
       takeUntil(this.stopPolling)
     );
 
-    this.allMessages$ = timer(1, 10000).pipe(
+    
+    this.allMessages$ = timer(1, 5000).pipe(
       switchMap(() =>
-        this.http.post<Message[]>(this.url + "/chat", this.queryParams)),
+      this.chatService.getAllMessages(this.queryParams)),
       retry(),
       share(),
       takeUntil(this.stopPolling)
@@ -106,7 +107,7 @@ export class ChatComponent implements OnInit {
   }
 
   public getMessages(withFriend: string) {
-    this.chatService.getAllMessages(this.authenticationService.getCurrentUser(), withFriend).subscribe(
+    this.chatService.getAllMessages(withFriend).subscribe(
       (resp: Message[]) => {
         this.messages = resp;
       },
