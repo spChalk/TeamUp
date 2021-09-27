@@ -218,7 +218,7 @@ export class JobComponent implements OnInit {
   public increaseView(jid: number) {
     this.jobViewService.addView(jid).subscribe(
       (response: JobView) => {
-        this.getJobs();
+
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

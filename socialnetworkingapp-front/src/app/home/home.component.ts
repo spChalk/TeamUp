@@ -272,7 +272,7 @@ public loadPostLikes(pid: number) {
   public increaseView(pid: number) {
     this.postViewService.addView(pid).subscribe(
       (response: PostView) => {
-        this.loadPosts();
+
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
