@@ -13,9 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +48,7 @@ public class MessageController {
         String senderMail = authentication.getName();
         Account sender = accountService.findAccountByEmail(senderMail);
         Account receiver = accountService.findAccountByEmail(request.getReceiverMail());
-        Message newMessage = new Message(request.getPayload(), sender, receiver, LocalDateTime.now());
+        Message newMessage = new Message(request.getPayload(), sender, receiver, new Date());
         return new ResponseEntity<>( messageService.addMessage(newMessage) , HttpStatus.CREATED);
     }
 

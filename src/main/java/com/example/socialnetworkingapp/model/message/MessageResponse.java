@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class MessageResponse {
     private String payload;
-    private LocalDateTime date;
+    private String date;
 
     private String senderEmail;
     private String senderFirstName;

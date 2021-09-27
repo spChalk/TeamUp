@@ -8,7 +8,7 @@ import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 
 export interface Message{
   payload : string;
-  date : Date;
+  date : string;
 
   senderEmail : string;
   senderFirstName: string;

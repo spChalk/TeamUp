@@ -24,7 +24,7 @@ public interface MessageMapper {
     @Mapping(target = "receiverImageUrl", expression = "java(mapImage(message.getReceiver()))")
     @Mapping(target = "receiverPhone", expression = "java(mapPhone(message.getReceiver()))")
 
-    @Mapping(target = "date", expression = "java(mapDate(message))")
+//    @Mapping(target = "date", expression = "java(mapDate(message))")
     MessageResponse MessageToMessageResponse(Message message);
 
     default String mapImage(Account account){
@@ -37,9 +37,6 @@ public interface MessageMapper {
 
     default String mapFirstName(Account account){
         return account.getFirstName();
-    }
-    default LocalDateTime mapDate(Message message){
-        return message.getDate();
     }
     default String mapLastName(Account account){
         return account.getLastName();
