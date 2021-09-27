@@ -185,8 +185,8 @@
 
                   <div class="form-group">
                     <label for="receiver">Your Friend</label>
-                    <select *ngFor="let friend of myFriends" formControlName="receiver" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
-                    <option  value={{friend.email}} >{{friend.firstName}} {{friend.lastName}}</option>
+                    <select  formControlName="receiver" class="form-control" data-role="select-dropdown" data-profile="minimal" required>
+                    <option  *ngFor="let friend of myFriends" value={{friend.email}} >{{friend.firstName}} {{friend.lastName}}</option>
                     </select>
                   </div>
 

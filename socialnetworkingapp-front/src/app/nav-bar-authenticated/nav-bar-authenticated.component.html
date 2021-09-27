@@ -1,18 +1,138 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light " >
-  <a class="navbar-brand" href="#" style="font-size: large"><strong>up</strong></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/home" > Home </a>
-      <a class="nav-link" routerLink="/notifications" > Notifications</a>
-      <a class="nav-link" routerLink="/network">Network </a>
-      <a class="nav-link" routerLink="/jobs">Jobs </a>
-      <a class="nav-link" routerLink="/chat">Chat</a>
-      <a class="nav-link" routerLink="/account">Profile</a>
-      <a class="nav-link" routerLink="/settings">Settings</a>
-      <a class="nav-link" href (click)="logout()">Logout</a>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="#" style="font-size: large"><strong>up</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link" routerLink="/home"> Home </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="nav-link" routerLink="/network">Network </a>
+            <a class="nav-link" routerLink="/jobs">Jobs </a>
+            <a class="nav-link" routerLink="/chat">Chat</a>
+            <a class="nav-link" routerLink="/account">Profile</a>
+            <a class="nav-link" routerLink="/settings">Settings</a>
+            <a class="nav-link" href (click)="logout()">Logout</a>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Notifications
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+                    <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-outline-warning mb-2"
+                        data-placement="top" data-original-title="comments">
+                        <i class="fa fa-comments" aria-hidden="true"></i>Comments </button>
+
+                    <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
+                        data-placement="top" data-original-title="likes">
+                        <i class="fa fa-heart" aria-hidden="true"></i>Likes </button>
+
+                    <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+                        data-placement="top" data-original-title="friends">
+                        <i class="fa fa-address-book" aria-hidden="true"></i>Requests </button>
+                </div>
+            </li>
+        </div>
     </div>
-  </div>
 </nav>
+
+    <!-- friends modal -->
+    <div class="modal fade" id="friends" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="friends">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Friend Requests</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body" *ngFor="let req of requests">
+                    <div *ngIf="req.receiver == account"> You have a new friend request from {{req.sender}} 
+                    <button (click)="accept(req.sender)" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+                        data-placement="top" data-original-title="accept">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>Accept</button>
+
+                    <button (click)="reject(req.sender)" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
+                        data-placement="top" data-original-title="reject">
+                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>Reject</button>
+
+                    </div>
+
+                    <div *ngIf="req.sender==account"> Pending friend request to {{req.receiver}} 
+                    <button (click)="remove(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
+                        data-placement="top" data-original-title="reject">
+                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>Cancel request</button>
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+<!-- end friends modal -->
+
+<!-- comments modal -->
+    <div class="modal fade" id="comments" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="comments">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Comments</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                hello
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+<!-- end of comments modal -->
+
+<!-- likes modal -->
+    <div class="modal fade" id="likes" tabindex="-1" role="dialog" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="likes">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            <h5 class="modal-title" id="friends">Likes</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                hello
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+        </div>
+    </div>
+</div>
