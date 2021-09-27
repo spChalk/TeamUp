@@ -57,7 +57,7 @@ export class NetworkComponent implements OnInit {
           account.imageUrl, null, null);
 
         for(let xp of account.experience) {
-          if (xp.endDate === null) {
+          if (xp.endDate === null && xp.visible === true) {
             net.position = xp.headline;
             net.company = xp.company;
             break;

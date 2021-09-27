@@ -30,11 +30,19 @@ public class ConnectionReqController {
         return new ResponseEntity<>(newConnectionRequest, HttpStatus.CREATED);
     }
 
-    @GetMapping("/search/{receiver_email}")
-    public ResponseEntity<Long> SearchRequest(@PathVariable("receiver_email") String receiverEmail){
+    @GetMapping("/search-pending/{receiver_email}")
+    public ResponseEntity<Long> SearchPendingRequest(@PathVariable("receiver_email") String receiverEmail){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        return new ResponseEntity<>(this.connectionReqService.findRequestByAccEmails(currUser.getEmail(), receiverEmail),
+        return new ResponseEntity<>(this.connectionReqService.findPendingRequestByAccEmails(currUser.getEmail(), receiverEmail),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/search-received/{email}")
+    public ResponseEntity<Long> SearchReceivedRequest(@PathVariable("email") String receiverEmail){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account currUser = accountService.findAccountByEmail(authentication.getName());
+        return new ResponseEntity<>(this.connectionReqService.findReceivedRequestByAccEmails(currUser.getEmail(), receiverEmail),
                 HttpStatus.OK);
     }
 
@@ -53,11 +61,11 @@ public class ConnectionReqController {
         return new ResponseEntity<>(this.connectionReqService.findRequestsByAccId(currUser.getId()), HttpStatus.OK);
     }
 
-    @PutMapping("/accept/{email}")
-    public ResponseEntity<HttpStatus> acceptConnectionRequests(@PathVariable("email") String email) {
+    @PutMapping("/accept/{req_id}")
+    public ResponseEntity<HttpStatus> acceptConnectionRequests(@PathVariable("req_id") Long reqId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account currUser = accountService.findAccountByEmail(authentication.getName());
-        this.connectionReqService.acceptRequest(currUser, this.accountService.findAccountByEmail(email));
+        this.connectionReqService.acceptRequest(currUser, reqId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

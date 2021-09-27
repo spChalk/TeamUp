@@ -21,11 +21,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.*;
 
-/**
- * TECHNOLOGY,     BUSINESS,     MACHINE LEARNING,     SOFTWARE,     HARDWARE,     SALES,     RESEARCH,     MAINTENANCE,     OPERATING SYSTEMS,     ARTIFICIAL INTELLIGENCE,     DBMS,     NETWORKING,     DATA STRUCTURES,     ALGORITHMS,     OOP,     SQL,     UNIX,     WINDOWS,     GIT,     GITHUB,     MANAGEMENT,     ECONOMICS,     PSYCHOLOGY,     HISTORY,     BOOKS,     MUSIC,     RUNNING,     SWIMMING,     LAW,     MATHEMATICS,     PHYSICS,     ENGINEERING,     ARCHITECTURE,     AGRICULTURE,     SPACE,     CHEMISTRY,     SCIENCE,     POLITICS,     ATHLETICS,     ROBOTICS,     BIOINFORMATICS,     MEDICINE,     ARCHEOLOGY,     STOCK_MARKET,     CRYPTOCURRENCY,     YACHTS,     SHIPS,     AEROPLANE,     MINERAL RESOURCES,     MINING,     TRAVELLING
- *
- */
-
 @Data
 @Getter
 @Setter
@@ -65,7 +60,7 @@ public class Account implements UserDetails {
     @JoinTable(name = "network",
             joinColumns = { @JoinColumn(name = "account1_id") },
             inverseJoinColumns = { @JoinColumn(name = "account2_id") })
-    @JsonSerialize(using = CustomNetworkSerializer.class)
+    @JsonSerialize(converter = NetworkConverter.class)
     private List<Account> network = new ArrayList<Account>();
 
     @ManyToMany(fetch = FetchType.LAZY,

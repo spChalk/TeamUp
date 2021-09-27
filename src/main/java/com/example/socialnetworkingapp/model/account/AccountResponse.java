@@ -26,7 +26,6 @@ public class AccountResponse {
     private final String imageUrl;
     private final LocalDate dateCreated;
 
-    @JsonSerialize(using = CustomNetworkSerializer.class)
     private final List<Account> network;
 
     private final List<Tag> tags;

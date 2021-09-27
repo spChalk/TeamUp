@@ -48,17 +48,6 @@ public class PostController {
         return new ResponseEntity<>(postService.findAllPosts(newUser), HttpStatus.OK);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id){
-//        PostResponse post = postService.findPostById(id);
-//        return new ResponseEntity<>(post , HttpStatus.OK);
-//    }
-//    @GetMapping("/by-user/{name}")
-//    public List<PostResponse> getPostsByUsername(String username){
-//        return postService.getPostsByUsername(username);
-//    }
-
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePostById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

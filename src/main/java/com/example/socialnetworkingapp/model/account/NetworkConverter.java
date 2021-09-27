@@ -1,33 +1,16 @@
 package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.model.experience.Experience;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.util.StdConverter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomNetworkSerializer extends StdSerializer<List<Account>> {
-
-    public CustomNetworkSerializer() {
-        this(null);
-    }
-
-    public CustomNetworkSerializer(Class<List<Account>> t) {
-        super(t);
-    }
+public class NetworkConverter extends StdConverter<List<Account>, List<NetworkEntity>> {
 
     @Override
-    public void serialize(
-            List<Account> accounts,
-            JsonGenerator generator,
-            SerializerProvider provider)
-            throws IOException, JsonProcessingException {
+    public List<NetworkEntity> convert(List<Account> accounts) {
 
         List<NetworkEntity> accs = new ArrayList<>();
         for (Account account : accounts) {
@@ -47,6 +30,6 @@ public class CustomNetworkSerializer extends StdSerializer<List<Account>> {
                     account.getLastName(), account.getEmail(), account.getImageUrl(),
                     headline, company));
         }
-        generator.writeObject(accs);
+        return accs;
     }
 }
