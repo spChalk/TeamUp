@@ -27,7 +27,7 @@ public class LikeService {
 
     public LikeResponse addLike(Like like) {
         Like l = this.likeRepository.save(like);
-        return new LikeResponse(l.getId(), l.getUser().getFirstName(), l.getUser().getLastName(), l.getUser().getEmail());
+        return new LikeResponse(l.getId(), l.getUser().getFirstName(), l.getUser().getLastName(), l.getUser().getEmail(), l.getPost().getId(), l.getUser().getImageUrl());
     }
 
     public void deleteLikeById(Long likeId) {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { Comment } from './comment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,9 @@ export class CommentService {
   public deleteComment(lid: number): Observable<any> {
     return this.http.delete<any>(`${this.url}/delete/${lid}`);
   }
+
+  public getAllCommentsOfMyPosts(): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.url}/all-comments-of-my-posts`);
+  }
+
 }

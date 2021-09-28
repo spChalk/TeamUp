@@ -2,8 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication';
+import { CommentService } from '../comment/comment.service';
 import { ConnectionRequestService } from '../connection-request/connection-request.service';
 import { ConnectionRequest } from '../connection-request/ConnectionRequest';
+import { Like } from '../like/like';
+import {LikeService} from "../like/like.service";
+import { Comment } from '../comment/comment';
 
 @Component({
     selector: 'app-nav-bar-authenticated',
@@ -13,13 +17,16 @@ import { ConnectionRequest } from '../connection-request/ConnectionRequest';
 export class NavBarAuthenticatedComponent implements OnInit {
 
     requests : ConnectionRequest[];
+    likes : Like[];
+    comments: Comment[];
     account: string;
 
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        private connectionRequestService : ConnectionRequestService) {
-
+        private connectionRequestService : ConnectionRequestService,
+        private likeService : LikeService,
+        private commentService : CommentService) {
     }
 
     ngOnInit() {
@@ -93,11 +100,30 @@ export class NavBarAuthenticatedComponent implements OnInit {
         }
         if (mode === 'comments') {
             button.setAttribute('data-target', '#comments');
+            this.commentService.getAllCommentsOfMyPosts().subscribe(
+                (response : Comment[])=>{
+                    this.comments = response;
+                },
+                (error : any)=>{
+                    console.log(error);
+                }
+            )
         }
 
         if (mode === 'likes') {
             button.setAttribute('data-target', '#likes');
+
+            this.likeService.getAllLikesOfMyPosts().subscribe(
+                (resp : Like[])=>{
+                    this.likes =resp;
+                    console.log(resp);
+                },
+                (error : any)=>{
+                    console.log(error);
+                }
+            )
         }
+
         if (container != null) {
             container.appendChild(button);
             button.click();

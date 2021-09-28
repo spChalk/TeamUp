@@ -3,6 +3,7 @@ package com.example.socialnetworkingapp.model.like;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.post.Post;
+import com.example.socialnetworkingapp.model.post.PostResponse;
 import com.example.socialnetworkingapp.model.post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +53,19 @@ public class LikeController {
         Account currUser = accountService.findAccountByEmail(authentication.getName());
         this.likeService.deleteLikeById(likeId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/all-likes-of-my-posts")
+    public ResponseEntity<List<LikeResponse>> getAllLikesOfMyPosts(){
+
+        Account author = this.accountService.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<PostResponse> posts =  this.postService.findPostsByAuthorId(author.getId());
+
+        List<LikeResponse> likes = new ArrayList<>();
+        for(PostResponse post : posts){
+            likes.addAll(this.likeService.findAllLikesOfPost(post.getId()));
+        }
+        return new ResponseEntity<>(likes, HttpStatus.OK);
     }
 
 }
