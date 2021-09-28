@@ -23,4 +23,9 @@ export class LikeService {
   public deleteLike(lid: number): Observable<any> {
     return this.http.delete<any>(`${this.url}/delete/${lid}`);
   }
+
+  public getAllLikesOfMyPosts(): Observable<Like[]> {
+    return this.http.get<Like[]>(`${this.url}/all-likes-of-my-posts`);
+  }
+
 }

@@ -13,7 +13,17 @@ public interface LikeMapper {
     @Mapping(target = "userFirstName", expression = "java(mapFirstName(like.getUser()))")
     @Mapping(target = "userLastName", expression = "java(mapLastName(like.getUser()))")
     @Mapping(target = "userEmail", expression = "java(mapEmail(like.getUser()))")
+    @Mapping(target = "postId", expression = "java(mapId(like.getPost()))")
+    @Mapping(target = "imageUrl", expression = "java(mapImage(like.getUser()))")
     LikeResponse LikeToLikeResponse(Like like);
+
+    default Long mapId(Post post){
+        return post.getId();
+    }
+
+    default String mapImage(Account account){
+        return account.getImageUrl();
+    }
 
     default String mapFirstName(Account account){
         return account.getFirstName();
