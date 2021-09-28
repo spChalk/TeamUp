@@ -7,4 +7,6 @@ export interface Like {
   userFirstName: string;
   userLastName: string;
   userEmail: string;
+  postId : number;
+  imageUrl : string;
 }

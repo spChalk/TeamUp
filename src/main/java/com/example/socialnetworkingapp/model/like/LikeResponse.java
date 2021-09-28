@@ -12,4 +12,6 @@ public class LikeResponse {
     private String userFirstName;
     private String userLastName;
     private String userEmail;
+    private Long postId;
+    private String imageUrl;
 }
