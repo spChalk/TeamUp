@@ -1,6 +1,5 @@
 package com.example.socialnetworkingapp.model.account;
 
-import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.bio.Bio;
 import com.example.socialnetworkingapp.model.connection_request.ConnectionReqService;
 import com.example.socialnetworkingapp.model.education.Education;
@@ -13,10 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -25,22 +22,9 @@ public class AccountController {
 
     private final AccountService accountService;
     private final ConnectionReqService connectionReqService;
-    private final FileDBService fileDBService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<AccountResponse>> getAllAccounts() throws IOException {
-
-        /* Utility method to move all dangling files to the corresponding folders */
-        Set<String> files = this.fileDBService.listDir(".");
-        for (String filename: files) {
-            if(filename.contains("EXP_")) {
-                if (filename.contains(".xml"))
-                    this.fileDBService.moveFile(filename, "./exported_XML/" + filename);
-                if (filename.contains(".json"))
-                    this.fileDBService.moveFile(filename, "./exported_JSON/" + filename);
-            }
-        }
-
+    public ResponseEntity<List<AccountResponse>> getAllAccounts() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account currUser = accountService.findAccountByEmail(user);

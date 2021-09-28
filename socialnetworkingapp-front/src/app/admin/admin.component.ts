@@ -20,7 +20,6 @@ export class AdminComponent implements OnInit {
   public accounts: Account[];
   public similarAccs: Account[];
   public deleteAccount: Account;
-  /*public editAccount: Account;*/
   public infoAccount: Account;
   public selectedUsers: Account[];
 
@@ -99,10 +98,6 @@ export class AdminComponent implements OnInit {
       this.infoAccount = account;
       button.setAttribute('data-target', '#info');
     }
-   /* if(mode === 'edit') {
-      this.editAccount = account;
-      button.setAttribute('data-target', '#edit');
-    }*/
     if(mode === 'remove') {
       this.deleteAccount = account;
       button.setAttribute('data-target', '#remove');
@@ -199,6 +194,7 @@ export class AdminComponent implements OnInit {
             element.setAttribute('download',  'accounts__' + Date.now() + '.xml');
             document.body.appendChild(element);
             element.click();
+            this.exportService.cleanup().subscribe();
             window.location.reload();
         }),
           (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
@@ -237,6 +233,7 @@ export class AdminComponent implements OnInit {
             element.setAttribute('download',  'accounts__' + Date.now() + '.json');
             document.body.appendChild(element);
             element.click();
+            this.exportService.cleanup().subscribe();
             window.location.reload();
           }),
           (error: any) => console.log('Error downloading the file'), //when you use stricter type checking

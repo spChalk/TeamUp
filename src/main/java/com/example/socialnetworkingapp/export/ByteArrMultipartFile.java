@@ -1,7 +1,5 @@
 package com.example.socialnetworkingapp.export;
 
-/* https://newbedev.com/how-to-convert-byte-array-to-multipartfile */
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

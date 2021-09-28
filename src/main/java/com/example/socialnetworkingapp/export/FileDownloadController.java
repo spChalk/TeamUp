@@ -1,7 +1,5 @@
 package com.example.socialnetworkingapp.export;
 
-/* https://roytuts.com/download-file-from-server-using-angular/   */
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;

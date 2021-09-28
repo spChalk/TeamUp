@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/* https://www.bezkoder.com/angular-spring-boot-file-upload/ */
-/* https://www.bezkoder.com/spring-boot-upload-file-database/ */
 
 @Controller
 @CrossOrigin("http://localhost:8081")
@@ -94,6 +92,12 @@ public class FileController {
     @DeleteMapping("/files/delete/{id}")
     public ResponseEntity<HttpStatus> deleteFile(@PathVariable("id") String id) {
         this.storageService.deleteFile(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/cleanup")
+    public ResponseEntity<HttpStatus> cleanup() throws IOException {
+        this.storageService.fileCleanup();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

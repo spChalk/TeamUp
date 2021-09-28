@@ -103,13 +103,11 @@ public class FileDBService {
         return fileDBRepository.findAll().stream();
     }
 
-    /* https://stackoverflow.com/questions/4645242/how-do-i-move-a-file-from-one-location-to-another-in-java */
     public void moveFile(String source, String target) {
         File fileToMove = new File(source);
         fileToMove.renameTo(new File(target));
     }
 
-    /* https://www.baeldung.com/java-list-directory-files */
     public Set<String> listDir(String dir) throws IOException {
         Set<String> fileList = new HashSet<>();
         Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
@@ -123,6 +121,19 @@ public class FileDBService {
             }
         });
         return fileList;
+    }
+
+    public void fileCleanup() throws IOException {
+        /* Utility method to move all dangling files to the corresponding folders */
+        Set<String> files = this.listDir(".");
+        for (String filename: files) {
+            if(filename.contains("EXP_")) {
+                if (filename.contains(".xml"))
+                    this.moveFile(filename, "./exported_XML/" + filename);
+                if (filename.contains(".json"))
+                    this.moveFile(filename, "./exported_JSON/" + filename);
+            }
+        }
     }
 
     public void deleteFile(String id) {

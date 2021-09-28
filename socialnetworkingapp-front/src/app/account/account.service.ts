@@ -40,7 +40,6 @@ export class AccountService {
 
   public registerAccount(account: Account): Observable<Account> {
 
-    /* https://www.gitmemory.com/issue/angular/angular/18396/490910837 */
     let httpOptions = { headers: new HttpHeaders(
       { 'Content-Type': 'application/json', })};
     return this.http.post<Account>(`${environment.apiBaseUrl}/register`,

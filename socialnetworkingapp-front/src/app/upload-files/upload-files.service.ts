@@ -3,8 +3,6 @@ import { HttpClient, HttpRequest, HttpHeaders, HttpEvent } from '@angular/common
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
 
-/* https://www.bezkoder.com/angular-spring-boot-file-upload/ */
-
 @Injectable({
   providedIn: 'root'
 })

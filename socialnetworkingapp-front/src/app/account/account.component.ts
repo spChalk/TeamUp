@@ -13,8 +13,6 @@ import { FormBuilder, FormControl, Validators, FormGroup, FormArray } from '@ang
 import { TagsService } from '../tags/tags.service';
 import { Tag } from '../tags/Tag'
 
-/* https:odecraft.tv/courses/angular/routing/parameterised-routes/ */
-
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',

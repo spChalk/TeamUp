@@ -38,7 +38,7 @@ public class JobService {
         // 13. TAG FILTERING
         /*
          *   14. For every Job with id === tuple.job-id, see how many tags the job and the user have in common
-         *           and for every tag, add 1 to views.
+         *           and for every tag, add an amount to views.
          */
         for(int i = 0; i < arrayOfTuples.size(); i++) {
             List<Tag> jobTags = allJobs[i].getTags();
@@ -46,10 +46,10 @@ public class JobService {
                 for(Tag accTag: userAccountTags) {
                     if(tag.getTag().equals(accTag.getTag())) {
                         log.write("Equal Tags! " + " \n");
-                        /* For every matching tag, add 2% of current value (if value is non zero) */
+                        /* For every matching tag, add 10% of current value (if value is non zero) */
                         Long val = arrayOfTuples.get(i).getValue0();
                         if(weightTagsAsOne == false) {
-                            arrayOfTuples.set(i, arrayOfTuples.get(i).setAt0(val + (5 * val)/100));
+                            arrayOfTuples.set(i, arrayOfTuples.get(i).setAt0(val + (10 * val)/100));
                         } else {
                             arrayOfTuples.set(i, arrayOfTuples.get(i).setAt0(val + 1));
                         }
@@ -129,17 +129,6 @@ public class JobService {
             }
             return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
         }
-        //      7.2 If there's no one in the network, create an array of tuples (views, job-id) for all the jobs and proceed to (13).
-        /*if(allAccounts.length == 1) {
-            log.write("There's no one in the network!" + "\n");
-            ArrayList<Pair<Long, Long>> views_JobId_Tuples = new ArrayList<>();
-            for(JobView view: allJobViews) {
-                log.write("Adding pair { " + view.getTimes() + ", " + view.getJob().getId() + " }" + "\n");
-                views_JobId_Tuples.add(new Pair<Long, Long>(view.getTimes(), view.getJob().getId()));
-            }
-            return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
-        }
-*/
         /*
          *   8. Make a zeroed 2D matrix, where   (index in x axis === index in array of Jobs),
          *                                       (index in y axis === index in array of Accounts)

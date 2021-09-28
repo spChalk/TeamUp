@@ -35,4 +35,8 @@ export class ExportService {
   public downloadFile(url: string): Observable<Blob> {
     return this.http.get(url, {responseType: 'blob'});
   }
+
+  public cleanup(): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/cleanup`);
+  }
 }
