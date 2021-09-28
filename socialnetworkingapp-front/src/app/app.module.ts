@@ -19,7 +19,6 @@ import { MessageComponent } from './message/message.component';
 import { PostComponent } from './post/post.component';
 import { SettingsComponent } from './settings/settings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AboutComponent } from './about/about.component';
 import { ChatComponent } from './chat/chat.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AdminComponent } from './admin/admin.component';
@@ -54,7 +53,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
     PostComponent,
     SettingsComponent,
     WelcomeComponent,
-    AboutComponent,
     ChatComponent,
     AdminComponent,
     NetworkComponent,
