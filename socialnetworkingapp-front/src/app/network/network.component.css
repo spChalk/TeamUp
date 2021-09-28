@@ -28,6 +28,7 @@ body{
   height: 280px;
   background: #ffffff;
   border-radius: 20px;
+  margin-left: 25px;
   overflow: hidden;
 }
 
@@ -205,7 +206,7 @@ body{
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
-  margin-left: 250px;
+  margin-left: -160px;
   margin-right: 250px;
 }
 
