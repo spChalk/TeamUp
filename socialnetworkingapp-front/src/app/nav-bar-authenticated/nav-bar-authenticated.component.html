@@ -25,17 +25,17 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-              <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-outline-warning mb-2"
+              <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-block btn-light mb-2"
                       data-placement="top" data-original-title="comments">
-                <i class="fa fa-comments" aria-hidden="true"></i>Comments </button>
+                <i class="fa fa-comments mr-1" style="color: orange" aria-hidden="true"></i> <a style="color: orange">Comments</a> </button>
 
-              <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
+              <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-block btn-light mb-2"
                       data-placement="top" data-original-title="likes">
-                <i class="fa fa-heart" aria-hidden="true"></i>Likes </button>
+                <i class="fa fa-heart" style="color: red" aria-hidden="true"></i> <a style="color: red"> Likes </a> </button>
 
-              <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+              <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-block btn-light mb-2"
                       data-placement="top" data-original-title="friends">
-                <i class="fa fa-address-book" aria-hidden="true"></i>Requests </button>
+                <i class="fa fa-address-book mr-1" style="color: green" aria-hidden="true"></i> <a style="color: green">Requests</a> </button>
             </div>
           </li>
 
@@ -79,7 +79,7 @@
             </div>
 
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
         </div>
         </div>
@@ -125,7 +125,7 @@
             </div>
 
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
         </div>
         </div>
@@ -170,7 +170,7 @@
             </div>
 
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
         </div>
         </div>
