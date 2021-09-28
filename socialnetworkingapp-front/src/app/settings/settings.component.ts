@@ -51,9 +51,6 @@ export class SettingsComponent implements OnInit {
     );
   }
 
-  /**
-   * TODO: Nα μπορω να κανω validation κατα την αλλαγη του email και password
-   */
   public updateProfileInformation(settingsForm: NgForm): void {
 
     if((this.account.bio !== null) && (settingsForm.value.bio !== this.account.bio.description)) {

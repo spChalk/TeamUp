@@ -1,12 +1,7 @@
 package com.example.socialnetworkingapp.model.bio;
 
-import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.mail.Part;
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

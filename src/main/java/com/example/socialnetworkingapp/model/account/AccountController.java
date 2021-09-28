@@ -105,8 +105,12 @@ public class AccountController {
         accountService.findAccountByEmail(user);
 
         Account currUser = accountService.findAccountById(id);
-        for(int i = 0; i < currUser.getNetwork().size(); i++) {
-            this.connectionReqService.deleteConnection(currUser.getEmail(), currUser.getNetwork().get(i).getEmail());
+        List<String> emailsToDelete = new ArrayList<>();
+        for(Account usr: currUser.getNetwork()) {
+            emailsToDelete.add(usr.getEmail());
+        }
+        for(String email: emailsToDelete) {
+            this.connectionReqService.deleteConnection(currUser.getEmail(), email);
         }
 
         this.accountService.deleteAccount(id);

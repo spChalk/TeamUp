@@ -140,23 +140,6 @@ export class AdminComponent implements OnInit {
   }
 
   public onDeleteAccount(account: Account): void {
-
-    let bioId = account?.bio?.id;
-    if(bioId) {
-      this.accountService.deleteBio(account.id).subscribe(
-        (event: any) => {
-          this.bioService.deleteBioById(bioId).subscribe(
-            (response: void) => {
-            }, (err: HttpErrorResponse) => {
-              alert(err.message);
-            }
-          );
-        }, (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      )
-    }
-
     this.accountService.deleteAccountById(account.id).subscribe(
       (news: void) => {
         this.getAccounts();

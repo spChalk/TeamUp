@@ -32,6 +32,7 @@ public class Like implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
     private Date dateCreated;

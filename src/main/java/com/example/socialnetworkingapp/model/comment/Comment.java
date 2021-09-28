@@ -43,6 +43,7 @@ public class Comment {
     //1 post ->many comments
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name ="post_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
     //date of creation

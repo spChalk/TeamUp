@@ -67,10 +67,10 @@ public class Account implements UserDetails {
             cascade = {
                     CascadeType.MERGE
             })
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "account_tags",
             joinColumns = { @JoinColumn(name = "account_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Tag> tags = new ArrayList<>();
 
     @NotNull
@@ -78,8 +78,7 @@ public class Account implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.REMOVE,
-                    CascadeType.MERGE
+                    CascadeType.REMOVE
             })
     @JoinTable(name = "account_experience",
             joinColumns = { @JoinColumn(name = "account_id") },
@@ -88,8 +87,7 @@ public class Account implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.REMOVE,
-                    CascadeType.MERGE
+                    CascadeType.REMOVE
             })
     @JoinTable(name = "account_education",
             joinColumns = { @JoinColumn(name = "account_id") },
