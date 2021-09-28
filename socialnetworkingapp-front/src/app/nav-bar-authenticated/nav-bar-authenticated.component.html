@@ -17,7 +17,6 @@
             <a class="nav-link" routerLink="/network">Network </a>
             <a class="nav-link" routerLink="/jobs">Jobs </a>
             <a class="nav-link" routerLink="/chat">Chat</a>
-            <a class="nav-link" routerLink="/account">Profile</a>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -26,20 +25,22 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-              <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-block btn-light mb-2"
-                      data-placement="top" data-original-title="comments">
-                <i class="fa fa-comments mr-1" style="color: orange" aria-hidden="true"></i> <a style="color: orange">Comments</a> </button>
+              <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-block btn-light mb-2"
+                      data-placement="top" data-original-title="friends">
+                <i class="fa fa-address-book mr-1" style="color: green" aria-hidden="true"></i> <a style="color: green">Requests</a> </button>
 
               <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-block btn-light mb-2"
                       data-placement="top" data-original-title="likes">
                 <i class="fa fa-heart" style="color: red" aria-hidden="true"></i> <a style="color: red"> Likes </a> </button>
 
-              <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-block btn-light mb-2"
-                      data-placement="top" data-original-title="friends">
-                <i class="fa fa-address-book mr-1" style="color: green" aria-hidden="true"></i> <a style="color: green">Requests</a> </button>
+              <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-block btn-light mb-2"
+                      data-placement="top" data-original-title="comments">
+                <i class="fa fa-comments mr-1" style="color: orange" aria-hidden="true"></i> <a style="color: orange">Comments</a> </button>
+
             </div>
           </li>
 
+            <a class="nav-link" routerLink="/account">Profile</a>
             <a class="nav-link" routerLink="/settings">Settings</a>
             <a class="nav-link" href (click)="logout()">Logout</a>
 

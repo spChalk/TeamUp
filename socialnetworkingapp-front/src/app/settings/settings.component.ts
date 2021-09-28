@@ -194,6 +194,7 @@ export class SettingsComponent implements OnInit {
               this.authenticationService.logIn({"username":this.account.email, "password":newPassword}).subscribe(
                 (response:any)=>{
                   console.log("password updated");
+                  window.location.reload();
                 },
                 (error:any)=>{
                   console.log("error while updating password");
