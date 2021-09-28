@@ -148,7 +148,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="this.router.navigateByUrl('/login');" >No</button>
-        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()">
+        <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()" data-dismiss="modal">
           Upload
         </button>
       </div>
@@ -173,7 +173,7 @@
         </h4>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="this.goToHomePage()">
+        <button class="btn btn-success" routerLink="/home" (click)="goToHomePage()">
           Take me to Home screen!
         </button>
       </div>

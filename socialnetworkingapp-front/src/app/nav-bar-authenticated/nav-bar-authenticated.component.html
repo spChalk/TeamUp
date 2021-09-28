@@ -51,7 +51,7 @@
     <!-- friends modal -->
     <div class="modal fade" id="friends" tabindex="-1" role="dialog"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="friends">
+        <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="friends">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -62,18 +62,19 @@
             </div>
 
             <div class="modal-body" style="overflow-y: scroll;" *ngFor="let req of requests">
-                    <div *ngIf="req.receiver == account"> You have a new friend request from {{req.sender}}
-                    <button (click)="accept(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+                    <div *ngIf="req.receiver == account"> You have a new friend request from <a routerLink="/visit/{{req.sender}}" data-dismiss="modal"> {{req.sender}} </a>
+
+                      <button (click)="reject(req.sender)" type="button" style="margin-left:auto;float:right; " class="btn btn-outline-danger mb-2"
+                              data-placement="top" data-original-title="reject">
+                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>Reject</button>
+
+                      <button (click)="accept(req.id)" type="button" style="margin-right: 5px;float: right " class="btn btn-outline-success mb-2"
                         data-placement="top" data-original-title="accept">
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>Accept</button>
 
-                    <button (click)="reject(req.sender)" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
-                        data-placement="top" data-original-title="reject">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>Reject</button>
-
                     </div>
 
-                    <div *ngIf="req.sender==account"> Pending friend request to {{req.receiver}}
+                    <div *ngIf="req.sender==account"> Pending friend request to <a routerLink="/visit/{{req.receiver}}" data-dismiss="modal"> {{req.receiver}} </a>
                     <button (click)="remove(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
                         data-placement="top" data-original-title="reject">
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>Cancel request</button>
@@ -102,29 +103,30 @@
             </button>
             </div>
 
-            <div class="modal-body" style="overflow-y: scroll;" *ngFor="let comment of comments">
-                    <div *ngIf="comment.authorEmail == account">
+          <div  style="max-height:500px;overflow-y: scroll;">
+              <div class="modal-body" *ngFor="let comment of comments">
+                      <div *ngIf="comment.authorEmail == account">
 
-                    <a data-dismiss="modal" routerLink="/home">
-                        <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
-                          height="36" class="rounded-circle">
-                        <img *ngIf="comment.authorImage!== null" src="{{comment.authorImage}}" width="36"
-                          height="36" class="rounded-circle">
-                            You commented your own post
-                        </a>
-                    </div>
+                      <a data-dismiss="modal" routerLink="/home">
+                          <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
+                            height="36" class="rounded-circle">
+                          <img *ngIf="comment.authorImage!== null" src="{{comment.authorImage}}" width="36"
+                            height="36" class="rounded-circle">
+                              You commented your own post
+                          </a>
+                      </div>
 
-                    <div *ngIf="comment.authorEmail !== account">
-                    <a data-dismiss="modal" routerLink="/home">
-                        <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
-                          height="36" class="rounded-circle">
-                        <img *ngIf="comment.authorImage!== null" src="{{comment.authorImage}}" width="36"
-                          height="36" class="rounded-circle">
-                            {{comment.authorFirstName}} {{comment.authorLastName}} commented on your post
-                        </a>
-                    </div>
-
-            </div>
+                      <div *ngIf="comment.authorEmail !== account">
+                      <a data-dismiss="modal" routerLink="/home">
+                          <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
+                            height="36" class="rounded-circle">
+                          <img *ngIf="comment.authorImage!== null" src="{{comment.authorImage}}" width="36"
+                            height="36" class="rounded-circle">
+                              {{comment.authorFirstName}} {{comment.authorLastName}} commented on your post
+                          </a>
+                      </div>
+                </div>
+              </div>
 
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -148,28 +150,29 @@
             </button>
             </div>
 
-            <div class="modal-body" style="overflow-y: scroll;" *ngFor="let like of likes">
-                    <div *ngIf="like.userEmail == account">
-                    <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
-                            <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
-                            height="36" class="rounded-circle" style="float: right;">
-                            <img *ngIf="like.imageUrl !== null" src="{{like.imageUrl}}" width="36"
+          <div  style="max-height:500px;overflow-y: scroll;">
+              <div class="modal-body" *ngFor="let like of likes">
+                      <div *ngIf="like.userEmail == account">
+                      <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
+                              <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
+                              height="36" class="rounded-circle" style="float: right;">
+                              <img *ngIf="like.imageUrl !== null" src="{{like.imageUrl}}" width="36"
+                              height="36" class="rounded-circle">
+                              You liked your own post
+                          </a>
+                      </div>
+
+                      <div *ngIf="like.userEmail != account">
+                      <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
+                          <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
                             height="36" class="rounded-circle">
-                            You liked your own post
-                        </a>
-                    </div>
-
-                    <div *ngIf="like.userEmail != account">
-                    <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
-                        <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
-                          height="36" class="rounded-circle">
-                        <img *ngIf="like.imageUrl !== null" src="{{like.imageUrl}}" width="36"
-                          height="36" class="rounded-circle">
-                            {{like.userFirstName }} {{like.userLastName}} liked your post
-                        </a>
-                    </div>
-
-            </div>
+                          <img *ngIf="like.imageUrl !== null" src="{{like.imageUrl}}" width="36"
+                            height="36" class="rounded-circle">
+                              {{like.userFirstName }} {{like.userLastName}} liked your post
+                          </a>
+                      </div>
+                </div>
+              </div>
 
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
