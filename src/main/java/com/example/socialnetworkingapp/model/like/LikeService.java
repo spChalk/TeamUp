@@ -2,11 +2,9 @@ package com.example.socialnetworkingapp.model.like;
 
 import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.LikeMapper;
-import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,10 +28,6 @@ public class LikeService {
     public LikeResponse addLike(Like like) {
         Like l = this.likeRepository.save(like);
         return new LikeResponse(l.getId(), l.getUser().getFirstName(), l.getUser().getLastName(), l.getUser().getEmail());
-    }
-
-    public void deleteLike(Long user_id, Long post_id) {
-        this.likeRepository.deleteByUserAndPost(user_id, post_id);
     }
 
     public void deleteLikeById(Long likeId) {

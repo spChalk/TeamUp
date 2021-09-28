@@ -1,7 +1,6 @@
 package com.example.socialnetworkingapp.model.job_application;
 
 import com.example.socialnetworkingapp.mapper.JobApplicationMapper;
-import com.example.socialnetworkingapp.model.job.Job;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

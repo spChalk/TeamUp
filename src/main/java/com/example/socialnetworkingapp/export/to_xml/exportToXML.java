@@ -2,7 +2,6 @@ package com.example.socialnetworkingapp.export.to_xml;
 
 import com.example.socialnetworkingapp.export.ByteArrMultipartFile;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
-import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.account.details.FullAccountDetails;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -26,7 +25,6 @@ import java.util.List;
 @AllArgsConstructor
 public class exportToXML {
 
-    private FileDBService storageService;
     private AccountService accountService;
 
     @PostMapping("/export/xml")

@@ -16,14 +16,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
 
-    /*public List<CommentResponse> findAll() {
-        return commentRepository.findAll().stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
-    }
-
-    public List<CommentResponse> findAllComments() {
-        return commentRepository.findAll().stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
-    }
-*/
     public List<CommentResponse> findAllCommentsOfPost(Long postId) {
         return this.commentRepository.findCommentsOfPostById(postId).stream().map(commentMapper::CommentToCommentResponse).collect(Collectors.toList());
     }

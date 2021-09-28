@@ -1,7 +1,6 @@
 package com.example.socialnetworkingapp.model.account;
 
 import com.example.socialnetworkingapp.model.experience.Experience;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;

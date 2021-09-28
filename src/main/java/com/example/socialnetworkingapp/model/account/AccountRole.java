@@ -3,7 +3,6 @@ package com.example.socialnetworkingapp.model.account;
 import com.example.socialnetworkingapp.security.AccountPermission;
 import com.google.common.collect.Sets;
 
-
 import java.util.Set;
 
 public enum AccountRole {

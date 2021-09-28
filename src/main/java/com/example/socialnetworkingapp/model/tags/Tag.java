@@ -1,15 +1,11 @@
 package com.example.socialnetworkingapp.model.tags;
 
-import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.job.Job;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

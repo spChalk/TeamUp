@@ -1,7 +1,5 @@
 package com.example.socialnetworkingapp.model.job_application;
 
-import com.example.socialnetworkingapp.model.bio.Bio;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

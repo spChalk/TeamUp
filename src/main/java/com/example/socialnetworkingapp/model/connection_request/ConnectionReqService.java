@@ -5,8 +5,6 @@ import com.example.socialnetworkingapp.mapper.ConnectionRequestMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.matcher.CollectionOneToOneMatcher;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,30 +49,6 @@ public class ConnectionReqService {
         Optional<ConnectionRequest> exists = this.connectionReqRepository.findRequestByAccIds(receiverId, senderId);
         return exists.map(ConnectionRequest::getId).orElse(null);
     }
-
-/*    public ConnectionRequest findAcceptedRequestByEmails(String email1, String email2) {
-        return this.connectionReqRepository.findAcceptedRequestsByEmails(email1, email2);
-    }*/
-
-/*    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccId(Long id) {
-        return this.connectionReqRepository.findReceivedAcceptedRequestsByAccId(id).
-                orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
-    }
-
-    public List<ConnectionRequest> findSentAcceptedRequestsByAccId(Long id) {
-        return this.connectionReqRepository.findSentAcceptedRequestsByAccId(id).
-                orElseThrow( () -> new UserNotFoundException("User by id "+ id + "was not found !"));
-    }
-
-    public List<ConnectionRequest> findReceivedAcceptedRequestsByAccEmail(String email) {
-        return this.connectionReqRepository.findReceivedAcceptedRequestsByAccEmail(email).
-                orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
-    }
-
-    public List<ConnectionRequest> findSentAcceptedRequestsByAccEmail(String email) {
-        return this.connectionReqRepository.findSentAcceptedRequestsByAccEmail(email).
-                orElseThrow( () -> new UserNotFoundException("User with email "+ email + "was not found !"));
-    }*/
 
     public ConnectionRequestResponse addRequest(ConnectionRequest connectionRequest) {
         Optional<ConnectionRequest> alreadyExists = this.connectionReqRepository

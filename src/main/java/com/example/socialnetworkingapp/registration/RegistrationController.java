@@ -2,7 +2,6 @@ package com.example.socialnetworkingapp.registration;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

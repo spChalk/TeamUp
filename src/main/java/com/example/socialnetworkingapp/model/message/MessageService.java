@@ -4,12 +4,10 @@ import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.FriendMapper;
 import com.example.socialnetworkingapp.mapper.MessageMapper;
 import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.post.PostResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

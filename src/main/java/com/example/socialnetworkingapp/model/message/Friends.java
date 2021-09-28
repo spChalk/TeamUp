@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Friends{
+public class Friends {
     private String senderEmail;
     private String receiverEmail;
 }

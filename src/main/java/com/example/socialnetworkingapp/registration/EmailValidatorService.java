@@ -3,7 +3,6 @@ package com.example.socialnetworkingapp.registration;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service

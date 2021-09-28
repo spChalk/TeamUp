@@ -1,10 +1,7 @@
 package com.example.socialnetworkingapp.registration;
 
-import com.example.socialnetworkingapp.exception.UserNotFoundException;
-import com.example.socialnetworkingapp.filesystem.FileDBService;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
-import com.example.socialnetworkingapp.model.account.AccountRole;
 import com.example.socialnetworkingapp.exception.NotValidEmailException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

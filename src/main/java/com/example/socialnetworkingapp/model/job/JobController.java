@@ -2,13 +2,8 @@ package com.example.socialnetworkingapp.model.job;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
-import com.example.socialnetworkingapp.model.job_application.JobApplication;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
-import com.example.socialnetworkingapp.model.job_view.JobView;
-import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
 import com.example.socialnetworkingapp.model.job_view.JobViewService;
-import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

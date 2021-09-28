@@ -1,6 +1,5 @@
 package com.example.socialnetworkingapp.model.education;
 
-import com.example.socialnetworkingapp.model.experience.Experience;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

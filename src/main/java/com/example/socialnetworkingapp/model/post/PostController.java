@@ -1,11 +1,9 @@
 package com.example.socialnetworkingapp.model.post;
 
-
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.comment.CommentService;
-import com.example.socialnetworkingapp.model.like.Like;
 import com.example.socialnetworkingapp.model.like.LikeResponse;
 import com.example.socialnetworkingapp.model.like.LikeService;
 import lombok.AllArgsConstructor;
@@ -13,11 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

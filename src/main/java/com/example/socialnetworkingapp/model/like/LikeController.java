@@ -2,12 +2,9 @@ package com.example.socialnetworkingapp.model.like;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
-import com.example.socialnetworkingapp.model.bio.Bio;
-import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.post.Post;
 import com.example.socialnetworkingapp.model.post.PostService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

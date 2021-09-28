@@ -8,5 +8,4 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface EducationRepository extends JpaRepository<Education, Long> {
-
 }

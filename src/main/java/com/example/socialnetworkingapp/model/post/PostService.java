@@ -1,14 +1,9 @@
 package com.example.socialnetworkingapp.model.post;
 
-
-import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import com.example.socialnetworkingapp.mapper.PostMapper;
 import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.comment.CommentResponse;
 import com.example.socialnetworkingapp.model.comment.CommentService;
-import com.example.socialnetworkingapp.model.job.JobResponse;
-import com.example.socialnetworkingapp.model.job_view.JobView;
 import com.example.socialnetworkingapp.model.like.Like;
 import com.example.socialnetworkingapp.model.like.LikeResponse;
 import com.example.socialnetworkingapp.model.like.LikeService;
@@ -22,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.javatuples.Pair;
-import org.javatuples.Tuple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

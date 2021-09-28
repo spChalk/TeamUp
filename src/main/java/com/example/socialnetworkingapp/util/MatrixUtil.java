@@ -2,34 +2,13 @@ package com.example.socialnetworkingapp.util;
 
 public class MatrixUtil {
 
-    public void print1DArray(float[] A) {
-
-        for (float v : A) {
-            System.out.print(v);
-            System.out.print(" ");
-        }
-        System.out.print("\n\n");
-    }
-
-    public void print2DArray(float[][] A) {
-
-        for (float[] floats : A) {
-            for (float aFloat : floats) {
-                System.out.print(aFloat);
-                System.out.print(" ");
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n\n");
-    }
-
     public float[][] transpose(float[][] A) {
 
         int M = A.length, N = A[0].length;
         float[][] T = new float[N][M];
 
-        for(int i=0 ; i<N ; i++){
-            for(int j=0 ; j<M ; j++){
+        for(int i = 0 ; i < N ; i++){
+            for(int j = 0 ; j < M ; j++){
                 T[i][j] = A[j][i];
             }
         }

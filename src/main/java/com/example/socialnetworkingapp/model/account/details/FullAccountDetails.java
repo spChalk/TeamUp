@@ -1,13 +1,8 @@
 package com.example.socialnetworkingapp.model.account.details;
 
-import com.example.socialnetworkingapp.model.account.AccountUpdateRequest;
-import com.example.socialnetworkingapp.model.education.EducationResponse;
-import com.example.socialnetworkingapp.model.experience.ExperienceResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter

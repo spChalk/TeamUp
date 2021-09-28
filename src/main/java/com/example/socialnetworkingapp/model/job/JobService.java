@@ -3,19 +3,14 @@ package com.example.socialnetworkingapp.model.job;
 import com.example.socialnetworkingapp.mapper.JobMapper;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountRepository;
-import com.example.socialnetworkingapp.model.job_application.JobApplication;
 import com.example.socialnetworkingapp.model.job_application.JobApplicationRepository;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationResponse;
 import com.example.socialnetworkingapp.model.job_view.JobView;
-import com.example.socialnetworkingapp.model.job_view.JobViewResponse;
-import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
 import com.example.socialnetworkingapp.model.tags.TagService;
 import com.example.socialnetworkingapp.util.MF;
 import com.example.socialnetworkingapp.util.MatrixUtil;
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.nullness.Opt;
 import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +24,7 @@ import java.util.stream.Collectors;
 public class JobService {
 
     private final JobRepository jobRepository;
-    private final AccountRepository accountRepository;
     private final JobViewRepository jobViewRepository;
-    private final JobApplicationRepository jobApplicationRepository;
     private final TagService tagService;
     private final JobMapper jobMapper;
 
@@ -286,17 +279,4 @@ public class JobService {
     public void deleteJob(Long id) {
         this.jobRepository.deleteById(id);
     }
-/*
-    public Job addTag(String tagName, Long id) {
-
-        Job job = findJobById(id);
-        Tag existingTag = this.tagService.getTagByName(tagName);
-        if(existingTag == null) {
-            job.getTags().add(this.tagService.addTag(new Tag(tagName)));
-        } else {
-            job.getTags().add(existingTag);
-        }
-        return this.jobRepository.save(job);
-
-     }*/
 }

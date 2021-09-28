@@ -1,10 +1,8 @@
 package com.example.socialnetworkingapp.model.experience;
 
-import com.example.socialnetworkingapp.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

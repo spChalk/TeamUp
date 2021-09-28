@@ -1,7 +1,6 @@
 package com.example.socialnetworkingapp.model.connection_request;
 
 import com.example.socialnetworkingapp.model.account.Account;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

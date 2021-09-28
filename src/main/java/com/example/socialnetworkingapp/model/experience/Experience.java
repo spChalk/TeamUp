@@ -1,15 +1,11 @@
 package com.example.socialnetworkingapp.model.experience;
 
-import com.example.socialnetworkingapp.model.account.Account;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @Getter

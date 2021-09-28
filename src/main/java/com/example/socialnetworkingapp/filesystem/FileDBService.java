@@ -1,14 +1,11 @@
 package com.example.socialnetworkingapp.filesystem;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.example.socialnetworkingapp.model.account.Account;
@@ -16,7 +13,6 @@ import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.post.Post;
 import com.example.socialnetworkingapp.model.post.PostService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -105,10 +101,6 @@ public class FileDBService {
 
     public Stream<FileDB> getAllFiles() {
         return fileDBRepository.findAll().stream();
-    }
-
-    public String getFileIdByOwnerEmail(String email) {
-        return fileDBRepository.findIdByOwnerEmail(email).getId();
     }
 
     /* https://stackoverflow.com/questions/4645242/how-do-i-move-a-file-from-one-location-to-another-in-java */

@@ -28,5 +28,4 @@ public interface PostMapper {
     default String mapImage(Account account){
         return account.getImageUrl();
     }
-    //    Post PostResponseToPost(PostResponse postResponse);
 }

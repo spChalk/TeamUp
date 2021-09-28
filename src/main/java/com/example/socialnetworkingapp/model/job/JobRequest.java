@@ -3,9 +3,6 @@ package com.example.socialnetworkingapp.model.job;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Date;
 import java.util.List;
 
 @Data

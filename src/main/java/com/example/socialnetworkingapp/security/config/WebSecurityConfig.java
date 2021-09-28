@@ -3,8 +3,6 @@ package com.example.socialnetworkingapp.security.config;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.security.jwt.JwtConfig;
 import com.example.socialnetworkingapp.security.jwt.JwtTokenVerifier;
-import com.example.socialnetworkingapp.security.jwt.JwtUsernamePasswordAuthFilter;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

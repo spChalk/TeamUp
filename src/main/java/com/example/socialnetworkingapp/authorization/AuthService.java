@@ -3,24 +3,14 @@ package com.example.socialnetworkingapp.authorization;
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.security.jwt.JwtConfig;
 import io.jsonwebtoken.Jwts;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.time.LocalDate;
 
 @Service
@@ -47,8 +37,6 @@ public class AuthService {
         Account user = (Account) authentication.getPrincipal();
         return new AuthResponse(loginRequest.getUsername(), token, user.getRole());
     }
-
-
 
     protected String generateToken(Authentication authentication) {
         UserDetails user = (UserDetails) authentication.getPrincipal();

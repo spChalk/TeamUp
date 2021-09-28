@@ -1,13 +1,10 @@
 package com.example.socialnetworkingapp.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 /* Matrix factorization */
 public class MF {
 
     private final MatrixUtil util;
 
-    @Autowired
     public MF(MatrixUtil util) {
         this.util = util;
     }
