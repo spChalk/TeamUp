@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostResponse>> getAllPosts() throws IOException {
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account newUser = accountService.findAccountByEmail(user);
@@ -57,9 +56,4 @@ public class PostController {
         this.postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
 }

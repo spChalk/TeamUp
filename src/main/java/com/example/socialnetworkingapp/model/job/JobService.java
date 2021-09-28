@@ -2,8 +2,6 @@ package com.example.socialnetworkingapp.model.job;
 
 import com.example.socialnetworkingapp.mapper.JobMapper;
 import com.example.socialnetworkingapp.model.account.Account;
-import com.example.socialnetworkingapp.model.account.AccountRepository;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationRepository;
 import com.example.socialnetworkingapp.model.job_view.JobView;
 import com.example.socialnetworkingapp.model.tags.Tag;
 import com.example.socialnetworkingapp.model.job_view.JobViewRepository;
@@ -14,8 +12,6 @@ import lombok.AllArgsConstructor;
 import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,7 +30,7 @@ public class JobService {
     }
 
     private List<JobResponse> tagFilter(ArrayList<Pair<Long, Long>> arrayOfTuples, List<Tag> userAccountTags,
-                                JobResponse[] allJobs, HashMap<Long, Integer> jobsMap, FileWriter log, Boolean weightTagsAsOne) throws IOException {
+                                JobResponse[] allJobs, HashMap<Long, Integer> jobsMap, Boolean weightTagsAsOne) {
         // 13. TAG FILTERING
         /*
          *   14. For every Job with id === tuple.job-id, see how many tags the job and the user have in common
@@ -45,7 +41,6 @@ public class JobService {
             for(Tag tag: jobTags) {
                 for(Tag accTag: userAccountTags) {
                     if(tag.getTag().equals(accTag.getTag())) {
-                        log.write("Equal Tags! " + " \n");
                         /* For every matching tag, add 10% of current value (if value is non zero) */
                         Long val = arrayOfTuples.get(i).getValue0();
                         if(weightTagsAsOne == false) {
@@ -69,10 +64,8 @@ public class JobService {
         // 16. Make an empty list, iterate the tuple array, and push() all the Job classes s.t Job.id == tuple.job-id
         List<JobResponse> result = new ArrayList<>();
         for(Pair<Long, Long> tuple: arrayOfTuples) {
-            log.write("Pushing Job " + allJobs[jobsMap.get(tuple.getValue1())].getId() + " with SCORE: " + tuple.getValue0() + "\n");
             result.add(0, allJobs[jobsMap.get(tuple.getValue1())]);
         }
-        log.close();
         // 17. Return the list of jobs.
         return result;
     }
@@ -81,15 +74,11 @@ public class JobService {
         return this.jobRepository.findJobsByPublisherId(userId);
     }
 
-    public List<JobResponse> getJobs(Account user) throws IOException {
-
-        FileWriter log = new FileWriter("GetAllJobsLOG.txt");
+    public List<JobResponse> getJobs(Account user) {
 
         //   1. Get all jobs (List<Job>) and 2. Transform List<Job> -> Array<Job>
         JobResponse[] allJobs = this.jobRepository.findAll().stream().map(jobMapper::JobToJobResponse).toArray(JobResponse[]::new);
         if(allJobs.length == 0){
-            log.write("There are 0 jobs. Returning an empty array..");
-            log.close();
             return new ArrayList<JobResponse>();
         }
 
@@ -101,33 +90,28 @@ public class JobService {
         // 5. Map {Job.id: index in Array<Job>}
         HashMap<Long, Integer> jobsMap = new HashMap<Long, Integer>();
         for(int i = 0; i < allJobs.length; i++) {
-            log.write("Mapping Job " + allJobs[i].getId() + " to Index " + i + "\n");
             jobsMap.put(allJobs[i].getId(), i);
         }
 
         // 6. Map {Account.id: index in Array<Account>}
         HashMap<Long, Integer> accountsMap = new HashMap<Long, Integer>();
         for(int i = 0; i < allAccounts.length; i++) {
-            log.write("Mapping Account " + allAccounts[i].getId() + " to Index " + i + "\n");
             accountsMap.put(allAccounts[i].getId(), i);
         }
 
         // Get user's tags
         int K = user.getTags().size();
-        log.write("USER " + user.getId() + " HAS " + K + " TAGS." + "\n");
 
         // 7. Get all job views (List<JobView>)
         List<JobView> allJobViews = this.jobViewRepository.findAll();
 
         //      7.1 If list of job views is empty, create an array of tuples (0, job-id) for all the jobs and proceed to (13).
         if(allJobViews.isEmpty()) {
-            log.write("List of job views is empty!" + "\n");
             ArrayList<Pair<Long, Long>> views_JobId_Tuples = new ArrayList<>();
             for(JobResponse job: allJobs) {
-                log.write("Adding pair { " + 0L + ", " + job.getId() + " }" + "\n");
                 views_JobId_Tuples.add(new Pair<Long, Long>(0L, job.getId()));
             }
-            return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, true);
+            return this.tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, true);
         }
         /*
          *   8. Make a zeroed 2D matrix, where   (index in x axis === index in array of Jobs),
@@ -143,19 +127,9 @@ public class JobService {
              }
          }
 
-        log.write("\nCreated zeroed matrix of " + allJobs.length + " x " + allAccounts.length + "\n\n");
-        for(int i = 0; i < allAccounts.length; i++) {
-            for(int j = 0; j < allJobs.length; j++) {
-                log.write(String.valueOf(matrixToFactorize[i][j]));
-            }
-            log.write("\n");
-        }
-
-        log.write("\n Adding views.." + "\n\n");
         for(JobView view: allJobViews) {
             if(accountsMap.containsKey(view.getViewer().getId()) && jobsMap.containsKey(view.getJob().getId())) {
                 matrixToFactorize[accountsMap.get(view.getViewer().getId())][jobsMap.get(view.getJob().getId())] = (float) view.getTimes();
-                log.write("Added to [" + accountsMap.get(view.getViewer().getId()) + ", " + jobsMap.get(view.getJob().getId()) + "]" + " : " + (float) view.getTimes() + " views\n");
             }
         }
 
@@ -177,21 +151,12 @@ public class JobService {
               */
             int N = matrixToFactorize.length;
             int M = matrixToFactorize[0].length;
-            log.write("Creating random arrays....(N = " + N + ") and (M = " + M + ")\n\n");
             float[][] P = new float[N][K];
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < K; j++) {
                     P[i][j] = ((float) (Math.random() * 10));
                 }
             }
-            log.write("P = \n");
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < K; j++) {
-                    log.write(String.valueOf(P[i][j]) + "  ");
-                }
-                log.write("\n");
-            }
-
 
             float[][] Q = new float[M][K];
             for (int i = 0; i < M; i++) {
@@ -199,28 +164,14 @@ public class JobService {
                     Q[i][j] = ((float) (Math.random() * 10));
                 }
             }
-            log.write("\nQ = \n");
-            for (int i = 0; i < M; i++) {
-                for (int j = 0; j < K; j++) {
-                    log.write(String.valueOf(Q[i][j]) + "  ");
-                }
-                log.write("\n");
-            }
+
             // 10. Run matrix factorization.
-            log.write("\n\nRunning matrix factorization...");
             float[][] producedMatrix = new MF(new MatrixUtil()).matrix_factorization(matrixToFactorize, P, Q, K);
-            log.write("\n\nProduced matrix:\n");
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++) {
-                    log.write(String.valueOf(producedMatrix[i][j]) + "  ");
-                }
-                log.write("\n");
-            }
+
              // 11. Get the row of current user (M[i] s.t Accounts[i].id === MY ID).
              // 12. From the previous row, create an array of tuples (views, job-id).
             int i = 0;
              for(float views: producedMatrix[currUserIndex]) {
-                 log.write("Adding { views: " + views + ", jobID: " + allJobs[i].getId() + "}\n");
                  views_JobId_Tuples.add(new Pair<Long, Long>((long)views, allJobs[i++].getId()));
              }
          }
@@ -229,11 +180,10 @@ public class JobService {
              // 12. From the previous row, create an array of tuples (views, job-id).
             int i = 0;
              for (float views: matrixToFactorize[currUserIndex]) {
-                 log.write("Adding { views: " + views + ", jobID: " + allJobs[i].getId() + "}\n");
                  views_JobId_Tuples.add(new Pair<Long, Long>((long) views, allJobs[i++].getId()));
              }
          }
-        return tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, log, false);
+        return tagFilter(views_JobId_Tuples, user.getTags(), allJobs, jobsMap, false);
     }
 
     public JobResponse addJob(Job job) {

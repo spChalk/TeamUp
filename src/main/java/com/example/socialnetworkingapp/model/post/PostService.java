@@ -20,8 +20,6 @@ import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -192,7 +190,7 @@ public class PostService {
         return Stream.concat(temp.stream(), userPosts.stream()).collect(Collectors.toList());
     }
 
-    public ArrayList<Pair<Long, Long>> runMatrixFactorization(List<PostResponse> dateSortedPosts, Account user, FileWriter log) throws IOException {
+    public ArrayList<Pair<Long, Long>> runMatrixFactorization(List<PostResponse> dateSortedPosts, Account user) {
         //   1. Get all jobs (List<Post>) and 2. Transform List<Post> -> Array<Post>
         PostResponse[] allPosts = dateSortedPosts.toArray(new PostResponse[0]);
 
@@ -204,14 +202,12 @@ public class PostService {
         // 5. Map {Post.id: index in Array<Job>}
         HashMap<Long, Integer> postsMap = new HashMap<Long, Integer>();
         for(int i = 0; i < allPosts.length; i++) {
-            log.write("Mapping Post " + allPosts[i].getId() + " to Index " + i + "\n");
             postsMap.put(allPosts[i].getId(), i);
         }
 
         // 6. Map {Account.id: index in Array<Account>}
         HashMap<Long, Integer> accountsMap = new HashMap<Long, Integer>();
         for(int i = 0; i < allAccounts.length; i++) {
-            log.write("Mapping Account " + allAccounts[i].getId() + " to Index " + i + "\n");
             accountsMap.put(allAccounts[i].getId(), i);
         }
 
@@ -220,7 +216,6 @@ public class PostService {
 
         // Get user's tags
         int K = user.getTags().size();
-        log.write("USER " + user.getId() + " HAS " + K + " TAGS." + "\n");
 
         /*
          *   8. Make a zeroed 2D matrix, where   (index in x axis === index in array of Posts),
@@ -236,19 +231,9 @@ public class PostService {
             }
         }
 
-        log.write("\nCreated zeroed matrix of " + allPosts.length + " x " + allAccounts.length + "\n\n");
-        for(int i = 0; i < allAccounts.length; i++) {
-            for(int j = 0; j < allPosts.length; j++) {
-                log.write(String.valueOf(matrixToFactorize[i][j]));
-            }
-            log.write("\n");
-        }
-
-        log.write("\n Adding views.." + "\n\n");
         for(PostView view: allPostViews) {
             if(accountsMap.containsKey(view.getViewer().getId()) && postsMap.containsKey(view.getPost().getId())) {
                 matrixToFactorize[accountsMap.get(view.getViewer().getId())][postsMap.get(view.getPost().getId())] = (float)view.getTimes();
-                log.write("Added to [" + accountsMap.get(view.getViewer().getId()) + ", " + postsMap.get(view.getPost().getId()) + "]" + " : " + (float)view.getTimes() + " views\n");
             }
         }
         int currUserIndex = accountsMap.get(user.getId());
@@ -259,21 +244,12 @@ public class PostService {
          */
         int N = matrixToFactorize.length;
         int M = matrixToFactorize[0].length;
-        log.write("Creating random arrays....(N = " + N + ") and (M = " + M + ")\n\n");
         float[][] P = new float[N][K];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < K; j++) {
                 P[i][j] = ((float) (Math.random() * 10));
             }
         }
-        log.write("P = \n");
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < K; j++) {
-                log.write(String.valueOf(P[i][j]) + "  ");
-            }
-            log.write("\n");
-        }
-
 
         float[][] Q = new float[M][K];
         for (int i = 0; i < M; i++) {
@@ -281,29 +257,14 @@ public class PostService {
                 Q[i][j] = ((float) (Math.random() * 10));
             }
         }
-        log.write("\nQ = \n");
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < K; j++) {
-                log.write(String.valueOf(Q[i][j]) + "  ");
-            }
-            log.write("\n");
-        }
+
         // 10. Run matrix factorization.
-        log.write("\n\nRunning matrix factorization...");
         float[][] producedMatrix = new MF(new MatrixUtil()).matrix_factorization(matrixToFactorize, P, Q, K);
-        log.write("\n\nProduced matrix:\n");
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                log.write(String.valueOf(producedMatrix[i][j]) + "  ");
-            }
-            log.write("\n");
-        }
         // 11. Get the row of current user (M[i] s.t Accounts[i].id === MY ID).
         // 12. From the previous row, create an array of tuples (views, post-id).
         ArrayList<Pair<Long, Long>> views_PostId_Tuples = new ArrayList<>();
         int i = 0;
         for(float views: producedMatrix[currUserIndex]) {
-            log.write("Adding { views: " + views + ", postID: " + allPosts[i].getId() + "}\n");
             views_PostId_Tuples.add(new Pair<Long, Long>((long)views, allPosts[i++].getId()));
         }
         return views_PostId_Tuples;
@@ -350,14 +311,10 @@ public class PostService {
      * 5. Sort by most viewed.
      * 6. Sort by {network}{non network}{user's posts} by parsing the already sorted list of posts and RETURN.
      */
-    public List<PostResponse> findAllPosts(Account user) throws IOException {
-
-        FileWriter log = new FileWriter("GetAllPostsLOG.txt");
+    public List<PostResponse> findAllPosts(Account user) {
 
         List<PostResponse> dateSortedPosts = getDateSortedPosts(user);
         if(dateSortedPosts.isEmpty()) {
-            log.write("There are 0 posts. Returning an empty array..");
-            log.close();
             return new ArrayList<PostResponse>();
         }
 
@@ -366,16 +323,15 @@ public class PostService {
             if(haveNoViews(user, dateSortedPosts) || hasSeenAllOf(user, dateSortedPosts)) {
                 return sortPostsByNetwork(user, dateSortedPosts);
             } else {
-                listOfTuples = runMatrixFactorization(dateSortedPosts, user, log);
+                listOfTuples = runMatrixFactorization(dateSortedPosts, user);
             }
         } else {
             if(hasSeenAllOf(user, dateSortedPosts) == false) {
-                listOfTuples = runMatrixFactorization(dateSortedPosts, user, log);
+                listOfTuples = runMatrixFactorization(dateSortedPosts, user);
             } else {
                 listOfTuples = new ArrayList<>();
                 for (PostResponse post : dateSortedPosts) {
                     Long views = this.postViewService.getSumOfViewsOfPostByUser(user.getId(), post.getId());
-                    log.write("Adding { views: " + views + ", postID: " + post.getId() + "}\n");
                     listOfTuples.add(new Pair<Long, Long>((long) views, post.getId()));
                 }
             }

@@ -2,8 +2,6 @@ package com.example.socialnetworkingapp.model.job;
 
 import com.example.socialnetworkingapp.model.account.Account;
 import com.example.socialnetworkingapp.model.account.AccountService;
-import com.example.socialnetworkingapp.model.job_application.JobApplicationService;
-import com.example.socialnetworkingapp.model.job_view.JobViewService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +18,11 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
-    private final JobViewService jobViewService;
-    private final JobApplicationService jobApplicationService;
     private final AccountService accountService;
 
     /* Get the list of jobs for user */
     @GetMapping("/all")
-    public List<JobResponse> getJobs() throws IOException {
+    public List<JobResponse> getJobs() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String user = authentication.getName();
         Account newUser = accountService.findAccountByEmail(user);
