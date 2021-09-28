@@ -1,13 +1,10 @@
-import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import {Login} from '../login/login';
 import { environment } from 'src/environments/environment';
 import {map} from 'rxjs/operators'
-import { LoginComponent } from '../login';
 import { LocalStorageService } from 'ngx-webstorage';
-import { AccountService } from '../account/account.service';
-import { Account } from '../account/account';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +15,7 @@ export class AuthenticationService{
     private loggedIn = false ;
     private role = 'USER';
 
-    constructor(private http: HttpClient,private localStorage : LocalStorageService , private accountService : AccountService) { 
+    constructor(private http: HttpClient,private localStorage : LocalStorageService) {
     }
 
     public logIn(credentials: Login): Observable<boolean> {

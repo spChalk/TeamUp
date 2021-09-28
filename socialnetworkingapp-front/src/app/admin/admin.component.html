@@ -43,22 +43,6 @@
         <a class="dropdown-item" (click)="this.onExportSelectedJSON('sel')">Selected</a>
       </div>
     </div>
-
-
-    <!--<button (click)="onSelectAll()" id="select" type="submit" class="btn btn-primary mr-1" style="margin-left:170px;">
-      Select All
-    </button>
-    <button (click)="onRemoveAllSelections()" id="cl_select" type="submit" class="btn btn-outline-primary mr-1">
-      Clear selections
-    </button>
-
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Export Selections
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">JSON</a>
-      <a class="dropdown-item" href="#">XML</a>
-    </div>-->
   </div>
   </form>
   <br>
@@ -86,20 +70,13 @@
               <td>
                 <img *ngIf="account?.imageUrl !== null" src="{{account?.imageUrl}}" alt="">
                 <img *ngIf="account?.imageUrl === null" src="../../assets/images/user_default.png" alt="">
-<!--
-                <img src="#" alt="">
--->
                 <a class="user-link" routerLink="/visit/{{account?.email}}"> {{account?.firstName}} {{account?.lastName}} </a>
-                <!--<span class="user-subhead">{{account?.dateCreated}}</span>-->
-<!--
-                <span class="user-subhead">PROFESSION</span>
--->
+
               </td>
               <td>
                 {{account?.dateCreated}}
               </td>
               <td>
-                <!--<a href="#">{{account?.email}}</a>-->
                 {{account?.email}}
               </td>
               <td>
@@ -110,9 +87,6 @@
               </td>
               <td style="width: 20%;">
                 <button (click)="onClickModal(account, 'info')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Info"> <i class="fa fa-question"></i> </button>
-<!--
-                <button (click)="onClickModal(account, 'edit')" type="button" class="btn btn-outline-primary mr-3" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
--->
                 <button (click)="onClickModal(account, 'remove')" type="button" class="btn btn-outline-danger" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></button>
               </td>
             </tr>
@@ -212,58 +186,6 @@
   </div>
 </div>
 
-<!-- Edit Modal -->
-<!--
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModal">Edit user</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <div class="card-body tab-content">
-          <div class="tab-pane active" id="profile">
-            <form #editForm="ngForm">
-
-              <input type="hidden" ngModel="{{editAccount?.id}}"  class="form-control" name="id" aria-describedby="identificationHelp">
-              <input type="hidden" ngModel="{{editAccount?.appUserRole}}" class="form-control" name="appUserRole" aria-describedby="roleHelp">
-              <input type="hidden" ngModel="{{editAccount?.dateCreated}}" class="form-control" name="dateCreated" aria-describedby="dateHelp">
-
-              <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" ngModel="{{editAccount?.firstName}}" class="form-control" name="firstName" aria-describedby="firstNameHelp" value="{{editAccount?.firstName}}">
-              </div>
-              <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" ngModel="{{editAccount?.lastName}}" class="form-control" name="lastName" aria-describedby="lastNameHelp" value="{{editAccount?.lastName}}">
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" ngModel="{{editAccount?.email}}" class="form-control" name="email" aria-describedby="emailHelp" value="{{editAccount?.email}}">
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" ngModel="{{editAccount?.phone}}" class="form-control" name="phone" aria-describedby="phoneHelp" value="{{editAccount?.phone}}">
-              </div>
-              <input type="hidden" ngModel="{{editAccount?.password}}" class="form-control" name="password" aria-describedby="passwordHelp">
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button (click)="onUpdateAccount(editForm.value);onClickModal(null, 'addPhoto')" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-        <button (click)="onClickModal(null, 'addPhoto')" type="button" class="btn btn-info" data-dismiss="modal">Add photo</button>
-      </div>
-    </div>
-  </div>
-</div>
--->
-
 <!-- Remove Modal -->
 <div class="modal fade" id="remove" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
@@ -319,14 +241,6 @@
                 <label for="phone">Phone</label>
                 <input type="text" ngModel class="form-control" name="phone" aria-describedby="phoneHelp" required>
               </div>
-              <!--<div class="form-group">
-                <label for="customeFile">Image</label>
-                <div class="custom-file">
-                  <input type="file" ngModel class="custom-file-input" name="imageUrl" id="customFile">
-                  <label class="custom-file-label" for="customFile">Upload image</label>
-                </div>
-              </div>
-              -->
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="text" ngModel class="form-control" name="password" id="password" aria-describedby="pwdHelp" required/>

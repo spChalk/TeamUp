@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { HttpErrorResponse } from "@angular/common/http";
 import { AccountService } from "../account/account.service";
-import { Login } from "./login";
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication';
 
@@ -33,8 +31,6 @@ export class LoginComponent implements OnInit {
             username: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)])
         });
-
-
     }
 
     public onLogin(loginForm: FormGroup): void {

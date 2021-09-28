@@ -4,7 +4,6 @@ import { AccountService } from '../account/account.service';
 import { AuthenticationService } from '../authentication';
 import { ChatService, Friends } from './chat.service';
 import { Message } from './chat.service';
-import { DomSanitizer, SafeHtml, SafeScript } from '@angular/platform-browser';
 import { ActivatedRoute  , Router} from '@angular/router';
 import { retry, switchMap, takeUntil, share } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -46,7 +45,7 @@ export class ChatComponent implements OnInit {
       takeUntil(this.stopPolling)
     );
 
-    
+
     this.allMessages$ = timer(1, 5000).pipe(
       switchMap(() =>
       this.chatService.getAllMessages(this.queryParams)),

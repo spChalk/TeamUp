@@ -11,7 +11,6 @@ import {Like} from "../like/like";
 import {LikeService} from "../like/like.service";
 import {Comment} from "../comment/comment";
 import {CommentService} from "../comment/comment.service";
-import {JobView} from "../job-view/job-view";
 import {PostView} from "../post-view/post-view";
 import {PostViewService} from "../post-view/post-view.service";
 

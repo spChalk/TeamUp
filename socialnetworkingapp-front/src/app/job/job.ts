@@ -1,4 +1,3 @@
-import {Account} from "../account/account";
 import {Tag} from "../tags/Tag";
 import {ExperienceLevel} from "./experienceLevel";
 import {JobType} from "./jobType";

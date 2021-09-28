@@ -1,5 +1,4 @@
-import {Account} from "../account/account";
-import {Observable} from "rxjs";
+
 
 export class Bio {
 

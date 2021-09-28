@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { AccountService } from "../account/account.service";
-import { HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse } from "@angular/common/http";
+import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { Account } from "../account/account";
-import { Bio } from "../bio/bio";
 import { Router } from '@angular/router';
-import { environment } from "../../environments/environment";
-import { Observable } from "rxjs";
 import { UploadFileService } from "../upload-files/upload-files.service";
-import { BioComponent } from "../bio/bio.component";
 import { BioService } from "../bio/bio.service";
 import { AuthenticationService } from '../authentication';
 import { TagsService } from "../tags/tags.service";

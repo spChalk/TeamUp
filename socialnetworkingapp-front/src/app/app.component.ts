@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Account} from "./account/account";
-import {AccountService} from "./account/account.service";
 
 @Component({
   selector: 'app-root',

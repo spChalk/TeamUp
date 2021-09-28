@@ -5,7 +5,6 @@ import { Job } from './job';
 import {JobService} from "./job.service";
 import {JobApplicationService} from "../job-application/job-application.service";
 import {AccountService} from "../account/account.service";
-import {BioService} from "../bio/bio.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {JobApplication} from "../job-application/job-application";
 import {FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
@@ -14,9 +13,7 @@ import {JobView} from "../job-view/job-view";
 import {TagsService} from "../tags/tags.service";
 import {AuthenticationService} from "../authentication";
 import {JobRequest} from "./job-request";
-import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
 import {Tag} from "../tags/Tag";
-import {NetworkEntity} from "../account/network-entity";
 
 @Component({
   selector: 'app-job',

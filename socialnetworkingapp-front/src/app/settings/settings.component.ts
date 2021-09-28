@@ -6,11 +6,9 @@ import {Account} from "../account/account";
 import {Bio} from "../bio/bio";
 import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
-import {readSpanComment} from "@angular/compiler-cli/src/ngtsc/typecheck/src/comments";
 import {UploadFileService} from "../upload-files/upload-files.service";
 import {environment} from "../../environments/environment";
 import {AuthenticationService} from "../authentication";
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 @Component({
   selector: 'app-settings',

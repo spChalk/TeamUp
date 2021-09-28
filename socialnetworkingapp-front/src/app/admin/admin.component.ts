@@ -9,8 +9,6 @@ import {Router} from "@angular/router";
 import {BioService} from "../bio/bio.service";
 import {environment} from "../../environments/environment";
 import { AuthenticationService } from '../authentication';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
-
 
 @Component({
   selector: 'app-admin',
@@ -219,15 +217,6 @@ export class AdminComponent implements OnInit {
             document.body.appendChild(element);
             element.click();
             window.location.reload();
-       /*   const blob: Blob = new Blob([response], {
-            type: 'text/xml' });
-
-          const url = window.URL.createObjectURL(blob);
-          fileSaver.saveAs(blob,);
-          window.open(url);
-
-          this.selectedUsers.splice(0, this.selectedUsers.length);
-          window.location.reload();*/
         }),
           (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
           () => console.info('File downloaded successfully');
@@ -266,15 +255,6 @@ export class AdminComponent implements OnInit {
             document.body.appendChild(element);
             element.click();
             window.location.reload();
-           /* const blob:any = new Blob([response], {
-              type: 'text/json; charset=utf-8' });
-
-            const url = window.URL.createObjectURL(blob);
-            fileSaver.saveAs(blob, 'accounts__' + Date.now() + '.json');
-            window.open(url);
-
-            this.selectedUsers.splice(0, this.selectedUsers.length);
-            window.location.reload();*/
           }),
           (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
           () => console.info('File downloaded successfully');

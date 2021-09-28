@@ -5,7 +5,6 @@ import {AccountService} from "../account/account.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ConnectionRequestService} from "../connection-request/connection-request.service";
-import {concat} from "rxjs";
 import {ConnectionRequest} from "../connection-request/ConnectionRequest";
 
 @Component({

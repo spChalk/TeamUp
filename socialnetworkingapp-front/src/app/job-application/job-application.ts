@@ -1,5 +1,3 @@
-import {Account} from "../account/account";
-import {Job} from "../job/job";
 
 export class JobApplication {
 
