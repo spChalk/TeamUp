@@ -17,36 +17,37 @@
             <a class="nav-link" routerLink="/jobs">Jobs </a>
             <a class="nav-link" routerLink="/chat">Chat</a>
             <a class="nav-link" routerLink="/account">Profile</a>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              Notifications
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+              <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-outline-warning mb-2"
+                      data-placement="top" data-original-title="comments">
+                <i class="fa fa-comments" aria-hidden="true"></i>Comments </button>
+
+              <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
+                      data-placement="top" data-original-title="likes">
+                <i class="fa fa-heart" aria-hidden="true"></i>Likes </button>
+
+              <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
+                      data-placement="top" data-original-title="friends">
+                <i class="fa fa-address-book" aria-hidden="true"></i>Requests </button>
+            </div>
+          </li>
+
             <a class="nav-link" routerLink="/settings">Settings</a>
             <a class="nav-link" href (click)="logout()">Logout</a>
 
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Notifications
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
-                    <button (click)="onClickModal(null, 'comments')" type="button" style="margin-left:auto" class="btn btn-outline-warning mb-2"
-                        data-placement="top" data-original-title="comments">
-                        <i class="fa fa-comments" aria-hidden="true"></i>Comments </button>
-
-                    <button (click)="onClickModal(null, 'likes')" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
-                        data-placement="top" data-original-title="likes">
-                        <i class="fa fa-heart" aria-hidden="true"></i>Likes </button>
-
-                    <button (click)="onClickModal(null, 'friends')" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
-                        data-placement="top" data-original-title="friends">
-                        <i class="fa fa-address-book" aria-hidden="true"></i>Requests </button>
-                </div>
-            </li>
         </div>
     </div>
 </nav>
 
     <!-- friends modal -->
-    <div class="modal fade" id="friends" tabindex="-1" role="dialog" 
+    <div class="modal fade" id="friends" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="friends">
         <div class="modal-content">
@@ -59,7 +60,7 @@
             </div>
 
             <div class="modal-body" style="overflow-y: scroll;" *ngFor="let req of requests">
-                    <div *ngIf="req.receiver == account"> You have a new friend request from {{req.sender}} 
+                    <div *ngIf="req.receiver == account"> You have a new friend request from {{req.sender}}
                     <button (click)="accept(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-success mb-2"
                         data-placement="top" data-original-title="accept">
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>Accept</button>
@@ -70,7 +71,7 @@
 
                     </div>
 
-                    <div *ngIf="req.sender==account"> Pending friend request to {{req.receiver}} 
+                    <div *ngIf="req.sender==account"> Pending friend request to {{req.receiver}}
                     <button (click)="remove(req.id)" type="button" style="margin-left:auto " class="btn btn-outline-danger mb-2"
                         data-placement="top" data-original-title="reject">
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>Cancel request</button>
@@ -87,7 +88,7 @@
 <!-- end friends modal -->
 
 <!-- comments modal -->
-    <div class="modal fade" id="comments" tabindex="-1" role="dialog" 
+    <div class="modal fade" id="comments" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="comments">
         <div class="modal-content">
@@ -100,7 +101,7 @@
             </div>
 
             <div class="modal-body" style="overflow-y: scroll;" *ngFor="let comment of comments">
-                    <div *ngIf="comment.authorEmail == account"> 
+                    <div *ngIf="comment.authorEmail == account">
 
                     <a data-dismiss="modal" routerLink="/home">
                         <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
@@ -111,13 +112,13 @@
                         </a>
                     </div>
 
-                    <div *ngIf="comment.authorEmail !== account"> 
+                    <div *ngIf="comment.authorEmail !== account">
                     <a data-dismiss="modal" routerLink="/home">
                         <img *ngIf="comment.authorImage === null" src="../../assets/images/user_default.png" width="36"
                           height="36" class="rounded-circle">
                         <img *ngIf="comment.authorImage!== null" src="{{comment.authorImage}}" width="36"
                           height="36" class="rounded-circle">
-                            {{comment.authorFirstName}} {{comment.authorLastName}} commented on your post 
+                            {{comment.authorFirstName}} {{comment.authorLastName}} commented on your post
                         </a>
                     </div>
 
@@ -133,7 +134,7 @@
 <!-- end of comments modal -->
 
 <!-- likes modal -->
-    <div class="modal fade" id="likes" tabindex="-1" role="dialog" 
+    <div class="modal fade" id="likes" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" aria-describedby="likes">
         <div class="modal-content">
@@ -146,7 +147,7 @@
             </div>
 
             <div class="modal-body" style="overflow-y: scroll;" *ngFor="let like of likes">
-                    <div *ngIf="like.userEmail == account"> 
+                    <div *ngIf="like.userEmail == account">
                     <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
                             <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
                             height="36" class="rounded-circle" style="float: right;">
@@ -156,13 +157,13 @@
                         </a>
                     </div>
 
-                    <div *ngIf="like.userEmail != account"> 
+                    <div *ngIf="like.userEmail != account">
                     <a data-dismiss="modal" routerLink="/home#{{like.postId}}">
                         <img *ngIf="like.imageUrl === null" src="../../assets/images/user_default.png" width="36"
                           height="36" class="rounded-circle">
                         <img *ngIf="like.imageUrl !== null" src="{{like.imageUrl}}" width="36"
                           height="36" class="rounded-circle">
-                            {{like.userFirstName }} {{like.userLastName}} liked your post 
+                            {{like.userFirstName }} {{like.userLastName}} liked your post
                         </a>
                     </div>
 
