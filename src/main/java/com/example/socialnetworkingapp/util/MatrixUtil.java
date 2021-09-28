@@ -31,15 +31,15 @@ public class MatrixUtil {
         int row2 = B.length;
         int col2 = B[0].length;
 
-        //For two matrices to be multiplied,
-        //number of columns in first matrix must be equal to number of rows in second matrix
+        /* For two matrices to be multiplied, the number of columns in first matrix must be equal to number of rows in second matrix */
         if(col1 != row2){
             System.out.println("Matrices cannot be multiplied");
         } else {
-            //Array prod will hold the result
+
             float[][] prod = new float[row1][col2];
 
-            //Performs product of matrices a and b. Store the result in matrix prod
+            /* Performs product of matrices A and B.
+                Stores the result in matrix prod */
             for(int i = 0; i < row1; i++){
                 for(int j = 0; j < col2; j++){
                     for(int k = 0; k < row2; k++){

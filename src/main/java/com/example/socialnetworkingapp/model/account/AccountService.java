@@ -358,21 +358,6 @@ public class AccountService implements UserDetailsService {
         return this.accountRepository.save(account);
     }
 
-    public List<Experience> getExperience(String email) {
-
-        Account account = this.accountRepository.findAccountByEmail(email).orElseThrow(
-                () -> new UserNotFoundException("User with email " + email + " was not found!")
-        );
-        return account.getExperience();
-    }
-
-    public List<Education> getEducation(String email) {
-        Account account = this.accountRepository.findAccountByEmail(email).orElseThrow(
-                () -> new UserNotFoundException("User with email " + email + " was not found!")
-        );
-        return account.getEducation();
-    }
-
     public Bio addBio(Account account, Bio bio) {
         account.setBio(this.bioService.addBio(bio));
         this.accountRepository.save(account);
