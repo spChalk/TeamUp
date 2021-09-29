@@ -22,10 +22,12 @@
           <hr>
           <div class="ks-search">
             <div class="input-icon icon-right icon icon-lg icon-color-primary">
-              <input id="input-group-icon-text" type="text" class="form-control" placeholder="Search">
-              <span class="icon-addon">
-                <span class="la la-search"></span>
-              </span>
+              <form #searchContactForm="ngForm">
+                <input id="input-group-icon-text" type="text" ngModel name="keyword" (ngModelChange)="onSearchSimilar(searchContactForm.value.keyword)" class="form-control" placeholder="Search a user...">
+                <span class="icon-addon">
+                  <span class="la la-search"></span>
+                </span>
+              </form>
             </div>
           </div>
 

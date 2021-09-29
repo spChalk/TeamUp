@@ -166,4 +166,14 @@ export class ChatComponent implements OnInit {
     this.stopPolling.next();
   }
 
+  public onSearchSimilar(keyword: string) {
+    this.friends = [];
+
+    for(let account of this.account.network) {
+      if(account.firstName.toLowerCase().includes(keyword.toLowerCase()) ||
+        account.lastName.toLowerCase().includes(keyword.toLowerCase())) {
+        this.friends.push(account);
+      }
+    }
+  }
 }
