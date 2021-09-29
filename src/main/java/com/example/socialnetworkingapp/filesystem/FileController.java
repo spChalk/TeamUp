@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("https://localhost:8443")
 @AllArgsConstructor
 public class FileController {
 

@@ -24,7 +24,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     //attach token
     if(token){
         newHeaders= newHeaders.append(this.auth, this.tokenPrefix + token);
-        newHeaders= newHeaders.append("Access-Control-Allow-Origin","http://localhost:4200");
+        newHeaders= newHeaders.append("Access-Control-Allow-Origin","https://localhost:4200");
     }
     //clone this request with the new headers
     const authRequest = req.clone({headers: newHeaders});

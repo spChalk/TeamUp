@@ -68,7 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "SocialNetworkingApp:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "ssl":true,
+            "sslCert": "./src/ssl/server.crt",
+            "sslKey": "./src/ssl/server.key"
           },
           "configurations": {
             "production": {
