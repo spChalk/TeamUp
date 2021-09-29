@@ -124,6 +124,12 @@ public class FileDBService {
     }
 
     public void fileCleanup() throws IOException {
+
+        File XMLdirectory = new File("./exported_XML/");
+        if (!XMLdirectory.exists()) { XMLdirectory.mkdir(); }
+        File JSONdirectory = new File("./exported_JSON/");
+        if (!JSONdirectory.exists()) { JSONdirectory.mkdir(); }
+
         /* Utility method to move all dangling files to the corresponding folders */
         Set<String> files = this.listDir(".");
         for (String filename: files) {
