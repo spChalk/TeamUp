@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit {
 
   constructor(private router : Router , private chatService: ChatService, private accountService: AccountService, private authenticationService: AuthenticationService, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient) {
 
-    this.allFriends$ = timer(1, 10000).pipe(
+    this.allFriends$ = timer(1, 5000).pipe(
       switchMap(() =>
         this.http.get<Friends[]>(this.url + "/friends")),
       retry(),
@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
     );
 
 
-    this.allMessages$ = timer(1, 5000).pipe(
+    this.allMessages$ = timer(1, 3000).pipe(
       switchMap(() =>
       this.chatService.getAllMessages(this.queryParams)),
       retry(),
