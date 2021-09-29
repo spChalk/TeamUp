@@ -43,6 +43,18 @@ public class PostController {
         return new ResponseEntity<>(postService.findAllPosts(newUser), HttpStatus.OK);
     }
 
+    @PutMapping("/update/{pid}")
+    public ResponseEntity<HttpStatus> updatePostPayload(@PathVariable("pid") Long postId,
+                                                   @RequestBody String payload) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String user = authentication.getName();
+        Account newUser = accountService.findAccountByEmail(user);
+        Post existingPost = this.postService.findPostById(postId);
+        existingPost.setPayload(payload);
+        this.postService.updatePost(existingPost);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePostById(@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

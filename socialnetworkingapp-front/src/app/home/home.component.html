@@ -59,7 +59,10 @@
                   <div class="h7 text-muted">{{post?.authorEmail}}</div>
                 </div>
               </div>
-              <button (click)="onClickModal(post.id, 'deletePost')" *ngIf="this.authenticationService.getCurrentUser() === post?.authorEmail" type="button" class="btn" style="color: dimgray"><i class="fa fa-times"></i></button>
+              <div class="row">
+                <button (click)="onClickModal(post, 'editPost')" *ngIf="this.authenticationService.getCurrentUser() === post?.authorEmail" type="button" class="btn" style="color: dimgray;"><i class="fa fa-pencil"></i></button>
+                <button (click)="onClickModal(post.id, 'deletePost')" *ngIf="this.authenticationService.getCurrentUser() === post?.authorEmail" type="button" class="btn" style="color: dimgray"><i class="fa fa-times"></i></button>
+              </div>
             </div>
 
           </div>
@@ -227,6 +230,29 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
         <button (click)="onDeleteComment(this.commentIdToDelete)" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit post modal -->
+<div class="modal fade" id="editPost" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPostModalLabel">Edit caption</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editPostForm="ngForm">
+          <textarea type="text" ngModel name="payload" class="form-control" value="{{this.postToEdit?.payload}}" placeholder="Type your comment..." required></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button [disabled]="editPostForm.invalid" (click)="onUpdatePost(this.postToEdit.id, editPostForm.value.payload)" type="submit" class="btn btn-primary" data-dismiss="modal">Update</button>
       </div>
     </div>
   </div>

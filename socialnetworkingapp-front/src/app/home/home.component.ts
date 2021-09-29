@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   public commentedPosts: Map<number, [Comment[], number[]]> = new Map<number, [Comment[], number[]]>();
 
   public postIdToDelete: number;
+  public postToEdit: Post;
   public commentIdToDelete: number;
   public commentToEdit: Comment;
   public selectedPost: Post = undefined;
@@ -172,6 +173,10 @@ public loadPostLikes(pid: number) {
       this.postIdToDelete = data;
       button.setAttribute('data-target', '#deletePost');
     }
+    if(mode === 'editPost') {
+      this.postToEdit = data;
+      button.setAttribute('data-target', '#editPost');
+    }
     if(mode === 'deleteComment') {
       this.commentIdToDelete = data[0];
       this.tempRefreshPostId = data[1];
@@ -195,7 +200,7 @@ public loadPostLikes(pid: number) {
   public onDeletePost(postIdToDelete: number) {
     this.postService.deletePost(postIdToDelete).subscribe(
       (event: any) => {
-        window.location.reload();
+        this.loadPosts();
       }, (error: HttpErrorResponse) => {
         alert(error.message);
       }
@@ -276,6 +281,16 @@ public loadPostLikes(pid: number) {
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
+    );
+  }
+
+  public onUpdatePost(id: number, payload: string) {
+    this.postService.updatePost(id, payload).subscribe(
+        (response: any) => {
+          this.loadPosts();
+        }, (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
     );
   }
 }

@@ -20,6 +20,10 @@ export class PostService {
     return this.http.get<Post[]>(`${this.url}/all`);
   }
 
+  public updatePost(pid: number, payload: string): Observable<any> {
+    return this.http.put<any>(`${this.url}/update/${pid}`, payload);
+  }
+
   public deletePost(pid: number): Observable<any> {
     return this.http.delete<void>(`${this.url}/delete/${pid}`);
   }
