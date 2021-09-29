@@ -35,7 +35,7 @@ public class FileDBService {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB(fileName, file.getContentType(), user, file.getBytes());
         FileDB saved = fileDBRepository.save(fileDB);
-        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
+        String fileURL = "https://localhost:8443/api/files/" + saved.getId();
 
         /* The file is going to a post with id = postId. */
         if (postId != null) {
@@ -60,7 +60,7 @@ public class FileDBService {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB(fileName, file.getContentType(), user, file.getBytes());
         FileDB saved = fileDBRepository.save(fileDB);
-        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
+        String fileURL = "https://localhost:8443/api/files/" + saved.getId();
 
         /* The file is an image and is going to a user profile. */
         if(saved.getType().contains("image")) {
@@ -79,7 +79,7 @@ public class FileDBService {
 
         FileDB fileDB = new FileDB(fileName, file.getContentType(), userEmail, file.getBytes());
         FileDB saved = fileDBRepository.save(fileDB);
-        String fileURL = "http://localhost:8081/api/files/" + saved.getId();
+        String fileURL = "https://localhost:8443/api/files/" + saved.getId();
 
         /* The file is an image and is going to a user profile. */
         if(saved.getType().contains("image")) {
