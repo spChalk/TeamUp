@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres:alpine
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: chris
+      POSTGRES_USER: chris
+      POSTGRES_DB: app
+    volumes:
+      - type: volume
+        source: psql_data
+        target: /var/lib/postgresql/data
+    networks: 
+      - app
+    restart: always
+  inventory:
+    image: 'teamup.jar'
+    depends_on:
+        - db
+    ports:
+      - 8443:8443
+    networks:
+      - app
+    restart: always
+volumes:
+  psql_data:
+networks: 
+  app:

@@ -191,6 +191,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>teamUp</finalName>
 	</build>
 
 </project>
