@@ -2,23 +2,16 @@
 FROM node:14-alpine As build
 
 #Setup the working directory
-WORKDIR ./app
+WORKDIR /app
 
-EXPOSE 4200
+ENV PATH /app/node_modules/.bin$PATH
 
-#Copy package.json
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-#Install dependencies
-RUN npm install
+RUN npm isntall
 
-#Copy other files and folder to working directory
-COPY . .
+RUN npm install -g @angular/cli
 
-RUN npm run build
+COPY . /app
 
-#Download NGINX Image
-FROM nginx:1.15.8-alpine
-
-#Copy built angular app files to NGINX HTML folder
-COPY --from=build ./app/dist /usr/share/nginx/html
+CMD ng serve --host 0.0.0.0

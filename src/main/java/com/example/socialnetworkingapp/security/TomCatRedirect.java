@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TomCatRedirect {
 
+    //redirect http to https (port 8443)
     @Bean
     public ServletWebServerFactory servletWebServerFactory(){
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){

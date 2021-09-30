@@ -6,8 +6,8 @@ services:
     ports:
       - 5433:5432
     environment:
-      POSTGRES_PASSWORD: chris
-      POSTGRES_USER: chris
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
       POSTGRES_DB: app
     volumes:
       - type: volume
@@ -22,6 +22,11 @@ services:
         - db
     ports:
       - 8443:8443
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/app
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
     networks:
       - app
     restart: always
