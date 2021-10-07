@@ -2,6 +2,8 @@ package com.example.socialnetworkingapp.export.to_xml;
 
 import com.example.socialnetworkingapp.export.ByteArrMultipartFile;
 import com.example.socialnetworkingapp.filesystem.FileDBService;
+import com.example.socialnetworkingapp.model.account.Account;
+import com.example.socialnetworkingapp.model.account.AccountRole;
 import com.example.socialnetworkingapp.model.account.AccountService;
 import com.example.socialnetworkingapp.model.account.details.FullAccountDetails;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
