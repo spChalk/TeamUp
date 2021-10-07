@@ -30,6 +30,11 @@ public class exportToXML {
     @PostMapping("/export/xml")
     public ResponseEntity<String> export(@RequestBody ArrayList<Long> accountIds) throws IOException {
 
+        Account account = this.accountService.findAccountByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if(account.getRole() == AccountRole.ADMIN){
+            return null;
+        }
+
         List<FullAccountDetails> accounts = this.accountService.getFullAccountsDetails(accountIds);
 
         XmlMapper xmlMapper = new XmlMapper();
