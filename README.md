@@ -1,4 +1,4 @@
-# Team Up!
+# Team Up! :partying_face:
 #### A professional networking application for the course *Web Development Technologies* in collaboration with [Christos Laspias](https://github.com/ChrisLaspias).
 
 ## 0. Abstract
