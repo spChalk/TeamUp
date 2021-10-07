@@ -54,9 +54,9 @@ self-signed certificate ```server.crt```, which is located under:
 ### 1.2. Compose & Run
 In order to deal with environment disparity across different machines and
 platforms, the project is deployed using **Docker**. 
-- In project's root directory, run ```install.sh``` with **root privileges**. The script creates a docker image for the backend and the database and runs them in different containers. **In case it fails, you should install PostgreSQL to your system and create an empty database named ```app``` with ```username: postgres``` and ```password: root```.**
+- In project's root directory, run ```install.sh``` with **root privileges**. The script creates a docker image for the backend and the database and runs them in different containers. **In case it fails, you should install PostgreSQL to your system, create an empty database named ```app``` and change ```spring.datasource.username``` and ```spring.datasource.password``` which are located under ```src/main/resources/application.properties``` according to your credentials.**
 
-- For the front-end, run ```install.sh```, located under ```/socialnetworkingapp-front``` directory. **If this fails, run ```npm start```.**
+- For the front-end, run ```install.sh```, located under ```/socialnetworkingapp-front``` directory.
 - Backend runs on https://localhost:8443.
 - Front end runs on https://localhost:4200.
 - PostgreSQL runs on localhost:5432.
