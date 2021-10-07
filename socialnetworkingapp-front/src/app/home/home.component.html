@@ -363,8 +363,8 @@
                   <img *ngIf="comment?.authorImage" src="{{comment?.authorImage}}" class="avatar" alt="">
                   <img *ngIf="comment?.authorImage === null" src="../../assets/images/user_default.png" class="avatar" alt="">
                   <div class="post-comments">
-                    <p class="meta"> <button (click)="onClickModal([comment.id, this.selectedPost.id], 'deleteComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-times"></i></button>
-                      <button (click)="onClickModal([comment, this.selectedPost.id], 'editComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-pencil"></i></button>
+                    <p class="meta"> <button (click)="onClickModal([comment.id, this.selectedPost.id], 'deleteComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                      <button (click)="onClickModal([comment, this.selectedPost.id], 'editComment')" *ngIf="this.authenticationService.getCurrentUser() === comment?.authorEmail" type="button" class="btn" style="color: dimgray;float: right"><i class="fa fa-pencil" data-dismiss="modal"></i></button>
                       {{comment?.date}} <a routerLink="/visit/{{comment?.authorEmail}}">{{comment?.authorFirstName}} {{comment?.authorLastName}}</a> says :
                     </p>
 

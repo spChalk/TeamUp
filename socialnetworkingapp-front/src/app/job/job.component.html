@@ -35,7 +35,7 @@
             <img *ngIf="job?.publisherImage === null" src="../../assets/images/user_default.png" style="width: 50px;height: auto;border-radius: 30%" alt=""/>
             <div class="ms-2 c-details">
               <h6 class="mb-0 ml-3"> <strong> {{job?.publisherFirstName}} {{job?.publisherLastName}}</strong> </h6>
-              <span class="ml-3"> {{job?.date.slice(0, -7)}} </span>
+              <span class="ml-3"> {{job?.date}} </span>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
                <br><br>
                <strong>Experience level:  </strong> <span class="badge badge-secondary"> {{selectedJob?.experienceLevel.toString().replace('_', ' ')}} </span>
                <br><br>
-               <strong>Uploaded:  </strong> <span class="badge badge-primary text-white"> {{selectedJob?.date.slice(0, -7)}} </span>
+               <strong>Uploaded:  </strong> <span class="badge badge-primary text-white"> {{selectedJob?.date}} </span>
                <br><br>
                <strong>Tags:  </strong>
                   <span *ngFor="let tag of selectedJob?.tags" class="badge badge-secondary text-white mr-1"> {{tag?.tag.replace('_', ' ')}}  </span>
