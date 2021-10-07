@@ -293,10 +293,20 @@ that post.
 5. Sort by most viewed posts.
 6. Sort and return the resulting list the same way as (3.a.i).
 
-## Gallery
+## 6. Gallery
+![landing](https://github.com/spChalk/TeamUp/blob/main/Gallery/landing.png)
+![register](https://github.com/spChalk/TeamUp/blob/main/Gallery/register.png)
+![admin](https://github.com/spChalk/TeamUp/blob/main/Gallery/admin.png)
+![homepage](https://github.com/spChalk/TeamUp/blob/main/Gallery/homepage.png)
+![post](https://github.com/spChalk/TeamUp/blob/main/Gallery/post.png)
+![jobs](https://github.com/spChalk/TeamUp/blob/main/Gallery/jobs.png)
+![network](https://github.com/spChalk/TeamUp/blob/main/Gallery/network.png)
+![profile](https://github.com/spChalk/TeamUp/blob/main/Gallery/profile.png)
+![notifications](https://github.com/spChalk/TeamUp/blob/main/Gallery/comments.png)
+![settings](https://github.com/spChalk/TeamUp/blob/main/Gallery/settings.png)
+![chat](https://github.com/spChalk/TeamUp/blob/main/Gallery/chat.png)
 
-
-## 6. Sources
+## 7. Sources
 - https://stackoverflow.com/
 - https://www.baeldung.com/
 - https://www.gitmemory.com/
